@@ -43,5 +43,11 @@
 	
 	<!-- AOP SETTING:S -->
 	<aop:aspectj-autoproxy/><!-- SPRING이 proxy를 자동으로 만들어 준다 -->
-	<!-- AOP SETTING:S -->		
+	<!-- AOP SETTING:S -->	
+	
+	<!-- DB TRANSACTION S-->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<!-- DB TRANSACTION E-->	
 </beans>
