@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberMapper">
+	
+	<insert id="memberJoin" parameterType="com.basic.member.MemberDTO">
+		insert into member
+		values(member_seq.nextVal,#{id},#{pw},#{name},#{age},#{sung},#{tel})
+
+	</insert>
+
+
+	<select id="memberLogin" resultType="com.basic.member.MemberDTO" parameterType="com.basic.member.MemberDTO">
+		select * from member where id=#{id} and pw=#{pw}
+	</select>
+	
+	<update id="memberUpdate" parameterType="com.basic.member.MemberDTO">
+		update member 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="pw != null">
+				pw = #{pw}
+			</if>
+			<if test="age != 0">
+				age = #{age}
+			</if>
+			<if test="tel != null">
+				tel = #{tel0}/#{tel1}/#{tel2}/#{tel3}
+			</if>
+		
+		</trim>
+		where num=#{num}
+	</update>
+
+	<delete id="memberDelete" parameterType="com.basic.member.MemberDTO">
+		delete member where num=#{num}
+	</delete>
+
+
+</mapper>

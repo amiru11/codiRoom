@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FreeboardMapper">
+
+	<select id="boardView" resultType="com.basic.freeboard.FreeboardDTO" parameterType="com.basic.freeboard.FreeboardDTO">
+		select * from freeboard where num=#{num}
+	</select>
+	<!-- 파일업로드를 같이 해보자!! -->
+	<insert id="boardWrite" parameterType="com.basic.freeboard.FreeboardDTO">
+		insert into freeboard
+		values(freeboard_seq.nextVal,#{writer},#{title},#{contents},#{category},sysdate,0,0,freeboard_seq.currVal,0,0)
+	</insert>
+	<!-- files table에 등록하기 -->
+	<insert id="fileWrite" parameterType="java.util.HashMap">
+		insert into freeboard_files
+		values(file_seq.nextVal, #{refNum}, #{fileName})
+	</insert>
+	
+	<!-- 임시테이블 dual을 통해서 file_seq를 가져온다 -->
+	<select id="fileNum" resultType="int">
+		<!-- select last_number from user_sequences where sequence_name = 'freeboard_seq' -->
+		<![CDATA[
+			select num from freeboard where rownum <= 1  order by num desc
+		]]>
+		
+	</select>
+	
+	<!-- 뷰에 보여줄 fileList -->
+	<select id="fileView" resultType="com.basic.freeboard.FileDTO" parameterType="com.basic.freeboard.FreeboardDTO" >
+		<![CDATA[
+			select * from freeboard_files where refNum = #{num}
+		]]>
+	</select>
+	
+	<!-- 게시물수정 -->
+	<update id="boardUpdate" parameterType="com.basic.freeboard.FreeboardDTO">
+		<![CDATA[
+				update freeboard set title=#{title},contents=#{contents} where num=#{num}
+		]]>
+	</update>
+	
+	<!-- 수정시 파일도 같이 수정 -->
+	<update id="fileUpdate" parameterType="com.basic.freeboard.FileDTO" >
+			<![CDATA[
+					update freeboard_files set fileName=#{fileName} where refNum=#{refNum}
+			]]>
+	</update>
+	
+	<!-- 게시물리스트 -->
+	<select id="boardList" resultType="com.basic.freeboard.FreeboardDTO" parameterType="com.basic.util.PageMaker">
+		select * from
+		(select Rownum R, F.* from
+		(select * from freeboard order by ref desc, step asc) F)
+		where R between #{startRowNum} and #{lastLowNum}
+	</select>
+	
+	<select id="boardCount" resultType="int">
+		select count(*) from freeboard
+	</select>
+</mapper>
