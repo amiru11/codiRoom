@@ -80,6 +80,21 @@
 		ORDER BY p.PRODUCT_NUM desc
 	</select>
 
+	<insert id="TestAdd1" parameterType="com.basic.test.ProductDTO">
+		insert into product values(product_seq.nextval,#{product_name})
+	</insert>
+	<insert id="TestAdd2" parameterType="com.basic.test.ProductInfoDTO">
+		insert into productInfo
+		values(product_seq.currval,#{productInfo_price},sysdate,sysdate,#{productInfo_saleRate},#{productInfo_searchWord})
+	</insert>
+	<insert id="TestAdd3" parameterType="com.basic.test.ProductEachDTO">
+		insert into productEach values(product_seq.currval,#{productEach_size},#{productEach_color},#{productEach_each})
+	</insert>
+	<insert id="TestAdd4" parameterType="com.basic.test.ProductKindDTO">
+		insert into productKind values(product_seq.currval,#{kind_num})
+	</insert>
+
+
 
 	<select id="TestListPr" resultMap="Product">
 		select * from product

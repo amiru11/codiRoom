@@ -1,4 +1,4 @@
-package com.basic.smart;
+package com.basic.codi;
 
 import java.io.File;
 import java.util.UUID;
@@ -11,19 +11,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.basic.smart.PhotoDTO;
+
 @Controller
-@RequestMapping(value = "/board")
-public class BoardController {
+@RequestMapping(value="/smart")
+public class SmarteditorController {
 	@RequestMapping(value = "/boardView")
 	public void boardView() {
 
 	}
-
+	
 	@RequestMapping(value = "/boardWrite", method = RequestMethod.GET)
 	public void boardWrite() {
 
 	}
-
 	@RequestMapping(value = "/boardWrite", method = RequestMethod.POST)
 	public String boardWrite(String title, String contents, Model model, RedirectAttributes rd) {
 		model.addAttribute("title", title);
@@ -36,7 +37,10 @@ public class BoardController {
 		return "redirect:/smart/boardView";
 
 	}
-
+	
+	
+	
+	
 	@RequestMapping(value = "/fileupload")
 	public String fileupload(PhotoDTO photoDTO, HttpSession session) {
 		System.out.println("gggg");

@@ -478,7 +478,7 @@
  	 */
  	function callFileUploader (){
  		oFileUploader = new jindo.FileUploader(jindo.$("uploadInputBox"),{
- 			sUrl  : '/myweeb/board/fileupload',	//샘플 URL입니다.
+ 			sUrl  : '/codi/smart/fileupload',	//샘플 URL입니다.
  			//sUrl  : '/file_uploader.do',	//샘플 URL입니다.
  	        sCallback : '/resources/SE2/photo_uploader/popup/callback.html',	//업로드 이후에 iframe이 redirect될 콜백페이지의 주소
  	    	sFiletype : "*.jpg;*.png;*.bmp;*.gif",						//허용할 파일의 형식. ex) "*", "*.*", "*.jpg", 구분자(;)	
@@ -534,6 +534,7 @@
     /**
      * 페이지 닫기 버튼 클릭
      */
+ 	
     function closeWindow(){
 	   	if(bSupportDragAndDropAPI){
 	   		removeEvent();

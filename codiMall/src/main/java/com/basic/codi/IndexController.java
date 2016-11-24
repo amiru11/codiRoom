@@ -24,43 +24,5 @@ public class IndexController {
 	public String index(){
 		return "index";
 	}
-	
-	@Autowired
-	private SqlSession sqlSession;
-	private String namespace = "TestMapper.";
-
-	@Autowired
-	private PlatformTransactionManager transactionManager;
-
-	DefaultTransactionDefinition def = null;
-	TransactionStatus status = null;
-
-	@RequestMapping(value = "/t3")
-	public String ttteee3() {
-
-		System.out.println(sqlSession.selectOne(namespace + "TestListCount"));
-
-		return "redirect:/";
-	}
-
-	@RequestMapping(value = "/t1")
-	public String ttteee(Model ra) {
-		List<ProductDTO> ar = new ArrayList<ProductDTO>();
-		ar = sqlSession.selectList(namespace + "TestListPr");
-		ra.addAttribute("list", ar);
-		return "/ttt/tlist2";
-	}
-
-	@RequestMapping(value = "/t2")
-	public String ttteee2(Model ra) {
-		List<TestDTO> ar = new ArrayList<TestDTO>();
-		ar = sqlSession.selectList(namespace + "TestListAll");
-		for (int i = 0; i < ar.size(); i++) {
-			System.out.println(i + "---" + ar.get(i).getProductDTO().getProduct_num());
-			System.out.println(i + "---" + ar.get(i).getProductDTO().getProduct_name());
-			System.out.println("-----------------------------------------");
-		}
-		return "/ttt/tlist2";
-	}
 
 }
