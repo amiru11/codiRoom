@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TestMapper">
+
+	<resultMap type="com.basic.test.ProductSelectDTO" id="ProductSelect">
+		<result column="productSelect_num" property="productSelect_num"
+			javaType="int" />
+		<result column="productSelect_name" property="productSelect_name"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.test.KindDTO" id="Kind">
+		<result column="kind_num" property="kind_num" javaType="int" />
+		<result column="kind_name" property="kind_name" javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.test.ProductInfoDTO" id="ProductInfo">
+		<result column="product_num" property="product_num" javaType="int" />
+		<result column="productInfo_price" property="productInfo_price"
+			javaType="int" />
+		<result column="productInfo_reg_date" property="productInfo_reg_date"
+			javaType="java.sql.Date" />
+		<result column="productInfo_rec_date" property="productInfo_rec_date"
+			javaType="java.sql.Date" />
+		<result column="productInfo_saleRate" property="productInfo_saleRate"
+			javaType="double" />
+		<result column="productInfo_searchWord" property="productInfo_searchWord"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.test.ProductEachDTO" id="ProductEach">
+		<result column="product_num" property="product_num" javaType="int" />
+		<result column="productEach_size" property="productEach_size"
+			javaType="java.lang.String" />
+		<result column="productEach_color" property="productEach_color"
+			javaType="java.lang.String" />
+		<result column="productEach_each" property="productEach_each"
+			javaType="int" />
+	</resultMap>
+
+	<resultMap type="com.basic.test.ProductKindDTO" id="ProductKind">
+		<result column="product_num" property="product_num" javaType="int" />
+		<result column="kind_num" property="kind_num" javaType="int" />
+	</resultMap>
+
+	<resultMap type="com.basic.test.ProductDTO" id="Product">
+		<result column="product_num" property="product_num" javaType="int" />
+		<result column="product_name" property="product_name" javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.test.TestDTO" id="Test">
+		<collection property="productDTO" resultMap="Product" />
+		<collection property="productEachDTO" resultMap="ProductEach" />
+		<collection property="productInfoDTO" resultMap="ProductInfo" />
+		<collection property="productKindDTO" resultMap="ProductKind" />
+		<collection property="kindDTO" resultMap="Kind" />
+		<collection property="productSelectDTO" resultMap="ProductSelect" />
+	</resultMap>
+
+
+
+
+	<select id="TestListAll" resultMap="Test">
+		select distinct p.*,
+		pr.PRODUCTEACH_COLOR,pr.PRODUCTEACH_EACH,pr.PRODUCTEACH_SIZE,
+		pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_DATE,pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_SEARCHWORD,
+		pk.KIND_NUM,
+		k.KIND_NAME,
+		ps.PRODUCTSELECT_NAME,ps.PRODUCTSELECT_NUM
+		from PRODUCT p,PRODUCTEACH pr,PRODUCTINFO pi,PRODUCTKIND pk
+		,PRODUCTSELECT
+		ps,kind k
+		where pi.PRODUCT_NUM = p.PRODUCT_NUM and
+		pr.PRODUCT_NUM = p.PRODUCT_NUM and
+		pk.PRODUCT_NUM = p.PRODUCT_NUM
+		and
+		pk.KIND_NUM = k.KIND_NUM
+		and k.PRODUCTSELECT_NUM =ps.PRODUCTSELECT_NUM
+		ORDER BY p.PRODUCT_NUM desc
+	</select>
+
+
+	<select id="TestListPr" resultMap="Product">
+		select * from product
+	</select>
+	<select id="TestListCount" resultType="int">
+		select count(product_num)
+		from product
+	</select>
+
+</mapper>

@@ -40,7 +40,13 @@
 				<li><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
 				<li><a href="${pageContext.request.contextPath}/board/findList?board=1">QnA</a></li>
 				<li><a href="${pageContext.request.contextPath}/freeboard/freeboardList">FREEBOARD</a></li>
-				<li><a href="${pageContext.request.contextPath}/files/filesList">FILES LIST</a></li>				
+				<li><a href="${pageContext.request.contextPath}/files/filesList">FILES LIST</a></li>
+				<!--            test li s -->
+				<li><a href="${pageContext.request.contextPath}/t1">T1</a></li>
+				<li><a href="${pageContext.request.contextPath}/t2">T2</a></li>
+				<li><a href="${pageContext.request.contextPath}/t3t">T3</a></li>
+				<!--            test li e -->
+								
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="">고객센터</a></li>

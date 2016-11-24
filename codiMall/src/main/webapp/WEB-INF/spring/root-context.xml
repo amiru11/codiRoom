@@ -3,16 +3,18 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 			<!-- CONNECTION POOL:S -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	<property name="username" value="mall01"/>
 		<property name="password" value="mall01"/>
-		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe"/>
+		<property name="url" value="jdbc:oracle:thin:@192.168.30.18:1521:xe"/>
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 	</bean>
 	<!-- CONNECTION POOL:E -->
@@ -39,6 +41,8 @@
 	<!-- COMPONENT SCAN :S -->
 	<context:component-scan base-package="com.basic.freeboard"/>
 	<context:component-scan base-package="com.basic.member"/>
+	<context:component-scan base-package="com.basic.test"/>
+	
 	<!-- COMPONENT SCAN :E -->
 	
 	<!-- AOP SETTING:S -->
