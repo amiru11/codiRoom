@@ -1,6 +1,6 @@
 package com.basic.board;
 
-public class BoardSearch {
+public class BoardSearchDTO {
 	private String type;
 	private String find;
 	

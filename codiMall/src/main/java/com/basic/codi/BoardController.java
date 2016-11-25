@@ -114,7 +114,7 @@ public class BoardController {
 		try {
 			boardService.findList(type, find, curPage, perPage, board_kind, model);
 			System.out.println("BOARD SEARCH");
-			System.out.println("BOARD NUM : " +board_kind);
+			System.out.println("BOARD KIND : " +board_kind);
 			System.out.println("TYPE : "+type);
 			System.out.println("FIND : "+find);
 		} catch (Exception e) {

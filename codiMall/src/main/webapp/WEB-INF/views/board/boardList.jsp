@@ -20,16 +20,22 @@
 		alert(message);
 	}
 	$(function(){
+	
+		alert(${board_kind});
+		
 		$("#wrBtn").click(function(){
 			location.href="${pageContext.request.contextPath}/board/boardWrite?board_kind=${board_kind}";
 		});
 		
-		if(${boardName eq 'NOTICE'}){
-			$(".noticeTab").css("color","black");
+		if(${board_kind eq 1}){
+			$(".noticeTab").css("color","#f8f8f8");
 			$(".noticeTab").css("font-weight","800");
-		}else if(${boardName eq 'FAQ'}){
-			$(".faqTab").css("color","black");
+		}else if(${board_kind eq 2}){
+			$(".faqTab").css("color","#f8f8f8");
 			$(".faqTab").css("font-weight","800");
+		}else if(${board_kind eq 3}){
+			$(".qnaTab").css("color","#f8f8f8");
+			$(".qnaTab").css("font-weight","800");
 		}
 		
 		
@@ -41,7 +47,8 @@
 }
 
 #subheader{
-	background : url("${pageContext.request.contextPath}/resources/images/subMenu_back.jpg");
+	background : url("${pageContext.request.contextPath}/resources/images/subMenu_bg.png");
+	height: 178px;
 }
 .sub-title{
 	color : white;
@@ -49,10 +56,17 @@
 	text-decoration: none;
 }
 .sub-title:HOVER {
-	color: black;
+	color: #f8f8f8;
 	text-decoration: none;
 	font-weight: 800;
 }
+
+#searchHeader{
+	background : url("${pageContext.request.contextPath}/resources/images/main_search_bg.png");
+	
+}
+
+
 </style>
 </head>
 <body>
@@ -64,18 +78,17 @@
 	<!-- SUBHEADER:S -->
 		<div class="jumbotron text-center" id="subheader">		
 			<h2></h2>
-			<a href="#" class="sub-title noticeTab">NOTICE</a>
-			<a href="#" class="sub-title faqTab" style="margin-left: 100px;">FAQ</a>
+			<a href="${pageContext.request.contextPath}/board/findList?board_kind=1" class="sub-title noticeTab">NOTICE</a>
+			<a href="${pageContext.request.contextPath}/board/findList?board_kind=2" class="sub-title faqTab" style="margin-left: 100px;">FAQ</a>
 			<a href="#" class="sub-title qnaTab" style="margin-left: 100px;">Q&A</a>
 		</div>
 	<!-- SUBHEADER:E -->
 	
-	<div class="container">
+	<c:if test="${board_kind eq 1}">
 	
-		
+	<!-- NOTICE SECTION:S -->
+	<div class="container">
 		<nav class="nav nav-default">
-			<!-- <div class="jumbotron"> -->
-			
 			<form action="findList" method="post" role="search" class="navbar-form navbar-right">
 				
 				
@@ -91,9 +104,7 @@
 				        <a class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></a>
 				      </span>
 				    </div>
-				
 			</form>
-			<!-- </div> -->
 		</nav>
 		
 <%-- 		<div class="panel panel-default">
@@ -159,6 +170,18 @@
 		</div>
 	</div>
 	
+	<!-- NOTICE SECTION1:E -->
+	</c:if>
+	
+	<c:if test="${board_kind eq 2}">
+	<!-- FAQ SECTION:S -->
+		<div class="container">
+			<div class="jumbotron text-center" id="searchHeader">
+				
+			</div>
+		</div>
+	<!-- FAQ SECTION:E -->
+	</c:if>
 	<!-- Footer:S -->
 	<%@ include file="/resources/temp/footer.jsp"%>	
 	<!-- Footer:E -->

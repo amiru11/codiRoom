@@ -62,6 +62,7 @@ public class BoardDAO {
 			boardDTO = sqlSession.selectOne(namespace1+"boardView", num);			
 		}else if(board_kind==2){
 			boardDTO = sqlSession.selectOne(namespace1+"boardView", num);
+			
 		}
 		return boardDTO;
 	};
@@ -82,10 +83,12 @@ public class BoardDAO {
 	//페이징시 글의 총개수세기//
 	public int boardCount(int board_kind){
 		int result = 0;
+		System.out.println("boardCount :" + board_kind);
 		if(board_kind==1){
 			result = sqlSession.selectOne(namespace1+"boardCount");
 		}else if(board_kind==2){
 			result = sqlSession.selectOne(namespace2+"boardCount");
+			System.out.println(namespace2 +"count");
 		}
 		
 		return result;
