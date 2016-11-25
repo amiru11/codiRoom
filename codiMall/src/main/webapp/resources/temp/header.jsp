@@ -38,9 +38,6 @@
 
 			<ul class="nav navbar-nav" style="margin-top: 60px;">
 				<li><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
-				<li><a href="${pageContext.request.contextPath}/board/findList?board=1">QnA</a></li>
-				<li><a href="${pageContext.request.contextPath}/freeboard/freeboardList">FREEBOARD</a></li>
-				<li><a href="${pageContext.request.contextPath}/files/filesList">FILES LIST</a></li>
 				<!--            test li s -->
 				<li><a href="${pageContext.request.contextPath}/ttt/t1">T1</a></li>
 				<li><a href="${pageContext.request.contextPath}/ttt/t2">T2</a></li>
@@ -51,7 +48,7 @@
 								
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="">고객센터</a></li>
+				<li><a href="${pageContext.request.contextPath}/board/findList?board_kind=1">고객센터</a></li>
 				<li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span> CART</a></li>
 				<c:if test="${sessionScope.member eq null}">			
 				<li><a href="" data-toggle="modal" data-target="#loginModal"

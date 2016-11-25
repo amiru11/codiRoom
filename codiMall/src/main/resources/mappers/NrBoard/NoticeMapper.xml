@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NoticeMapper">
+	
+	
+	<!-- WRITE:S -->
+	<insert id="boardWrite" parameterType="com.basic.board.BoardDTO">
+		insert into board
+		values(board_seq.nextVal,#{board_title},#{board_writer},#{board_contents},#{board_category},
+			   0,sysdate,board_seq.currVal,0,0,1)
+	</insert>
+	<!-- WRITE:E -->
+
+	<!-- LIST:S -->
+	<select id="boardList" resultType="com.basic.board.BoardDTO" parameterType="com.basic.util.PageMaker">
+		select * from
+		(select Rownum R, F.* from
+		(select * from board where board_kind=1 order by board_num) F)
+		where R between #{startRowNum} and #{lastLowNum}
+	</select>	
+	<!-- LIST:E -->
+	
+	<!-- VIEW:S -->
+	<select id="boardView" resultType="com.basic.board.BoardDTO" parameterType="com.basic.board.BoardDTO">
+		select * from board where board_num=#{board_num}
+	</select>		
+	<!-- VIEW:E -->
+	
+	<!-- COUNT UPDATE:S -->
+	<update id="boardViewUpdate" parameterType="com.basic.board.BoardDTO" statementType="PREPARED">
+		<![CDATA[
+				update board set board_counts=#{board_counts}+1 where board_num=#{board_num}
+		]]>
+	</update>	
+	<!-- COUNT UPDATE:E -->	
+	
+	<!-- UPDATE:S -->
+	<update id="boardUpdate" parameterType="com.basic.board.BoardDTO" statementType="PREPARED">
+		<![CDATA[
+				update board set board_title=#{board_title},board_contents=#{board_contents},board_category=#{board_category} where board_num=#{board_num}
+		]]>
+	</update>	
+	<!-- UPDATE:E -->
+	
+	<!-- DELETE:S -->
+	<delete id="boardDelete" parameterType="int" statementType="PREPARED">
+		<![CDATA[
+				delete board where board_num=#{board_num}
+		]]>
+	</delete>	
+	<!-- DELETE:E -->
+	
+	<!-- BOARD GETCOUNT:S -->
+	
+	<select id="boardCount" parameterType="java.util.HashMap" resultType="int">
+		<if test="type == null">
+			<![CDATA[
+					select count(*) from board where board_kind=1
+			]]>
+		</if>
+
+		<if test="type != null">
+			<if test="type=='writer'">
+				and writer like #{find}
+			</if>
+			<if test="type=='title'">
+				and title like #{find}
+			</if>
+			<if test="type=='contents'">
+				and contents like #{find}
+			</if>
+		</if>		
+				
+	</select>
+	<!-- BOARD GETCOUNT:E -->
+	
+	<!-- BOARD SEARCH:S -->
+ 	<select id="findList" parameterType="java.util.HashMap" resultType="com.basic.board.BoardDTO" statementType="PREPARED">
+		<if test="type != null">
+			select * from 
+			(select rownum R, F.* from
+			(select * from board where board_kind=1 
+			<if test="type=='writer'">
+				and board_writer like #{find} 
+			</if>
+			<if test="type=='title'">
+				and board_title like #{find}
+			</if>
+			<if test="type=='contents'">
+				and board_contents like #{find}
+			</if>
+			order by board_ref desc, board_step asc) F)
+			where R between #{paging.startRowNum} and  #{paging.lastLowNum}
+		</if>
+	</select> 
+	<!-- BOARD SEARCH:E -->
+	
+</mapper>
