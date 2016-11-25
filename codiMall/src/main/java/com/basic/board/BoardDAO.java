@@ -127,6 +127,9 @@ public class BoardDAO {
 			ar = sqlSession.selectList(namespace2+"findList", mp);
 		}
 		return ar;
-		
+	}
+	//FAQ BEST 5//
+	public List<BoardDTO> bestList() throws Exception{
+		return sqlSession.selectList(namespace2+"bestList");
 	}
 }

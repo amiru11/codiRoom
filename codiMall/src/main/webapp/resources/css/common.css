@@ -3,8 +3,8 @@
 body{
 	padding-top: 100px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 	line-height: 1;
+    /* font-family: 'nbg', '맑은 고딕', HelveticaNeue, DroidSans, Sans-serif, Helvetica; */
     color: #414141;
-    font-family: 'Sandol', sans-serif;
     /* background: #f5f5f5; */
 }
 
@@ -17,7 +17,9 @@ img, ul, li{
     vertical-align: baseline;
     list-style: none;
 }
-
+#header{
+	background : url(/codi/resources/images/footer-bg.png);
+}
 #footer{
-	background-image: url("/t8/resources/images/footer-bg.png");
+	background-image: url("/codi/resources/images/footer-bg.png");
 }

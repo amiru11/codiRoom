@@ -27,7 +27,7 @@
 		});		
 	});
 </script>
-<nav class="navbar navbar-inverse navbar-fixed-top" style="z-index: 100;">
+<nav class="navbar navbar-inverse navbar-fixed-top" style="z-index: 100;" id="header">
 	<div class="container">		
 		<div class="navbar-header">
 			<h1 style="margin-top: 40px;">

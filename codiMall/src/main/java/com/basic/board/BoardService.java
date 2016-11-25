@@ -134,7 +134,7 @@ public class BoardService {
 		pageMaker.makeRow();
 		pageMaker.makePage(boardDAO.boardCount(board_kind));
 		List<BoardDTO> ar;
-		
+		List<BoardDTO> br;
 		System.out.println("boardNum : "+board_kind);
 		System.out.println("검색종류 : "+type);
 		System.out.println("검색어 : "+find);
@@ -143,7 +143,6 @@ public class BoardService {
 		System.out.println("시작숫자 : "+pageMaker.getStartRowNum());
 		System.out.println("마지막 숫자 : "+pageMaker.getLastLowNum());
 		System.out.println("글의 총 갯수 : "+boardDAO.boardCount(board_kind));
-		
 		ar = boardDAO.findList(type, find, board_kind, pageMaker);
 		model.addAttribute("type", type);
 		model.addAttribute("find", find);
@@ -151,11 +150,21 @@ public class BoardService {
 		model.addAttribute("list", ar);
 		model.addAttribute("board_kind", board_kind);
 		
+
 		if(board_kind==1){				
 			model.addAttribute("boardName", "NOTICE");
 		}else if(board_kind==2){
 			model.addAttribute("boardName", "FAQ");
+			//BEST 5//
+			br = boardDAO.bestList();
+			for(int i = 0; i<br.size();i++){
+				System.out.println("bestTITLE : "+br.get(i).getBoard_title());
+			}
+			model.addAttribute("bestList", br);
 		}
 	}
+	
+	
+
 	
 }

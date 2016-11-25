@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="FAQBoardMapper">	
+<mapper namespace="FAQMapper">	
+
 	<!-- WRITE:S -->
 	<insert id="boardWrite" parameterType="com.basic.board.BoardDTO">
 		insert into board
@@ -14,7 +15,7 @@
 	<select id="boardList" resultType="com.basic.board.BoardDTO" parameterType="com.basic.util.PageMaker">
 		select * from
 		(select Rownum R, F.* from
-		(select * from board where board_kind=1 order by board_num) F)
+		(select * from board where board_kind=2 order by board_num) F)
 		where R between #{startRowNum} and #{lastLowNum}
 	</select>	
 	<!-- LIST:E -->
@@ -93,6 +94,16 @@
 		</if>
 	</select> 
 	<!-- BOARD SEARCH:E -->
+
+	<!-- 자주묻는 질문 best5 -->
+	<select id="bestList" resultType="com.basic.board.BoardDTO">
+		<![CDATA[
+			select * from
+			(select Rownum R, F.* from
+			(select * from board where board_kind=2 order by board_counts desc) F)
+			where R between 1 and 5
+		]]>
+	</select>
 
 	
 </mapper>

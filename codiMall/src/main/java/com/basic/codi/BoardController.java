@@ -123,6 +123,4 @@ public class BoardController {
 		return "board/boardList";
 		
 	}
-	
-	
 }
