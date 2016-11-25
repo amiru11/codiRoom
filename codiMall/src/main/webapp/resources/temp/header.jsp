@@ -42,7 +42,13 @@
 				<li><a href="${pageContext.request.contextPath}/ttt/t1">T1</a></li>
 				<li><a href="${pageContext.request.contextPath}/ttt/t2">T2</a></li>
 				<li><a href="${pageContext.request.contextPath}/ttt/product_add">ADD</a></li>
-				<li><a href="${pageContext.request.contextPath}/smart/boardWrite">smart</a></li>
+				<li><a href="${pageContext.request.contextPath}/ttt/view?product_num=1">VEIW</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/login">LOGIN</a></li>
+				<li><a href="${pageContext.request.contextPath}/member/logout">LOGOUT</a></li>
+				<li><a href="${pageContext.request.contextPath}/ttt/basket">BASKET</a></li>
+				<li><a href="${pageContext.request.contextPath}/ttt/test">TEST</a></li>
+				
+				
 				
 				<!--            test li e -->
 								

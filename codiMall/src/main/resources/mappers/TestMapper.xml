@@ -58,9 +58,41 @@
 		<collection property="productSelectDTO" resultMap="ProductSelect" />
 	</resultMap>
 
+	<!-- TestDTO2 -->
+	<resultMap type="com.basic.test.ProductEachDTO2" id="Proeach2">
+		<id property="product_num" column="product_num" />
+		<result column="productEach_size" property="productEach_size"
+			javaType="java.lang.String" />
+		<result column="productEach_color" property="productEach_color"
+			javaType="java.lang.String" />
+		<result column="productEach_each" property="productEach_each"
+			javaType="int" />
+	</resultMap>
+
+	<resultMap type="com.basic.test.TestDTO2" id="Test22">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="product_name" property="product_name" javaType="java.lang.String" />
+		<collection property="productEachDTO2" javaType="java.util.List"
+			resultMap="Proeach2" />
+	</resultMap>
+	<!-- Test product join proe -->
+	<select id="TestProjproe" resultMap="Test22">
+		select
+		p.PRODUCT_NUM,p.PRODUCT_NAME,pe.PRODUCTEACH_COLOR,pe.PRODUCTEACH_EACH,pe.PRODUCTEACH_SIZE
+		from product p ,PRODUCTEACH pe where pe.PRODUCT_NUM = p.PRODUCT_NUM order by p.product_num desc
+	</select>
 
 
+	<!-- test basket add -->
+	<insert id="TestBasketAdd" parameterType="com.basic.basket.BasketDTO">
+		insert into basket
+		values(basket_seq.nextval,#{member_id},#{product_num})
+	</insert>
 
+	<insert id="TestBasketAdd2" parameterType="com.basic.basket.BasketInfoDTO">
+		insert into basketInfo
+		values(basket_seq.currval,#{basketInfo_size},#{basketInfo_color},#{basketInfo_each})
+	</insert>
 	<select id="TestListAll" resultMap="Test">
 		select distinct p.*,
 		pr.PRODUCTEACH_COLOR,pr.PRODUCTEACH_EACH,pr.PRODUCTEACH_SIZE,
@@ -80,18 +112,41 @@
 		ORDER BY p.PRODUCT_NUM desc
 	</select>
 
+	<select id="TestView" resultMap="Test" parameterType="int">
+		select
+		distinct p.*,
+		pr.PRODUCTEACH_COLOR,pr.PRODUCTEACH_EACH,pr.PRODUCTEACH_SIZE,
+		pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_DATE,pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_SEARCHWORD,
+		pk.KIND_NUM,
+		k.KIND_NAME,
+		ps.PRODUCTSELECT_NAME,ps.PRODUCTSELECT_NUM
+		from PRODUCT p,PRODUCTEACH pr,PRODUCTINFO pi,PRODUCTKIND pk
+		,PRODUCTSELECT
+		ps,kind k
+		where pi.PRODUCT_NUM = p.PRODUCT_NUM and
+		pr.PRODUCT_NUM = p.PRODUCT_NUM and
+		pk.PRODUCT_NUM = p.PRODUCT_NUM
+		and
+		pk.KIND_NUM = k.KIND_NUM
+		and k.PRODUCTSELECT_NUM =ps.PRODUCTSELECT_NUM
+		and p.product_num = #{product_num}
+	</select>
+
 	<insert id="TestAdd1" parameterType="com.basic.test.ProductDTO">
-		insert into product values(product_seq.nextval,#{product_name})
+		insert into product
+		values(product_seq.nextval,#{product_name})
 	</insert>
 	<insert id="TestAdd2" parameterType="com.basic.test.ProductInfoDTO">
 		insert into productInfo
 		values(product_seq.currval,#{productInfo_price},sysdate,sysdate,#{productInfo_saleRate},#{productInfo_searchWord})
 	</insert>
 	<insert id="TestAdd3" parameterType="com.basic.test.ProductEachDTO">
-		insert into productEach values(product_seq.currval,#{productEach_size},#{productEach_color},#{productEach_each})
+		insert into productEach
+		values(product_seq.currval,#{productEach_size},#{productEach_color},#{productEach_each})
 	</insert>
 	<insert id="TestAdd4" parameterType="com.basic.test.ProductKindDTO">
-		insert into productKind values(product_seq.currval,#{kind_num})
+		insert into productKind
+		values(product_seq.currval,#{kind_num})
 	</insert>
 
 

@@ -13,6 +13,7 @@ table, table tr, tr td, th {
 </head>
 <body>
 <h1>PRODUCT ADDDDDDDDDDDDD</h1>
+<h1><a href="${pageContext.request.contextPath}/">HOME</a></h1>
 <form action="${pageContext.request.contextPath}/ttt/product_add" method="post" enctype="multipart/form-data">
 	PRODUCT_NAME<input type="text" name="product_name"><br>
 	<HR>
@@ -26,9 +27,9 @@ table, table tr, tr td, th {
 	PRODUCTEACH_COLOR<input type="text" name="productEach_color"><br>
 	PRODUCTEACH_EACH<input type="number" name="productEach_each"><br>
 	<hr>
-	<!-- PRODUCTPIC <button disabled="disabled" >ADD</button><BR>  NONE    
+	PRODUCTPIC <button disabled="disabled" >ADD</button><BR>  NONE    
 	PIC<input type="file" name="productPic_pic" disabled="disabled">
-	<hr> -->
+	<hr>
 	PRODUCTKIND<BR>
 	KIND_NUM<input type="number" name="kind_num"><br>
 	<button>SUBMIT</button>

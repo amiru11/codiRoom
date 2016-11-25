@@ -12,6 +12,7 @@ table, table tr, tr td, th {
 </style>
 </head>
 <body class="home">
+<h1><a href="${pageContext.request.contextPath}/">HOME</a></h1>
 	<table>
 		<tr>
 			<th>01</th>

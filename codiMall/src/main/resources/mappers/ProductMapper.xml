@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProductMapper">
+
+	<!-- default DTO S -->
+
+	<resultMap type="com.basic.test.ProductSelectDTO" id="ProductSelect">
+		<id column="productSelect_num" property="productSelect_num"
+			javaType="int" />
+		<result column="productSelect_name" property="productSelect_name"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.test.KindDTO" id="Kind">
+		<id column="kind_num" property="kind_num" javaType="int" />
+		<result column="kind_name" property="kind_name" javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.test.ProductInfoDTO" id="ProductInfo">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="productInfo_price" property="productInfo_price"
+			javaType="int" />
+		<result column="productInfo_reg_date" property="productInfo_reg_date"
+			javaType="java.sql.Date" />
+		<result column="productInfo_rec_date" property="productInfo_rec_date"
+			javaType="java.sql.Date" />
+		<result column="productInfo_saleRate" property="productInfo_saleRate"
+			javaType="double" />
+		<result column="productInfo_searchWord" property="productInfo_searchWord"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.test.ProductEachDTO" id="ProductEach">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="productEach_size" property="productEach_size"
+			javaType="java.lang.String" />
+		<result column="productEach_color" property="productEach_color"
+			javaType="java.lang.String" />
+		<result column="productEach_each" property="productEach_each"
+			javaType="int" />
+	</resultMap>
+
+	<resultMap type="com.basic.test.ProductKindDTO" id="ProductKind">
+		<result column="product_num" property="product_num" javaType="int" />
+		<result column="kind_num" property="kind_num" javaType="int" />
+	</resultMap>
+
+	<resultMap type="com.basic.test.ProductDTO" id="Product">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="product_name" property="product_name" javaType="java.lang.String" />
+	</resultMap>
+
+	<!-- default DTO E -->
+
+	<!-- join DTO S -->
+
+
+	<!-- Product List DTO S -->
+	<resultMap type="com.basic.product.ProductList" id="ProductList">
+		<collection property="productDTO" resultMap="Product" />
+		<collection property="productInfoDTO" resultMap="ProductInfo" />
+	</resultMap>
+	<!-- Product List DTO E -->
+	<select id="SelProductList" resultMap="ProductList" parameterType="com.basic.util.PageMaker">
+		select * from (select ROWNUM r,p.* from product p ,productinfo pi where p.product_num=pi.product_num
+		order by p.product_num desc) where r between #{startRowNum} and #{lastLowNum}
+	</select>
+
+
+</mapper>
