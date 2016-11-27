@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="FAQBoardMapper">	
-		<!-- WRITE:S -->
+<mapper namespace="FAQMapper">	
+
+	<!-- WRITE:S -->
 	<insert id="boardWrite" parameterType="com.basic.board.BoardDTO">
 		insert into board
 		values(board_seq.nextVal,#{board_title},#{board_writer},#{board_contents},#{board_category},
@@ -59,14 +60,14 @@
 		</if>
 
 		<if test="type != null">
-			<if test="type=='writer'">
-				and writer like #{find}
+		<if test="type=='board_writer'">
+				and board_writer like #{find}
 			</if>
-			<if test="type=='title'">
-				and title like #{find}
+			<if test="type=='board_title'">
+				and board_title like #{find}
 			</if>
-			<if test="type=='contents'">
-				and contents like #{find}
+			<if test="type=='board_contents'">
+				and board_contents like #{find}
 			</if>
 		</if>		
 				
@@ -78,14 +79,14 @@
 		<if test="type != null">
 			select * from 
 			(select rownum R, F.* from
-			(select * from board where board_kind=2  
-			<if test="type=='writer'">
+			(select * from board where board_kind=2 
+			<if test="type=='board_writer'">
 				and board_writer like #{find} 
 			</if>
-			<if test="type=='title'">
+			<if test="type=='board_title'">
 				and board_title like #{find}
 			</if>
-			<if test="type=='contents'">
+			<if test="type=='board_contents'">
 				and board_contents like #{find}
 			</if>
 			order by board_ref desc, board_step asc) F)
@@ -93,6 +94,16 @@
 		</if>
 	</select> 
 	<!-- BOARD SEARCH:E -->
+
+	<!-- 자주묻는 질문 best5 -->
+	<select id="bestList" resultType="com.basic.board.BoardDTO">
+		<![CDATA[
+			select * from
+			(select Rownum R, F.* from
+			(select * from board where board_kind=2 order by board_counts desc) F)
+			where R between 1 and 5
+		]]>
+	</select>
 
 	
 </mapper>

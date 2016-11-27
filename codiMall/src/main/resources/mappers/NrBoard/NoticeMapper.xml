@@ -61,14 +61,14 @@
 		</if>
 
 		<if test="type != null">
-			<if test="type=='writer'">
-				and writer like #{find}
+			<if test="type=='board_writer'">
+				and board_writer like #{find}
 			</if>
 			<if test="type=='title'">
-				and title like #{find}
+				and board_title like #{find}
 			</if>
-			<if test="type=='contents'">
-				and contents like #{find}
+			<if test="type=='board_contents'">
+				and board_contents like #{find}
 			</if>
 		</if>		
 				
@@ -81,13 +81,13 @@
 			select * from 
 			(select rownum R, F.* from
 			(select * from board where board_kind=1 
-			<if test="type=='writer'">
+			<if test="type=='board_writer'">
 				and board_writer like #{find} 
 			</if>
-			<if test="type=='title'">
+			<if test="type=='board_title'">
 				and board_title like #{find}
 			</if>
-			<if test="type=='contents'">
+			<if test="type=='board_contents'">
 				and board_contents like #{find}
 			</if>
 			order by board_ref desc, board_step asc) F)

@@ -27,7 +27,7 @@
 		});		
 	});
 </script>
-<nav class="navbar navbar-inverse navbar-fixed-top" style="z-index: 100;">
+<nav class="navbar navbar-inverse navbar-fixed-top" style="z-index: 100;" id="header">
 	<div class="container">		
 		<div class="navbar-header">
 			<h1 style="margin-top: 40px;">
@@ -37,11 +37,11 @@
 		<div id="navbar" class="navbar-collapse collapse">
 
 			<ul class="nav navbar-nav" style="margin-top: 60px;">
-				<li><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
 				<!--            test li s -->
 				<li><a href="${pageContext.request.contextPath}/ttt/t1">T1</a></li>
 				<li><a href="${pageContext.request.contextPath}/ttt/t2">T2</a></li>
 				<li><a href="${pageContext.request.contextPath}/ttt/product_add">ADD</a></li>
+<<<<<<< HEAD
 				<li><a href="${pageContext.request.contextPath}/ttt/view?product_num=1">VEIW</a></li>
 				<li><a href="${pageContext.request.contextPath}/member/login">LOGIN</a></li>
 				<li><a href="${pageContext.request.contextPath}/member/logout">LOGOUT</a></li>
@@ -49,12 +49,15 @@
 				<li><a href="${pageContext.request.contextPath}/ttt/test">TEST</a></li>
 				
 				
+=======
+				<li><a href="${pageContext.request.contextPath}/board/findList?board_kind=2">smart</a></li>
+>>>>>>> branch 'master' of https://github.com/mallgit12/codiMall.git
 				
 				<!--            test li e -->
 								
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="${pageContext.request.contextPath}/board/findList?board_kind=1">고객센터</a></li>
+				<li><a href="${pageContext.request.contextPath}/board/findList?board_kind=1">고객센터</a></li><!-- 기본적으로 notice로 가게 -->
 				<li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span> CART</a></li>
 				<c:if test="${sessionScope.member eq null}">			
 				<li><a href="" data-toggle="modal" data-target="#loginModal"
