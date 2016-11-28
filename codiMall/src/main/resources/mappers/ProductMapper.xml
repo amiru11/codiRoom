@@ -56,7 +56,7 @@
 	<!-- join DTO S -->
 
 	<!-- Product List Count S -->
-	<select id="selProductCount" parameterType="java.util.Map  ">
+	<select id="selProductCount" parameterType="java.util.HashMap">
 		select count(product_num) from product
 		<where>
 			<if test="kind_num != null">
@@ -88,27 +88,58 @@
 
 
 	<!-- Product List DTO S -->
-	<resultMap type="com.basic.product.ProductListDTO" id="ProductList">
-		<collection property="productDTO" resultMap="Product" />
-		<collection property="productInfoDTO" resultMap="ProductInfo" />
-	</resultMap>
+
 	<!-- Product List DTO E -->
-	<select id="SelProductList" resultMap="ProductList"
-		parameterType="java.util.Map">
+	<select id="SelProductList" resultType="com.basic.product.ProductListDTO"
+		parameterType="java.util.HashMap">
 		select * from
 		(select ROWNUM r,t.* from (select DISTINCT
 		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE from PRODUCT p ,
 		PRODUCTINFO pi , PRODUCTEACH pe , PRODUCTKIND pk
-		where pe.PRODUCT_NUM = p.PRODUCT_NUM
+		where pe.PRODUCT_NUM =
+		p.PRODUCT_NUM
 		and pi.PRODUCT_NUM = p.PRODUCT_NUM
-		and pk.PRODUCT_NUM = p.PRODUCT_NUM
-		and UPPER(pe.PRODUCTEACH_COLOR)
-		<if test="ar.">
-		
-		
+		and pk.PRODUCT_NUM =
+		p.PRODUCT_NUM
+		<if test="productParamDTO.color != null ">
+			and UPPER(pe.PRODUCTEACH_COLOR) in
+			<foreach item="item" index="index" collection="productParamDTO.color"
+				open="(" separator="," close=")">
+				UPPER(#{item})
+			</foreach>
 		</if>
-		in(UPPER('orange'),UPPER('red'),UPPER('blue')) order by p.PRODUCT_NUM
-		desc) t ) where r BETWEEN #{pageMaker.startRowNum} and #{pageMaker.lastLowNum};
+		<if test="productParamDTO.getKind_num() != null ">
+			and UPPER(pk.kind_num) in
+			<foreach item="item" index="index" collection="productParamDTO.Kind_num"
+				open="(" separator="," close=")">
+				UPPER(#{item})
+			</foreach>
+		</if>
+		<if test="productParamDTO.getSize() != null ">
+			and UPPER(pe.PRODUCTEACH_size) in
+			<foreach item="item" index="index" collection="productParamDTO.Size"
+				open="(" separator="," close=")">
+				UPPER(#{item})
+			</foreach>
+		</if>
+		<choose>
+			<when test="productParamDTO.getSel() == 2">
+				order by p.PRODUCT_NUM asc
+			</when>
+			<when test="productParamDTO.getSel() == 3">
+				order by pi.productInfo_price asc
+			</when>
+			<when test="productParamDTO.getSel() == 4">
+				order by pi.productInfo_price desc
+			</when>
+			<otherwise>
+				order by p.PRODUCT_NUM desc
+			</otherwise>
+		</choose>
+		) t ) where r BETWEEN
+		#{pageMaker.startRowNum} and
+		#{pageMaker.lastLowNum}
+
 	</select>
 
 

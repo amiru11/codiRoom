@@ -32,10 +32,10 @@ public class ProductDAO {
 
 	public List<ProductListDTO> productList(PageMaker pageMaker,ProductParamDTO productParamDTO) {
 		// TODO Auto-generated method stub
-		Map<String, Object> ar = new HashMap<String, Object>();
-		ar.put("pageMaker", pageMaker);
-		ar.put("productParamDTO",productParamDTO);
-		return sqlSession.selectList(namespace+"SelProductList",ar);
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("pageMaker", pageMaker);
+		hm.put("productParamDTO",productParamDTO);
+		return sqlSession.selectList(namespace+"SelProductList",hm);
 	}
 	
 	

@@ -1,7 +1,7 @@
 package com.basic.product;
 
 public class ProductParamDTO {
-	private int sel = 1;
+	private int sel;
 	private int []kind_num;
 	private String []color;
 	private String []size;

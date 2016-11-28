@@ -18,9 +18,23 @@ public class ProductController {
 	private ProductService productService;
 
 	@RequestMapping(value = "/productList")
-	public void productList(int curPage, int perPage, @RequestParam(required = false)ProductParamDTO productParamDTO
-			,Model model){
+	public void productList(@RequestParam(defaultValue = "1") int curPage,
+			@RequestParam(defaultValue = "10") int perPage, @RequestParam(defaultValue = "1") int sel,
+			@RequestParam(required = false) String[] kind_num, @RequestParam(required = false) String[] color,
+			@RequestParam(required = false) String[] size, Model model) {
+		ProductParamDTO productParamDTO = new ProductParamDTO();
+		productParamDTO.setColor(color);
 		
+		int[] ina = null;
+		if (kind_num != null) {
+			ina =  new int[kind_num.length];
+			for (int i = 0; i < ina.length; i++) {
+				ina[i] = Integer.parseInt(kind_num[i]);
+			}
+		}
+		productParamDTO.setSize(size);
+		productParamDTO.setKind_num(ina);
+		productParamDTO.setSel(sel);
 		model.addAttribute("list", productService.productList(curPage, perPage, productParamDTO));
 	}
 
