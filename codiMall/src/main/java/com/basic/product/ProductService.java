@@ -14,15 +14,15 @@ public class ProductService {
 	@Autowired
 	private ProductDAO productDAO;
 	
-	public List<ProductListDTO> productList(int curPage,int perPage){
-		int totalCount = productDAO.productCount();
+	public List<ProductListDTO> productList(int curPage,int perPage,ProductParamDTO productParamDTO){
+		int totalCount = productDAO.productCount(productParamDTO);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCurPage(curPage);
 		pageMaker.setPerPage(perPage);
 		pageMaker.makeRow();
 		pageMaker.makePage(totalCount);
 		
-		return productDAO.productList(pageMaker);
+		return productDAO.productList(pageMaker,productParamDTO);
 	}
 
 }

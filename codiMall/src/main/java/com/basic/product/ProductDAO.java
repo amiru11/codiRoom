@@ -1,6 +1,9 @@
 package com.basic.product;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +26,16 @@ public class ProductDAO {
 	DefaultTransactionDefinition def = null;
 	TransactionStatus status = null;
 	
-	public int productCount(){
+	public int productCount(ProductParamDTO productParamDTO){
 		return 0;
 	}
 
-	public List<ProductListDTO> productList(PageMaker pageMaker) {
+	public List<ProductListDTO> productList(PageMaker pageMaker,ProductParamDTO productParamDTO) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace+"SelProductList",pageMaker);
+		Map<String, Object> ar = new HashMap<String, Object>();
+		ar.put("pageMaker", pageMaker);
+		ar.put("productParamDTO",productParamDTO);
+		return sqlSession.selectList(namespace+"SelProductList",ar);
 	}
 	
 	

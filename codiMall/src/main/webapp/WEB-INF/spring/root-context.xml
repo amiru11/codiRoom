@@ -42,6 +42,8 @@
 	<context:component-scan base-package="com.basic.board"/>
 	<context:component-scan base-package="com.basic.member"/>
 	<context:component-scan base-package="com.basic.test"/>
+	<context:component-scan base-package="com.basic.product"/>
+	
 	
 	<!-- COMPONENT SCAN :E -->
 	

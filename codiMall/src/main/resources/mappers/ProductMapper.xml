@@ -55,6 +55,37 @@
 
 	<!-- join DTO S -->
 
+	<!-- Product List Count S -->
+	<select id="selProductCount" parameterType="java.util.Map  ">
+		select count(product_num) from product
+		<where>
+			<if test="kind_num != null">
+				<foreach collection="kind_num" item="item">
+					#{item}
+				</foreach>
+
+
+
+			</if>
+			<if test="color != null">
+
+
+
+			</if>
+			<if test="searchWord != null">
+
+
+
+			</if>
+
+		</where>
+
+	</select>
+
+
+	<!-- Product List Count E -->
+
+
 
 	<!-- Product List DTO S -->
 	<resultMap type="com.basic.product.ProductList" id="ProductList">
@@ -62,9 +93,22 @@
 		<collection property="productInfoDTO" resultMap="ProductInfo" />
 	</resultMap>
 	<!-- Product List DTO E -->
-	<select id="SelProductList" resultMap="ProductList" parameterType="com.basic.util.PageMaker">
-		select * from (select ROWNUM r,p.* from product p ,productinfo pi where p.product_num=pi.product_num
-		order by p.product_num desc) where r between #{startRowNum} and #{lastLowNum}
+	<select id="SelProductList" resultMap="ProductList"
+		parameterType="java.util.Map">
+		select * from
+		(select ROWNUM r,t.* from (select DISTINCT
+		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE from PRODUCT p ,
+		PRODUCTINFO pi , PRODUCTEACH pe , PRODUCTKIND pk
+		where pe.PRODUCT_NUM = p.PRODUCT_NUM
+		and pi.PRODUCT_NUM = p.PRODUCT_NUM
+		and pk.PRODUCT_NUM = p.PRODUCT_NUM
+		and UPPER(pe.PRODUCTEACH_COLOR)
+		<if test="ar.">
+		
+		
+		</if>
+		in(UPPER('orange'),UPPER('red'),UPPER('blue')) order by p.PRODUCT_NUM
+		desc) t ) where r BETWEEN #{pageMaker.startRowNum} and #{pageMaker.lastLowNum};
 	</select>
 
 
