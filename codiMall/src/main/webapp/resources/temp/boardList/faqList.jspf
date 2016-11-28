@@ -1,0 +1,115 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<div id="searchHeader" class="text-center">
+						<div class="search_txt">
+							<strong>궁금하신 점을 검색 해 주세요.</strong>
+							<p>	알고 싶으신 내용이 있으시면 키워드를 입력하셔서 검색해 주세요.</p>
+						</div>
+						
+						<form action="findList" method="post" role="search">
+							    <div class="search_input">
+							      <input type="text" placeholder="Search for...">
+							      <a href="#" class="sch_btn" id="sch_btn">검색</a>
+							    </div>
+						</form>
+					</div>
+					<div id="searchTable" class="panel panel-default">
+						<div class="panel-body">
+							<div class="inner-searchL">
+								<strong>FAQ</strong>
+								<p>자주하는 질문 BEST 5</p>
+								<ul>
+									<c:forEach items="${bestList}" var="bestList">								
+									<li>
+										<a style="text-decoration: none; cursor: pointer; color: #006633; font-size: 16px; font-weight: bold;">
+											<span style="padding-right: 50px; border-right: 1px solid #ddd;">${bestList.board_category}</span>
+											<span style="padding-left : 30px;">${bestList.board_title}</span>
+										</a>
+									</li>
+									</c:forEach>
+								</ul>
+							</div>
+							<div class="inner-searchR">
+								<strong>분류별 키워드</strong><br>
+								<select class="form-control">
+									<option value="">전체</option>
+									<option value="코디/상품">코디/상품</option>
+									<option value="주문/배송">주문/배송</option>
+									<option value="입금/결제">입금/결제</option>
+									<option value="기타">기타</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div id="faq_wrap">
+						<table class="table" id="faqList">
+							<tbody>
+								<c:forEach items="${list}" var="list">
+									<tr class="faqTop">
+										<td style="width : 150px; padding-left : 20px;">${list.board_category}</td>
+										<td>
+											<span class="faq_Q">Q</span>
+											<span class="faqTitle">
+										 		${list.board_title}
+										 	</span>
+										</td>
+									</tr>
+									<tr style="background-color: #ddd; display:none;" class="faqBottom">
+										<td>&nbsp</td>
+										<td>
+											<span class="faq_A">A</span>
+											<span class="faqCont">
+										 		${list.board_contents}
+										 	</span>											
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+					<!-- PAGINATIOIN:S -->
+					<div class="center-block">
+						<nav aria-label="Page navigation">
+							<ul class="pagination">
+								<li><a href="#" aria-label="Previous"> <span
+										aria-hidden="true">&laquo;</span>
+								</a></li>
+								<li><c:if test="${paging.curBlock > 1}">
+										<a class="N_pageing"
+											href="boardList?curPage=${paging.startNum-1}&perPage=10&board=${board}&type=${type}&find=${find}">&laquo;</a>
+									</c:if></li>
+								<li><c:forEach begin="${paging.startNum}" step="1"
+										end="${paging.lastNum}" var="i">
+										<a class="N_pageing"
+											href="boardList?curPage=${i}&perPage=10&board=${board}&type=${type}&find=${find}">${i}</a>
+			
+									</c:forEach></li>
+								<li><c:if test="${paging.curBlock < paging.totalBlock}">
+										<a class="N_pageing"
+											href="boardList?curPage=${paging.lastNum+1}&perPage=10&board=${board}&type=${type}&find=${find}">&raquo;</a>
+									</c:if></li>
+								<li><a href="#" aria-label="Next"> <span
+										aria-hidden="true">&raquo;</span>
+								</a></li>
+							</ul>
+						</nav>
+					</div>
+					<!-- PAGINATIOIN:E -->
+					<div class="col-md-4">
+						<input type="button" value="글쓰기" id="wrBtn" class="btn" style="background-color: #333; color : #ddd;">
+					</div>
+				</div>
+				<div class="col-md-3">
+					<nav id="listMenu">
+						<ul>
+							<li class=""><a href="${pageContext.request.contextPath}/board/findList?board_kind=1">NOTICE</a></li>
+							<li class=""><a href="${pageContext.request.contextPath}/board/findList?board_kind=2">FAQ</a></li>
+							<li class=""><a href="${pageContext.request.contextPath}/board/findList?board_kind=3">QNA</a></li>
+						</ul>
+					</nav>		
+				</div>
+			</div>
+		</div>

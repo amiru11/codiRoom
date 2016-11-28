@@ -1,0 +1,212 @@
+@CHARSET "UTF-8";
+.center-block {
+	margin-left: 50%;
+}
+
+#subheader{
+	background : url(/codi/resources/images/subMenu_bg.png);
+	height: 178px;
+	capacity : 1;
+}
+.sub_tit_inner{
+	height: 74px;
+    margin: 0 auto;
+    padding-top: 50px;
+    position: relative;
+    width: 1100px;
+}
+.sub_tit_inner h4{
+	font: bold 36px Avenir, Arial, georgia;
+    color: #fefefe;
+    position: relative;
+}
+#subheader ul.smap {
+    position: absolute;
+    right: 0;
+    top: 78px;
+}
+#subheader ul.smap li {
+    vertical-align: middle;
+    float: left;
+    height: 16px;
+    line-height: 16px;
+    margin: 0 2.5px;
+}
+#subheader ul.smap li a{
+	text-decoration: none;
+	color : #fefefe;
+}
+#subheader ul.smap li span{
+}
+/* .sub-title{
+	color : white;
+	font-size: 40px;
+	text-decoration: none;
+}
+.sub-title:HOVER {
+	color: #f8f8f8;
+	text-decoration: none;
+	font-weight: 800;
+} */
+
+#searchHeader{
+	background : url(/codi/resources/images/main_search_bg.png);
+	border-radius: 3px;
+    height: 290px;
+    width: 100%;
+}
+.search_input {
+    height: 45px;
+    left: 161px;
+    position: absolute;
+    top: 161px;
+    width: 520px;
+}
+.search_input input {
+    border: none;
+    color: #666;
+    float: left;
+    font-size: 14px;
+    height: 40px;
+    line-height: 40px;
+    margin: 3px 0 0 30px;
+    width: 416px;
+}
+.search_input a {
+    background: url(/codi/resources/images/btn_search.png);
+    margin-left : 20px;
+    float: right;
+    display: block;
+    height: 45px;
+    overflow: hidden;
+    text-indent: -20000px;
+    width: 45px;
+}
+.search_txt{
+	left: 0;
+    position: absolute;
+    top: 54px;
+    width: 830px;
+}
+
+.search_txt > strong{
+	font-size: 22px;
+    line-height: 30px;
+}
+
+.search_txt > p{
+	font-size: 14px;
+    line-height: 20px;
+}
+#listMenu{
+	float: right;
+    font-weight: bold;
+    width: 220px;
+    margin-bottom: 90px;
+}
+#listMenu > ul{
+	border-top : 2px solid #222;
+}
+#listMenu > ul > li{
+	border-bottom: 1px solid #ddd;
+    width: 220px;
+}
+#listMenu > ul > li > a {
+    color: #444;
+    display: block;
+    font-size: 14px;
+    padding: 20px 30px 20px 15px;
+    position: relative;
+    width: 175px;
+    text-decoration: none;
+}
+#listMenu > ul > li > a:HOVER{
+	color: #006633;
+}
+
+#searchTable{
+	margin-top : 50px;
+}
+.inner-searchL{
+	float : left; 
+	width : 60%;
+	padding: 10px;
+	border-right: 1px solid #ccc;
+}
+.inner-searchL strong{
+	font-size: 22px;
+    line-height: 30px;
+}
+.inner-searchL p{
+	font-size: 16px;
+    line-height: 20px;
+}
+.inner-searchL > ul > li > span {
+	border-right: 1px solid #ccc;
+    color: #666;
+    padding-right: 7px;
+    font-size: 18px;
+    font-weight : bold;
+    line-height: 30px;
+}
+.inner-searchL > ul > li > a {
+	color: #666;
+    margin-left: 7px;
+    text-indent: 0;
+    font-size: 18px;
+    line-height: 30px;
+}
+.inner-searchR{
+	float : right; 
+	width:40%;
+	padding: 10px;
+}
+.inner-searchR strong{
+	font-size: 22px;
+    line-height: 30px;
+}
+.inner-searchR > select{
+	margin-top : 70px;	
+}
+#faq_wrap{
+	border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+}
+#faqList{
+	margin : 0;
+}
+#faqList > tbody > tr > td{
+	padding : 20px;
+	font-size: 18px;
+}
+.faqTop{
+	cursor: pointer;
+}
+.faq_Q{
+	float: left;
+    width: 23px;
+    font-size: 18px;
+    color: #006633;
+    position: relative;
+}
+.faqTitle{
+	float: left;
+	font-size: 18px;
+	padding-left : 20px;
+    width: 600px;
+    color: #006633;
+}
+.faq_A{
+	float: left;
+    width: 23px;
+    font-size: 18px;
+    color: #333;
+    position: relative;
+}
+.faqCont{
+	float: left;
+	font-size: 18px;
+	padding-left : 20px;
+    width: 600px;
+    color: #333;
+}

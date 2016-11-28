@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +14,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>	
 <script type="text/javascript">
 	var message = "${message}";
 	if (message != '') {
@@ -62,8 +62,8 @@
 </script>
 </head>
 <body>
+	<%@ include file="/resources/temp/header.jsp"%>
 	<div class="container">
-		<%@ include file="/resources/temp/header.jsp"%>
 		<h2>게시판입니다.</h2>
 		<div class="row">
 			<div class="col-lg-12" style="height: 50px;"></div>
@@ -87,7 +87,15 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td colspan="6">${view.board_contents}</td>
+						<td colspan="6">
+						
+							${view.board_contents}<br>
+							<c:if test="${fileView ne null }">
+								<c:forEach items="${fileView}" var="fileView">
+									<img alt="" style="width: 200px; height: 200px;" src="${context.request.contextPath}/codi/resources/upload/${fileViews.fileName}"><br>
+								</c:forEach>
+							</c:if>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="6">
@@ -96,7 +104,9 @@
 									name="delFrm" method="post">
 									<a id="goList" class="btn btn-md btn-primary" role="button">LIST</a>
 									<a id="goMod" class="btn btn-md btn-primary" role="button">MODIFY</a>
+<%-- 									<c:if test="${view.board_kind eq 3}">
 									<a id="goReply" class="btn btn-md btn-primary" role="button">REPLY</a>
+									</c:if> --%>
 									<a id="goDel" class="btn btn-md btn-primary" role="button">DELETE</a>
 									<input type="hidden" value="${view.board_num}" name="board_num" id="data1">
 									<input type="hidden" value="${view.board_kind}" name="board_kind">
@@ -134,8 +144,10 @@
 							<td>
 								<div class="form-group">
 									<select class="form-control" name="board_category">
+										<option value="공지">공지</option>
 										<option value="정보">정보</option>
 										<option value="질문">질문</option>
+										<option value="답변">답변</option>
 									</select>
 								</div>
 							</td>
@@ -148,8 +160,9 @@
 							<td colspan="6" class="info">
 								<div class="form-group">
 									<label for="content">Content:</label>
-									<textarea class="form-control" rows="5" id="content"
-										name="board_contents">${view.board_contents}</textarea>
+									<textarea class="form-control" name="board_contents" rows="5"  id="smarteditor" rows="10" cols="100" style="width:100%; height:100%;">
+										${view.board_contents}
+									</textarea>
 								</div>
 							</td>
 						</tr>
@@ -240,24 +253,4 @@
 	<!-- Footer:S -->
 	<%@ include file="/resources/temp/footer.jsp"%>	
 	<!-- Footer:E -->	
-	
-	
-=======
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-</head>
-<body>
-	<input type="text" value="${title}">
-	<div style="width: 1000px;height: 1000px;">${contents}</div>
-
-
->>>>>>> branch 'master' of https://github.com/mallgit12/codiMall.git
-</body>
 </html>
