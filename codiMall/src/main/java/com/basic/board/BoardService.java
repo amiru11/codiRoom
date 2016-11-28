@@ -1,10 +1,17 @@
 package com.basic.board;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.basic.board.BoardDAO;
 import com.basic.util.PageMaker;
@@ -32,6 +39,36 @@ public class BoardService {
 		System.out.println("결과 : "+message);
 		return message;
 	}
+	
+	//QNA등록//
+	public String qnaWrite(BoardDTO boardDTO,int board_kind, MultipartRequest mr, HttpSession session) throws Exception {
+		int result = 0;
+		System.out.println("WRITE");
+		System.out.println("BOARD NUM : "+board_kind);
+		String path = session.getServletContext().getRealPath("resources/upload");//파일저장경로 만들어주기
+		List<MultipartFile> files = mr.getFiles("files");//files로 지정된 애들을 List에 집어넣는다
+		ArrayList<String> fileNames = new ArrayList<String>();//list에 담은 file의 경로+이름을 담을 arrayList
+		
+		for(int i = 0; i<files.size();i++){
+			MultipartFile mf = files.get(i);//반복문이 돌 동안 하나씩 뽑아준다
+			String fileName = UUID.randomUUID().toString()+"_" + mf.getOriginalFilename();//랜덤 아이디를 붙어주면서 fileName 만들어주기
+			File file = new File(path, fileName);
+			mf.transferTo(file);//TransferTo를 통해 파일객체에 경로+파일명 저장
+			System.out.println(path+fileName);
+			fileNames.add(fileName);//fileNames ArrayList에 만들어준 fileName을 담아준다
+		}		
+		result = boardDAO.qnaWrite(boardDTO, board_kind, fileNames);
+		String message = "";
+		if(result > 0){
+			message = "등록완료!";
+		}else{
+			message = "등록실패!";
+		}
+		
+		System.out.println("결과 : "+message);
+		return message;
+	}	
+	
 	
 	//수정//
 	
@@ -66,14 +103,20 @@ public class BoardService {
 	
 	//뷰//
 	
-	public BoardDTO boardView(int board_num, int board_kind, Model model) throws Exception {
+	public BoardDTO boardView(BoardDTO boardDTO, int board_kind, Model model) throws Exception {
 		
-		BoardDTO boardDTO = boardDAO.boardView(board_num,board_kind);
+		boardDTO = boardDAO.boardView(boardDTO,board_kind);
 		boardDAO.boardViewUpdate(boardDTO);
 		
 		model.addAttribute("view", boardDTO);
+		model.addAttribute("fileView", boardDAO.fileView(boardDTO));
 		return boardDTO;
 	}
+	
+	//파일뷰//
+/*	public void fileView(BoardDTO boardDTO, Model model) throws Exception {
+		model.addAttribute("fileView", boardDAO.fileView(boardDTO));
+	}*/
 	
 	//리스트//
 	

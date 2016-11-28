@@ -12,8 +12,34 @@
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+		
 		$("#goList").click(function() {
 			location.href = "findList?board_kind=${board_kind}";
+		});
+
+		
+		var f = '<input type="file" name="files" class="form-control">';		
+		/* 파일타입 추가하기 */
+		$("#addFile").click(function(){
+			var r = $("[type='file']");
+			if(r.length < 5){				
+				$("#fileSet").append(f);
+			}else{
+				alert('5개까지 가능');
+			}
+		});
+		/* 파일타입 삭제하기 */
+		$("#delFile").on("click","input",function(){
+			$("#fileSet").closest("input").remove();
+		});			
+		
+		/* 파일타입 접고열기 */
+		$("#fileToggle").click(function(){
+			$("#fileSet").toggle();
+		});
+		
+		$("#qnaWrite").click(function(){
+			document.writeFrm.submit();
 		});
 		
 	    //전역변수선언
@@ -33,7 +59,7 @@
 	        }
 	    });
 	     
-	    //전송버튼 클릭이벤트
+		//전송버튼 클릭이벤트
 	    $("#goWrite").click(function(){
 	        //id가 smarteditor인 textarea에 에디터에서 대입
 	        editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
@@ -49,11 +75,15 @@
 </script>
 </head>
 <body>
+	<!-- HEADER:S -->
+	<%@ include file="/resources/temp/header.jsp"%>
+	<!-- HEADER:E -->
+	
+	<c:if test="${board_kind eq 1}">
+	<!-- NOTICE SECTION:S -->
 	<div class="container">
-		<%@ include file="/resources/temp/header.jsp"%>
-		<h2>글쓰기입니다.</h2>
+		<h2>NOTICE 작성</h2>
 		
-		<!-- WRITE:S -->
 		<div id="v_1" class="panel panel-default">
 			<!-- Default panel contents -->
 			<div class="panel-heading">글쓰기</div>
@@ -107,8 +137,149 @@
 			</form>
 		</div>
 	</div>
-	<!-- WRITE:E -->
+	<!-- NOTICE SECTION:E -->
+	</c:if>
+
+	<c:if test="${board_kind eq 2}">
 	
+	<!-- FAQ SECTION:S -->
+	<div class="container">
+		<h2>FAQ 작성</h2>
+		
+		<div id="v_1" class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">글쓰기</div>
+			<form action="${pageContext.request.contextPath}/board/boardWrite" name="writeFrm" method="post">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td class="active">TITLE</td>
+						<td colspan="3">
+							<div class="form-group"> 
+								<input type="text" class="form-control" id="tit" name="board_title" placeholder="제목을 입력하세요">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="active">WRTIER</td>
+						<td>
+							<div class="form-group"> 
+								<input type="text" class="form-control" id="wri" name="board_writer" placeholder="당신은 누구인가요">
+							</div>
+						</td>
+						<td class="active">CATEGORY</td>
+						<td>
+							<div class="form-group"> 
+								<select class="form-control" name="board_category">
+									<option value="코디/상품">코디/상품</option>
+									<option value="주문/배송">주문/배송</option>
+									<option value="입금/결제">입금/결제</option>
+									<option value="기타">기타</option>
+								</select>
+							</div>						
+						</td>					
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="4" class="active">Content</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<div class="form-group">
+								<textarea class="form-control" name="board_contents" rows="5"  id="smarteditor" rows="10" cols="100" style="width:100%; height:100%;"  placeholder="내용을 입력하세요"></textarea>
+							</div>
+							<input type="hidden" name="board_kind" value="${board_kind}">
+							<a id="goList" class="btn btn-md btn-primary" role="button">LIST</a>
+							<a id="goWrite" class="btn btn-md btn-primary" role="button">SUBMIT</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</form>
+		</div>
+	</div>	
+	<!-- FAQ SECTION:E -->
+	</c:if>
+	
+	<c:if test="${board_kind eq 3}">
+	
+	<!-- QNA SECTION:S -->
+	<div class="container">
+		<h2>QNA 작성</h2>
+		
+		<div id="v_1" class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">글쓰기</div>
+			<form action="${pageContext.request.contextPath}/board/qnaWrite" name="writeFrm" method="post" enctype="multipart/form-data">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td class="active">TITLE</td>
+						<td colspan="3">
+							<div class="form-group"> 
+								<input type="text" class="form-control" id="tit" name="board_title" placeholder="제목을 입력하세요">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="active">WRTIER</td>
+						<td>
+							<div class="form-group"> 
+								<input type="text" class="form-control" id="wri" name="board_writer" placeholder="당신은 누구인가요">
+							</div>
+						</td>
+						<td class="active">CATEGORY</td>
+						<td>
+							<div class="form-group"> 
+								<select class="form-control" name="board_category">
+									<option value="코디/상품">코디/상품</option>
+									<option value="주문/배송">주문/배송</option>
+									<option value="입금/결제">입금/결제</option>
+									<option value="기타">기타</option>
+								</select>
+							</div>						
+						</td>					
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="4" class="active">Content</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<div class="form-group">
+								<textarea class="form-control" rows="5" id="content" name="board_contents" placeholder="내용을 입력하세요"></textarea>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<button type="button" class="btn btn-default btn-sm" id="fileToggle">
+          						<span class="glyphicon glyphicon-chevron-down"></span> FLIE UP
+        					</button>
+							<div id="fileSet" style="display: none;">
+								<a id="addFile" class="btn btn-default btn-sm" role="button">ADDFILE</a>
+								<a id="delFile" class="btn btn-default btn-sm" role="button">DELFILE</a>
+								<input type="file" name="files" id="firstFile" class="form-control">
+							</div>
+						</td>
+					</tr>	
+					<tr>
+						<td colspan="4">
+							<input type="hidden" name="board_kind" value="${board_kind}">
+							<a id="goList" class="btn btn-md btn-primary" role="button">LIST</a>
+							<a id="qnaWrite" class="btn btn-md btn-primary" role="button">SUBMIT</a>
+						</td>
+					</tr>				
+				</tbody>
+			</table>
+			</form>
+		</div>
+	</div>	
+	<!-- QNA SECTION:E -->
+	</c:if>
+		
 	<!-- Footer:S -->
 	<%@ include file="/resources/temp/footer.jsp"%>	
 	<!-- Footer:E -->	

@@ -1,11 +1,14 @@
 package com.basic.codi;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.basic.board.BoardDTO;
@@ -34,7 +37,7 @@ public class BoardController {
 	//글쓰기폼//
 	@RequestMapping(value = "/boardWrite", method=RequestMethod.GET)
 	public String boardWriteForm(int board_kind,Model model){
-		System.out.println("FREEBOARD WRITEFORM");
+		System.out.println("WRITEFORM");
 		model.addAttribute("board_kind", board_kind);
 		return "board/boardWrite";
 	}
@@ -52,11 +55,38 @@ public class BoardController {
 		}
 		return "redirect:/board/findList?board_kind="+board_kind;
 	}
+	
+	//QNA글쓰기//
+	@RequestMapping(value="/qnaWrite")
+	public String qnaWrite(BoardDTO boardDTO, int board_kind, RedirectAttributes ra, MultipartHttpServletRequest mr, HttpSession session){
+		try {
+			String message = boardService.qnaWrite(boardDTO, board_kind, mr, session);
+			System.out.println("BOARD WRITE");
+			System.out.println("BOARD NUM : " +board_kind);
+			ra.addFlashAttribute("message", message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/board/findList?board_kind="+board_kind;
+	}	
+	
+	//QNA뷰//
+	@RequestMapping(value="/qnaView")
+	public String qnaView(BoardDTO boardDTO, int board_kind, Model model){
+		try {
+			System.out.println("QNA VIEW");
+			boardService.boardView(boardDTO, board_kind, model);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "board/boardView";
+	}
+	
 	//글보기//
 	@RequestMapping(value="/boardView")
-	public String boardView(int board_num, int board_kind, Model model){
+	public String boardView(BoardDTO boardDTO, int board_kind, Model model){
 		try {
-			boardService.boardView(board_num, board_kind, model);
+			boardService.boardView(boardDTO, board_kind, model);
 			System.out.println("BOARD VIEW");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,9 +110,9 @@ public class BoardController {
 	}
 	//삭제//
 	@RequestMapping(value="/boardDelete")
-	public String boardDel(int num, int board_kind, RedirectAttributes ra){
+	public String boardDel(int board_num, int board_kind, RedirectAttributes ra){
 		try {
-			String message = boardService.boardDel(num,board_kind);
+			String message = boardService.boardDel(board_num,board_kind);
 			System.out.println("BOARD DEL");
 			System.out.println("글 삭제 : " + message);
 			ra.addFlashAttribute("message", message);
@@ -90,7 +120,7 @@ public class BoardController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/board/boardList?board_kind="+board_kind;
+		return "redirect:/board/findList?board_kind="+board_kind;
 	}
 	//답글//
 /*	@RequestMapping(value="/boardReply")
