@@ -15,12 +15,14 @@
 <script
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>	
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/previewImage.js"></script>
 <script type="text/javascript">
 	var message = "${message}";
 	if (message != '') {
 		alert(message);
 	}
 	$(function() {
+		
 		$("#m_1").css("display", "none");
 		$("#r_1").css("display", "none");
 		$("#goMod").click(function() {
@@ -37,9 +39,7 @@
 			$("#r_1").css("display", "none");
 		});
 		$("#goReply").click(function() {
-			$("#v_1").css("display", "none");
-			$("#m_1").css("display", "none");
-			$("#r_1").css("display", "block");
+			$("#replySet").toggle();
 		});
 		$("#goCancel2").click(function() {
 			$("#v_1").css("display", "block");
@@ -52,12 +52,80 @@
 				document.delFrm.submit();
 			}
 		});
-		$("#modCom").click(function() {
-			document.modFrm.submit();
+		
+		var f = '<input type="file" name="files" class="form-control sImg">';		
+		/* 파일타입 추가하기 */
+		$("#addFile").click(function(){
+			var r = $("[type='file']");
+			if(r.length < 5){				
+				$("#fileSet").append(f);
+			}else{
+				alert('5개까지 가능');
+			}
 		});
+		/* 파일타입 삭제하기 */
+		$("#delFile").on("click","input",function(){
+			$("#fileSet").closest("input").remove();
+		});			
+		
+		/* 파일타입 접고열기 */
+		$("#fileToggle").click(function(){
+			$("#fileSet").toggle();
+		});		
+		
+		$("#modQna").click(function(){
+			document.modQnA.submit();
+		});
+		
+		
+		//image 미리보기//
+/* 		$(":file").on('change', function(){
+            readURL(this);
+        });
+		function readURL(input) {
+	        if (input.files && input.files[0]) {
+		        var reader = new FileReader();
+		
+		        reader.onload = function (e) {
+		                $('#holder').attr('src', e.target.result);
+		        }
+	        reader.readAsDataURL(input.files[0]);
+        	}	
+		} */
+	    //전역변수선언
+	    var editor_object = [];
+	     
+	    nhn.husky.EZCreator.createInIFrame({
+	        oAppRef: editor_object,
+	        elPlaceHolder: "smarteditor",
+	        sSkinURI: "/codi/resources/SE2/SmartEditor2Skin.html", 
+	        htParams : {
+	            // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+	            bUseToolbar : true,             
+	            // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+	            bUseVerticalResizer : true,     
+	            // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+	            bUseModeChanger : true, 
+	        }
+	    });
+	     
+		//전송버튼 클릭이벤트
+	    $("#modCom").click(function(){
+	        //id가 smarteditor인 textarea에 에디터에서 대입
+	        editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
+	         
+	        // 이부분에 에디터 validation 검증
+	         
+	        //폼 submit
+	        document.modFrm.submit();
+	    });		
+		
+
+		
 		$("#replyCom").click(function() {
 			document.replyFrm.submit();
-		})
+		});
+		
 	});
 </script>
 </head>
@@ -91,27 +159,35 @@
 						
 							${view.board_contents}<br>
 							<c:if test="${fileView ne null }">
-								<c:forEach items="${fileView}" var="fileView">
-									<img alt="" style="width: 200px; height: 200px;" src="${context.request.contextPath}/codi/resources/upload/${fileViews.fileName}"><br>
+								<c:forEach items="${fileView}" var="fileView0">
+									${fileView0.bFile_num}
+									<img alt="" style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/resources/upload/${fileView0.bFile_fileName}"><br>
 								</c:forEach>
 							</c:if>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="6">
-							<div>
+
+							<div class="text-right">
 								<form action="${pageContext.request.contextPath}/board/boardDelete"
 									name="delFrm" method="post">
 									<a id="goList" class="btn btn-md btn-primary" role="button">LIST</a>
 									<a id="goMod" class="btn btn-md btn-primary" role="button">MODIFY</a>
-<%-- 									<c:if test="${view.board_kind eq 3}">
+ 									<c:if test="${view.board_kind eq 3}">
 									<a id="goReply" class="btn btn-md btn-primary" role="button">REPLY</a>
-									</c:if> --%>
+									</c:if> 
 									<a id="goDel" class="btn btn-md btn-primary" role="button">DELETE</a>
 									<input type="hidden" value="${view.board_num}" name="board_num" id="data1">
 									<input type="hidden" value="${view.board_kind}" name="board_kind">
 								</form>
 							</div>
+						</td>
+					</tr>
+					<tr id="replySet" style="display:none;">
+						<td colspan="6">
+							Writer         수정 삭제 <br>
+							Contents
 						</td>
 					</tr>
 				</tbody>
@@ -123,10 +199,65 @@
 	<!-- MOD:S -->
 	<div class="container">
 		<div id="m_1">
-			<form action="${pageContext.request.contextPath}/board/boardUpdate"
+			<c:choose>
+				<c:when test="${view.board_kind eq 1 }">
+					<form action="${pageContext.request.contextPath}/board/boardUpdate"
 				name="modFrm" method="post">
-
-				<table class="table table-bordered">
+					<table class="table table-bordered">
+					<thead>
+						<tr>
+							<td class="active">TITLE</td>
+							<td colspan="5">
+								<div class="form-group">
+									<input type="text" class="form-control" id="tit" name="board_title"
+										value="${view.board_title}">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="active">WRTIER</td>
+							<td>${view.board_writer}</td>
+							<td class="active">CATEGORY</td>
+							<td>
+								<div class="form-group">
+									<select class="form-control" name="board_category">
+										<option value="공지">공지</option>
+									</select>
+								</div>
+							</td>
+							<td class="active">DATE</td>
+							<td>${view.board_date}</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan="6" class="info">
+								<div class="form-group">
+									<label for="content">Content:</label>
+									<textarea class="form-control" name="board_contents" rows="5"  id="smarteditor" rows="10" cols="100" style="width:100%; height:100%;">
+										${view.board_contents}
+									</textarea>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<div>
+									<a id="modCom" class="btn btn-md btn-primary" role="button">SUBMIT</a>
+									<a id="goCancel" class="btn btn-md btn-primary" role="button">CANCEL</a>
+									<input type="hidden" value="${view.board_kind}" name="board_kind">
+									<input type="hidden" value="${view.board_num}" name="board_num" id="data1">
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+				</c:when>
+				<c:when test="${view.board_kind eq 2 }">
+					<form action="${pageContext.request.contextPath}/board/boardUpdate"
+				name="modFrm" method="post">
+					<table class="table table-bordered">
 					<thead>
 						<tr>
 							<td class="active">TITLE</td>
@@ -171,6 +302,7 @@
 								<div>
 									<a id="modCom" class="btn btn-md btn-primary" role="button">SUBMIT</a>
 									<a id="goCancel" class="btn btn-md btn-primary" role="button">CANCEL</a>
+				
 									<input type="hidden" value="${view.board_kind}" name="board_kind">
 									<input type="hidden" value="${view.board_num}" name="board_num" id="data1">
 								</div>
@@ -179,12 +311,97 @@
 					</tbody>
 				</table>
 			</form>
+				</c:when>
+				<c:when test="${view.board_kind eq 3 }">
+					<form action="${pageContext.request.contextPath}/board/qnaUpdate"
+				name="modQnA" method="post" enctype="multipart/form-data">
+					<table class="table table-bordered">
+					<thead>
+						<tr>
+							<td class="active">TITLE</td>
+							<td colspan="5">
+								<div class="form-group">
+									<input type="text" class="form-control" id="tit" name="board_title"
+										value="${view.board_title}">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="active">WRTIER</td>
+							<td>${view.board_writer}</td>
+							<td class="active">CATEGORY</td>
+							<td>
+								<div class="form-group">
+									<select class="form-control" name="board_category">
+										<option value="코디/상품">코디/상품</option>
+										<option value="주문/배송">주문/배송</option>
+										<option value="입금/결제">입금/결제</option>
+										<option value="기타">기타</option>
+									</select>
+								</div>
+							</td>
+							<td class="active">DATE</td>
+							<td>${view.board_date}</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan="6" class="bg-grey">
+								<div class="form-group">
+									<label for="content">Content:</label>
+									<textarea class="form-control" name="board_contents" rows="5" rows="10" cols="100" style="width:100%; height:100%;">
+										${view.board_contents}
+									</textarea>
+									<c:if test="${fileView ne null }">
+										<c:forEach items="${fileView}" var="fileView0">
+											<img alt="${fileView0.bFile_num}" style="width: 200px; height: 200px;" src="${pageContext.request.contextPath}/resources/upload/${fileView0.bFile_fileName}"><br>
+										</c:forEach>
+									</c:if>
+								</div>
+							</td>
+						</tr>
+					<tr>
+						<td colspan="6">
+							<button type="button" class="btn btn-default btn-sm" id="fileToggle">
+          						<span class="glyphicon glyphicon-chevron-down"></span> FLIE UP
+        					</button>
+							<div id="fileSet" style="display: none;">
+								<a id="addFile" class="btn btn-default btn-sm" role="button">ADDFILE</a>
+								<a id="delFile" class="btn btn-default btn-sm" role="button">DELFILE</a>
+								<input type="file" name="files" id="firstFile" class="form-control sImg">
+									<c:forEach items="${fileView}" var="fileView0">
+									<input type="hidden" value="${fileView0.bFile_num}" name="bFile_num">
+									</c:forEach>
+							</div>
+						</td>
+					</tr>							
+					<tr>
+						<td colspan="6">
+							<div>
+								<a id="modQna" class="btn btn-md btn-primary" role="button">SUBMIT</a>
+								<a id="goCancel" class="btn btn-md btn-primary" role="button">CANCEL</a>
+								<input type="hidden" value="${view.board_kind}" name="board_kind">
+								<input type="hidden" value="${view.board_num}" name="board_num" id="data1">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6">
+							
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</form>
+				</c:when>
+			</c:choose>
+
 		</div>
 	</div>
 	<!-- MOD:E -->
 
 	<!-- REPLY:S -->
-	<div class="container">
+<%-- 	<div class="container">
 		<div id="r_1">
 			<form action="${pageContext.request.contextPath}/board/boardReply"
 				name="replyFrm" method="post">
@@ -247,7 +464,7 @@
 				</table>
 			</form>
 		</div>
-	</div>
+	</div> --%>
 	<!-- REPLY:E -->
 	
 	<!-- Footer:S -->

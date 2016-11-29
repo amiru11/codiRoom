@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.basic.board.BoardDTO;
+import com.basic.board.BoardFileDTO;
 import com.basic.board.BoardService;
 
 
@@ -34,6 +36,20 @@ public class BoardController {
 		}
 		return "board/boardList";
 	}
+	
+	//코멘트 글쓰기//
+	@RequestMapping(value="/commentWrite")
+	public String commentWrite(BoardDTO boardDTO, int board_kind, Model model){
+		try {
+			String message = boardService.boardWrite(boardDTO, board_kind);
+			
+			model.addAttribute("message", message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "board/commentResult";
+	}
+	
 	//글쓰기폼//
 	@RequestMapping(value = "/boardWrite", method=RequestMethod.GET)
 	public String boardWriteForm(int board_kind,Model model){
@@ -69,6 +85,21 @@ public class BoardController {
 		}
 		return "redirect:/board/findList?board_kind="+board_kind;
 	}	
+	
+	//QNA수정//
+	@RequestMapping(value="/qnaUpdate")
+	public String qnaMod(BoardDTO boardDTO, int board_kind, @RequestParam(value="bFile_num") int [] bFile_num, RedirectAttributes ra,MultipartHttpServletRequest mr, HttpSession session){
+		try {
+			String message = boardService.qnaUpdate(boardDTO, board_kind, bFile_num, mr, session);
+			System.out.println("QNA MOD");
+			System.out.println("글 번호 : " + boardDTO.getBoard_num());
+			System.out.println("글 수정 : " + message);
+			ra.addFlashAttribute("message", message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/board/boardView?board_num="+boardDTO.getBoard_num()+"&board_kind="+board_kind;
+	}
 	
 	//QNA뷰//
 	@RequestMapping(value="/qnaView")
@@ -106,7 +137,7 @@ public class BoardController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/board/boardView?num="+boardDTO.getBoard_num()+"&board_kind="+board_kind;
+		return "redirect:/board/boardView?board_num="+boardDTO.getBoard_num()+"&board_kind="+board_kind;
 	}
 	//삭제//
 	@RequestMapping(value="/boardDelete")

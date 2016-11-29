@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CommentMapper">	
+
+
+	<!-- BOARD comment:S -->
+	
+	<!-- COMM LIST :S -->
+	<select id="commentList" resultType="com.basic.board.CommentDTO" parameterType="com.basic.board.BoardDTO">
+		<![CDATA[
+				select * from
+				(select rownum R, F.* from
+				(select * from comment where comm_refNum = #{board_num} order by comm_num desc) F) 
+		]]>
+	</select>
+	<!-- COMM LIST :E -->
+
+
+	<!-- COMMWRITE :S -->
+	<insert id="commentWrite" parameterType="com.basic.board.CommentDTO"> 
+		<![CDATA[
+			insert into comment
+		values(comment_seq.nextVal,#{comm_refNum},#{comm_writer},#{comm_contents},sysdate)
+		]]>
+	</insert>
+	<!-- COMMWRITE :E -->
+	
+	<!-- COMM UPDATE :S -->
+	<update id="commentUpdate" parameterType="com.basic.board.CommentDTO">
+		<![CDATA[
+			update comment set comm_contents=#{comm_contents} where comm_num=#{comm_num}
+		]]>
+	</update>
+	<!-- COMM UPDATE :E -->
+	
+	<!-- COMM DELETE :S -->
+	<delete id="commentDelete" parameterType="int">
+		<![CDATA[
+			delete comment where comm_num=#{comm_num}
+		]]>
+		
+	</delete>
+	<!-- COMM DELETE :E -->
+	
+	<!-- COMM GET COUNT :S -->
+	<select id="commentCount" resultType="int" parameterType="com.basic.board.BoardDTO">
+			<![CDATA[
+					select count(*) from comment where comm_refNum=#{board_num}
+			]]>
+	</select>
+	<!-- COMM GET COUNT :E -->
+	
+	
+	
+</mapper>	

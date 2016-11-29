@@ -22,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.basic.basket.BasketDTO;
 import com.basic.basket.BasketInfoDTO;
 import com.basic.member.MemberDTO;
+import com.basic.test.MemoDAO;
+import com.basic.test.MemoDTO;
 import com.basic.test.ProductDTO;
 import com.basic.test.ProductEachDTO;
 import com.basic.test.ProductInfoDTO;
@@ -43,6 +45,9 @@ public class TestController {
 	@Autowired
 	private PlatformTransactionManager transactionManager;
 
+	@Autowired
+	private MemoDAO memoDAO;
+	
 	DefaultTransactionDefinition def = null;
 	TransactionStatus status = null;
 	
@@ -236,4 +241,48 @@ public class TestController {
 		System.out.println("success");
 	}
 
+	
+	
+	
+	//memo
+	
+	@RequestMapping(value="/testmemo")
+	public void testmemo(){
+		
+	}
+	
+	//write//
+	@RequestMapping(value="/memoWrite")
+	public String memoWrite(MemoDTO memoDTO,Model model){
+		System.out.println("memoNum : " + memoDTO.getNum());
+		System.out.println("memoWriter : " + memoDTO.getWriter());
+		System.out.println("memoContents : " + memoDTO.getContents());
+		int result = memoDAO.memoWrite(memoDTO);
+		String message = "";
+		if(result> 0){
+			message="등록 성공";
+		}else{
+			message="등록 실패";
+		}
+		model.addAttribute("message", message);
+		return "/ttt/memoResult";
+	}
+	
+	@RequestMapping(value="/memoResult")
+	public void memoResult(){
+		
+	}
+	
+	//list//
+	@RequestMapping(value="/memoList")
+	public String memoList(Model model){
+		List<MemoDTO> ar;
+		ar = memoDAO.memoList();
+		
+		model.addAttribute("list", ar);
+		return "/ttt/testmemo";
+	}	
+	
+	
+	
 }
