@@ -35,6 +35,7 @@ public class BoardDAO {
 		}else if(board_kind==3){
 			result = sqlSession.insert(namespace3+"boardWrite",boardDTO);
 		}
+		
 		return result;
 	};
 
@@ -56,6 +57,41 @@ public class BoardDAO {
 		return result;
 	}
 	
+	//QNA 글수정 FILE도 같이 수정//
+	public int qnaMod(BoardDTO boardDTO,int board_kind,ArrayList<String> fileNames, int [] bFile_num) throws Exception{
+		int result = 0;
+		
+		Map<String, Object> data = new HashMap<String, Object>();//fileDB에 등록해줄 맵을 만들어준다//
+		int refNum = boardDTO.getBoard_num();
+		System.out.println("refNum : " + refNum);
+		if(board_kind==3){
+			result = sqlSession.update(namespace3+"boardUpdate",boardDTO);//board DB 수정//
+			for(int i=0;i<fileNames.size();i++){
+				data.put("bFile_refNum", refNum);
+				data.put("bFile_fileName", fileNames.get(i));
+				System.out.println("파일 이름 : " + fileNames.get(i));
+				sqlSession.insert(namespace3+"fileWrite", data);
+			}
+/*			for(int i=0;i<fileNames.size();i++){
+				data.put("bFile_refNum", refNum);
+				data.put("bFile_fileName", fileNames.get(i));
+				data.put("bFile_num", bFile_num[i]);//이미지파일의 번호
+				System.out.println("파일 이름 : " + fileNames.get(i));
+				System.out.println("파일 번호 : " + bFile_num[i]);
+				System.out.println("게시글 번호 : " + refNum);
+				if(fileNames.size()<bFile_num.length || fileNames.size()==bFile_num.length){					
+					//바꾸려는 이미지의 갯수가 현재 이미지 갯수와 같을 때 & 적을 때//
+					sqlSession.update(namespace3+"fileUpdate", data);//board_files DB 수정//
+				}else if(fileNames.size()<bFile_num.length){
+					//바꾸려는 이미지의 갯수가 현재 이미지 갯수보다 많을 때 ex)img는 1개 업데이트는 2개 할 때//
+					sqlSession.insert(namespace3+"fileWrite", data);
+				}
+				
+			}*/
+		}
+		return result;
+	};	
+	
 	//글수정//
 	public int boardMod(BoardDTO boardDTO,int board_kind) throws Exception{
 		int result = 0;
@@ -74,6 +110,10 @@ public class BoardDAO {
 			result = sqlSession.delete(namespace1+"boardDelete",board_num);
 		}else if(board_kind==2){
 			result = sqlSession.delete(namespace2+"boardDelete",board_num);			
+		}else if(board_kind==3){
+			result = sqlSession.delete(namespace3+"boardDelete",board_num);
+		}else if(board_kind==4){
+			result = sqlSession.delete(namespace3+"boardDelete",board_num);
 		}
 		return result;
 	};
@@ -119,6 +159,9 @@ public class BoardDAO {
 		}else if(board_kind==2){
 			result = sqlSession.selectOne(namespace2+"boardCount");
 			System.out.println(namespace2 +"count");
+		}else if(board_kind==3){
+			result = sqlSession.selectOne(namespace3+"boardCount");
+			System.out.println(namespace3 +"count");
 		}
 		
 		return result;
