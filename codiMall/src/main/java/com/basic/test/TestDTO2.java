@@ -6,7 +6,7 @@ public class TestDTO2 {
 	
 	private int product_num;
 	private String product_name;
-	private List<ProductEachDTO2> productEachDTO2;
+	private List<ProductEachDTO2> listProEach;
 	public int getProduct_num() {
 		return product_num;
 	}
@@ -19,12 +19,13 @@ public class TestDTO2 {
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
 	}
-	public List<ProductEachDTO2> getProductEachDTO2() {
-		return productEachDTO2;
+	public List<ProductEachDTO2> getListProEach() {
+		return listProEach;
 	}
-	public void setProductEachDTO2(List<ProductEachDTO2> productEachDTO2) {
-		this.productEachDTO2 = productEachDTO2;
+	public void setListProEach(List<ProductEachDTO2> listProEach) {
+		this.listProEach = listProEach;
 	}
+	
 	
 	
 

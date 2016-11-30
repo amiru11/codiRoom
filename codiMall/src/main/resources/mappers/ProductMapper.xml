@@ -5,19 +5,19 @@
 
 	<!-- default DTO S -->
 
-	<resultMap type="com.basic.test.ProductSelectDTO" id="ProductSelect">
+	<resultMap type="com.basic.product.ProductSelectDTO" id="ProductSelect">
 		<id column="productSelect_num" property="productSelect_num"
 			javaType="int" />
 		<result column="productSelect_name" property="productSelect_name"
 			javaType="java.lang.String" />
 	</resultMap>
 
-	<resultMap type="com.basic.test.KindDTO" id="Kind">
+	<resultMap type="com.basic.product.KindDTO" id="Kind">
 		<id column="kind_num" property="kind_num" javaType="int" />
 		<result column="kind_name" property="kind_name" javaType="java.lang.String" />
 	</resultMap>
 
-	<resultMap type="com.basic.test.ProductInfoDTO" id="ProductInfo">
+	<resultMap type="com.basic.product.ProductInfoDTO" id="ProductInfo">
 		<id column="product_num" property="product_num" javaType="int" />
 		<result column="productInfo_price" property="productInfo_price"
 			javaType="int" />
@@ -31,7 +31,7 @@
 			javaType="java.lang.String" />
 	</resultMap>
 
-	<resultMap type="com.basic.test.ProductEachDTO" id="ProductEach">
+	<resultMap type="com.basic.product.ProductEachDTO" id="ProductEach">
 		<id column="product_num" property="product_num" javaType="int" />
 		<result column="productEach_size" property="productEach_size"
 			javaType="java.lang.String" />
@@ -41,55 +41,60 @@
 			javaType="int" />
 	</resultMap>
 
-	<resultMap type="com.basic.test.ProductKindDTO" id="ProductKind">
+	<resultMap type="com.basic.product.ProductKindDTO" id="ProductKind">
 		<result column="product_num" property="product_num" javaType="int" />
 		<result column="kind_num" property="kind_num" javaType="int" />
 	</resultMap>
 
-	<resultMap type="com.basic.test.ProductDTO" id="Product">
+	<resultMap type="com.basic.product.ProductPicDTO" id="ProductPic">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="productPic_pic" property="ProductPic_pic"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductDTO" id="Product">
 		<id column="product_num" property="product_num" javaType="int" />
 		<result column="product_name" property="product_name" javaType="java.lang.String" />
 	</resultMap>
+
+	<!-- PRODUCTVIEW DTO S -->
+	<resultMap type="com.basic.product.ProductViewDTO" id="ProudctView">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="product_name" property="product_name" javaType="java.lang.String" />
+		<result column="productInfo_price" property="productInfo_price"
+			javaType="int" />
+		<result column="productInfo_saleRate" property="productInfo_saleRate"
+			javaType="double" />
+		<result column="productInfo_searchWord" property="productInfo_searchWord"
+			javaType="java.lang.String" />
+		<result column="kind_num" property="kind_num" javaType="int" />
+
+		<collection property="productEachDTOs" ofType="com.basic.product.ProductEachDTO">
+			<result column="productEach_size" property="productEach_size"
+				javaType="java.lang.String" />
+			<result column="productEach_color" property="productEach_color"
+				javaType="java.lang.String" />
+			<result column="productEach_each" property="productEach_each"
+				javaType="int" />
+		</collection>
+
+	</resultMap>
+
+	<!-- PRODUCTVIEW DTO E -->
 
 	<!-- default DTO E -->
 
 	<!-- join DTO S -->
 
-	<!-- Product List Count S -->
-	<select id="selProductCount" parameterType="java.util.HashMap">
-		select count(product_num) from product
-		<where>
-			<if test="kind_num != null">
-				<foreach collection="kind_num" item="item">
-					#{item}
-				</foreach>
 
-
-
-			</if>
-			<if test="color != null">
-
-
-
-			</if>
-			<if test="searchWord != null">
-
-
-
-			</if>
-
-		</where>
-
-	</select>
-
-
-	<!-- Product List Count E -->
 
 
 
 	<!-- Product List DTO S -->
 
 	<!-- Product List DTO E -->
+
+	<!-- Product List S -->
 	<select id="SelProductList" resultType="com.basic.product.ProductListDTO"
 		parameterType="java.util.HashMap">
 		select * from
@@ -108,28 +113,28 @@
 				UPPER(#{item})
 			</foreach>
 		</if>
-		<if test="productParamDTO.getKind_num() != null ">
+		<if test="productParamDTO.kind_num != null ">
 			and UPPER(pk.kind_num) in
-			<foreach item="item" index="index" collection="productParamDTO.Kind_num"
+			<foreach item="item" index="index" collection="productParamDTO.kind_num"
 				open="(" separator="," close=")">
 				UPPER(#{item})
 			</foreach>
 		</if>
-		<if test="productParamDTO.getSize() != null ">
+		<if test="productParamDTO.size != null ">
 			and UPPER(pe.PRODUCTEACH_size) in
-			<foreach item="item" index="index" collection="productParamDTO.Size"
+			<foreach item="item" index="index" collection="productParamDTO.size"
 				open="(" separator="," close=")">
 				UPPER(#{item})
 			</foreach>
 		</if>
 		<choose>
-			<when test="productParamDTO.getSel() == 2">
+			<when test="productParamDTO.sel == 2">
 				order by p.PRODUCT_NUM asc
 			</when>
-			<when test="productParamDTO.getSel() == 3">
+			<when test="productParamDTO.sel == 3">
 				order by pi.productInfo_price asc
 			</when>
-			<when test="productParamDTO.getSel() == 4">
+			<when test="productParamDTO.sel == 4">
 				order by pi.productInfo_price desc
 			</when>
 			<otherwise>
@@ -141,6 +146,62 @@
 		#{pageMaker.lastLowNum}
 
 	</select>
+	<!-- Product List E -->
+
+	<!-- Product List Count S -->
+	<select id="SelProductCount" parameterType="com.basic.product.ProductParamDTO"
+		resultType="int">
+		select count(t.product_num) from (select DISTINCT
+		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE from PRODUCT p ,
+		PRODUCTINFO pi , PRODUCTEACH pe , PRODUCTKIND pk
+		where pe.PRODUCT_NUM =
+		p.PRODUCT_NUM
+		and pi.PRODUCT_NUM = p.PRODUCT_NUM
+		and pk.PRODUCT_NUM =
+		p.PRODUCT_NUM
+		<if test="color != null ">
+			and UPPER(pe.PRODUCTEACH_COLOR) in
+			<foreach item="item" index="index" collection="color" open="("
+				separator="," close=")">
+				UPPER(#{item})
+			</foreach>
+		</if>
+		<if test="kind_num != null ">
+			and UPPER(pk.kind_num) in
+			<foreach item="item" index="index" collection="kind_num"
+				open="(" separator="," close=")">
+				UPPER(#{item})
+			</foreach>
+		</if>
+		<if test="size != null ">
+			and UPPER(pe.PRODUCTEACH_size) in
+			<foreach item="item" index="index" collection="size" open="("
+				separator="," close=")">
+				UPPER(#{item})
+			</foreach>
+		</if>
+		) t
+
+	</select>
+	<!-- Product List Count E -->
+
+	<!-- Product View S -->
+	<select id="SelProductView" parameterType="int" resultMap="ProudctView">
+		SELECT
+		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,
+		pi.productInfo_searchWord,
+		pk.KIND_NUM,pe.PRODUCTEACH_COLOR,pe.PRODUCTEACH_EACH,pe.PRODUCTEACH_SIZE
+		from PRODUCT p , PRODUCTINFO pi , PRODUCTKIND pk ,PRODUCTEACH pe
+		where
+		pe.PRODUCT_NUM = p.PRODUCT_NUM
+		and pi.PRODUCT_NUM = p.PRODUCT_NUM
+		and
+		pk.PRODUCT_NUM = p.PRODUCT_NUM
+		and p.PRODUCT_NUM = #{product_num}
+	</select>
+	<!-- Product View E -->
+
+
 
 
 </mapper>

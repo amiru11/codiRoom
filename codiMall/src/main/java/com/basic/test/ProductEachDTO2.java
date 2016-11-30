@@ -1,16 +1,11 @@
 package com.basic.test;
 
 public class ProductEachDTO2 {
-	private String product_num;
-	public String getProduct_num() {
-		return product_num;
-	}
-	public void setProduct_num(String product_num) {
-		this.product_num = product_num;
-	}
+	private int product_num;
 	private String productEach_size;
 	private String productEach_color;
 	private int productEach_each;
+	
 	public String getProductEach_size() {
 		return productEach_size;
 	}
@@ -30,5 +25,11 @@ public class ProductEachDTO2 {
 		this.productEach_each = productEach_each;
 	}
 	
+	public int getProduct_num() {
+		return product_num;
+	}
+	public void setProduct_num(int product_num) {
+		this.product_num = product_num;
+	}
 	
 }

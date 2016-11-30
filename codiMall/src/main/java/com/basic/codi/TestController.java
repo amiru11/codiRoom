@@ -56,11 +56,12 @@ public class TestController {
 		for (int i = 0; i < ar.size(); i++) {
 			System.out.println("ar num --"+i+"--i-------------");
 			System.out.println("pronum--"+i+"--"+ar.get(i).getProduct_num());
-			System.out.println("pronum--"+i+"--"+ar.get(i).getProduct_name());
-			for (int j = 0; j < ar.get(i).getProductEachDTO2().size(); j++) {
-				System.out.println("ar num --"+i+"--"+ar.get(i).getProductEachDTO2().get(j).getProductEach_color());
-				System.out.println("ar num --"+i+"--"+ar.get(i).getProductEachDTO2().get(j).getProductEach_size());
-				System.out.println("ar num --"+i+"--"+ar.get(i).getProductEachDTO2().get(j).getProductEach_each());
+			System.out.println("pro-name--"+i+"--"+ar.get(i).getProduct_name());
+			for (int j = 0; j < ar.get(i).getListProEach().size(); j++) {
+				System.out.println("ar.getprdto2--size - "+ar.get(i).getListProEach().size());
+				System.out.println("ar num --"+i+"--"+ar.get(i).getListProEach().get(j).getProductEach_color());
+				System.out.println("ar num --"+i+"--"+ar.get(i).getListProEach().get(j).getProductEach_size());
+				System.out.println("ar num --"+i+"--"+ar.get(i).getListProEach().get(j).getProductEach_each());
 				
 			}
 		}

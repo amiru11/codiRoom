@@ -37,5 +37,10 @@ public class ProductController {
 		productParamDTO.setSel(sel);
 		model.addAttribute("list", productService.productList(curPage, perPage, productParamDTO));
 	}
+	@RequestMapping(value="/productView")
+	public void productView(@RequestParam(required = false)int product_num,Model model){
+		model.addAttribute("view",productService.productView(product_num));
+	}
+	
 
 }

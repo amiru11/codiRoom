@@ -24,5 +24,8 @@ public class ProductService {
 		
 		return productDAO.productList(pageMaker,productParamDTO);
 	}
+	public List<ProductViewDTO> productView(int product_num){
+		return productDAO.productView(product_num);
+	}
 
 }

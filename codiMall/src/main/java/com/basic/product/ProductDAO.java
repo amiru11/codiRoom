@@ -27,7 +27,7 @@ public class ProductDAO {
 	TransactionStatus status = null;
 	
 	public int productCount(ProductParamDTO productParamDTO){
-		return 0;
+		return sqlSession.selectOne(namespace+"SelProductCount",productParamDTO);
 	}
 
 	public List<ProductListDTO> productList(PageMaker pageMaker,ProductParamDTO productParamDTO) {
@@ -36,6 +36,16 @@ public class ProductDAO {
 		hm.put("pageMaker", pageMaker);
 		hm.put("productParamDTO",productParamDTO);
 		return sqlSession.selectList(namespace+"SelProductList",hm);
+	}
+	
+	public List<ProductViewDTO> productView(int product_num){
+		List<ProductViewDTO> ar =  new ArrayList<ProductViewDTO>();
+		ar = sqlSession.selectList(namespace+"SelProductView",product_num);
+		System.out.println("arsize--"+ar.size());
+		System.out.println("ar2size--"+ar.get(0).getProductEachDTOs().size());
+
+		
+		return sqlSession.selectList(namespace+"SelProductView",product_num);
 	}
 	
 	

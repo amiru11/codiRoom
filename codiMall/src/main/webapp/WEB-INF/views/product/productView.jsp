@@ -46,33 +46,34 @@ table, table tr, tr td, th {
 	<table>
 		<tr>
 			<td>PRODUCT_NUM</td>
-			<td>${view.productDTO.product_num}</td>
+			<td>${view.get(0).product_num}</td>
 			<td>PRODUCT_NAME</td>
-			<td>${view.productDTO.product_name}</td>
+			<td>${view.get(0).product_name}</td>
 			<td>PRODUCT_PRICE</td>
-			<td>${view.productInfoDTO.productInfo_price}</td>
+			<td>${view.get(0).productInfo_price}</td>
 			<td>PRODUCT_SALERATE</td>
-			<td>${view.productInfoDTO.productInfo_saleRate}</td>
+			<td>${view.get(0).productInfo_saleRate}</td>
 		</tr>
 		<tr>
 			<td>PRODUCT_SEARCHWORD</td>
-			<td>${view.productInfoDTO.productInfo_searchWord}</td>
+			<td>${view.get(0).productInfo_searchWord}</td>
 			<td>PRODUCT_KINDNUM</td>
-			<td>${view.productKindDTO.kind_num}</td>
+			<td>${view.get(0).kind_num}</td>
 		</tr>
 		<tr>
 			<td>PRODUCT_COLOR</td>
 			<td><select id="test_sel_c" name="productEach_color">
-					<c:forEach var="x" items="${view.productEachDTO.productEach_color}">
-						<option value="${x}">${x}</option>
+					<c:forEach var="x" items="${view.get(0).productEachDTOs}">
+						<option value="${x.productEach_color}">${x.productEach_color}</option>
 					</c:forEach>
 			</select></td>
 		</tr>
 		<tr>
 			<td>PRODUCT_SIZE</td>
 			<td><select id="test_sel_s" name="productEach_size">
-					<c:forEach var="x" items="${view.productEachDTO.productEach_size}">
-						<option value="${x}">${x}</option>
+					<c:forEach var="y" items="${view.get(0).productEachDTOs}">
+						<option value="${y.productEach_size}">${y.productEach_size}
+							-- ${y.productEach_each}ea</option>
 					</c:forEach>
 			</select></td>
 			<td><input id="test_inp_proe" type="number" value="0"
@@ -84,7 +85,7 @@ table, table tr, tr td, th {
 				</form>
 			</td>
 			<td><form id="bas_frm" action="basket" method="post">
-					<input type="text" value="${view.productDTO.product_num}"
+					<input type="text" value="${view.get(0).product_num}"
 						name="product_num"> <input id="test_inh_pros"
 						type="text" value="" name="basketInfo_size"> <input
 						id="test_inh_proc" type="text" value="" name="basketInfo_color">
