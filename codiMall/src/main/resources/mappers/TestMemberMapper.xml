@@ -3,7 +3,7 @@
 
 <mapper namespace="TestMemberMapper">
 
-<select id="MemberLogin" parameterType="com.basic.test.TestMemberDTO" resultType="com.basic.test.TestMemberDTO">
+<select id="MemberLogin" parameterType="com.basic.member.MemberDTO" resultType="com.basic.test.TestMemberDTO">
 select * from member where member_id = #{member_id} and member_pw = #{member_pw} 
 </select>
 

@@ -2,6 +2,8 @@ package com.basic.product;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -26,6 +28,14 @@ public class ProductService {
 	}
 	public List<ProductViewDTO> productView(int product_num){
 		return productDAO.productView(product_num);
+	}
+	
+	public int productAdd(ProductAddDTO productAddDTO){
+		return productDAO.productAdd(productAddDTO);
+	}
+	
+	public int productEachAdd(ProductEachAddDTO[] productEachAddDTOs){
+		return productDAO.productEachAdd(productEachAddDTOs);
 	}
 
 }

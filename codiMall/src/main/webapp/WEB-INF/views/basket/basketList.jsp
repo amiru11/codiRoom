@@ -13,7 +13,6 @@ table, table tr, tr td, th {
 <script type="text/javascript">
 	$(function() {
 		$(".bas_tr_jq").on("click",".bas_sel_color",function(){
-			alert($(this).val());
 		})
 
 		/* $(".bas_tr_jq").mouseenter(function(){

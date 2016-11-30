@@ -200,6 +200,37 @@
 		and p.PRODUCT_NUM = #{product_num}
 	</select>
 	<!-- Product View E -->
+	
+	<!--   Product Add S  -->
+	
+	<insert id="ProductAdd" parameterType="com.basic.product.ProductAddDTO">
+	insert into product
+		values(product_seq.nextval,#{product_name})
+	</insert>
+	<insert id="ProductInfoAdd" parameterType="com.basic.product.ProductAddDTO">
+		insert into productInfo
+		values(product_seq.currval,#{productInfo_price},sysdate,sysdate,#{productInfo_saleRate},#{productInfo_searchWord})
+	</insert>
+	<insert id="ProductKindAdd" parameterType="com.basic.product.ProductAddDTO">
+		insert into productKind
+		values(product_seq.currval,#{kind_num})
+	</insert>
+	
+	<!--   Product Add E  -->
+	
+	<!--   Product Size Add S  -->
+	
+	<insert id="ProductSizeAdd" parameterType="com.basic.product.ProductEachAddDTO">
+	insert into productSize
+		values(#{product_num},#{productSize_size})
+	</insert>
+	<insert id="ProductEachAdd" parameterType="com.basic.product.ProductEachAddDTO">
+		insert into productEach
+		values(#{product_num},#{productSize_size},#{productEach_color},#{productEach_each})
+	</insert>
+	
+	<!--   Product Size Add E  -->
+	
 
 
 

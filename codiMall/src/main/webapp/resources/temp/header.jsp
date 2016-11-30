@@ -41,13 +41,10 @@
 
 			<ul class="nav navbar-nav" style="margin-top: 60px;">
 				<!--            test li s -->
-				<li><a href="${pageContext.request.contextPath}/ttt/t1">T1</a></li>
-				<li><a href="${pageContext.request.contextPath}/ttt/t2">T2</a></li>
+				<li><a href="${pageContext.request.contextPath}/test/move">MOVE</a></li>
 				<li><a
-					href="${pageContext.request.contextPath}/ttt/product_add">ADD</a></li>
+					href="${pageContext.request.contextPath}/product/productAdd">ADD</a></li>
 
-				<li><a
-					href="${pageContext.request.contextPath}/ttt/view?product_num=1">VEIW</a></li>
 				<li><a href="${pageContext.request.contextPath}/member/login">LOGIN</a></li>
 				<li><a href="${pageContext.request.contextPath}/member/logout">LOGOUT</a></li>
 				<li><a href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
