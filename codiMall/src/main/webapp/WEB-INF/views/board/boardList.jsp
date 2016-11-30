@@ -59,10 +59,7 @@
 					<li><img class="arrow" src="${pageContext.request.contextPath}/resources/images/icon_arrow_w.png" alt="작은 맵 화살표"></li>
 					<li><a href="${pageContext.request.contextPath}/board/findList?board_kind=${board_kind}"><span>${boardName}</span></a></li>
 				</ul>
-				<%-- <a href="${pageContext.request.contextPath}/board/findList?board_kind=1" class="sub-title noticeTab">NOTICE</a> --%>
 			</div>
-			<%-- <a href="${pageContext.request.contextPath}/board/findList?board_kind=2" class="sub-title faqTab" style="margin-left: 100px;">FAQ</a>
-			<a href="#" class="sub-title qnaTab" style="margin-left: 100px;">Q&A</a> --%>
 		</div>
 	<!-- SUBHEADER:E -->
 	

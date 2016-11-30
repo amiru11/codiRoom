@@ -28,10 +28,11 @@
 				alert('5개까지 가능');
 			}
 		});
+
 		/* 파일타입 삭제하기 */
-		$("#delFile").on("click","input",function(){
-			$("#fileSet").closest("input").remove();
-		});			
+		$("#delFile").on("click",function(){
+			$("#firstFile").next().remove();
+		});
 		
 		/* 파일타입 접고열기 */
 		$("#fileToggle").click(function(){
@@ -261,7 +262,7 @@
 							<div id="fileSet" style="display: none;">
 								<a id="addFile" class="btn btn-default btn-sm" role="button">ADDFILE</a>
 								<a id="delFile" class="btn btn-default btn-sm" role="button">DELFILE</a>
-								<input type="file" name="files" id="firstFile" class="form-control">
+								<input type="hidden" id="firstFile" class="form-control">
 							</div>
 						</td>
 					</tr>	

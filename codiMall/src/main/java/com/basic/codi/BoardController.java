@@ -15,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.basic.board.BoardDTO;
 import com.basic.board.BoardFileDTO;
 import com.basic.board.BoardService;
+import com.basic.board.CommentDTO;
+import com.basic.board.CommentService;
 
 
 @Controller
@@ -23,6 +25,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private CommentService commentService;
 	
 	//리스트//
 	@RequestMapping(value="/boardList")
@@ -37,11 +42,11 @@ public class BoardController {
 		return "board/boardList";
 	}
 	
-	//코멘트 글쓰기//
+	//댓글쓰기//
 	@RequestMapping(value="/commentWrite")
-	public String commentWrite(BoardDTO boardDTO, int board_kind, Model model){
+	public String commentWrite(CommentDTO commentDTO, Model model){
 		try {
-			String message = boardService.boardWrite(boardDTO, board_kind);
+			String message = commentService.commentWrite(commentDTO);
 			
 			model.addAttribute("message", message);
 		} catch (Exception e) {
@@ -50,6 +55,28 @@ public class BoardController {
 		return "board/commentResult";
 	}
 	
+	//댓글수정//
+	@RequestMapping(value="/commentUpdate")
+	public String commentUpdate(CommentDTO commentDTO, Model model){
+		try {
+			String message = commentService.commentUpdate(commentDTO);
+			model.addAttribute("message", message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "board/commentResult";
+	}
+	//댓글삭제//
+	@RequestMapping(value="/commentDelete")
+	public String commentDelete(int comm_num, Model model){
+		try {
+			String message = commentService.commentDelete(comm_num);
+			model.addAttribute("message", message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "board/commentResult";
+	}
 	//글쓰기폼//
 	@RequestMapping(value = "/boardWrite", method=RequestMethod.GET)
 	public String boardWriteForm(int board_kind,Model model){

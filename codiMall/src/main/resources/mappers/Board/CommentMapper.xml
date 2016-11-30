@@ -11,7 +11,7 @@
 		<![CDATA[
 				select * from
 				(select rownum R, F.* from
-				(select * from comment where comm_refNum = #{board_num} order by comm_num desc) F) 
+				(select * from BOARD_COMMENT where comm_refNum = #{board_num} order by comm_num desc) F) 
 		]]>
 	</select>
 	<!-- COMM LIST :E -->
@@ -20,7 +20,7 @@
 	<!-- COMMWRITE :S -->
 	<insert id="commentWrite" parameterType="com.basic.board.CommentDTO"> 
 		<![CDATA[
-			insert into comment
+			insert into BOARD_COMMENT
 		values(comment_seq.nextVal,#{comm_refNum},#{comm_writer},#{comm_contents},sysdate)
 		]]>
 	</insert>
@@ -29,7 +29,7 @@
 	<!-- COMM UPDATE :S -->
 	<update id="commentUpdate" parameterType="com.basic.board.CommentDTO">
 		<![CDATA[
-			update comment set comm_contents=#{comm_contents} where comm_num=#{comm_num}
+			update BOARD_COMMENT set comm_contents=#{comm_contents}, comm_date = sysdate where comm_num=#{comm_num}
 		]]>
 	</update>
 	<!-- COMM UPDATE :E -->
@@ -37,7 +37,7 @@
 	<!-- COMM DELETE :S -->
 	<delete id="commentDelete" parameterType="int">
 		<![CDATA[
-			delete comment where comm_num=#{comm_num}
+			delete BOARD_COMMENT where comm_num=#{comm_num}
 		]]>
 		
 	</delete>
@@ -46,7 +46,7 @@
 	<!-- COMM GET COUNT :S -->
 	<select id="commentCount" resultType="int" parameterType="com.basic.board.BoardDTO">
 			<![CDATA[
-					select count(*) from comment where comm_refNum=#{board_num}
+					select count(*) from BOARD_COMMENT where comm_refNum=#{board_num}
 			]]>
 	</select>
 	<!-- COMM GET COUNT :E -->
