@@ -67,6 +67,16 @@
 	</update>	
 	<!-- UPDATE:E -->
 	
+	<!-- FILE UPDATE:S -->
+	<update id="fileUpdate" parameterType="java.util.HashMap">
+		<![CDATA[
+			update board_files set bFile_fileName = #{bFile_fileName} where bFile_refNum=#{bFile_refNum} and bFile_num=#{bFile_num}
+		]]>
+	</update>
+	<!-- FILE UPDATE:E -->
+	
+	
+	
 	<!-- DELETE:S -->
 	<delete id="boardDelete" parameterType="int" statementType="PREPARED">
 		<![CDATA[
@@ -119,4 +129,8 @@
 		</if>
 	</select> 
 	<!-- BOARD SEARCH:E -->	
+	
+
+	
+	
 </mapper>
