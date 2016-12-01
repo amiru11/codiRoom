@@ -14,87 +14,87 @@ table, table tr, tr td, th {
 </style>
 <script type="text/javascript">
 	$(function() {
-
-		$("#test_sel_c").click(function() {
-			$("#test_inh_proc").val($(this).val());
-		});
-		$("#test_sel_c").blur(function() {
-			$("#test_inh_proc").val($(this).val());
-		});
-		$("#test_sel_s").click(function() {
-			$("#test_inh_pros").val($(this).val());
-		});
-		$("#test_sel_s").blur(function() {
-			$("#test_inh_pros").val($(this).val());
-		});
-		$("#test_btn_basket").click(function() {
-			$("#test_inh_proe").val($("#test_inp_proe").val());
-
-			if ($("#test_inp_proe").val() > 0) {
-				$("#test_inh_proe").val($("#test_inp_proe").val());
-				$("#bas_frm").submit();
-			}else{
-				alert("수량입력");
-			}
+		$("#btn_aa").click(function(){
+			$.ajax({
+			    url : "../json/productSize",
+			    type : "post",
+			    data : {
+			    	product_num:${view.product_num}
+			    },
+			    success: function(data) {
+			    	var x="";
+			    	$.each(data, function( index, value ) {
+			    		   x=x+"<option value="+value+">"+value+"</option>";
+			    		});
+			    	$("#sel_size_a").html(x);
+			    },
+			    error:function(request,status,error){
+			        alert("code:"+request.status+"\n"+"error:"+error);
+			    }
+			 
+			});
 		})
+		
+		$("#btn_bb").click(function(){
+			$.ajax({
+			    url : "../json/productEach",
+			    type : "post",
+			    dataType : 'json',
+			    data : {
+			    	product_num:${view.product_num},
+			    	productSize_size:$("#sel_size_a").val()
+			    },
+			    success:function(data) {
+			    	var x="";
+			    	$.each(data.eachList, function( index, value ) {
+			    		x=x+"<option value="+value.productEach_color+">"+value.productEach_color+'__'+value.productEach_each+"</option>";
+			    		});
+			    	
+			    	$("#sel_size_b").html(x);
+			    },
+			    error:function(request,status,error){
+			        alert("code:"+request.status+"\n"+"error:"+error);
+			    }
+			 
+			});
+		}) 
+		
+
 	});
 </script>
 </head>
 <body>
 	<h1>TEST TABLE</h1>
-	<h1><a href="${pageContext.request.contextPath}/">HOME</a></h1>
+	<h1>
+		<a href="${pageContext.request.contextPath}/">HOME</a>
+	</h1>
 	<table>
 		<tr>
 			<td>PRODUCT_NUM</td>
-			<td>${view.get(0).product_num}</td>
+			<td>${view.product_num}</td>
 			<td>PRODUCT_NAME</td>
-			<td>${view.get(0).product_name}</td>
+			<td>${view.product_name}</td>
 			<td>PRODUCT_PRICE</td>
-			<td>${view.get(0).productInfo_price}</td>
+			<td>${view.productInfo_price}</td>
 			<td>PRODUCT_SALERATE</td>
-			<td>${view.get(0).productInfo_saleRate}</td>
+			<td>${view.productInfo_saleRate}</td>
 		</tr>
 		<tr>
 			<td>PRODUCT_SEARCHWORD</td>
-			<td>${view.get(0).productInfo_searchWord}</td>
+			<td>${view.productInfo_searchWord}</td>
 			<td>PRODUCT_KINDNUM</td>
-			<td>${view.get(0).kind_num}</td>
+			<td>${view.kind_num}</td>
 		</tr>
 		<tr>
-			<td>PRODUCT_COLOR</td>
-			<td><select id="test_sel_c" name="productEach_color">
-					<c:forEach var="x" items="${view.get(0).productEachDTOs}">
-						<option value="${x.productEach_color}">${x.productEach_color}</option>
-					</c:forEach>
-			</select></td>
+			<td><select id="sel_size_a"></select></td>
+			<td><select id="sel_size_b"></select></td>
 		</tr>
-		<tr>
-			<td>PRODUCT_SIZE</td>
-			<td><select id="test_sel_s" name="productEach_size">
-					<c:forEach var="y" items="${view.get(0).productEachDTOs}">
-						<option value="${y.productEach_size}">${y.productEach_size}
-							-- ${y.productEach_each}ea</option>
-					</c:forEach>
-			</select></td>
-			<td><input id="test_inp_proe" type="number" value="0"
-				name="productEach_each"></td>
-			<td>
-				<form action="buy" method="post">
 
-					<input type="button" value="BUY" id="test_btn_buy">
-				</form>
-			</td>
-			<td><form id="bas_frm" action="basket" method="post">
-					<input type="text" value="${view.get(0).product_num}"
-						name="product_num"> <input id="test_inh_pros"
-						type="text" value="" name="basketInfo_size"> <input
-						id="test_inh_proc" type="text" value="" name="basketInfo_color">
-					<input id="test_inh_proe" type="text" value=""
-						name="basketInfo_each">
-					<input type="button" value="BASKET" id="test_btn_basket">
-				</form></td>
-		</tr>
+
 	</table>
+
+	<button id="btn_aa">aaaaa</button>
+	<button id="btn_bb">bbbb</button>
 
 </body>
 </html>

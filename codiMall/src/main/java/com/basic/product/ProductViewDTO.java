@@ -1,7 +1,5 @@
 package com.basic.product;
 
-import java.util.List;
-
 public class ProductViewDTO {
 	private int product_num;
 	private String product_name;
@@ -9,9 +7,6 @@ public class ProductViewDTO {
 	private double productInfo_saleRate;
 	private String productInfo_searchWord;
 	private int kind_num;
-	
-	private List<ProductEachDTO> productEachDTOs;
-	
 	
 	public int getKind_num() {
 		return kind_num;
@@ -48,12 +43,6 @@ public class ProductViewDTO {
 	}
 	public void setProductInfo_searchWord(String productInfo_searchWord) {
 		this.productInfo_searchWord = productInfo_searchWord;
-	}
-	public List<ProductEachDTO> getProductEachDTOs() {
-		return productEachDTOs;
-	}
-	public void setProductEachDTOs(List<ProductEachDTO> productEachDTOs) {
-		this.productEachDTOs = productEachDTOs;
 	}
 
 

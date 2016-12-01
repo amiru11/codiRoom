@@ -26,7 +26,7 @@ public class ProductService {
 		
 		return productDAO.productList(pageMaker,productParamDTO);
 	}
-	public List<ProductViewDTO> productView(int product_num){
+	public ProductViewDTO productView(int product_num){
 		return productDAO.productView(product_num);
 	}
 	
@@ -34,8 +34,17 @@ public class ProductService {
 		return productDAO.productAdd(productAddDTO);
 	}
 	
-	public int productEachAdd(ProductEachAddDTO[] productEachAddDTOs){
+	public int productEachAdd(ProductEachAddDTOs productEachAddDTOs){
 		return productDAO.productEachAdd(productEachAddDTOs);
+	}
+	
+	//json
+	public List<String> productSizeList(int product_num){
+		return productDAO.productSizeList(product_num);
+	}
+	
+	public List<ProductEachListDTO> productEachList(int product_num,String productSize_size){
+		return productDAO.productEachList(product_num, productSize_size);
 	}
 
 }

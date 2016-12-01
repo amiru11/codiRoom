@@ -68,19 +68,11 @@
 		<result column="productInfo_searchWord" property="productInfo_searchWord"
 			javaType="java.lang.String" />
 		<result column="kind_num" property="kind_num" javaType="int" />
-
-		<collection property="productEachDTOs" ofType="com.basic.product.ProductEachDTO">
-			<result column="productEach_size" property="productEach_size"
-				javaType="java.lang.String" />
-			<result column="productEach_color" property="productEach_color"
-				javaType="java.lang.String" />
-			<result column="productEach_each" property="productEach_each"
-				javaType="int" />
-		</collection>
-
 	</resultMap>
-
 	<!-- PRODUCTVIEW DTO E -->
+
+
+
 
 	<!-- default DTO E -->
 
@@ -152,13 +144,15 @@
 	<select id="SelProductCount" parameterType="com.basic.product.ProductParamDTO"
 		resultType="int">
 		select count(t.product_num) from (select DISTINCT
-		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE from PRODUCT p ,
-		PRODUCTINFO pi , PRODUCTEACH pe , PRODUCTKIND pk
-		where pe.PRODUCT_NUM =
-		p.PRODUCT_NUM
-		and pi.PRODUCT_NUM = p.PRODUCT_NUM
-		and pk.PRODUCT_NUM =
-		p.PRODUCT_NUM
+		p.PRODUCT_NUM,p.PRODUCT_NAME,pk.KIND_NUM,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_SEARCHWORD
+		from PRODUCT p,PRODUCTINFO pi,PRODUCTKIND pk ,PRODUCTSIZE ps,
+		PRODUCTEACH pe
+		where pe.PRODUCT_NUM = p.PRODUCT_NUM and pi.PRODUCT_NUM
+		= p.PRODUCT_NUM and
+		pk.PRODUCT_NUM = p.PRODUCT_NUM
+		and ps.PRODUCT_NUM =
+		p.PRODUCT_NUM and ps.PRODUCTSIZE_SIZE =
+		pe.PRODUCTSIZE_SIZE
 		<if test="color != null ">
 			and UPPER(pe.PRODUCTEACH_COLOR) in
 			<foreach item="item" index="index" collection="color" open="("
@@ -174,7 +168,7 @@
 			</foreach>
 		</if>
 		<if test="size != null ">
-			and UPPER(pe.PRODUCTEACH_size) in
+			and UPPER(ps.PRODUCTsize_size) in
 			<foreach item="item" index="index" collection="size" open="("
 				separator="," close=")">
 				UPPER(#{item})
@@ -187,50 +181,89 @@
 
 	<!-- Product View S -->
 	<select id="SelProductView" parameterType="int" resultMap="ProudctView">
-		SELECT
-		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,
-		pi.productInfo_searchWord,
-		pk.KIND_NUM,pe.PRODUCTEACH_COLOR,pe.PRODUCTEACH_EACH,pe.PRODUCTEACH_SIZE
-		from PRODUCT p , PRODUCTINFO pi , PRODUCTKIND pk ,PRODUCTEACH pe
+		SELECT DISTINCT
+		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_SEARCHWORD
+		,pk.KIND_NUM FROM PRODUCT p , PRODUCTINFO pi ,PRODUCTKIND pk
 		where
-		pe.PRODUCT_NUM = p.PRODUCT_NUM
-		and pi.PRODUCT_NUM = p.PRODUCT_NUM
-		and
-		pk.PRODUCT_NUM = p.PRODUCT_NUM
-		and p.PRODUCT_NUM = #{product_num}
+		pi.PRODUCT_NUM = p.PRODUCT_NUM and pk.PRODUCT_NUM = p.PRODUCT_NUM and
+		pk.PRODUCT_NUM = pi.PRODUCT_NUM
+		and p.PRODUCT_NUM=#{product_num}
 	</select>
 	<!-- Product View E -->
-	
-	<!--   Product Add S  -->
-	
+
+	<!-- Product View SUB S -->
+
+	<select id="SelProductSizeList" parameterType="int" resultType="java.lang.String">
+		select distinct ps.productSize_size from
+		product p,productSize ps where
+		p.product_num = ps.product_num
+		and p.product_num = #{product_num}
+	</select>
+
+	<select id="SelProductEachList" parameterType="com.basic.product.ProductEachListDTO"
+		resultType="com.basic.product.ProductEachDTO">
+		select DISTINCT pe.PRODUCTEACH_COLOR,pe.PRODUCTEACH_EACH
+		from PRODUCT p,
+		PRODUCTSIZE ps, PRODUCTEACH pe
+		where pe.PRODUCT_NUM =
+		p.PRODUCT_NUM and ps.PRODUCT_NUM = p.PRODUCT_NUM and
+		ps.PRODUCT_NUM =
+		pe.PRODUCT_NUM and ps.PRODUCTSIZE_SIZE =
+		pe.PRODUCTSIZE_SIZE
+		and
+		p.PRODUCT_NUM = #{product_num} and ps.PRODUCTSIZE_SIZE =
+		#{productSize_size}
+	</select>
+
+
+	<!-- Product View SUB E -->
+
+
+	<!-- Product Add S -->
+
 	<insert id="ProductAdd" parameterType="com.basic.product.ProductAddDTO">
-	insert into product
+		insert into product
 		values(product_seq.nextval,#{product_name})
 	</insert>
 	<insert id="ProductInfoAdd" parameterType="com.basic.product.ProductAddDTO">
-		insert into productInfo
+		insert into
+		productInfo
 		values(product_seq.currval,#{productInfo_price},sysdate,sysdate,#{productInfo_saleRate},#{productInfo_searchWord})
 	</insert>
 	<insert id="ProductKindAdd" parameterType="com.basic.product.ProductAddDTO">
-		insert into productKind
+		insert into
+		productKind
 		values(product_seq.currval,#{kind_num})
 	</insert>
-	
-	<!--   Product Add E  -->
-	
-	<!--   Product Size Add S  -->
-	
+
+	<!-- Product Add E -->
+
+	<!-- Product Size Add S -->
+
+	<select id="ProductSizeCheck" resultType="int"
+		parameterType="com.basic.product.ProductEachAddDTO">
+		select DISTINCT count(ps.productSize_size) from product
+		p, PRODUCTSIZE ps
+		where ps.PRODUCT_NUM = p.PRODUCT_NUM and
+		ps.PRODUCT_NUM = #{product_num}
+		and
+		ps.PRODUCTSIZE_SIZE=#{productSize_size}
+
+	</select>
+
 	<insert id="ProductSizeAdd" parameterType="com.basic.product.ProductEachAddDTO">
-	insert into productSize
+		insert into
+		productSize
 		values(#{product_num},#{productSize_size})
 	</insert>
 	<insert id="ProductEachAdd" parameterType="com.basic.product.ProductEachAddDTO">
-		insert into productEach
+		insert into
+		productEach
 		values(#{product_num},#{productSize_size},#{productEach_color},#{productEach_each})
 	</insert>
-	
-	<!--   Product Size Add E  -->
-	
+
+	<!-- Product Size Add E -->
+
 
 
 

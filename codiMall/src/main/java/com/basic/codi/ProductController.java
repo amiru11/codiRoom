@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.basic.member.MemberDTO;
 import com.basic.product.ProductAddDTO;
 import com.basic.product.ProductEachAddDTO;
+import com.basic.product.ProductEachAddDTOs;
 import com.basic.product.ProductParamDTO;
 import com.basic.product.ProductService;
 import com.basic.util.PageMaker;
@@ -74,8 +75,8 @@ public class ProductController {
 		return path;
 	}
 
-	@RequestMapping(value = "/productEachAdd")
-	public String productEachAdd(ProductEachAddDTO productEachAddDTOs[], HttpSession session, RedirectAttributes ra) {
+	@RequestMapping(value = "/productEachAdd",method=RequestMethod.POST)
+	public String productEachAdd(ProductEachAddDTOs productEachAddDTOs, HttpSession session, RedirectAttributes ra) {
 		String message = "";
 		String path = "";
 		int result = 0;
