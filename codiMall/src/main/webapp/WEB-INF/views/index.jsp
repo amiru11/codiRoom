@@ -37,6 +37,12 @@
 		    auto : false,
 		    pager : false
 		});
+		
+		
+		$(".codi-item").focus(function(){
+			
+		});
+		
 	});
 </script>
 <style type="text/css">
@@ -79,7 +85,9 @@
 	
 }
 .codi-item:HOVER {
-	background: #a6a6a6;
+	-moz-box-shadow: 0 15px 30px rgba(53, 57, 64, 0.5);
+    -webkit-box-shadow: 0 15px 30px rgba(53, 57, 64, 0.5);
+    box-shadow: 0 15px 30px rgba(53, 57, 64, 0.5);
 }
 </style>
 </head>
@@ -128,7 +136,7 @@
 				</div>
 				<div class="slider3">
 				  <div class="slide codi-item">
-				  	<table class="table table-bordered" style="margin-bottom: 0;">
+				  	<table class="table table-bordered" data-toggle="modal" data-target="#viewModal" style="margin-bottom: 0;">
 				  		<tr>
 				  			<td style="padding:0;"><img src="http://placehold.it/500x150&text=FooBar1"></td>
 				  		</tr>
@@ -151,14 +159,41 @@
 		</section>
 		<!-- BEST CODI :E -->
 		
-		<div class="row">
-			<div class="col-lg-4" STYLE=""></div>
-			<div class="col-lg-4"></div>
-			<div class="col-lg-4"></div>
-		</div>
+		<!-- BEST ITEM :S --> 
+		<section class="container" style="padding-top : 50px;">
+			<div class="row">
+				<div class="text-center">
+				    <p style="font-size: 18px; font-weight: 800;">BEST ITEM</p>
+				    <p style="font-size: 12px; color : #a6a6a6; font-weight: 700;">현재 가장 인기있는 상품을 만나보세요</p>	
+				</div>
+				<div class="slider3">
+				  <div class="slide codi-item">
+				  	<table class="table table-bordered" data-toggle="modal" data-target="#viewModal" style="margin-bottom: 0;">
+				  		<tr>
+				  			<td style="padding:0;"><img src="http://placehold.it/500x150&text=FooBar1"></td>
+				  		</tr>
+				  		<tr>
+				  			<td style="padding:0;"><p>상품명</p><p>브랜드</p><p>가격</p><a href=""><span class="glyphicon glyphicon-shopping-cart"></span> CART</a></td>
+				  		</tr>
+				  	</table>
+				  </div>
+				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar2"></div>
+				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar3"></div>
+				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar4"></div>
+				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar5"></div>
+				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar6"></div>
+				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar7"></div>
+				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar8"></div>
+				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar9"></div>
+				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar10"></div>
+				</div>
+			</div>
+		</section>
+		<!-- BEST ITEM :E -->
 	<br>
 	<!-- Footer:S -->
 	<%@ include file="/resources/temp/footer.jsp"%>	
 	<!-- Footer:E -->
+	
 </body>
 </html>

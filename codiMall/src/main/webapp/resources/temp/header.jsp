@@ -48,8 +48,6 @@
 					href="${pageContext.request.contextPath}/ttt/product_add">ADD</a></li>
 				<li><a
 					href="${pageContext.request.contextPath}/ttt/view?product_num=1">VEIW</a></li>
-				<%-- <li><a href="${pageContext.request.contextPath}/member/login">LOGIN</a></li>
-				<li><a href="${pageContext.request.contextPath}/member/logout">LOGOUT</a></li> --%>
 				<li><a href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
 				<li><a href="${pageContext.request.contextPath}/product/productList">PRODUCTLIST</a></li>
 
