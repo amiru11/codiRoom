@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script type="text/javascript">
-$(function () {
+
 	$("#joinCom").click(function(){
 		var id = $("#id").val();
 		var pw = $("#pw").val();
@@ -109,7 +109,7 @@ $(function () {
 			$("#jfrm").submit();
 		}
 	});
-});
+
 //ID 중복 체크
 function idCheck() {
 	
