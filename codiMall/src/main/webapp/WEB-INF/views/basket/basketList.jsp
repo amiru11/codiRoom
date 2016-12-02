@@ -52,21 +52,9 @@ table, table tr, tr td, th {
 					href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">${list1.product_name}</a></td>
 				<td>${list1.productInfo_price}</td>
 				<td>${list1.productInfo_saleRate}</td>
-
-				<td><select class="bas_sel_color"><c:forEach var="list3"
-							items="${list1.productEachDTOs}">
-							<option value="${list3.productEach_color}">${list3.productEach_color}</option>
-						</c:forEach></select> ${list1.basketInfo_color}</td>
-				<td><select class="bas_sel_size">
-						<c:forEach var="list2" items="${list1.productEachDTOs}">
-							<option value="${list2.productEach_size}">${list2.productEach_size}</option>
-						</c:forEach>
-				</select> ${list1.basketInfo_size}</td>
-				<td><select class="bask_sel_each"><c:forEach var="list4"
-							items="${list1.productEachDTOs}">
-							<option class="bas_op_each">
-								${list4.productEach_color}_${list4.productEach_size}_${list4.productEach_each}</option>
-						</c:forEach></select></td>
+				<td>${list1.basketInfo_size}</td>
+				<td>${list1.basketInfo_color}</td>
+				<td>${list1.basketInfo_each}</td>
 			</tr>
 		</c:forEach>
 	</table>

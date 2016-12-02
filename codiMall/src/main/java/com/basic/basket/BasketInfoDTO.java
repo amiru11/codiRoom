@@ -1,11 +1,18 @@
 package com.basic.basket;
 
-public class BasketInfoDTO extends BasketDTO{
+public class BasketInfoDTO {
 	
+	private int basket_num;
 	private String basketInfo_size;
 	private String basketInfo_color;
 	private int  basketInfo_each;
 	
+	public int getBasket_num() {
+		return basket_num;
+	}
+	public void setBasket_num(int basket_num) {
+		this.basket_num = basket_num;
+	}
 	public String getBasketInfo_size() {
 		return basketInfo_size;
 	}
@@ -26,5 +33,4 @@ public class BasketInfoDTO extends BasketDTO{
 	}
 	
 	
-
 }

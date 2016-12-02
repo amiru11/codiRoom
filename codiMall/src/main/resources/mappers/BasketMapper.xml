@@ -1,23 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="BasketMapper">
 
 
-	<!-- BASKET List S -->
+	<resultMap type="int" id="ResultValue">
+		<result column="basket_num" property="basket_num" />
+	</resultMap>
+
 	<select id="SelBasketList" parameterType="com.basic.member.MemberDTO"
 		resultType="com.basic.basket.BasketListDTO">
 		select
-		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE
-		,b.BASKET_NUM,bi.BASKETINFO_SIZE,bi.BASKETINFO_COLOR,bi.BASKETINFO_EACH
-		from PRODUCT p, PRODUCTINFO pi,BASKET b,BASKETINFO bi
-		where
-		bi.BASKET_NUM = b.BASKET_NUM and p.PRODUCT_NUM = b.PRODUCT_NUM
-		and
-		pi.PRODUCT_NUM = b.PRODUCT_NUM and pi.PRODUCT_NUM = p.PRODUCT_NUM
-		and
-		b.MEMBER_ID=#{id}
+		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,
+		b.BASKET_NUM,bi.BASKETINFO_SIZE,bi.BASKETINFO_COLOR,bi.BASKETINFO_EACH
+		from PRODUCT p , PRODUCTINFO pi, BASKET b , BASKETINFO bi
+		where bi.BASKET_NUM = b.BASKET_NUM and p.PRODUCT_NUM = b.PRODUCT_NUM
+		and pi.PRODUCT_NUM = b.PRODUCT_NUM and pi.PRODUCT_NUM = p.PRODUCT_NUM
+		and b.ID=#{id}
 	</select>
+
+	<!-- BASKET ADD S -->
+
+	<select id="SelBasketUseBasNum" parameterType="java.util.HashMap"
+		resultType="int">
+		SELECT b.BASKET_NUM FROM BASKET b , BASKETINFO bi
+		where
+		bi.BASKET_NUM = b.BASKET_NUM
+		and b.PRODUCT_NUM=
+		#{productEachDTO.product_num} and b.ID=#{memberDTO.id} and
+		bi.BASKETINFO_SIZE= #{productEachDTO.productSize_size}
+		and
+		bi.BASKETINFO_COLOR= #{productEachDTO.productEach_color}
+	</select>
+
+	<select id="SelBasketGetEach" parameterType="int" resultType="int">
+		select bi.basketInfo_each from basket b,basketinfo bi
+		where
+		bi.basket_num = b.basket_num
+		and b.basket_num=#{basket_num}
+	</select>
+
+	<select id="SelProuctGetEach" parameterType="java.util.HashMap"
+		resultType="int">
+		select DISTINCT pe.PRODUCTEACH_EACH from product
+		p,PRODUCTSIZE ps
+		,PRODUCTEACH pe where pe.PRODUCT_NUM = p.PRODUCT_NUM
+		and
+		ps.PRODUCT_NUM = p.PRODUCT_NUM
+		and ps.PRODUCTSIZE_SIZE =
+		pe.PRODUCTSIZE_SIZE
+		and p.PRODUCT_NUM=#{productEachDTO.product_num} and
+		pE.PRODUCTSIZE_SIZE =#{productEachDTO.productSize_size} and
+		pe.PRODUCTEACH_COLOR=#{productEachDTO.productEach_color}
+
+	</select>
+
+	<update id="UpBasketEach" parameterType="com.basic.basket.BasketInfoDTO">
+		update basketInfo set
+		basketinfo_each=#{basketInfo_each}
+		where basket_num=#{basket_num}
+	</update>
+
+
+
 
 	<insert id="InBasketAdd" parameterType="java.util.HashMap">
 		insert into basket values
@@ -28,15 +72,7 @@
 		basketInfo values
 		(basket_seq.currval,#{productEachDTO.productSize_size},#{productEachDTO.productEach_color},#{productEachDTO.productEach_each})
 	</insert>
-	
-	<!--  private int product_num;
-	private String productSize_size;
-	private String productEach_color;
-	private int productEach_each;  -->
 
-
-
-
-
+	<!-- BASKET ADD E -->
 
 </mapper>

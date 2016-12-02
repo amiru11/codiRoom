@@ -2,14 +2,15 @@ package com.basic.basket;
 
 public class BasketDTO {
 	
-	private String basket_num;
+	private int basket_num;
 	private String member_id;
 	private int product_num;
 	
-	public String getBasket_num() {
+	
+	public int getBasket_num() {
 		return basket_num;
 	}
-	public void setBasket_num(String basket_num) {
+	public void setBasket_num(int basket_num) {
 		this.basket_num = basket_num;
 	}
 	public String getMember_id() {
