@@ -67,13 +67,11 @@ table, table tr, tr td, th {
 			/*  var as =  $("#inh_productEach_color").val(); 
 			alert(as);
 			alert($("."+as+"").val());  */
-
 		});
 		$("#sel_size_b").click(function(){
 			$("#inp_each").val(1);
 			$("#inh_productEach_each").val($("#inp_each").val());
 		});
-
 		$("#inp_each").blur(function(){
 			var as =  $("#inh_productEach_color").val(); 
 			var b = $("."+as+"").val()*1;
@@ -84,11 +82,9 @@ table, table tr, tr td, th {
 			}else{
 			$("#inh_productEach_each").val($("#inp_each").val());
 			}
-
 		});
 		
 		
-
 	});
 </script>
 </head>

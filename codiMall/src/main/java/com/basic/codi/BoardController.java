@@ -1,5 +1,8 @@
 package com.basic.codi;
 
+import java.io.File;
+import java.util.UUID;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import com.basic.board.BoardFileDTO;
 import com.basic.board.BoardService;
 import com.basic.board.CommentDTO;
 import com.basic.board.CommentService;
+import com.basic.board.PhotoDTO;
 
 
 @Controller
@@ -211,4 +215,46 @@ public class BoardController {
 		return "board/boardList";
 		
 	}
+	
+	@RequestMapping(value="/fileUpload")
+	public String fileUpload(PhotoDTO photoDTO, HttpSession session){
+		String callback = photoDTO.getCallback();
+		String callback_func = photoDTO.getCallback_func();
+		String file_result = "";
+		try {
+		if(photoDTO.getFiledata() != null && photoDTO.getFiledata().getOriginalFilename() != null && !photoDTO.getFiledata().getOriginalFilename().equals("")){
+			//파일이 존재하면
+			
+			//파일명
+			String original_name = photoDTO.getFiledata().getOriginalFilename();
+			//확장자를 찾는 구간
+			String ext = original_name.substring(original_name.lastIndexOf(".")+1);
+			//파일 기본 경로
+			String defaultPath = session.getServletContext().getRealPath("/");
+			//파일 상세경로
+			String path = defaultPath + "resources" + File.separator + "upload"; //separator는 구분자!!
+			
+			File file = new File(path);
+			
+			//디렉토리 존재하지 않을 경우, 디렉토리 생성
+			if(!file.exists()){
+				file.mkdirs();
+			}
+			//서버에 업로드 할 파일명
+			String realName = UUID.randomUUID().toString() + "." + ext;//기존이름을 버리고 랜덤이름을 붙여서 새로운 이름을 만들어줌
+			
+			//서버에 파일쓰기//
+			
+				photoDTO.getFiledata().transferTo(new File(path+realName));
+				file_result += "&bNewLine=true&sFileName=" + original_name + "&sFileURL=/codi/resources/upload" + realName;
+			
+			}else{
+				file_result += "&errstr=error";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:" + callback + "?callback_func=" + callback_func + file_result;
+	}
+	
 }
