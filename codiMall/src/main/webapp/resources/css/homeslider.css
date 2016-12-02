@@ -133,7 +133,7 @@
   -o-transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%); }
-  @media (max-width: 1400px) {
+  @media (max-width: 1440px) {
     #homepage-slider .bx-wrapper .bx-pager {
       top: auto;
       bottom: 0;
@@ -168,7 +168,7 @@
   *zoom: 1;
   *display: inline;
   padding: 11px 0; }
-  @media (max-width: 1400px) {
+  @media (max-width: 1440px) {
     #homepage-slider .bx-wrapper .bx-pager .bx-pager-item,
     #homepage-slider .bx-wrapper .bx-controls-auto .bx-controls-auto-item {
       display: inline-block;
