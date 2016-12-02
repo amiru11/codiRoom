@@ -3,14 +3,11 @@
 <mapper namespace="MemberMapper">
 
 
-	
 	<insert id="memberJoin" parameterType="com.basic.member.MemberDTO">
 		insert into member
-		values(member_seq.nextVal,#{id},#{pw},#{name},#{age},#{sung},#{tel})
-
+		values(member_seq.nextval,#{id},#{pw},#{name},#{birth},#{gender},#{tel0},#{tel1},#{tel2},#{tel3})
 	</insert>
-
-
+	
 	<select id="memberLogin" resultType="com.basic.member.MemberDTO" parameterType="com.basic.member.MemberDTO">
 		select * from member where id=#{id} and pw=#{pw}
 	</select>
@@ -19,21 +16,26 @@
 		update member 
 		<trim prefix="set" suffixOverrides=",">
 			<if test="pw != null">
-				pw = #{pw}
+				pw = #{pw},
 			</if>
-			<if test="age != 0">
-				age = #{age}
+			<if test="tel0 != null">
+				tel0 = #{tel0},
 			</if>
-			<if test="tel != null">
-				tel = #{tel0}/#{tel1}/#{tel2}/#{tel3}
+			<if test="tel1 != null">
+				tel1 = #{tel1},
 			</if>
-		
+			<if test="tel2 != null">
+				tel2 = #{tel2},
+			</if>
+			<if test="tel3 != null">
+				tel3 = #{tel3}
+			</if>
 		</trim>
-		where num=#{num}
+		where id=#{id}
 	</update>
 
 	<delete id="memberDelete" parameterType="com.basic.member.MemberDTO">
-		delete member where num=#{num}
+		delete member where id=#{id} and pw=#{pw}
 	</delete>
 
 

@@ -11,8 +11,6 @@ public class MemberDAO {
 	private SqlSession sqlSession;
 	private String namespace = "MemberMapper.";
 	
-	
-	
 	//1.JOIN//
 		public int memberJoin(MemberDTO memberDTO) throws Exception{
 			return sqlSession.insert(namespace+"memberJoin", memberDTO);

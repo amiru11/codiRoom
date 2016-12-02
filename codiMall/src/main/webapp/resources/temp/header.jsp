@@ -2,30 +2,122 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script type="text/javascript">
-	$(function() {
-		//회원가입 클릭시 //
-		$("#joinCom").click(function() {
-			var tel = $("#tel0").val() + "/" + $("#tel1").val() + "/" + $("#tel2").val() + "/" + $("#tel3").val();
-			document.jfrm.submit();
-			//alert(tel);
-
-		/* 			$.ajax({
-						url : "memberJoin",
-						type :"POST",
-						data : {
-							id : $("#id").val(),
-							pw : $("#pw").val(),
-							name : $("#name").val(),
-							age : $("#age").val(),
-							sung : $("#sung").val(),
-							tel : tel
-						},
-						success : function(data){
-							alert(data);
-						}
-					}); */
-		});
+$(function () {
+	$("#joinCom").click(function(){
+		var id = $("#id").val();
+		var pw = $("#pw").val();
+		var pwc = $("#pwc").val();
+		var name = $("#name").val();
+		var birth = $("#birth").val();
+		var gender = $('input:radio[name=gender]:checked').val();
+		var tel0 = $("#tel0").val();
+		var tel1 = $("#tel1").val();
+		var tel2 = $("#tel2").val();
+		var tel3 = $("#tel3").val();
+		var check = false;
+		
+		if(id == '') {
+			alert('이메일을 입력하세요.');
+			$("#id").focus();
+			return check;
+		}
+		var emailChar =  /^([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+	        if(emailChar.test(id) == false){
+	        	alert("이메일 형식이 아닙니다.");
+	        	$("#id").focus();
+	        	return check;
+	        }
+		//아이디 중복 체크 했는지
+	/* 	if(idCount == '0') {
+			alert('아이디 중복체크를 해 주세요.');
+			$("#id").focus();
+			return false;
+		} */
+		if(pw == ''){
+			alert("패스워드를 입력해주세요.");
+			$("#pw").focus();
+			return check;
+		}
+		if($("#pw").val().length < 4){
+			alert("비밀번호는 4자리 이상으로 입력해주세요.")
+			$("#pw").focus();
+			return check;
+		}
+		if(pwc == ''){
+			alert("패스워드 확인을 입력해주세요.");
+			$("#pwc").focus();
+			return check;
+		}
+		if(pw != pwc){
+			alert("패스워드와 패스워드 확인이 다릅니다.");
+			 $("#pw").val("");
+			 $("#pwc").val("");
+			 $("#pw").focus();
+			return check;
+		}
+		if(name == '') {
+			alert("이름을 입력하세요.");
+			$("#name").focus();
+			return check;
+		}
+		var nameChar = /[가-힣]/;
+		for(var i=0; i<name.length; i++){
+	        if(nameChar.test(name.charAt(i)) == false ){
+	        	alert("올바른 이름 형식이 아닙니다.");
+	        	$("#name").focus();
+	        	return check;
+	        }
+		}
+		//생일
+		if(birth == '') {
+			alert('생년월일을 입력해 주세요.');
+			$("#birth").focus();
+			return check;
+		}
+		//성별​​
+		if(gender == '' || gender == null) {
+			alert('성별을 선택해 주세요.');
+			return check;
+		}
+		if(tel0 == ''){
+			alert("통신사를 입력해주세요.");
+			$("#tel0").focus();
+			return check;
+		}
+		if(tel2 == ''){
+			alert("전화번호를 입력하세요.");
+			$("#tel2").focus();
+			return check;
+		}
+		if($("#tel2").val().length < 3){
+			alert("전화번호를 입력해주세요.")
+			$("#tel2").focus();
+			return check;
+		}
+		if(tel3 == ''){
+			alert("전화번호를 입력하세요.");
+			$("#tel3").focus();
+			return check;
+		}
+		if($("#tel3").val().length < 4){
+			alert("전화번호를 입력해주세요.")
+			$("#tel3").focus();
+			return check;
+		}
+		check = true;
+		if(check == true){
+			$("#jfrm").submit();
+		}
 	});
+});
+//ID 중복 체크
+function idCheck() {
+	
+}
+
+
+
+
 </script>
 <nav class="navbar navbar-inverse navbar-fixed-top"
 	style="z-index: 100;" id="header">
@@ -48,8 +140,6 @@
 					href="${pageContext.request.contextPath}/ttt/product_add">ADD</a></li>
 				<li><a
 					href="${pageContext.request.contextPath}/ttt/view?product_num=1">VEIW</a></li>
-				<%-- <li><a href="${pageContext.request.contextPath}/member/login">LOGIN</a></li>
-				<li><a href="${pageContext.request.contextPath}/member/logout">LOGOUT</a></li> --%>
 				<li><a href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
 				<li><a href="${pageContext.request.contextPath}/product/productList">PRODUCTLIST</a></li>
 				<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOGIN</a></li>
@@ -73,8 +163,8 @@
 							Sign Up</a></li>
 				</c:if>
 				<c:if test="${sessionScope.member ne null}">
-					<li><a href="">MY PAGE</a></li>
-					<li><a href="${pageContext.request.contextPath}/memberLogout">LOGOUT</a></li>
+					<li><a href="${pageContext.request.contextPath}/member/myPage">MY PAGE</a></li>
+					<li><a href="${pageContext.request.contextPath}/member/memberLogout">LOGOUT</a></li>
 				</c:if>
 			</ul>
 			<form class="navbar-form navbar-right" style="margin-left: 200px;">
@@ -103,14 +193,14 @@
 				<h4 class="modal-title">LOGIN</h4>
 			</div>
 			<div class="modal-body">
-				<form action="memberLogin" method="post">
+				<form action="${pageContext.request.contextPath}/member/memberLogin" method="post">
 					<div class="form-group">
-						<label for="content">ID</label> <input type="text"
-							class="form-control" id="idd" name="id">
+						<label for="content">ID</label>
+						<input type="text" class="form-control" id="idL" name="id" maxlength="30" placeholder="이메일">
 					</div>
 					<div class="form-group">
-						<label for="content">PW</label> <input type="password"
-							class="form-control" id="pww" name="pw">
+						<label for="content">PW</label>
+						<input type="password" class="form-control" id="pwL" name="pw" maxlength="15" placeholder="비밀번호">
 					</div>
 					<input type="submit" class="btn btn-success" value="LOGIN">
 				</form>
@@ -133,35 +223,38 @@
 				<h4 class="modal-title">SIGN IN</h4>
 			</div>
 			<div class="modal-body">
-				<form action="memberJoin" method="post" name="jfrm">
+				<form action="${pageContext.request.contextPath}/member/memberJoin" method="post" name="jfrm">
 					<div class="form-group">
 						<label for="content">ID</label> <input type="text"
-							class="form-control" id="id" name="id">
+							class="form-control" id="id" name="id" maxlength="30" placeholder="이메일">
 					</div>
 					<div class="form-group">
-						<label for="content">PW</label> <input type="text"
-							class="form-control" id="pw" name="pw">
+						<label for="content">PW</label> <input type="password"
+							class="form-control" id="pw" name="pw" maxlength="15" placeholder="비밀번호">
+					</div>
+					<div class="form-group">
+						<label for="content">비밀번호 확인</label> <input type="password"
+							class="form-control" id="pwc" name="pwc" maxlength="15" placeholder="비밀번호 확인">
 					</div>
 					<div class="form-group">
 						<label for="content">NAME</label> <input type="text"
-							class="form-control" id="name" name="name">
+							class="form-control" id="name" name="name" placeholder="이름">
 					</div>
 					<div class="form-group">
-						<label for="content">AGE</label> <input type="number"
-							class="form-control" id="age" name="age">
+						<label for="content">BIRTH</label> <input type="text"
+							class="form-control" id="birth" name="birth">
 					</div>
 					<div class="form-group">
-						<label for="gender">GENDER</label> <label class="radio-inline"><input
-							type="radio" id="sung" name="sung" value="남">M</label> <label
-							class="radio-inline"><input type="radio" id="sung"
-							name="sung" value="여">W</label>
+						<label for="gender">GENDER</label>
+						<label class="radio-inline"><input type="radio" class="gender" name="gender" value="men">Men</label> 
+						<label class="radio-inline"><input type="radio" class="gender" name="gender" value="women">Women</label>
 					</div>
 					<div class="form-group form-group-sm">
 						<div>
 							<label for="tel">TEL</label>
 						</div>
 						<div class="col-sm-12">
-							<span class="col-sm-2"> <select class="form-control"
+							<span class="col-sm-3"> <select class="form-control"
 								id="tel0">
 									<option value="SKT">SKT</option>
 									<option value="KT">KT</option>
@@ -169,15 +262,19 @@
 							</select>
 							</span> <span class="col-sm-3"> <select class="form-control"
 								id="tel1">
-									<option value="010">010</option>
-									<option value="011">011</option>
-									<option value="016">016</option>
-									<option value="017">017</option>
+										<option value="010">010</option>
+										<option value="011">011</option>
+										<option value="016">016</option>
+										<option value="017">017</option>
+										<option value="018">018</option>
+										<option value="019">019</option>
 							</select>
-							</span> <span class="col-sm-3"> <input type="text"
-								class="form-control" id="tel2">
-							</span> <span class="col-sm-3"> <input type="text"
-								class="form-control" id="tel3">
+							</span>
+							<span class="col-sm-3">
+								<input type="text" class="form-control" id="tel2" name="tel2" maxlength="4" placeholder="전화번호">
+							</span> 
+							<span class="col-sm-3">
+								<input type="text" class="form-control" id="tel3" name="tel3" maxlength="4" placeholder="전화번호">
 							</span>
 						</div>
 					</div>
