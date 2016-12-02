@@ -18,6 +18,7 @@ img, ul, li{
     list-style: none;
 }
 #header{
+	z-index : 9999;
 	background : url(/codi/resources/images/footer-bg.png);
 }
 #footer{

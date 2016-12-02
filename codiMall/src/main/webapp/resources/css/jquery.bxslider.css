@@ -131,7 +131,7 @@
 	top: 50%;
 	margin-top: -16px;
 	outline: 0;
-	width: 32px;
+	/* width: 32px; */
 	height: 32px;
 	text-indent: -9999px;
 	z-index: 50;
