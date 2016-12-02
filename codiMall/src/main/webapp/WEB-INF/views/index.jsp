@@ -24,8 +24,9 @@
 		$('.bxslider').bxSlider({
 			  mode : 'fade',
 			  auto : true,
-			  pager : true
+			  pager : true,
 			  /* captions: true  */
+			  controls : false /* 슬라이드 좌,우 화살표  */
 		});
 		
 		/* 두번째 슬라이드 */
@@ -37,6 +38,18 @@
 		    auto : false,
 		    pager : false
 		});
+		
+		
+		/* 세번째 슬라이드 */
+		$('.slider4').bxSlider({
+		    slideWidth: 1000,
+		    minSlides: 4,
+		    maxSlides: 4,
+		    slideMargin: 20,
+		    auto : false,
+		    pager : false
+		});
+		
 		
 		
 		$(".codi-item").focus(function(){
@@ -81,7 +94,7 @@
     box-shadow: 0 15px 30px rgba(53, 57, 64, 0.5);
 }
 .codi-item{
-	cursor : pointer;
+	/* cursor : pointer; */
 	
 }
 .codi-item:HOVER {
@@ -166,30 +179,113 @@
 				    <p style="font-size: 18px; font-weight: 800;">BEST ITEM</p>
 				    <p style="font-size: 12px; color : #a6a6a6; font-weight: 700;">현재 가장 인기있는 상품을 만나보세요</p>	
 				</div>
-				<div class="slider3">
+				<div class="slider4">
 				  <div class="slide codi-item">
 				  	<table class="table table-bordered" data-toggle="modal" data-target="#viewModal" style="margin-bottom: 0;">
 				  		<tr>
 				  			<td style="padding:0;"><img src="http://placehold.it/500x150&text=FooBar1"></td>
 				  		</tr>
 				  		<tr>
-				  			<td style="padding:0;"><p>상품명</p><p>브랜드</p><p>가격</p><a href=""><span class="glyphicon glyphicon-shopping-cart"></span> CART</a></td>
+				  			<td style="padding:0; padding-left : 10px;">
+				  				<p style="padding-top:10px;"><a>상품명</a></p><p>브랜드</p><span>가격</span>
+				  				<span class="glyphicon glyphicon-shopping-cart" style="font-size: 20px; background: #000; color: #ffffff; padding : 10px; border-radius: 20px; position : absolute; top : 350px; right : 15px;"></span>
+							</td>
 				  		</tr>
 				  	</table>
 				  </div>
-				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar2"></div>
-				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar3"></div>
-				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar4"></div>
-				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar5"></div>
-				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar6"></div>
-				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar7"></div>
-				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar8"></div>
-				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar9"></div>
-				  <div class="slide"><img src="http://placehold.it/500x150&text=FooBar10"></div>
+				  <div class="slide codi-item">
+					<table class="table table-bordered" data-toggle="modal" data-target="#viewModal" style="margin-bottom: 0;">
+						<tr>
+							<td style="padding:0;"><img src="http://placehold.it/500x150&text=FooBar2"></td>
+						</tr>
+						<tr>
+							<td style="padding:0; padding-left : 10px;">
+								<p style="padding-top:10px;"><a>상품명</a></p><p>브랜드</p><span>가격</span>
+								<span class="glyphicon glyphicon-shopping-cart" style="font-size: 20px; background: #000; color: #ffffff; padding : 10px; border-radius: 20px; position : absolute; top : 350px; right : 15px;"></span>
+							</td>
+						</tr>
+					</table>
+				  </div>
+				  <div class="slide codi-item">
+					<table class="table table-bordered" data-toggle="modal" data-target="#viewModal" style="margin-bottom: 0;">
+						<tr>
+							<td style="padding:0;"><img src="http://placehold.it/500x150&text=FooBar3"></td>
+						</tr>
+						<tr>
+							<td style="padding:0; padding-left : 10px;">
+								<p style="padding-top:10px;"><a>상품명</a></p><p>브랜드</p><span>가격</span>
+								<span class="glyphicon glyphicon-shopping-cart" style="font-size: 20px; background: #000; color: #ffffff; padding : 10px; border-radius: 20px; position : absolute; top : 350px; right : 15px;"></span>
+							</td>
+						</tr>
+					</table>
+				  </div>
+				  <div class="slide codi-item">
+					<table class="table table-bordered" data-toggle="modal" data-target="#viewModal" style="margin-bottom: 0;">
+						<tr>
+							<td style="padding:0;"><img src="http://placehold.it/500x150&text=FooBar4"></td>
+						</tr>
+						<tr>
+							<td style="padding:0; padding-left : 10px;">
+								<p style="padding-top:10px;"><a>상품명</a></p><p>브랜드</p><span>가격</span>
+								<span class="glyphicon glyphicon-shopping-cart" style="font-size: 20px; background: #000; color: #ffffff; padding : 10px; border-radius: 20px; position : absolute; top : 350px; right : 15px;"></span>
+							</td>
+						</tr>
+					</table>
+				  </div>
 				</div>
 			</div>
 		</section>
 		<!-- BEST ITEM :E -->
+		
+		<!-- SALE , NEW , RECOMMEND ITEMs : S -->
+		<section class="container" style="padding-top : 50px;">
+			<div class="row">
+				<div class="col-lg-12" style="padding:0;">
+					<div class="col-lg-4"  style="padding-left:0;">
+						<table class="table table-bordered">
+							<tr>
+								<td style="padding:0;">
+									<h2>세일상품</h2>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding:0;">
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-lg-4">
+						<table class="table table-bordered">
+							<tr>
+								<td style="padding:0;">
+									<h2>신상품</h2>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding:0;">
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-lg-4">
+						<table class="table table-bordered">
+							<tr>
+								<td style="padding:0;">
+									<h2>추천상품</h2>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding:0;">
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- SALE , NEW , RECOMMEND ITEMs : E -->
+		
+		
 	<br>
 	<!-- Footer:S -->
 	<%@ include file="/resources/temp/footer.jsp"%>	
