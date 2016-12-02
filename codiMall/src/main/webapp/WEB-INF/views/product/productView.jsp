@@ -14,64 +14,29 @@ table, table tr, tr td, th {
 </style>
 <script type="text/javascript">
 	$(function() {
-		$("#btn_aa").click(function(){
-			$.ajax({
-			    url : "../json/productSize",
-			    type : "post",
-			    data : {
-			    	product_num:${view.product_num}
-			    },
-			    success: function(data) {
-			    	var x="";
-			    	$.each(data, function( index, value ) {
-			    		   x=x+"<option value="+value+">"+value+"</option>";
-			    		});
-			    	$("#sel_size_a").html(x);
-			    },
-			    error:function(request,status,error){
-			        alert("code:"+request.status+"\n"+"error:"+error);
-			    }
-			 
-			});
-		})
 		
-		$("#btn_bb").click(function(){
-			$.ajax({
-			    url : "../json/productEach",
-			    type : "post",
-			    dataType : 'json',
-			    data : {
-			    	product_num:${view.product_num},
-			    	productSize_size:$("#sel_size_a").val()
-			    },
-			    success:function(data) {
-			    	var x="";
-			    	var y="";
-			    	$.each(data.eachList, function( index, value ) {
-			    		x=x+"<option value="+value.productEach_color+">"+value.productEach_color+'_'+value.productEach_each+"</option>";
-			    		y=y+value.productEach_color+'_'+value.productEach_each+'<input class="'+value.productEach_color+'" type="text" value="'+value.productEach_each+'">';
-			    	});
-			    	$("#div_hidden_each").html(y);
-			    	$("#sel_size_b").html(x);
-			    	
-			    },
-			    error:function(request,status,error){
-			        alert("code:"+request.status+"\n"+"error:"+error);
-			    }
-			});
-		}) 
+		$("#sel_size_a").click(function(){
+			if($("#sel_size_a").val()!=""){
+				selSize();
+				$("#sel_size_b").css("display","inline-block");
+			}else{
+				$("#sel_size_b").css("display","none");
+				$("#sel_size_b").html("");
+			}
+		});
+
 		
 		$("#sel_size_b").blur(function(){
 			$("#inh_productSize_size").val($("#sel_size_a").val());
 			$("#inh_productEach_color").val($("#sel_size_b").val());
-			/*  var as =  $("#inh_productEach_color").val(); 
-			alert(as);
-			alert($("."+as+"").val());  */
 		});
 		$("#sel_size_b").click(function(){
+			$("#inh_productSize_size").val($("#sel_size_a").val());
+			$("#inh_productEach_color").val($("#sel_size_b").val());
 			$("#inp_each").val(1);
 			$("#inh_productEach_each").val($("#inp_each").val());
 		});
+
 		$("#inp_each").blur(function(){
 			var as =  $("#inh_productEach_color").val(); 
 			var b = $("."+as+"").val()*1;
@@ -84,8 +49,99 @@ table, table tr, tr td, th {
 			}
 		});
 		
+		$("#btn_basket").click(function(){
+			if($("#sel_size_b").val()!=null){
+				if($("#inp_each").val()!=null){
+					$.ajax({
+					    url : "../basket/basketAdd",
+					    type : "post",
+					    data : {
+					    	product_num:${view.product_num},
+					    	productSize_size:$("#sel_size_a").val(),
+					    	productEach_color:$("#sel_size_b").val(),
+					    	productEach_each:$("#inp_each").val(),
+					    },
+					    success: function(data) {
+					    	if(data==1){
+					    		alert("장바구니 등록성공");
+					    	}else{
+					    		alert(data);
+					    	}
+					    	
+					    },
+					    error:function(request,status,error){
+					        alert("code:"+request.status+"\n"+"error:"+error);
+					    }
+					});
+				}else{
+					alert("1개이상 입력하세요");
+				}
+			}else{
+				alert("color 선택하세요");
+			}
+		});
 		
+		$("#btn_buy").click(function(){
+			if($("#sel_size_b").val()!=null){
+				if($("#inp_each").val()!=null){
+					$("#view_frm").attr("action","${pageContext.request.contextPath}/basket/basketNonBuy");
+				}else{
+					alert("1개이상 입력하세요");
+				}
+			}else{
+				alert("color 선택하세요");
+			}
+		});
+		
+		
+
 	});
+	
+	function selList(){
+		$.ajax({
+		    url : "../json/productSize",
+		    type : "post",
+		    data : {
+		    	product_num:${view.product_num}
+		    },
+		    success: function(data) {
+		    	var x='<option value="">SIZE를 고르세요</option>';
+		    	$.each(data, function( index, value ) {
+		    		   x=x+"<option value="+value+">"+value+"</option>";
+		    		});
+		    	$("#sel_size_a").html(x);
+		    },
+		    error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"error:"+error);
+		    }
+		});
+	}
+	function selSize(){
+		$.ajax({
+		    url : "../json/productEach",
+		    type : "post",
+		    dataType : 'json',
+		    data : {
+		    	product_num:${view.product_num},
+		    	productSize_size:$("#sel_size_a").val()
+		    },
+		    success:function(data) {
+		    	var x='<option value="">Color를 고르세요</option>';
+		    	var y="";
+		    	$.each(data.eachList, function( index, value ) {
+		    		x=x+"<option value="+value.productEach_color+">"+value.productEach_color+'_'+value.productEach_each+"</option>";
+		    		y=y+value.productEach_color+'_'+value.productEach_each+'<input class="'+value.productEach_color+'" type="text" value="'+value.productEach_each+'">';
+		    	});
+		    	$("#div_hidden_each").html(y);
+		    	$("#sel_size_b").html(x);
+		    	
+		    },
+		    error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"error:"+error);
+		    }
+		});
+	}
+	
 </script>
 </head>
 <body>
@@ -112,7 +168,7 @@ table, table tr, tr td, th {
 		</tr>
 		<tr>
 			<td><select id="sel_size_a"></select></td>
-			<td><select id="sel_size_b"></select></td>
+			<td><select id="sel_size_b" style="display: none;"></select></td>
 			<td><input id="inp_each" type="number" min="0"></td>
 		</tr>
 		<tr>
@@ -122,22 +178,25 @@ table, table tr, tr td, th {
 						type="text" name="productSize_size"> <input
 						id="inh_productEach_color" type="text" name="productEach_color">
 					<input id="inh_productEach_each" type="text"
-						name="productEach_each">
-						<input id="inh_each_each" type="text">
+						name="productEach_each"> <input id="inh_each_each"
+						type="text">
 				</form></td>
 			<td><input id="btn_buy" type="button" value="BUY"></td>
 			<td><input id="btn_basket" type="button" value="BASKET">
 			</td>
 		</tr>
-		
+
 
 
 	</table>
-	<div id="div_hidden_each">
-	</div>
+
+	<div id="div_hidden_each"></div>
 
 	<button id="btn_aa">aaaaa</button>
 	<button id="btn_bb">bbbb</button>
+	<script type="text/javascript">
+		selList();
+	</script>
 
 </body>
 </html>

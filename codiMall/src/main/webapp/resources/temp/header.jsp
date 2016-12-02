@@ -52,6 +52,8 @@
 				<li><a href="${pageContext.request.contextPath}/member/logout">LOGOUT</a></li> --%>
 				<li><a href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
 				<li><a href="${pageContext.request.contextPath}/product/productList">PRODUCTLIST</a></li>
+				<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOGIN</a></li>
+				
 
 				<!--            test li e -->
 
