@@ -1,22 +1,17 @@
 package com.basic.member;
 
 public class MemberDTO {
-	
-	private int num;
 	private String id;
 	private String pw;
 	private String name;
-	private int age;
-	private String sung;
-	private String tel;
+	private String birth;
+	private String gender;
+	private String tel0;
+	private String tel1;
+	private String tel2;
+	private String tel3;
 	
 	
-	public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
-	}
 	public String getId() {
 		return id;
 	}
@@ -35,22 +30,40 @@ public class MemberDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getAge() {
-		return age;
+	public String getBirth() {
+		return birth;
 	}
-	public void setAge(int age) {
-		this.age = age;
+	public void setBirth(String birth) {
+		this.birth = birth;
 	}
-	public String getSung() {
-		return sung;
+	public String getGender() {
+		return gender;
 	}
-	public void setSung(String sung) {
-		this.sung = sung;
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
-	public String getTel() {
-		return tel;
+	public String getTel0() {
+		return tel0;
 	}
-	public void setTel(String tel) {
-		this.tel = tel;
+	public void setTel0(String tel0) {
+		this.tel0 = tel0;
+	}
+	public String getTel1() {
+		return tel1;
+	}
+	public void setTel1(String tel1) {
+		this.tel1 = tel1;
+	}
+	public String getTel2() {
+		return tel2;
+	}
+	public void setTel2(String tel2) {
+		this.tel2 = tel2;
+	}
+	public String getTel3() {
+		return tel3;
+	}
+	public void setTel3(String tel3) {
+		this.tel3 = tel3;
 	}
 }
