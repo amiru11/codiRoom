@@ -1,15 +1,24 @@
 package com.basic.product;
 
 public class ProductEachDTO {
-	private String productEach_size;
+	private int product_num;
+	private String productSize_size;
 	private String productEach_color;
 	private int productEach_each;
 	
-	public String getProductEach_size() {
-		return productEach_size;
+	
+	public int getProduct_num() {
+		return product_num;
 	}
-	public void setProductEach_size(String productEach_size) {
-		this.productEach_size = productEach_size;
+	public void setProduct_num(int product_num) {
+		this.product_num = product_num;
+	}
+	
+	public String getProductSize_size() {
+		return productSize_size;
+	}
+	public void setProductSize_size(String productSize_size) {
+		this.productSize_size = productSize_size;
 	}
 	public String getProductEach_color() {
 		return productEach_color;
