@@ -133,13 +133,7 @@ function idCheck() {
 
 			<ul class="nav navbar-nav" style="margin-top: 60px;">
 				<!--            test li s -->
-				<li><a href="${pageContext.request.contextPath}/ttt/t1">T1</a></li>
-				<li><a href="${pageContext.request.contextPath}/ttt/t2">T2</a></li>
-				<!-- 관리자할 때 상품등록 -->
-				<li><a
-					href="${pageContext.request.contextPath}/ttt/product_add">ADD</a></li>
-				<li><a
-					href="${pageContext.request.contextPath}/ttt/view?product_num=1">VEIW</a></li>
+
 				<li><a href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
 				<li><a href="${pageContext.request.contextPath}/product/productList">PRODUCTLIST</a></li>
 				<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOGIN</a></li>
