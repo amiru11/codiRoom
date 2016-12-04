@@ -246,4 +246,29 @@ public class BoardService {
 		}
 	}
 
+	
+	//JSON TEST//
+	public List<BoardDTO> bestList(int curPage, int perPage, Model model){
+		System.out.println("BESTLIST");
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCurPage(curPage);
+		pageMaker.setPerPage(perPage);
+		pageMaker.makeRow();
+		pageMaker.makePage(boardDAO.bestCount());//board_kind가 2인 게시물의 갯수 세기
+		System.out.println("cur : "+pageMaker.getCurPage());
+		System.out.println("per : "+pageMaker.getPerPage());
+		System.out.println("startRowNum : " + pageMaker.getStartRowNum());
+		System.out.println("lastLowNum : " + pageMaker.getLastLowNum());
+		System.out.println("FAQCount : "+boardDAO.bestCount());
+		//LIST객체로 불러와주기
+		List<BoardDTO> br = null;
+		try {
+			br = boardDAO.bestList(pageMaker);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return br;
+		
+	}
+	
 }

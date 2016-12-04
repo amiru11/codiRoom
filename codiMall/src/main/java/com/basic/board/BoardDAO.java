@@ -204,7 +204,16 @@ public class BoardDAO {
 		return ar;
 	}
 	//FAQ BEST 5//
-	public List<BoardDTO> bestList() throws Exception{
-		return sqlSession.selectList(namespace2+"bestList");
+		public List<BoardDTO> bestList(){
+			return sqlSession.selectList(namespace2+"bestList");
+		}
+	
+	//FAQ BEST 5 test//
+	public List<BoardDTO> bestList(PageMaker pageMaker) throws Exception{
+		return sqlSession.selectList(namespace2+"bestList2",pageMaker);
+	}
+	
+	public int bestCount(){
+		return sqlSession.selectOne(namespace2+"bestCount");
 	}
 }

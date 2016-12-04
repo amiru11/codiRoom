@@ -216,6 +216,8 @@ public class BoardController {
 		
 	}
 	
+	
+	//SMART EDITOR//
 	@RequestMapping(value="/fileUpload")
 	public String fileUpload(PhotoDTO photoDTO, HttpSession session){
 		String callback = photoDTO.getCallback();

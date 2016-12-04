@@ -104,6 +104,19 @@
 			where R between 1 and 5
 		]]>
 	</select>
-
+	<select id="bestList2" parameterType="com.basic.util.PageMaker" resultType="com.basic.board.BoardDTO">
+		<![CDATA[
+			select * from
+			(select Rownum R, F.* from
+			(select * from board where board_kind=2 order by board_counts desc) F)
+			where R between #{startRowNum} and #{lastLowNum}
+		]]>
+	</select>
+	
+	<select id="bestCount" resultType="int">
+		<![CDATA[
+			select count(*) from board where board_kind=2
+		]]>
+	</select>
 	
 </mapper>
