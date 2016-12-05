@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,7 +41,6 @@ public class MemberController {
 		if(result > 0){
 			path = "redirect:/";
 			message = "회원 가입 성공";
-			
 		}else {
 			path = "redirect:/";
 			message = "회원 가입 실패";
@@ -67,7 +66,7 @@ public class MemberController {
 			session.setAttribute("member", memberDTO);
 		}else {
 			path = "redirect:/";
-			message = "로그인 실패";
+			message = "아이디와 비밀번호가 다릅니다.";
 		}
 		rd.addFlashAttribute("message", message);
 		return path;
@@ -82,8 +81,9 @@ public class MemberController {
 	
 	//마이페이지
 	@RequestMapping(value = "myPage")
-	public void myPage(@RequestParam(defaultValue = "0") int showMyinfo, RedirectAttributes rd){
-		
+	public String myPage(@RequestParam String subMenu, Model model){
+		model.addAttribute("subMenu", subMenu);
+		return "/member/myPage";
 	}
 	
 	//showMyinfo

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,34 +14,6 @@
 <link href="${pageContext.request.contextPath}/resources/css/jquery.bxslider.css" rel="stylesheet">
 </head>
 <script type="text/javascript">
-
-//페이지 시작시 받아온 값에 따라 서브 메뉴 ajax로 보여짐
-$(function() {
-	var subSelect = $("#subSelect").val();
-	//회원 정보
-	if(subSelect == 1){
-		$.ajax({
-			url : "${pageContext.request.contextPath}/member/myPage/showMyinfo",
-			type : "post",
-			success : function(data){
-				data = data.trim();
-				$("#subView").html(data);
-			}
-		});
-	}
-	//주문내역
-	if(subSelect == 2){
-		
-	}
-	//장바구니
-	if(subSelect == 3){
-			
-	}
-	//문의 내역
-	if(subSelect == 4){
-		
-	}
-});
 
 
 
@@ -68,7 +41,6 @@ $(function() {
 	
 	
 	<!-- 서브 메뉴 부분 -->
-	<input type="hidden" id="subSelect" value="${subSelect }">
 	<div style="margin-top: 100px">
 		<a href="">주문 배송</a>
 		<a href="">장바구니</a>
@@ -78,6 +50,9 @@ $(function() {
 	
 	<!-- 서브 내용 -->
 	<div id="subView">
+	<c:if test="${subMenu == 'showMyinfo' }">
+		<c:import url="/member/myPage/showMyinfo"></c:import>
+	</c:if>
 ${message }
 	</div>	
 	
