@@ -238,7 +238,7 @@ function idCheck() {
 								Sign Up</a></li>
 					</c:if>
 					<c:if test="${sessionScope.member ne null}">
-						<li><a href="${pageContext.request.contextPath}/member/myPage">MY PAGE</a></li>
+						<li><a href="${pageContext.request.contextPath}/member/myPage?subMenu=showMyPage">MY PAGE</a></li>
 						<li><a href="${pageContext.request.contextPath}/member/memberLogout">LOGOUT</a></li>
 					</c:if>
 				</ul>
