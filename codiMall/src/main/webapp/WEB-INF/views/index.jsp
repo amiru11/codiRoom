@@ -79,9 +79,13 @@
 		function showSaleItem(sale_curPage) {
 
 			$.ajax({
-		        url: '/codi/board/bestList?curPage='+ sale_curPage + '&perPage=3',//지금은 일단 겟방식으로 ajax를 실행합니다
+		        url: '/codi/board/bestList',//지금은 일단 겟방식으로 ajax를 실행합니다
 		        type: 'GET',
 		        datatype : 'json',
+		        data :{
+		        	curPage:sale_curPage,
+		        	perPage:3
+		        },
 		        success: function(data)
 		        {
 		        	//var result = JSON.parse(data);
