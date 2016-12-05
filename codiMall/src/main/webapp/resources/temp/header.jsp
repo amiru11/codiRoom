@@ -12,10 +12,8 @@
 			var gender = $('input:radio[name=gender]:checked').val();
 			var tel0 = $("#tel0").val();
 			var tel1 = $("#tel1").val();
-			var tel2 = $("#tel2").val();
-			var tel3 = $("#tel3").val();
+
 			var check = false;
-			
 			if(id == '') {
 				alert('이메일을 입력하세요.');
 				$("#id").focus();
@@ -84,32 +82,41 @@
 				$("#tel0").focus();
 				return check;
 			}
-			if(tel2 == ''){
+			if(tel1 == ''){
 				alert("전화번호를 입력하세요.");
-				$("#tel2").focus();
+				$("#tel1").focus();
 				return check;
 			}
-			if($("#tel2").val().length < 3){
+			var telChar = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})[0-9]{3,4}[0-9]{4}$/;
+			 if(telChar.test(tel1) == false){
+		        	alert("전화번호 형식이 다릅니다.");
+		        	$("#tel1").focus();
+		        	return check;
+		        }
+			if($("#tel1").val().length < 10){
 				alert("전화번호를 입력해주세요.")
-				$("#tel2").focus();
-				return check;
-			}
-			if(tel3 == ''){
-				alert("전화번호를 입력하세요.");
-				$("#tel3").focus();
-				return check;
-			}
-			if($("#tel3").val().length < 4){
-				alert("전화번호를 입력해주세요.")
-				$("#tel3").focus();
+				$("#tel1").focus();
 				return check;
 			}
 			check = true;
 			if(check == true){
+				alert(1);
 				$("#jfrm").submit();
 			}
-		});		
+		});
 	});
+	
+function telCheck() {
+	var tel1 = $("#tel1").val();
+	var telChar = /[0-9]/;
+	for(var i=0; i<tel1.length; i++){
+        if(telChar.test(tel1.charAt(i)) == false ){
+        	alert("잘못입력하였습니다..");
+        	$("#tel1").focus();
+        	return false;
+        }
+	}
+};
 
 
 //ID 중복 체크
@@ -238,7 +245,7 @@ function idCheck() {
 								Sign Up</a></li>
 					</c:if>
 					<c:if test="${sessionScope.member ne null}">
-						<li><a href="${pageContext.request.contextPath}/member/myPage?subMenu=showMyPage">MY PAGE</a></li>
+						<li><a href="${pageContext.request.contextPath}/member/myPage?subMenu=showMyinfo">MY PAGE</a></li>
 						<li><a href="${pageContext.request.contextPath}/member/memberLogout">LOGOUT</a></li>
 					</c:if>
 				</ul>
@@ -307,7 +314,7 @@ function idCheck() {
 				<h4 class="modal-title">SIGN IN</h4>
 			</div>
 			<div class="modal-body">
-				<form action="${pageContext.request.contextPath}/member/memberJoin" method="post" name="jfrm">
+				<form action="${pageContext.request.contextPath}/member/memberJoin" method="post" name="jfrm" id="jfrm">
 					<div class="form-group">
 						<input type="email" class="form-control decorative-input" id="id" name="id" maxlength="30" placeholder="이메일">
 					</div>
@@ -318,7 +325,7 @@ function idCheck() {
 						<input type="password" class="form-control decorative-input" id="pwc" name="pwc" maxlength="15" placeholder="비밀번호 확인">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control decorative-input" id="name" name="name" placeholder="이름">
+						<input type="text" class="form-control decorative-input" id="name" name="name" maxlength="10" placeholder="이름">
 					</div>
 					<div class="form-group">
 						<input type="date" class="form-control decorative-input" id="birth" name="birth" placeholder="생년월일을 입력하세요">
@@ -333,27 +340,15 @@ function idCheck() {
 							<label for="tel">TEL</label>
 						</div>
 						<div class="col-sm-12">
-							<span class="col-sm-3"> <select class="form-control"
-								id="tel0">
-									<option value="SKT">SKT</option>
-									<option value="KT">KT</option>
-									<option value="LGU">LGU</option>
-							</select>
-							</span> <span class="col-sm-3"> <select class="form-control"
-								id="tel1">
-										<option value="010">010</option>
-										<option value="011">011</option>
-										<option value="016">016</option>
-										<option value="017">017</option>
-										<option value="018">018</option>
-										<option value="019">019</option>
+							<span class="col-sm-3"> <select class="form-control" id="tel0" name="tel0">
+								<option value="">통신사 선택</option>
+								<option value="SKT">SKT</option>
+								<option value="KT">KT</option>
+								<option value="LGU">LGU</option>
 							</select>
 							</span>
 							<span class="col-sm-3">
-								<input type="text" class="form-control" id="tel2" name="tel2" maxlength="4" placeholder="전화번호">
-							</span> 
-							<span class="col-sm-3">
-								<input type="text" class="form-control" id="tel3" name="tel3" maxlength="4" placeholder="전화번호">
+							 <input type="tel" class="form-control" id="tel1" name="tel1" maxlength="11" placeholder="'-' 없이 입력해주세요." onkeyup="telCheck()">
 							</span>
 						</div>
 					</div>

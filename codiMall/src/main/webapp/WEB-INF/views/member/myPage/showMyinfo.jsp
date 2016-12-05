@@ -7,8 +7,6 @@ $(function() {
 		var pwc = $("#pwcM").val();
 		var tel0 = $("#tel0M").val();
 		var tel1 = $("#tel1M").val();
-		var tel2 = $("#tel2M").val();
-		var tel3 = $("#tel3M").val();
 		var check = false;
 		
 		if(pw == ''){
@@ -38,24 +36,20 @@ $(function() {
 			$("#tel0M").focus();
 			return check;
 		}
-		if(tel2 == ''){
+		if(tel1 == ''){
 			alert("전화번호를 입력하세요.");
-			$("#tel2M").focus();
+			$("#tel1M").focus();
 			return check;
 		}
-		if($("#tel2M").val().length < 3){
+		var telChar = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})[0-9]{3,4}[0-9]{4}$/;
+		 if(telChar.test(tel1) == false){
+	        	alert("전화번호 형식이 다릅니다.");
+	        	$("#tel1").focus();
+	        	return check;
+	        }
+		if($("#tel1M").val().length < 10){
 			alert("전화번호를 입력해주세요.")
-			$("#tel2M").focus();
-			return check;
-		}
-		if(tel3 == ''){
-			alert("전화번호를 입력하세요.");
-			$("#tel3M").focus();
-			return check;
-		}
-		if($("#tel3M").val().length < 4){
-			alert("전화번호를 입력해주세요.")
-			$("#tel3M").focus();
+			$("#tel1M").focus();
 			return check;
 		}
 		check = true;
@@ -67,9 +61,7 @@ $(function() {
 					id : $("#idM").val(),
 					pw : pw,
 					tel0 : tel0,
-					tel1 : tel1,
-					tel2 : tel2,
-					tel3 : tel3
+					tel1 : tel1
 				},
 				success : function(data){
 					data = data.trim();
@@ -90,6 +82,19 @@ $(function() {
 		});
 	});
 });
+
+function telCheck() {
+	var tel1 = $("#tel1").val();
+	var telChar = /[0-9]/;
+	for(var i=0; i<tel1.length; i++){
+        if(telChar.test(tel1.charAt(i)) == false ){
+        	alert("잘못입력하였습니다.");
+        	$("#tel1").focus();
+        	return false;
+        }
+	}
+};
+
 </script>
 <input type="hidden" id="idM" value="${member.id }">
 	<label>이메일</label> <span>${member.id }</span><br>
@@ -101,21 +106,11 @@ $(function() {
 	<label>핸드폰</label>
 	<select id="tel0M" name="tel0">
 			<option value="${member.tel0 }">${member.tel0 }</option>
-			<option value="">선택하세요.</option>
+			<option value="">통신사 선택</option>
 			<option value="SKT">SKT</option>
 			<option value="KT">KT</option>
 			<option value="LGU">LGU</option>
 	</select>
-	<select id="tel1M" name="tel1" >
-		<option value="${member.tel1 }">${member.tel1 }</option>
-		<option value="010">010</option>
-		<option value="011">011</option>
-		<option value="016">016</option>
-		<option value="017">017</option>
-		<option value="018">018</option>
-		<option value="019">019</option>
-	</select>
-	<input type="text" id="tel2M" name="tel2" maxlength="4" placeholder="전화번호" value="${member.tel2 }">
-	<input type="text" id="tel3M" name="tel3" maxlength="4" placeholder="전화번호" value="${member.tel3 }"><br>
+	<input type="text" id="tel1M" name="tel1" maxlength="11" placeholder="'-' 없이 입력해주세요." value="${member.tel1 }" onkeyup="telCheck()">
 	<button type="button" id="update">회원 수정</button>
 	<button type="button" id="delete">회원 탈퇴</button>
