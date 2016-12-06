@@ -1,6 +1,7 @@
 package com.basic.codi;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -119,12 +120,13 @@ public class BoardController {
 	
 	//QNA수정//
 	@RequestMapping(value="/qnaUpdate")
-	public String qnaMod(BoardDTO boardDTO, int board_kind, @RequestParam(value="bFile_num") int [] bFile_num, RedirectAttributes ra,MultipartHttpServletRequest mr, HttpSession session){
+	public String qnaMod(BoardDTO boardDTO, int board_kind, @RequestParam(value="checkNum") int checkNum, @RequestParam(value="bFile_num") ArrayList<Integer> bFile_num, RedirectAttributes ra, MultipartHttpServletRequest mr, HttpSession session){
+		String message = "";
 		try {
-			String message = boardService.qnaUpdate(boardDTO, board_kind, bFile_num, mr, session);
-			System.out.println("QNA MOD");
+			message = boardService.qnaUpdate(boardDTO, board_kind, checkNum, bFile_num, mr, session);
+/*			System.out.println("QNA MOD");
 			System.out.println("글 번호 : " + boardDTO.getBoard_num());
-			System.out.println("글 수정 : " + message);
+			System.out.println("글 수정 : " + message);*/
 			ra.addFlashAttribute("message", message);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -83,6 +83,19 @@
 			document.modQnA.submit();
 		});
 		
+		/* 파일체크(등록인지 수정인지) */
+		$("[type='file']").change(function(){
+			$("#checkNum").val("1");
+			alert($("#checkNum").val());
+		});
+		
+		$("#addFile").click(function(){
+			$("[type='file']").change(function(){				
+				$("#checkNum").val("2");
+				alert($("#checkNum").val());
+			});
+		});
+		
 		//댓글등록하기//
 		$("#goComment").click(function(){
 			$.ajax({
@@ -201,7 +214,9 @@
 </script>
 </head>
 <body>
+	<!-- HEADER :S -->
 	<%@ include file="/resources/temp/header.jsp"%>
+	<!-- HEADER :E -->
 	<div class="container">
 		<h2>게시판입니다.</h2>
 		<div class="row">

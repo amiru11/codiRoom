@@ -57,37 +57,47 @@ public class BoardDAO {
 		return result;
 	}
 	
-	//QNA 글수정 FILE도 같이 수정//
-	public int qnaMod(BoardDTO boardDTO,int board_kind,ArrayList<String> fileNames, int [] bFile_num) throws Exception{
+	//QNA 글수정시 FILEUP//
+	public int qnaModFileup(BoardDTO boardDTO, int board_kind, ArrayList<String> fileNames) throws Exception{		
 		int result = 0;
-		
-		Map<String, Object> data = new HashMap<String, Object>();//fileDB에 등록해줄 맵을 만들어준다//
-		int refNum = boardDTO.getBoard_num();
-		System.out.println("refNum : " + refNum);
 		if(board_kind==3){
-			result = sqlSession.update(namespace3+"boardUpdate",boardDTO);//board DB 수정//
+			int refNum = boardDTO.getBoard_num();
+			Map<String, Object> data = new HashMap<String, Object>();//fileDB에 등록해줄 맵을 만들어준다//
+			
 			for(int i=0;i<fileNames.size();i++){
 				data.put("bFile_refNum", refNum);
 				data.put("bFile_fileName", fileNames.get(i));
 				System.out.println("파일 이름 : " + fileNames.get(i));
-				sqlSession.insert(namespace3+"fileWrite", data);
+				result = sqlSession.insert(namespace3+"fileWrite", data);
 			}
-/*			for(int i=0;i<fileNames.size();i++){
-				data.put("bFile_refNum", refNum);
-				data.put("bFile_fileName", fileNames.get(i));
-				data.put("bFile_num", bFile_num[i]);//이미지파일의 번호
-				System.out.println("파일 이름 : " + fileNames.get(i));
-				System.out.println("파일 번호 : " + bFile_num[i]);
-				System.out.println("게시글 번호 : " + refNum);
-				if(fileNames.size()<bFile_num.length || fileNames.size()==bFile_num.length){					
+		}
+		return result;
+	}
+	
+	
+	
+	
+	//QNA 글수정 FILE도 같이 수정//
+	public int qnaMod(BoardDTO boardDTO, int board_kind, ArrayList<String> fileNames, ArrayList<Integer> bFile_num, int checkNum) throws Exception{
+		int result = 0;
+		
+		Map<String, Object> data = new HashMap<String, Object>();//fileDB에 등록해줄 맵을 만들어준다//
+		int refNum = boardDTO.getBoard_num();
+		//System.out.println("refNum : " + refNum);
+		if(board_kind==3){
+			result = sqlSession.update(namespace3+"boardUpdate",boardDTO);//board DB 수정//
+			
+				for(int i=0;i<bFile_num.size();i++){
+					System.out.println(111111111);
+					data.put("bFile_refNum", refNum);
+					data.put("bFile_fileName", fileNames.get(i));
+					data.put("bFile_num", bFile_num.get(i));
+					System.out.println("파일 번호 : " + bFile_num.get(i));
+					System.out.println("파일 이름 : " + fileNames.get(i));
+					
 					//바꾸려는 이미지의 갯수가 현재 이미지 갯수와 같을 때 & 적을 때//
-					sqlSession.update(namespace3+"fileUpdate", data);//board_files DB 수정//
-				}else if(fileNames.size()<bFile_num.length){
-					//바꾸려는 이미지의 갯수가 현재 이미지 갯수보다 많을 때 ex)img는 1개 업데이트는 2개 할 때//
-					sqlSession.insert(namespace3+"fileWrite", data);
+					sqlSession.update(namespace3+"fileUpdate", data);//board_files DB 수정//	
 				}
-				
-			}*/
 		}
 		return result;
 	};	

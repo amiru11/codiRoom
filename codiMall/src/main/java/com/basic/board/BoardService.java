@@ -75,35 +75,54 @@ public class BoardService {
 	}	
 	
 	//QNA수정//
-	public String qnaUpdate(BoardDTO boardDTO, int board_kind, int [] bFile_num, MultipartRequest mr, HttpSession session) throws Exception {
+	public String qnaUpdate(BoardDTO boardDTO, int board_kind, int checkNum, ArrayList<Integer> bFile_num, MultipartRequest mr, HttpSession session) throws Exception {
 		int result = 0;
 		String path = session.getServletContext().getRealPath("resources/upload");//파일저장경로 만들어주기
 		List<MultipartFile> files = mr.getFiles("files");//files로 지정된 애들을 List에 집어넣는다
 		ArrayList<String> fileNames = new ArrayList<String>();
-		
-		for(int i=0;i<bFile_num.length;i++){
-			System.out.println(bFile_num[i]);
+		ArrayList<String> fileNames2 = new ArrayList<String>();
+		//ArrayList<Integer> bFile_num = new ArrayList<Integer>();
+		MultipartFile mf = null;
+		if(checkNum==1){
+			for(int i = 0; i<bFile_num.size();i++){
+				//System.out.println("bFile_num : " + bFile_num[i]);
+				mf = files.get(i);//반복문이 돌 동안 하나씩 뽑아준다
+				System.out.println(mf);
+				if(mf.getOriginalFilename()!=""){	
+					System.out.println(222222222);
+					String fileName = UUID.randomUUID().toString()+"_" + mf.getOriginalFilename();//랜덤 아이디를 붙어주면서 fileName 만들어주기
+					File file = new File(path, fileName);
+					mf.transferTo(file);//TransferTo를 통해 파일객체에 경로+파일명 저장
+					System.out.println(file);
+					fileNames.add(fileName);//fileNames ArrayList에 만들어준 fileName을 담아준다
+					//System.out.println("파일명 : " + fileNames.get(i));
+				}
+			}			
+			result = boardDAO.qnaMod(boardDTO, board_kind, fileNames, bFile_num, checkNum);	
+			System.out.println("result : " +result);
 		}
-		
-		for(int i = 0; i<files.size();i++){
-			MultipartFile mf = files.get(i);//반복문이 돌 동안 하나씩 뽑아준다
-			String fileName = UUID.randomUUID().toString()+"_" + mf.getOriginalFilename();//랜덤 아이디를 붙어주면서 fileName 만들어주기
-			File file = new File(path, fileName);
-			mf.transferTo(file);//TransferTo를 통해 파일객체에 경로+파일명 저장
-			System.out.println(file);
-			fileNames.add(fileName);//fileNames ArrayList에 만들어준 fileName을 담아준다
-			System.out.println("파일명 : " + fileNames.get(i));
-			
-		}
-		result = boardDAO.qnaMod(boardDTO, board_kind, fileNames, bFile_num);
-			String message = "";
-			if(result > 0){
-				message = "등록완료!";
-			}else{
-				message = "등록실패!";
+		else if(checkNum==2){
+			for(int j = bFile_num.size(); j<files.size();j++){
+				mf = files.get(j);//반복문이 돌 동안 하나씩 뽑아준다
+				String fileName = UUID.randomUUID().toString()+"_" + mf.getOriginalFilename();//랜덤 아이디를 붙어주면서 fileName 만들어주기
+				File file = new File(path, fileName);
+				mf.transferTo(file);//TransferTo를 통해 파일객체에 경로+파일명 저장
+				System.out.println(file);
+				System.out.println(fileName);
+				fileNames2.add(fileName);//fileNames ArrayList에 만들어준 fileName을 담아준다
+				//System.out.println("파일명 : " + fileNames2.get(j));
+				result = boardDAO.qnaModFileup(boardDTO, board_kind, fileNames2);
 			}
-			System.out.println("결과 : "+message);
-			return message;
+		}
+		
+		String message = "";
+		if(result > 0){
+			message = "등록완료!";
+		}else{
+			message = "등록실패!";
+		}
+		System.out.println("결과 : "+message);
+		return message;
 	}
 	
 	//수정//
