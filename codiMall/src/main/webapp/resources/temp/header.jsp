@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css">
 <script type="text/javascript">
 	$(function(){
 		$("#joinCom").click(function(){
@@ -129,6 +130,9 @@ function idCheck() {
 
 </script>
 <style>
+.navbar{
+	font-family: 'Hanna', sans-serif;
+}
 .separator {
     background: none;
     height: 34px;
@@ -219,15 +223,15 @@ function idCheck() {
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 	
-				<ul class="nav navbar-nav" style="margin-top: 60px;">
-					<!--            test li s -->
+				<ul class="nav navbar-nav" style="margin-top: 60px; margin-left: 50px;">
+					<!--  test li s -->
 	
 					<li><a href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
-					<li><a href="${pageContext.request.contextPath}/product/productList">PRODUCTLIST</a></li>
+					<li><a href="${pageContext.request.contextPath}/product/productList">ITEM</a></li>
 					<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOGIN</a></li>
 					
 	
-					<!--            test li e -->
+					<!--  test li e -->
 	
 				</ul>
 				<ul class="nav navbar-nav navbar-right">

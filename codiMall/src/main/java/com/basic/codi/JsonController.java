@@ -36,16 +36,5 @@ public class JsonController {
 		retVal.put("eachList", productService.productEachList(product_num, productSize_size));
 		return retVal;
 	}
-
-	@RequestMapping(value="/sale_item", method=RequestMethod.POST)
-	public Map<String, Object> sale_item(@RequestParam HashMap<String, Object> param){
-		System.out.println(param);
-		
-		HashMap<String, Object> hashmap = new HashMap<String, Object>();
-		hashmap.put("KEY", "VALUE");
-		
-		return hashmap;
-		
-	}
 	
 }

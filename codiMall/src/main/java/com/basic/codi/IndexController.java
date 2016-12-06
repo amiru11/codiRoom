@@ -30,9 +30,9 @@ public class IndexController {
 	@RequestMapping(value="/board/bestList", method= RequestMethod.GET)
 	@ResponseBody//responseBody 사용시 model 불필요
 	public ResponseEntity<List<BoardDTO>> boardlist(@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="3") int perPage, Model model){
-		System.out.println("JSON BEST LIST");
-		System.out.println("cur : " +curPage);
-		System.out.println("per : " +perPage);
+		//System.out.println("JSON BEST LIST");
+		//System.out.println("cur : " +curPage);
+		//System.out.println("per : " +perPage);
 		List<BoardDTO> list = boardService.bestList(curPage, perPage, model);
 		ResponseEntity<List<BoardDTO>> re ;
 		if(HttpStatus.OK != null){			

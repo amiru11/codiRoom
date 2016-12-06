@@ -1,0 +1,25 @@
+@CHARSET "UTF-8";
+
+.pagination>li>a, .pagination>li>span {
+	font-family: 'Hanna', sans-serif;
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #444444;
+    text-decoration: none;
+    border: none;
+}
+
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+    z-index: 2;
+   	color: #006633;
+    font-weight: bold;
+    background: none;
+    border : none;
+}
+
+.center-block {
+	text-align: center;
+}

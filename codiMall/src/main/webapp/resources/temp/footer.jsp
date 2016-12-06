@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/jejugothic.css">
 
 <style>
 .footer-ul > li > a{
@@ -8,37 +9,37 @@
 	color : #fff;
 }
 </style>
-
-<div id="footer">
-	<div style="margin-top: 50px; padding-top: 30px;">
-		<ul class="list-inline footer-ul">
-			<li style="margin-left: 400px;">
-				<a href="" target="_blank" class="link">MAPSSI 소개</a>
-			</li>
-			<li>
-				<a href="" target="_blank" class="link">개인 정보 수집 및 이용</a>
-			</li>
-			<li>
-				<a href="" target="_blank" class="link">사업제휴</a>
-			</li>
-			<li>
-				<a href="" target="_blank" class="link">채용 정보</a>
-			</li>
-
-			<li class="btn" style="margin-left: 200px;"> 
-				<a href="#">
-					<span class="glyphicon glyphicon-chevron-up"></span>TOP 
-				</a>
-			</li>	
-		</ul>
-		<ul class="list-inline text-center" style="font-size: 14px; color:#fff; margin-bottom: 10px; margin-top: 10px;">
-			<li> 
-				<strong>
-					© 2015 All right reserved. mapssi
-				</strong>
-			</li>
-		</ul>
-	</div>
+<div class="container-fluid" style="padding : 0;">
+	<div id="footer">
+		<div style="margin-top: 50px; padding-top: 30px;">
+			<ul class="list-inline footer-ul">
+				<li style="margin-left: 400px;">
+					<a href="" target="_blank" class="link">MAPSSI 소개</a>
+				</li>
+				<li>
+					<a href="" target="_blank" class="link">개인 정보 수집 및 이용</a>
+				</li>
+				<li>
+					<a href="" target="_blank" class="link">사업제휴</a>
+				</li>
+				<li>
+					<a href="" target="_blank" class="link">채용 정보</a>
+				</li>
+	
+				<li class="btn" style="margin-left: 200px;"> 
+					<a href="#">
+						<span class="glyphicon glyphicon-chevron-up"></span>TOP 
+					</a>
+				</li>	
+			</ul>
+			<ul class="list-inline text-center" style="font-size: 14px; color:#fff; margin-bottom: 10px; margin-top: 10px;">
+				<li> 
+					<strong>
+						© 2015 All right reserved. mapssi
+					</strong>
+				</li>
+			</ul>
+		</div>
 		<div style="font-size:11px; margin-left: 400px;" >
 			<ul class="list-inline" style="color:#fff;line-height:1.5em;">
 				<li>
@@ -60,3 +61,4 @@
 			</ul>
 		</div>	
 	</div>
+</div>	

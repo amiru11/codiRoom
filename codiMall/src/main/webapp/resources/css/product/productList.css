@@ -1,0 +1,78 @@
+@CHARSET "UTF-8";
+.sub-header > li {
+	line-height: 70px;
+    margin-left: 50px;
+}
+.sub-header > li > a{
+    display: block;
+    font-size: 14px;
+    color: #444444;
+    display: block;
+    text-align: center;
+    width: 80px;
+    line-height: 20px;
+}
+.sub-header > li > a:HOVER {
+	cursor : pointer;
+	color: #006633;
+    font-weight: bold;
+    background: none;
+}
+.item .left{
+	float: left;
+    width: 255px;
+    margin-right: 15px;
+    margin-top: 15px;
+}
+.item .right{
+	float: left;
+    padding-left: 30px;
+    border-left: 1px solid #eeeeee;
+}
+.category-type > li > a{
+display: block;
+    font-size: 16px;
+    color: #444444;
+    display: inline-block;
+    text-align: center;
+    line-height: 20px;
+}
+.category-type > li > a:HOVER{
+	cursor : pointer;
+	color: #006633;
+    font-weight: bold;
+    background: none;
+}
+.category_div{
+	border: 1px solid #eeeeee;
+    width: 253px;
+}
+.category_ul{
+	background: #f7f7f7;
+    height: 240px;
+    overflow-x: auto;
+}
+.category_chkbox{
+	width: 15px;
+    height: 15px;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    top: 3px;
+    background: url(/codi/resources/images/checkbox.png); 
+}
+.category_ul .selected{
+	background: url(/codi/resources/images/checkbox_sel.png);
+}
+.category_chkbox input[type="checkbox"] {
+    margin: 0;
+    position: absolute;
+    z-index: 2;
+    cursor: pointer;
+    outline: none;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+}

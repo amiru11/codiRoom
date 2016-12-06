@@ -133,7 +133,7 @@
   -o-transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%); }
-  @media (max-width: 1440px) {
+  @media (max-width: 1980px) {
     #homepage-slider .bx-wrapper .bx-pager {
       top: auto;
       bottom: 0;
