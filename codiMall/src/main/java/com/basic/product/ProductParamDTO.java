@@ -1,7 +1,7 @@
 package com.basic.product;
 
 public class ProductParamDTO {
-	private int sel;//최저가 & 최대가
+	private int sel;//최저가 & 최대가 & 최신순 등 정렬종류
 	private int []kind_num; //상품 종류 (상의, 하의, etc..)
 	private String []color; //색깔
 	private String []size; //사이즈

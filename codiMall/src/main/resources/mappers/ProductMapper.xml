@@ -120,13 +120,16 @@
 			</foreach>
 		</if>
 		<choose>
-			<when test="productParamDTO.sel == 2">
+			<when test="productParamDTO.sel == 2"><!-- 오래된 거 -->
 				order by p.PRODUCT_NUM asc
 			</when>
-			<when test="productParamDTO.sel == 3">
+			<when test="productParamDTO.sel == 3"><!-- 최신순 -->
+				order by p.PRODUCT_NUM desc
+			</when>
+			<when test="productParamDTO.sel == 4"><!-- 저가순 -->
 				order by pi.productInfo_price asc
 			</when>
-			<when test="productParamDTO.sel == 4">
+			<when test="productParamDTO.sel == 5"><!-- 고가순 -->
 				order by pi.productInfo_price desc
 			</when>
 			<otherwise>

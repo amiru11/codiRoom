@@ -12,10 +12,10 @@
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	$(function(){
-		$(".sel_type").click(function(){//검색타입 글자클릭시 라디오버튼 바뀌게
-			$(".sel_radio").attr("checked",null);//checked속성을 전부 다 지워준다.
-			$(this).prev("input").attr("checked","checked");//그다음 해당하는 radio에 checked를 해준다
-		});
+		//$(".sel_type").click(function(){//검색타입 글자클릭시 라디오버튼 바뀌게
+		//	$(".sel_radio").attr("checked",null);//checked속성을 전부 다 지워준다.
+		//	$(this).prev("input").attr("checked","checked");//그다음 해당하는 radio에 checked를 해준다
+		//});
 		
 		$(".chkbox").click(function(){//체크되면 검정색 배경으로 바꿔주기 name :1 배경X name:2 배경O
 			/* alert($(this).parent().attr("name")); */
@@ -32,6 +32,24 @@
 			} 
 		});
 		
+		//ajax로 라디오버튼에 따라서 정렬 바꿔주기
+		
+		$('.sel_type').click(function(){
+			alert($(this).attr("name"));
+			var selv = $(this).attr("name");
+ 			$.ajax({
+				url : "${pageContext.request.contextPath}/product/productList",	//경로
+				type : "GET",//메서도형식
+				data : {
+					sel : selv
+				},//들어가는 값
+				success : function(data){//성공했을 때 
+					location.href="${pageContext.request.contextPath}/product/productList?sel="+selv;
+					$(this).css("color","#006633");
+					$(this).css("font-weight","bold");
+				}
+			});
+		});
 	});
 </script>
 </head>
@@ -59,9 +77,7 @@
 			<div class="col-lg-12">
 			<div class="left col-lg-4">
 				<form action="${pageContext.request.contextPath}/product/productList" method="get">
-					<!-- curPage : <input type="number" name="curPage"><br>
-					perPage : <input type="number" name="perPage"><br> -->
-					sel : <input type="number" name="sel"><br>
+					sel : <input type="number" name="sel"><br><!-- 최신순 인기순 높은가격순 낮은가격순 -->
 					
 					<div class="category_div">
 						<p>CATEGORY</p>
@@ -132,13 +148,7 @@
 								<span>GRAPE</span>									
 							</li>
 						</ul>
-															
-						<!-- color_ : <input type="checkbox" value="ORANGE" name="color">
-						color_yellow : <input type="checkbox" value="YELLOW" name="color">
-						color_green : <input type="checkbox" value="GREEN" name="color">
-						color_blue : <input type="checkbox" value="BLUE" name="color">
-						color_navy : <input type="checkbox" value="NAVY" name="color">
-						color_grape : <input type="checkbox" value="GRAPE" name="color"> -->
+
 					</div>
 					<div class="category_div">
 						<p>SIZE</p>
@@ -166,15 +176,16 @@
 					<button>SUBMIT</button>
 				</form>			
 			</div>
+
 			<div class="right col-lg-8">
 				<!-- 상품 리스트:S -->
 				<nav class="navbar">
 					<div class="navbar-collapse collapse">
 						<ul class="nav navbar-nav category-type">
-							<li><input type="radio" name="type" checked="checked" class="sel_radio"><a class="sel_type">최신순</a></li>
-							<li><input name="type" type="radio" class="sel_radio"><a class="sel_type">인기순</a></li>
-							<li><input name="type" type="radio" class="sel_radio"><a class="sel_type">낮은 가격 순</a></li>
-							<li><input name="type" type="radio" class="sel_radio"><a class="sel_type">높은 가격 순</a></li>
+							<li><!-- <input name="sel" type="radio" class="sel_radio" value="3" checked="checked"> --><a class="sel_type" name="3">최신순</a></li>
+							<li><!-- <input name="sel" type="radio" class="sel_radio" value="3"> --><a class="sel_type" name="3">인기순</a></li>
+							<li><!-- <input name="sel" type="radio" class="sel_radio" value="4"> --><a class="sel_type" name="4">낮은 가격 순</a></li>
+							<li><!-- <input name="sel" type="radio" class="sel_radio" value="5"> --><a class="sel_type" name="5">높은 가격 순</a></li>
 						</ul>					
 					</div>
 				</nav>
