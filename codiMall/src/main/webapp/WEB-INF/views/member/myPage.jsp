@@ -53,8 +53,8 @@ $(function() {
 	<c:if test="${subMenu == 'showMyinfo' }">
 		<c:import url="/member/myPage/showMyinfo"></c:import>
 	</c:if>
-	testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestv
-${message }
+	sd
+	${message }
 	</div>	
 	
 	<br>
