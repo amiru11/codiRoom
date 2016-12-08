@@ -113,23 +113,20 @@
 			</foreach>
 		</if>
 		<if test="productParamDTO.size != null ">
-			and UPPER(pe.PRODUCTEACH_size) in
+			and UPPER(pe.PRODUCTsize_size) in
 			<foreach item="item" index="index" collection="productParamDTO.size"
 				open="(" separator="," close=")">
 				UPPER(#{item})
 			</foreach>
 		</if>
 		<choose>
-			<when test="productParamDTO.sel == 2"><!-- 오래된 거 -->
+			<when test="productParamDTO.sel == 2">
 				order by p.PRODUCT_NUM asc
 			</when>
-			<when test="productParamDTO.sel == 3"><!-- 최신순 -->
-				order by p.PRODUCT_NUM desc
-			</when>
-			<when test="productParamDTO.sel == 4"><!-- 저가순 -->
+			<when test="productParamDTO.sel == 3">
 				order by pi.productInfo_price asc
 			</when>
-			<when test="productParamDTO.sel == 5"><!-- 고가순 -->
+			<when test="productParamDTO.sel == 4">
 				order by pi.productInfo_price desc
 			</when>
 			<otherwise>
@@ -266,6 +263,48 @@
 	</insert>
 
 	<!-- Product Size Add E -->
+
+	<!-- Ajax -->
+
+	<select id="SelProductEachGet" parameterType="com.basic.product.ProductEachDTO"
+		resultType="int">
+		select pe.PRODUCTEACH_EACH from PRODUCT p,PRODUCTEACH
+		pe,PRODUCTSIZE ps
+		where pe.PRODUCT_NUM = p.PRODUCT_NUM and
+		ps.PRODUCT_NUM =
+		p.PRODUCT_NUM
+		and ps.PRODUCTSIZE_SIZE =
+		pe.PRODUCTSIZE_SIZE and
+		p.PRODUCT_NUM = #{product_num} and
+		ps.PRODUCTSIZE_SIZE =#{productSize_size} and pe.PRODUCTEACH_COLOR
+		=#{productEach_color}
+
+	</select>
+
+	<select id="SelAllProductSize" resultType="java.lang.String">
+		select DISTINCT
+		ps.PRODUCTSIZE_SIZE from product p ,
+		PRODUCTSIZE ps
+		where ps.PRODUCT_NUM
+		= p.PRODUCT_NUM
+	</select>
+
+	<select id="SelAllProductColor" resultType="java.lang.String">
+		select DISTINCT
+		pe.PRODUCTEACH_COLOR from PRODUCT p , PRODUCTEACH pe
+		where
+		pe.PRODUCT_NUM = p.PRODUCT_NUM
+	</select>
+
+	<select id="SelAllKindNum" resultType="int">
+		select DISTINCT pk.KIND_NUM from PRODUCT p , PRODUCTKIND pk
+		where pk.PRODUCT_NUM = p.PRODUCT_NUM
+	</select>
+
+
+	<!-- Ajax -->
+
+
 
 
 

@@ -120,5 +120,27 @@ public class ProductDAO {
 		productEachDTO.setProductSize_size(productSize_size);
 		return sqlSession.selectList(namespace+"SelProductEachList", productEachDTO);
 	}
+	
+	public int productEachGet(ProductEachDTO productEachDTO){
+		System.out.println("EA--"+sqlSession.selectOne(namespace+"SelProductEachGet", productEachDTO));
+		return sqlSession.selectOne(namespace+"SelProductEachGet", productEachDTO);
+	}
+	
+	//product List seach use size and color and  kind_num
+	
+	public List<String> allProductSize(){
+		return sqlSession.selectList(namespace+"SelAllProductSize");
+	}
+	
+	public List<String> allProductColor(){
+		return sqlSession.selectList(namespace+"SelAllProductColor");
+	}
+	
+	public List<Integer> allKindNum(){
+		return sqlSession.selectList(namespace+"SelAllKindNum");
+	}
+	
+	
+	
 
 }

@@ -1,5 +1,9 @@
 package com.basic.basket;
 
+import java.util.List;
+
+import com.basic.product.ProductEachDTO;
+
 public class BasketListDTO {
 	
 	private String basket_num;
@@ -10,6 +14,18 @@ public class BasketListDTO {
 	private String basketInfo_size;
 	private String basketInfo_color;
 	private int  basketInfo_each;
+	private List<ProductEachDTO> productEachDTO;
+	
+	
+	
+	public List<ProductEachDTO> getProductEachDTO() {
+		return productEachDTO;
+	}
+
+	public void setProductEachDTO(List<ProductEachDTO> productEachDTO) {
+		this.productEachDTO = productEachDTO;
+	}
+
 	public String getBasket_num() {
 		return basket_num;
 	}
