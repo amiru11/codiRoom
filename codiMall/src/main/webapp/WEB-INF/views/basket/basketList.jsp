@@ -98,12 +98,15 @@ td:LAST-OF-TYPE {
 
 			thisTr.find(".bas_td_inp_each").focus(function() {
 				$(this).keydown(function() {
+					numcheck();
 					productEachGet(thisTr);
 				});
 				$(this).keyup(function() {
+					numcheck();
 					productEachGet(thisTr);
 				});
 				$(this).keyblur(function() {
+					numcheck();
 					productEachGet(thisTr);
 				});
 			})
@@ -134,6 +137,11 @@ td:LAST-OF-TYPE {
 			}
 		});
 	}
+	function numcheck()  {  
+		  if ((event.keyCode==69))  {
+		      event.returnValue=false;
+		  }       
+		 }
 </script>
 </head>
 <body>

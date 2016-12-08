@@ -20,9 +20,9 @@ table, table tr, tr td, th {
 			},
 			success : function(data) {
 				$("#div_ck_size").html("");
-				var x="";
+				var x = "";
 				$.each(data.sizeList, function(index, value) {
-					x=x+value+' <input type="checkbox" value="'+value+'" name="size">'					
+					x = x + value + '<input type="checkbox" value="' + value + '" name="size"><BR>'
 				});
 				$("#div_ck_size").html(x);
 			},
@@ -39,9 +39,9 @@ table, table tr, tr td, th {
 			},
 			success : function(data) {
 				$("#div_ck_color").html("");
-				var x="";
+				var x = "";
 				$.each(data.colorList, function(index, value) {
-					x=x+value+' <input type="checkbox" value="'+value+'" name="color">'					
+					x = x + value + '<input type="checkbox" value="' + value + '" name="color"><BR>'
 				});
 				$("#div_ck_color").html(x);
 			},
@@ -58,9 +58,9 @@ table, table tr, tr td, th {
 			},
 			success : function(data) {
 				$("#div_ck_kind").html("");
-				var x="";
+				var x = "";
 				$.each(data.kindNumList, function(index, value) {
-					x=x+value+' <input type="checkbox" value="'+value+'" name="kind_num">'					
+					x = x + value + '<input type="checkbox" value="' + value + '" name="kind_num"><BR>'
 				});
 				$("#div_ck_kind").html(x);
 			},
@@ -100,9 +100,17 @@ table, table tr, tr td, th {
 			<option value="2">먼저나온순</option>
 			<option value="3">최저가순</option>
 			<option value="4">최고가순</option></select>
-		<div id="div_ck_kind"></div>
-		<div id="div_ck_size"></div>
-		<div id="div_ck_color"></div>
+		<div id="div_out_search_select">
+		KIND<br>
+			<div id="div_ck_kind"
+				style="width: 200px; height: 100px; overflow: scroll;"></div>
+				SIZE<BR>
+			<div id="div_ck_size"
+				style="width: 200px; height: 100px; overflow: scroll;"></div>
+				COLOR<br>
+			<div id="div_ck_color"
+				style="width: 200px; height: 100px; overflow: scroll;"></div>
+		</div>
 
 		<button>SUBMIT</button>
 

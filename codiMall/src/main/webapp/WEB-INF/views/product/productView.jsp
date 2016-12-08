@@ -15,11 +15,14 @@ table, table tr, tr td, th {
 <script type="text/javascript">
 	$(function() {
 		
-		$("#sel_size_a").click(function(){
+		
+		$("#sel_size_a").change(function(){
 			if($("#sel_size_a").val()!=""){
+				$("#inp_each").css("display","none")
 				selSize();
 				$("#sel_size_b").css("display","inline-block");
 			}else{
+				$("#inp_each").css("display","none")
 				$("#sel_size_b").css("display","none");
 				$("#sel_size_b").html("");
 			}
@@ -30,28 +33,35 @@ table, table tr, tr td, th {
 			$("#inh_productSize_size").val($("#sel_size_a").val());
 			$("#inh_productEach_color").val($("#sel_size_b").val());
 		});
-		$("#sel_size_b").click(function(){
-			$("#inh_productSize_size").val($("#sel_size_a").val());
-			$("#inh_productEach_color").val($("#sel_size_b").val());
-			$("#inp_each").val(1);
-			$("#inh_productEach_each").val($("#inp_each").val());
-		});
-
-		$("#inp_each").blur(function(){
-			var as =  $("#inh_productEach_color").val(); 
-			var b = $("."+as+"").val()*1;
-			var c = $("#inp_each").val()*1;
-			if(c*1>b*1){
-				alert("재고초과");
-				$("#inp_each").val(b);
+		$("#sel_size_b").change(function(){
+			if($("#sel_size_b").val()!=""){
+				$("#inp_each").css("display","inline-block")
+				$("#inh_productSize_size").val($("#sel_size_a").val());
+				$("#inh_productEach_color").val($("#sel_size_b").val());
+				$("#inp_each").val(1);
+				$("#inh_productEach_each").val($("#inp_each").val());	
 			}else{
-			$("#inh_productEach_each").val($("#inp_each").val());
+				$("#inp_each").css("display","none")
 			}
 		});
+
+		$("#inp_each").change(function(){
+			numcheck();
+			eachCheck();
+		});
+		$("#inp_each").keydown(function(){
+			numcheck();
+			eachCheck();
+		});
+		$("#inp_each").keyup(function(){
+			numcheck();
+			eachCheck();
+		});
+		
 		
 		$("#btn_basket").click(function(){
-			if($("#sel_size_b").val()!=null){
-				if($("#inp_each").val()!=null){
+			if($("#sel_size_b").val()!=null && $("#sel_size_a").val()!=null ){
+				if($("#inp_each").val()>0){
 					$.ajax({
 					    url : "../basket/basketAdd",
 					    type : "post",
@@ -142,6 +152,23 @@ table, table tr, tr td, th {
 		});
 	}
 	
+	function eachCheck(){
+		var as =  $("#inh_productEach_color").val(); 
+		var b = $("."+as+"").val()*1;
+		var c = $("#inp_each").val()*1;
+		if(c*1>b*1){
+			alert("재고초과");
+			$("#inp_each").val(b);
+		}else{
+		$("#inh_productEach_each").val($("#inp_each").val());
+		}
+	}
+	function numcheck()  {  
+		  if ((event.keyCode==69))  {
+		      event.returnValue=false;
+		  }       
+		 }
+	
 </script>
 </head>
 <body>
@@ -169,7 +196,8 @@ table, table tr, tr td, th {
 		<tr>
 			<td><select id="sel_size_a"></select></td>
 			<td><select id="sel_size_b" style="display: none;"></select></td>
-			<td><input id="inp_each" type="number" min="0"></td>
+			<td><input id="inp_each" accept="e" type="number" min="1"
+				step="1" style="display: none;"></td>
 		</tr>
 		<tr>
 			<td><form id="view_frm" method="post">
