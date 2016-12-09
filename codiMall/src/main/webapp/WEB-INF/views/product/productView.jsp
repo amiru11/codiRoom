@@ -6,15 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<style type="text/css">
-table, table tr, tr td, th {
-	border: 1px solid black;
-}
-</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+<link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/product/productView.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
 <script type="text/javascript">
 	$(function() {
-		
 		
 		$("#sel_size_a").change(function(){
 			if($("#sel_size_a").val()!=""){
@@ -172,59 +170,93 @@ table, table tr, tr td, th {
 </script>
 </head>
 <body>
-	<h1>TEST TABLE</h1>
-	<h1>
-		<a href="${pageContext.request.contextPath}/">HOME</a>
-	</h1>
-	<table>
-		<tr>
-			<td>PRODUCT_NUM</td>
-			<td>${view.product_num}</td>
-			<td>PRODUCT_NAME</td>
-			<td>${view.product_name}</td>
-			<td>PRODUCT_PRICE</td>
-			<td>${view.productInfo_price}</td>
-			<td>PRODUCT_SALERATE</td>
-			<td>${view.productInfo_saleRate}</td>
-		</tr>
-		<tr>
-			<td>PRODUCT_SEARCHWORD</td>
-			<td>${view.productInfo_searchWord}</td>
-			<td>PRODUCT_KINDNUM</td>
-			<td>${view.kind_num}</td>
-		</tr>
-		<tr>
-			<td><select id="sel_size_a"></select></td>
-			<td><select id="sel_size_b" style="display: none;"></select></td>
-			<td><input id="inp_each" accept="e" type="number" min="1"
-				step="1" style="display: none;"></td>
-		</tr>
-		<tr>
-			<td><form id="view_frm" method="post">
-					<input id="inh_product_num" type="text" value="${view.product_num}"
-						name="product_num"> <input id="inh_productSize_size"
-						type="text" name="productSize_size"> <input
-						id="inh_productEach_color" type="text" name="productEach_color">
-					<input id="inh_productEach_each" type="text"
-						name="productEach_each"> <input id="inh_each_each"
-						type="text">
-				</form></td>
-			<td><input id="btn_buy" type="button" value="BUY"></td>
-			<td><input id="btn_basket" type="button" value="BASKET">
-			</td>
-		</tr>
+	<!-- HEADER:S -->
+	<%@ include file="/resources/temp/header.jsp"%>
+	<!-- HEADER:E -->
+	
+	<div class="container" style="padding-top:20px;">
+		<div class="row">
+			<div class="col-sm-12">
+				<!-- 왼쪽 이미지부분 -->
+				<div class="col-sm-6 left-info">
+					<div id="image-block" class="clearfix">
+						<span class="image_loader" style="opacity: 0; display: none;"></span>
+						<div id="big_box" class="product_zoom spotlightActive" style="display:none">
+							<div class="product_img_zoom minus_cursor spotlight" id="big_img_area">
+								<img src="" id="big_img" alt="" style="position: relative; width: 1500px;" onclick="image_zoom.hideLayer('big_box');">
+								<span class="product_arrow_prev"><a href="#" onclick="image_zoom.rollImage('detail_thumb', 'big_img', 'prev'); return false;"><img src="//image.musinsa.com/skin/musinsa/images/d_arrow_prev_big.gif" alt="이전상품사진"></a></span>
+								<span class="product_arrow_next"><a href="#" onclick="image_zoom.rollImage('detail_thumb', 'big_img', 'next'); return false;"><img src="//image.musinsa.com/skin/musinsa/images/d_arrow_next_big.gif" alt="다음상품사진"></a></span>
+							</div>
+							<span class="btn_close_pop" onclick="image_zoom.hideLayer('big_box');">close</span>
+						</div>
+						<div id="detail_bigimg" class="product_img_basic plus_cursor">
+							<span class="product-img">
+								<img src="//image.musinsa.com/images/goods_img/20161202/456712/456712_1_500.jpg" width="500" title="" alt="나이키(NIKE) [나이키] NIKE 볼캡 BLACK_NIK-727042-010" id="bigimg" onclick="image_zoom.showLayer('big_box', 'big_img', 'detail_thumb', currentImageIdx);" style="margin-top: -250px; position: absolute; top: 50%; left: 0px;">
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6 right-info">
+					<table class="table">
+						<tr>
+							<td>PRODUCT_NUM</td>
+							<td>${view.product_num}</td>
+							<td>PRODUCT_NAME</td>
+							<td>${view.product_name}</td>
+							<td>PRODUCT_PRICE</td>
+							<td>${view.productInfo_price}</td>
+							<td>PRODUCT_SALERATE</td>
+							<td>${view.productInfo_saleRate}</td>
+						</tr>
+						<tr>
+							<td>PRODUCT_SEARCHWORD</td>
+							<td>${view.productInfo_searchWord}</td>
+							<td>PRODUCT_KINDNUM</td>
+							<td>${view.kind_num}</td>
+						</tr>
+						<tr>
+							<td><select id="sel_size_a"></select></td>
+							<td><select id="sel_size_b" style="display: none;"></select></td>
+							<td><input id="inp_each" accept="e" type="number" min="1"
+								step="1" style="display: none;"></td>
+						</tr>
+						<tr>
+							<td><form id="view_frm" method="post">
+									<input id="inh_product_num" type="text" value="${view.product_num}"
+										name="product_num"> <input id="inh_productSize_size"
+										type="text" name="productSize_size"> <input
+										id="inh_productEach_color" type="text" name="productEach_color">
+									<input id="inh_productEach_each" type="text"
+										name="productEach_each"> <input id="inh_each_each"
+										type="text">
+								</form></td>
+							<td><input id="btn_buy" type="button" value="BUY"></td>
+							<td><input id="btn_basket" type="button" value="BASKET">
+							</td>
+						</tr>
+				
+				
+				
+					</table>
+				
+					<div id="div_hidden_each"></div>
+				
+					<button id="btn_aa">aaaaa</button>
+					<button id="btn_bb">bbbb</button>
+					<script type="text/javascript">
+						selList();
+					</script>				
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
-	</table>
+	<!-- Footer:S -->
+	<%@ include file="/resources/temp/footer.jsp"%>	
+	<!-- Footer:E -->
 
-	<div id="div_hidden_each"></div>
-
-	<button id="btn_aa">aaaaa</button>
-	<button id="btn_bb">bbbb</button>
-	<script type="text/javascript">
-		selList();
-	</script>
 
 </body>
 </html>
