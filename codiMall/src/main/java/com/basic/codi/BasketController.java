@@ -67,7 +67,7 @@ public class BasketController {
 		String location = "";
 		if (session.getAttribute("member") != null) {
 			message = basketService.basketFix(request, session);
-			location = session.getServletContext().getContextPath() + "/basket/basketList";
+			location = "/basket/basketList";
 			path = "redirect:/result/result";
 		} else {
 			message = "잘못된접근";
@@ -91,7 +91,7 @@ public class BasketController {
 			} else {
 				message = "삭제실패";
 			}
-			location = session.getServletContext().getContextPath() + "/basket/basketList";
+			location ="/basket/basketList";
 
 			path = "redirect:/result/result";
 		} else {

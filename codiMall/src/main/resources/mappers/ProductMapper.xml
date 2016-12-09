@@ -96,8 +96,8 @@
 		where pe.PRODUCT_NUM =
 		p.PRODUCT_NUM
 		and pi.PRODUCT_NUM = p.PRODUCT_NUM
-		and pk.PRODUCT_NUM =
-		p.PRODUCT_NUM
+		and pk.PRODUCT_NUM = p.PRODUCT_NUM 
+		and pe.PRODUCTEACH_EACH not in(0)
 		<if test="productParamDTO.color != null ">
 			and UPPER(pe.PRODUCTEACH_COLOR) in
 			<foreach item="item" index="index" collection="productParamDTO.color"
@@ -264,7 +264,14 @@
 
 	<!-- Product Size Add E -->
 
-	<!-- Ajax -->
+	<!-- PRODUCT EACH UPDATE S -->
+
+	
+
+	<!-- PRODUCT EACH UPDATE E -->
+
+
+	<!-- Ajax S -->
 
 	<select id="SelProductEachGet" parameterType="com.basic.product.ProductEachDTO"
 		resultType="int">
@@ -294,15 +301,18 @@
 		pe.PRODUCTEACH_COLOR from PRODUCT p , PRODUCTEACH pe
 		where
 		pe.PRODUCT_NUM = p.PRODUCT_NUM
+		and pe.PRODUCTEACH_EACH not in(0)
 	</select>
 
 	<select id="SelAllKindNum" resultType="int">
-		select DISTINCT pk.KIND_NUM from PRODUCT p , PRODUCTKIND pk
-		where pk.PRODUCT_NUM = p.PRODUCT_NUM
+		select DISTINCT
+		pk.KIND_NUM from PRODUCT p , PRODUCTKIND pk
+		where pk.PRODUCT_NUM =
+		p.PRODUCT_NUM
 	</select>
 
 
-	<!-- Ajax -->
+	<!-- Ajax E -->
 
 
 

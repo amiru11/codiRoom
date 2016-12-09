@@ -8,10 +8,10 @@
 	var message = "${message}"
 	if (message != "") {
 		alert(message);
-		location.href="${location}"
+		location.href="${pageContext.request.contextPath}${location}"
 	} else {
 		alert("잘못된접근");
-		location.href="/"
+		location.href="${pageContext.request.contextPath}/"
 	}
 	
 </script>

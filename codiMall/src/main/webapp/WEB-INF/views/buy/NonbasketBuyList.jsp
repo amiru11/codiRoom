@@ -33,41 +33,6 @@ td:LAST-OF-TYPE {
 </style>
 <script type="text/javascript">
 	$(function() {
-		$("#btn_allBuy").click(function() {
-			$(".bas_td_check").prop("checked", true);
-			$(".bas_td_check").attr('checked', true);
-			var bas_tr_jq = $(".bas_tr_jq");
-			for (var i = 0; i < bas_tr_jq.length; i++) {
-				if ($(bas_tr_jq[i]).find(".bas_td_check").is(":checked") != true) {
-					$(bas_tr_jq[i]).find(".td_inh_bas_num").attr("disabled", "disabled");
-				} else {
-					$(bas_tr_jq[i]).find(".td_inh_bas_num").attr("disabled", "disabled");
-					$(bas_tr_jq[i]).find(".td_inh_bas_num").removeAttr("disabled");
-				}
-			}
-			$("#tab_form").attr("action", "${pageContext.request.contextPath}/buy/basketBuyList");
-			$("#tab_form").submit();
-		});
-
-		$("#btn_checkBuy").click(function() {
-			if ($(".bas_td_check:checked").length == 0) {
-				alert("1개이상 체크하세요");
-			} else {
-				var bas_tr_jq = $(".bas_tr_jq");
-				for (var i = 0; i < bas_tr_jq.length; i++) {
-					if ($(bas_tr_jq[i]).find(".bas_td_check").is(":checked") != true) {
-						$(bas_tr_jq[i]).find(".td_inh_bas_num").attr("disabled", "disabled");
-					} else {
-						$(bas_tr_jq[i]).find(".td_inh_bas_num").attr("disabled", "disabled");
-						$(bas_tr_jq[i]).find(".td_inh_bas_num").removeAttr("disabled");
-					}
-				}
-				$("#tab_form").attr("action", "${pageContext.request.contextPath}/buy/basketBuyList");
-				$("#tab_form").submit();
-			}
-		});
-
-
 		$("#btn_allDel").click(function() {
 			$(".bas_td_check").prop("checked", true);
 			$(".bas_td_check").attr('checked', true);
@@ -83,8 +48,23 @@ td:LAST-OF-TYPE {
 				$("#tab_form").submit();
 			}
 		});
+		
+		$("#btn_allBuy").click(function() {
+			$(".bas_td_check").prop("checked", true);
+			$(".bas_td_check").attr('checked', true);
+			$("#tab_form").attr("action", "${pageContext.request.contextPath}/buy/basketBuy");
+			$("#tab_form").submit();
+		})
 
+		$("#btn_checkBuy").click(function() {
+			if ($(".bas_td_check:checked").length == 0) {
+				alert("1개이상 체크하세요");
+			} else {
+				$("#tab_form").attr("action", "${pageContext.request.contextPath}/buy/basketBuy");
+				$("#tab_form").submit();
+			}
 
+		})
 
 
 		$("#allCheck").change(function() {
@@ -215,13 +195,14 @@ td:LAST-OF-TYPE {
 				<th class="bas_th_07">07</th>
 				<th class="bas_th_08">08</th>
 				<th class="bas_th_09">09</th>
+
 			</tr>
 			<c:forEach var="list1" items="${list}">
 
 				<tr class="bas_tr_jq">
 					<td><input type="checkbox" value="${list1.basket_num}"
 						name="del_basket_num" class="bas_td_check"></td>
-					<td class="bas_td_bas_num"><input class ="td_inh_bas_num" type="hidden"
+					<td class="bas_td_bas_num"><input type="hidden"
 						value="${list1.basket_num}" name="basket_num">${list1.basket_num}</td>
 					<td class="bas_td_second"><input type="text"
 						class="bas_td_hid_pronum" value="${list1.product_num}"

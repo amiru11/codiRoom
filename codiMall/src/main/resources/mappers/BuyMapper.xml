@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BuyMapper">
+
+	<!-- Buy List S -->
+
+	<select id="SelBuyList" parameterType="com.basic.member.MemberDTO" resultType="com.basic.buy.BuyListDTO">
+		select DISTINCT
+		p.PRODUCT_NUM,p.PRODUCT_NAME,b.BUY_NUM,bs.BUYSTATE_SIZE,bs.BUYSTATE_COLOR,bs.BUYSTATE_EACH,bs.BUYSTATE_PRICE
+		from PRODUCT p, MEMBER m, BUY b , BUYSTATE bs
+		where bs.BUY_NUM = b.BUY_NUM and m.ID = b.ID and p.PRODUCT_NUM =
+		b.PRODUCT_NUM
+		and m.id = #{id}
+		order by b.buy_num desc
+	</select>
+
+
+
+
+	<!-- Buy List E -->
+
+
+
+
+	<!-- BasketBuy List S -->
+	<select id="SelBasketBuyList" parameterType="java.util.HashMap"
+		resultType="com.basic.basket.BasketListDTO">
+		select
+		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,
+		b.BASKET_NUM,bi.BASKETINFO_SIZE,bi.BASKETINFO_COLOR,bi.BASKETINFO_EACH
+		from PRODUCT p , PRODUCTINFO pi, BASKET b , BASKETINFO bi
+		where
+		bi.BASKET_NUM = b.BASKET_NUM and p.PRODUCT_NUM = b.PRODUCT_NUM
+		and
+		pi.PRODUCT_NUM = b.PRODUCT_NUM and pi.PRODUCT_NUM = p.PRODUCT_NUM
+		and
+		b.BASKET_NUM in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	<!-- BasketBuy List E -->
+
+	<!-- BasketBuy S -->
+
+	<update id="UpProductBuy" parameterType="java.util.HashMap">
+		update productEach pes set
+		pes.productEach_each = (
+		(select DISTINCT pe.PRODUCTEACH_EACH from PRODUCT
+		p
+		, PRODUCTSIZE ps, PRODUCTEACH pe
+		where pe.PRODUCT_NUM = p.PRODUCT_NUM
+		and ps.PRODUCT_NUM = p.PRODUCT_NUM and
+		ps.PRODUCTSIZE_SIZE =
+		pe.PRODUCTSIZE_SIZE and ps.PRODUCT_NUM =
+		pe.PRODUCT_NUM
+		and
+		p.PRODUCT_NUM = #{basketListDTO.product_num} and pe.PRODUCTSIZE_SIZE =
+		upper(#{basketListDTO.basketInfo_size})
+		and pe.PRODUCTEACH_COLOR =
+		upper(#{basketListDTO.basketInfo_color})
+		) -
+		#{basketListDTO.basketInfo_each})
+		where pes.product_num = #{basketListDTO.product_num}
+		and upper(pes.productSize_size )= upper(#{basketListDTO.basketInfo_size})
+		and upper(pes.productEach_color )=upper( #{basketListDTO.basketInfo_color})
+
+	</update>
+
+
+
+
+	<insert id="InsBuy" parameterType="java.util.HashMap">
+		insert into buy values
+		(buy_seq.nextval,#{basketListDTO.product_num},#{memberDTO.id})
+	</insert>
+
+	<insert id="InsBuyState" parameterType="java.util.HashMap">
+		insert into buystate
+		values
+		(buy_seq.currval,#{basketListDTO.basketInfo_size},#{basketListDTO.basketInfo_color},
+		#{basketListDTO.basketInfo_each},#{basketListDTO.productInfo_price}*100/(100-#{basketListDTO.productInfo_saleRate})*#{basketListDTO.basketInfo_each},1,0,sysdate,sysdate)
+	</insert>
+
+	<!-- BasketBuy E -->
+
+</mapper>

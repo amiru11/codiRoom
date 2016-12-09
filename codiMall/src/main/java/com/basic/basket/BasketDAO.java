@@ -1,8 +1,5 @@
 package com.basic.basket;
 
-import static org.hamcrest.CoreMatchers.allOf;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,26 +49,25 @@ public class BasketDAO {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("productEachDTO", productEachDTO);
 		map.put("memberDTO", memberDTO);
-		System.out.println("pronum--"+productEachDTO.getProduct_num());
-		System.out.println("Size--"+productEachDTO.getProductSize_size());
-		System.out.println("Color--"+productEachDTO.getProductEach_color());
-		System.out.println("Each--"+productEachDTO.getProductEach_each());
-		
+		System.out.println("pronum--" + productEachDTO.getProduct_num());
+		System.out.println("Size--" + productEachDTO.getProductSize_size());
+		System.out.println("Color--" + productEachDTO.getProductEach_color());
+		System.out.println("Each--" + productEachDTO.getProductEach_each());
+
 		int result = 0;
 		int basket_num = 0;
 		try {
 			Integer a = sqlSession.selectOne(namespace + "SelBasketUseBasNum", map);
-			if(a != null && (int)a>0){
-				basket_num = (int)a;
-				System.out.println("basekt_num---"+basket_num);	
-			}
-			if (basket_num > 0) {
+			System.out.println("aaaaaaa----" + a);
+			if (a != null && (int) a > 0) {
+				basket_num = (int) a;
+				System.out.println("basekt_num---" + basket_num);
 				Integer basket_each = sqlSession.selectOne(namespace + "SelBasketGetEach", basket_num);
 				System.out.println("baseach--" + basket_each);
 				Integer product_each = sqlSession.selectOne(namespace + "SelProuctGetEach", map);
 				System.out.println("proeach--" + product_each);
-				int base = (int)basket_each;
-				int proe = (int)product_each;
+				int base = (int) basket_each;
+				int proe = (int) product_each;
 				System.out.println(base);
 				System.out.println(proe);
 				System.out.println(base + productEachDTO.getProductEach_each());
@@ -91,6 +87,7 @@ public class BasketDAO {
 					System.out.println("upresult2" + result);
 				}
 			} else {
+				System.out.println("firstelse----");
 				result = sqlSession.insert(namespace + "InBasketAdd", map);
 				System.out.println(result);
 				result = sqlSession.insert(namespace + "InBasketInfoAdd", map);
@@ -99,6 +96,9 @@ public class BasketDAO {
 			if (result > 0) {
 				transactionManager.commit(status);
 				System.out.println("success");
+			}else{
+				transactionManager.rollback(status);
+				result = 0;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -118,13 +118,13 @@ public class BasketDAO {
 		basketInfoDTO.setBasketInfo_color(request.getParameter("basketInfo_color"));
 		basketInfoDTO.setBasketInfo_each(Integer.parseInt(request.getParameter("basketInfo_each")));
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-		System.out.println("pronum---"+product_num);
-		System.out.println("basket_num---"+basketInfoDTO.getBasket_num());
-		System.out.println("basketInfoSize---"+basketInfoDTO.getBasketInfo_size());
-		System.out.println("basketInfoColor---"+basketInfoDTO.getBasketInfo_color());
-		System.out.println("basketInfoEach---"+basketInfoDTO.getBasketInfo_each());
+		System.out.println("pronum---" + product_num);
+		System.out.println("basket_num---" + basketInfoDTO.getBasket_num());
+		System.out.println("basketInfoSize---" + basketInfoDTO.getBasketInfo_size());
+		System.out.println("basketInfoColor---" + basketInfoDTO.getBasketInfo_color());
+		System.out.println("basketInfoEach---" + basketInfoDTO.getBasketInfo_each());
 		System.out.println(memberDTO.getId());
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("member", memberDTO);
 		map.put("product", productDTO);
@@ -133,28 +133,28 @@ public class BasketDAO {
 		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 
 		status = transactionManager.getTransaction(def);
-		
-		String message="";
+
+		String message = "";
 
 		int result = 0;
 		try {
 			Integer a = sqlSession.selectOne(namespace + "SelBasketInfo", map);
 			if (a != 0) {
 				message = "동일한 상품이 이미있습니다";
-				System.out.println(sqlSession.selectOne(namespace + "SelBasketInfo", map)); 
+				System.out.println(sqlSession.selectOne(namespace + "SelBasketInfo", map));
 			} else {
 				result = sqlSession.update(namespace + "UpbasketInfo", map);
 				if (result > 0) {
 					transactionManager.commit(status);
 					message = "수정성공";
-				}else{
+				} else {
 					message = "수정실패";
 				}
-			} 
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			transactionManager.rollback(status);
-			message="error";
+			message = "error";
 		}
 		return message;
 	}
