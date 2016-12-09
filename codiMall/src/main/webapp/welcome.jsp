@@ -88,7 +88,7 @@ body{
 		<div class="video-section" style="cursor : pointer;">
 			<div class="pattern-overlay">
 				<a id="bgndVideo" class="player"
-			data-property="{videoURL:'https://youtu.be/oPFkV-m4Nok',containment:'.video-section', autoPlay:true, mute:true, opacity:1}" style="margin-top : 100px;">bg</a>
+			data-property="{videoURL:'https://youtu.be/dZV0_kkzhEY',containment:'.video-section', autoPlay:true, mute:true, opacity:1}" style="margin-top : 100px;">bg</a>
 			</div>
 			<div id="text-area" class="container text-center" style="top : 200px;">
 				<h2 style="text-align: center;">남자의 패션이 바뀌면 &nbsp;남자의 인생이 바뀝니다</h2>

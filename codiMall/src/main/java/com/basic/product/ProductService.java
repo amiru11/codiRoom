@@ -25,6 +25,7 @@ public class ProductService {
 		pageMaker.makePage(totalCount);
 		System.out.println("curPage : " + curPage);
 		System.out.println("perPage : " + perPage);
+		System.out.println("sel : " + productParamDTO.getSel());
 		//임시 페이징//
 		model.addAttribute("paging", pageMaker);
 		return productDAO.productList(pageMaker,productParamDTO);

@@ -208,7 +208,12 @@ function idCheck() {
 #pwc{
 	background-position: right -85px;
 }
-
+#tel0{
+	width: 80px; padding: 0; height: 50px;
+	color:#a6a6a6;
+	/* font-family: 'Hanna', sans-serif; */
+	/* background: #ccc; */
+}
 </style>
 <div class="container-fluid">
 	<nav class="navbar navbar-inverse navbar-fixed-top"
@@ -310,60 +315,53 @@ function idCheck() {
 <!-- Modal -->
 <div class="modal fade" id="signModal" role="dialog">
 	<div class="modal-dialog">
-
 		<!-- Modal content-->
 		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">SIGN IN</h4>
-			</div>
-			<div class="modal-body">
-				<form action="${pageContext.request.contextPath}/member/memberJoin" method="post" name="jfrm" id="jfrm">
-					<div class="form-group">
-						<input type="email" class="form-control decorative-input" id="id" name="id" maxlength="30" placeholder="이메일">
-					</div>
-					<div class="form-group">
-						<input type="password" class="form-control decorative-input" id="pw" name="pw" maxlength="15" placeholder="비밀번호">
-					</div>
-					<div class="form-group">
-						<input type="password" class="form-control decorative-input" id="pwc" name="pwc" maxlength="15" placeholder="비밀번호 확인">
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control decorative-input" id="name" name="name" maxlength="10" placeholder="이름">
-					</div>
-					<div class="form-group">
-						<input type="date" class="form-control decorative-input" id="birth" name="birth" placeholder="생년월일을 입력하세요">
-					</div>
-					<div class="form-group">
-						<label for="gender">GENDER</label>
-						<label class="radio-inline"><input type="radio" class="gender" name="gender" value="men">Men</label> 
-						<label class="radio-inline"><input type="radio" class="gender" name="gender" value="women">Women</label>
-					</div>
-					<div class="form-group form-group-sm">
-						<div>
-							<label for="tel">TEL</label>
+			<form action="${pageContext.request.contextPath}/member/memberJoin" method="post" name="jfrm" id="jfrm">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">SIGN IN</h4>
+				</div>
+				<div class="modal-body">
+					
+						<div class="form-group">
+							<input type="email" class="form-control decorative-input" id="id" name="id" maxlength="30" placeholder="이메일">
 						</div>
-						<div class="col-sm-12">
-							<span class="col-sm-3"> <select class="form-control" id="tel0" name="tel0">
-								<option value="">통신사 선택</option>
-								<option value="SKT">SKT</option>
-								<option value="KT">KT</option>
-								<option value="LGU">LGU</option>
-							</select>
-							</span>
-							<span class="col-sm-3">
-							 <input type="tel" class="form-control" id="tel1" name="tel1" maxlength="11" placeholder="'-' 없이 입력해주세요." onkeyup="telCheck()">
-							</span>
+						<div class="form-group">
+							<input type="password" class="form-control decorative-input" id="pw" name="pw" maxlength="15" placeholder="비밀번호">
 						</div>
-					</div>
-					<div class="form-group" style="height: 15px;"></div>
+						<div class="form-group">
+							<input type="password" class="form-control decorative-input" id="pwc" name="pwc" maxlength="15" placeholder="비밀번호 확인">
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control decorative-input" id="name" name="name" maxlength="10" placeholder="이름">
+						</div>
+						<div class="form-group">
+							<input type="date" class="form-control decorative-input" id="birth" name="birth" placeholder="생년월일을 입력하세요">
+						</div>
+						<div class="form-group">
+							<label for="gender">GENDER</label>
+							<label class="radio-inline"><input type="radio" class="gender" name="gender" value="men">Men</label> 
+							<label class="radio-inline"><input type="radio" class="gender" name="gender" value="women">Women</label>
+						</div>
+						<div class="form-group input-group">
+							    <span class="input-group-addon" style="background: none; border:none; padding:0;">
+								    <select class="form-control" id="tel0" name="tel0">
+										<option value="SKT">SKT</option>
+										<option value="KT">KT</option>
+										<option value="LGU">LGU</option>
+									</select>
+							    </span>
+							    <!-- <input id="msg" type="text" class="form-control decorative-input" name="msg" placeholder="Additional Info"> -->
+								<input type="tel" class="form-control decorative-input" id="tel1" name="tel1" maxlength="11" placeholder="'-' 없이 입력해주세요." onkeyup="telCheck()">
+								
+							</div>
+						</div>
+			 			<div class="modal-footer">
+							<button type="button" id="joinCom" class="btn btn-md btn-success">Sign In</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>				
+						</div>
 				</form>
 			</div>
-			<div class="modal-footer">
-				<button type="button" id="joinCom" class="btn btn-md btn-success">Sign
-					In</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
 	</div>
 </div>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,40 +18,66 @@
 		//	$(this).prev("input").attr("checked","checked");//그다음 해당하는 radio에 checked를 해준다
 		//});
 		
-		$(".chkbox").click(function(){//체크되면 검정색 배경으로 바꿔주기 name :1 배경X name:2 배경O
+		$(".kindBox").click(function(){//체크되면 검정색 배경으로 바꿔주기 name :1 배경X name:2 배경O
+			alert($(this).val());
 			/* alert($(this).parent().attr("name")); */
- 			if($(this).parent().attr("name")=="1"){//배경이 적용될 부모 span의 name=1 일때는 배경이 없는 상태
-				$(this).parent().attr("class","category_chkbox selected");//selected class는 css에서 체크박스 배경을 채워줌
-				$(this).parent().attr("name","2");//배경을 넣기 위해 name을 2로 바꿔준다
-				//alert("name:"+$(this).parent().attr("name"));
-				//alert($(this).parent().attr("class"));
-			}else if($(this).parent().attr("name")=="2"){
-				$(this).parent().attr("class","category_chkbox");
-				$(this).parent().attr("name","1");
-				//alert("name:"+$(this).parent().attr("name"));
-				//alert($(this).parent().attr("class"));
-			} 
+			checkSet(this);//체크박스 채우고 해제하는 과정
+			$.ajax({
+				url : "${pageContext.request.contextPath}/product/productserList",
+				type : "GET",
+				data : {
+					kind_num : $(this).val()
+				},
+				success : function(data){//성공했을 때 
+					alert(data.trim());
+					$('#item-table').empty();
+					$('#item-table').html(data);
+				}
+			});
 		});
 		
-		//ajax로 라디오버튼에 따라서 정렬 바꿔주기
 		
-		$('.sel_type').click(function(){
-			alert($(this).attr("name"));
+		$('.sel_type').click(function(){//정렬방법 선택시
+			//alert($(this).attr("name"));
 			var selv = $(this).attr("name");
- 			$.ajax({
-				url : "${pageContext.request.contextPath}/product/productList",	//경로
-				type : "GET",//메서도형식
+   			$.ajax({
+				url : "${pageContext.request.contextPath}/product/productserList",	//경로
+				type : "GET",//메서드형식
 				data : {
 					sel : selv
 				},//들어가는 값
 				success : function(data){//성공했을 때 
-					location.href="${pageContext.request.contextPath}/product/productList?sel="+selv;
-					$(this).css("color","#006633");
-					$(this).css("font-weight","bold");
+					alert(data.trim());
+					$('#item-table').empty();
+					$('#item-table').html(data);
 				}
-			});
+			}); 
 		});
 	});
+	
+	function checkSet(data){
+		var v = "";	
+		if($(data).parent().attr("name")=="1"){//배경이 적용될 부모 span의 name=1 일때는 배경이 없는 상태
+			$(data).parent().attr("class","category_chkbox selected");//selected class는 css에서 체크박스 배경을 채워줌
+			$(data).parent().attr("name","2");//배경을 넣기 위해 name을 2로 바꿔준다
+			//alert($(this).val());
+		}else if($(data).parent().attr("name")=="2"){
+			$(data).parent().attr("class","category_chkbox");
+			$(data).parent().attr("name","1");
+			$(data).val('');
+			if($(data).attr("name")=="kind_num"){
+				alert($(data).val());
+				$("#hdkind").val('');
+			}else if($(data).attr("name")=="color"){
+				$("#hdcolor").val('');
+			}else if($(data).attr("name")=="size"){
+				$("#hdsize").val('');
+			}
+			//alert("name:"+$(this).parent().attr("name"));
+			//alert($(this).parent().attr("class"));
+		} 		
+	}
+	
 </script>
 </head>
 <body>
@@ -75,28 +102,28 @@
 		</nav>
 		<div class="item row">
 			<div class="col-lg-12">
-			<div class="left col-lg-4">
-				<form action="${pageContext.request.contextPath}/product/productList" method="get">
-					sel : <input type="number" name="sel"><br><!-- 최신순 인기순 높은가격순 낮은가격순 -->
+			<div class="left col-lg-4" style="margin-top: 0;">
+				<form action="${pageContext.request.contextPath}/product/productList" method="get" name="itemSearch">
+					<input type="hidden" name="sel" id="selValue"><!-- 최신순:3 인기순 높은가격순:4 낮은가격순:5 -->
 					
 					<div class="category_div">
 						<p>CATEGORY</p>
 						<ul class="category_ul">
 							<li>
 								<span class="category_chkbox" name="1">
-									<input type="checkbox" value="1" name="kind_num" class="chkbox">
+									<input type="checkbox" value="1" name="kind_num" class="chkbox kindBox">
 								</span>
 								<span>kind_num1</span>
 							</li>
 							<li>
 								<span class="category_chkbox" name="1">
-									<input type="checkbox" value="2" name="kind_num" class="chkbox">
+									<input type="checkbox" value="2" name="kind_num" class="chkbox kindBox">
 								</span>
 								<span>kind_num2</span>
 							</li>
 							<li>
 								<span class="category_chkbox" name="1">
-									<input type="checkbox" value="3" name="kind_num" class="chkbox">
+									<input type="checkbox" value="3" name="kind_num" class="chkbox kindBox">
 								</span>
 								<span>kind_num3</span>
 							</li>
@@ -107,49 +134,51 @@
 						<ul class="category_ul">
 							<li>
 								<span class="category_chkbox" name="1">
-									<input type="checkbox" value="RED" name="color" class="chkbox">
+									<input type="checkbox" value="SRED" name="color" class="chkbox colorBox">
 								</span>
 								<span>RED</span>
 							</li>
 							<li>
 							<span class="category_chkbox" name="1"> 
-								<input type="checkbox" value="ORANGE" name="color" class="chkbox">
+								<input type="checkbox" value="MORANGE" name="color" class="chkbox colorBox">
 							</span> 
 							<span>ORANGE</span>
 							</li>
 							<li>
 								<span class="category_chkbox" name="1">
-									<input type="checkbox" value="YELLOW" name="color" class="chkbox">
+									<input type="checkbox" value="MYELLOW" name="color" class="chkbox colorBox">
 								</span>
 								<span>YELLOW</span>							
 							</li>
 							<li>
 								<span class="category_chkbox" name="1">
-									<input type="checkbox" value="GREEN" name="color" class="chkbox">
+									<input type="checkbox" value="GREEN" name="color" class="chkbox colorBox">
 								</span>
 								<span>GREEN</span>							
 							</li>
 							<li>
 								<span class="category_chkbox" name="1">
-									<input type="checkbox" value="BLUE" name="color" class="chkbox">
+									<input type="checkbox" value="BLUE" name="color" class="chkbox colorBox">
 								</span>
 								<span>BLUE</span>							
 							</li>
 							<li>
 								<span class="category_chkbox" name="1">
-									<input type="checkbox" value="NAVY" name="color" class="chkbox">
+									<input type="checkbox" value="NAVY" name="color" class="chkbox colorBox">
 								</span>
 								<span>NAVY</span>							
 							</li>
 							<li>
 								<span class="category_chkbox" name="1">
-									<input type="checkbox" value="GRAPE" name="color" class="chkbox">
+									<input type="checkbox" value="XXLBLACK" name="color" class="chkbox colorBox">
 								</span>
 								<span>GRAPE</span>									
 							</li>
+							
 						</ul>
 
 					</div>
+					<!-- SIZE는 아직 안됨 -->
 					<div class="category_div">
 						<p>SIZE</p>
 						<ul class="category_ul">
@@ -173,36 +202,83 @@
 							</li>
 						</ul>
 					</div>					
-					<button>SUBMIT</button>
-				</form>			
+				</form>	
 			</div>
 
-			<div class="right col-lg-8">
+			<div class="right col-lg-8" style="margin-top: 0; width : 850px;">
 				<!-- 상품 리스트:S -->
 				<nav class="navbar">
-					<div class="navbar-collapse collapse">
+					<div class="navbar-collapse collapse" style="padding-left:0; border-bottom: 1px solid #eee;">
 						<ul class="nav navbar-nav category-type">
-							<li><!-- <input name="sel" type="radio" class="sel_radio" value="3" checked="checked"> --><a class="sel_type" name="3">최신순</a></li>
-							<li><!-- <input name="sel" type="radio" class="sel_radio" value="3"> --><a class="sel_type" name="3">인기순</a></li>
-							<li><!-- <input name="sel" type="radio" class="sel_radio" value="4"> --><a class="sel_type" name="4">낮은 가격 순</a></li>
+							<li><a class="sel_type" name="3">최신순</a></li>
+							<li><a class="sel_type" name="3">인기순</a></li>
+							<li><a class="sel_type" name="4">낮은 가격 순</a></li>
 							<li><!-- <input name="sel" type="radio" class="sel_radio" value="5"> --><a class="sel_type" name="5">높은 가격 순</a></li>
 						</ul>					
 					</div>
 				</nav>
-				<table class="table">
-					<tr>
-						<th>01</th>
-						<th>02</th>
-						<th>03</th>
-					</tr>
-					<c:forEach items="${list}" var="list1">
+				<div id="item-table">	
+					<ul class="list-inline" style="width : 850px;">
+						<c:forEach items="${list}" var="list1">
+						<li style="padding-left:20px;" class="viewItem">
+							<div class="mc" style="border : 1px solid #eee;">
+								<span class="img">
+									<a href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">
+										<img src="http://placehold.it/500x150&text=FooBar1" width="250" height="250">
+									</a>
+								</span>
+								<div class="item-info" style="padding-left: 10px;">
+									<p style="padding-top:10px;">
+					  					<a href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">${list1.product_name}</a>
+					  				</p>
+				  					<p>브랜드</p>
+				  					<p>
+					  					<span>
+					  						<fmt:formatNumber value="${list1.productInfo_price}" currencySymbol="" type="currency"/>원
+					  					</span>
+				  						<strong style="color:#b5172e;">→639,200 원(20%)</strong>
+				  					</p>								
+								</div>
+								<div class="cart">
+									<span style="font-size: 20px; color: #ffffff;">ADD TO CART</span>
+								</div>
+							</div>
+						</li>
+						</c:forEach>
+					</ul>
+<%-- 					<table class="table table-bordered" style="margin-bottom: 0;">
+				  		<c:forEach items="${list}" var="list1">
+				  		<tr style="width: 270px;">
+				  			<td style="padding:0;"><img src="http://placehold.it/500x150&text=FooBar1" width="270px"></td>
+				  		</tr>
+				  		<tr style="width: 270px;">
+				  			<td style="padding:0; padding-left : 10px;">
+				  				<p style="padding-top:10px;">
+				  					<a href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">${list1.product_name}</a>
+				  				</p>
+			  					<p>브랜드</p>
+			  					<span>${list1.productInfo_price}</span>
+				  				<span class="glyphicon glyphicon-shopping-cart" style="font-size: 20px; background: #000; color: #ffffff; padding : 10px; border-radius: 20px; position : absolute; top : 350px; right : 15px;"></span>
+							</td>
+				  		</tr>
+				  		</c:forEach>
+				  	</table> --%>
+<%-- 					<table class="table">
 						<tr>
-							<td>${list1.product_num}</td>
-							<td><a href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">${list1.product_name}</a></td>
-							<td>${list1.productInfo_price}</td>
+							<th>#</th>
+							<th>상품명</th>
+							<th>가격</th>
+							
 						</tr>
-					</c:forEach>
-				</table>	
+						<c:forEach items="${list}" var="list1">
+							<tr>
+								<td>${list1.product_num}</td>
+								<td><a href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">${list1.product_name}</a></td>
+								<td>${list1.productInfo_price}</td>
+							</tr>
+						</c:forEach>
+					</table>			 --%>
+				</div>	
 				<!-- 상품 리스트:E -->
 				
 				<!-- PAGINATIOIN:S -->
