@@ -59,7 +59,7 @@ public class ProductController {
 		productParamDTO.setSize(size);
 		productParamDTO.setKind_num(ina);
 		productParamDTO.setSel(sel);
-		model.addAttribute("list", productService.productList(curPage, perPage, productParamDTO, model));
+		//model.addAttribute("list", productService.productList(curPage, perPage, productParamDTO, model));
 		return "/product/productserList";
 	}	
 	

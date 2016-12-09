@@ -23,17 +23,17 @@ public class ProductService {
 		pageMaker.setPerPage(perPage);
 		pageMaker.makeRow();
 		pageMaker.makePage(totalCount);
-<<<<<<< HEAD
+
 
 		return productDAO.productList(pageMaker, productParamDTO);
-=======
-		System.out.println("curPage : " + curPage);
+
+/*		System.out.println("curPage : " + curPage);
 		System.out.println("perPage : " + perPage);
 		System.out.println("sel : " + productParamDTO.getSel());
 		//임시 페이징//
-		model.addAttribute("paging", pageMaker);
-		return productDAO.productList(pageMaker,productParamDTO);
->>>>>>> refs/heads/sub
+		//model.addAttribute("paging", pageMaker);
+		return productDAO.productList(pageMaker,productParamDTO);*/
+
 	}
 
 	public ProductViewDTO productView(int product_num) {
