@@ -161,9 +161,10 @@
 	<section id="firstWrap">
 		<div id="homepage-slider" class="slider">
 			<ul class="bxslider" id="bxslider1">
-			  <li><img src="${pageContext.request.contextPath}/resources/images/main/20161101daylife.jpg" title="Funky roots"></li>
-			  <li><img src="${pageContext.request.contextPath}/resources/images/main/20161102wissy.jpg" title="The long and winding road"></li>
-			  <li><img src="${pageContext.request.contextPath}/resources/images/main/20161125getitman.jpeg" title="Happy trees"></li>
+			  <li><img src="${pageContext.request.contextPath}/resources/images/main/20161101daylife.jpg" title=""></li>
+			  <li><img src="${pageContext.request.contextPath}/resources/images/main/20161102wissy.jpg" title=""></li>
+			  <li><img src="${pageContext.request.contextPath}/resources/images/main/20161125getitman.jpeg" title=""></li>
+			  <li><img src="${pageContext.request.contextPath}/resources/images/main/20161201secondmove.jpg" title=""></li>
 			</ul>
 		</div>
 	</section>	

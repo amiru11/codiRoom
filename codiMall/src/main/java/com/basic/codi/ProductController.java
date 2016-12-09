@@ -22,12 +22,15 @@ public class ProductController {
 
 	@RequestMapping(value = "/productList", method = RequestMethod.GET)
 	public void productList(@RequestParam(defaultValue = "1") int curPage,
-			@RequestParam(defaultValue = "10") int perPage, @RequestParam(defaultValue = "1") int sel,
+			@RequestParam(defaultValue = "9") int perPage, @RequestParam(defaultValue = "1") int sel,
 			@RequestParam(required = false) String[] kind_num, @RequestParam(required = false) String[] color,
 			@RequestParam(required = false) String[] size, Model model) {
+		
 		ProductParamDTO productParamDTO = new ProductParamDTO();
+		//파람DTO에 파라미터로 받은 컬러,사이즈,넘버,셀렉트를 넣어주기//
 		productParamDTO.setColor(color);
 		
+		//kind_num은 int 타입이기때문에 String 타입으로 바꿔주는 과정
 		int[] ina = null;
 		if (kind_num != null) {
 			ina =  new int[kind_num.length];
@@ -38,6 +41,9 @@ public class ProductController {
 		productParamDTO.setSize(size);
 		productParamDTO.setKind_num(ina);
 		productParamDTO.setSel(sel);
+		
+		
+		model.addAttribute("curPage", curPage);
 		model.addAttribute("list", productService.productList(curPage, perPage, productParamDTO));
 	}
 	
