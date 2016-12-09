@@ -30,4 +30,14 @@ public class MemberService {
 		return memberDAO.memberDelete(memberDTO);
 	}
 	
+	//ID 찾기
+	public MemberDTO idFind(MemberDTO memberDTO) throws Exception{
+		return memberDAO.idFind(memberDTO);
+	}
+	
+	//PW 찾기
+	public MemberDTO pwFind(MemberDTO memberDTO) throws Exception{
+		return memberDAO.pwFind(memberDTO);
+	}
+	
 }

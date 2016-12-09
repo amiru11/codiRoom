@@ -3,6 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css">
 <script type="text/javascript">
+$(function() {
+	var message = "${message}";
+	
+	if(message != ''){
+		alert(message);
+	}
+});
+
 	$(function(){
 		$("#joinCom").click(function(){
 			var id = $("#id").val();
@@ -307,6 +315,7 @@ function idCheck() {
 				</form>
 			</div>
 			<div class="modal-footer">
+				<a href="${pageContext.request.contextPath}/member/findFrom">아이디 / 패스워드 찾기</a>
 				<span>취향저격의 계정이 없으세요?</span>
 				<button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#signModal">회원 가입</button>
 			</div>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.basic.member.MailService;
 import com.basic.member.MemberDTO;
 import com.basic.member.MemberService;
 
@@ -25,6 +26,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private MailService mailService;
 	
 	//가입
 	@RequestMapping(value = "/memberJoin", method = RequestMethod.POST)
@@ -147,6 +151,77 @@ public class MemberController {
 		m.put("result", result);
 		rd.addFlashAttribute("message", message);
 		return new ResponseEntity<Map<String, Object>>(m, HttpStatus.OK);
+	}
+	
+	//findFrom
+	@RequestMapping(value = "findFrom")
+	public void findFrom(){}
+	
+	//ID 찾기
+	@RequestMapping(value = "idFind", method = RequestMethod.POST)
+	public String idFind(MemberDTO memberDTO, String mail, RedirectAttributes rd){
+		int result = 0;
+		String path = "";
+		String message = "";
+		
+		try {
+			memberDTO = memberService.idFind(memberDTO);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(memberDTO != null){
+			mailService.IdFind(memberDTO, mail);
+			
+			path = "redirect:/";
+			message = "메일을 발송 하였습니다.";
+		}else{
+			path = "redirect:/member/findFrom";
+			message = "이름과 전화번호가 다릅니다.";
+		}
+		
+		rd.addFlashAttribute("message", message);
+		return path;
+	}
+	
+	//PW 찾기
+	@RequestMapping(value = "pwFind", method = RequestMethod.POST)
+	public String pwFind(MemberDTO memberDTO, RedirectAttributes rd){
+		int result = 0;
+		String path = "";
+		String message = "";
+		
+		try {
+			memberDTO = memberService.pwFind(memberDTO);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(memberDTO != null){
+			//랜덤 pw 생성
+			memberDTO.setPw(String.valueOf((char)((int)(Math.random()*26)+97)) + ((int)Math.random()*10+1) + ((int)Math.random()*10+1) + ((int)Math.random()*10+1));
+			//랜덤 pw 생성 후 pw DB 저장
+			try {
+				result = memberService.memberUpdate(memberDTO);
+				if(result > 0){
+					//랜덤 pw 메일로 전송
+					mailService.PwFind(memberDTO);
+					
+					path = "redirect:/";
+					message = "메일을 발송 하였습니다.";
+				}
+			}catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			//가입이이디 찾을 수 없음 메시지 리턴 ?
+			path = "redirect:/member/findFrom";
+			message = "가입된 회원이 없습니다.";
+		}
+		
+		rd.addFlashAttribute("message", message);
+		return path;
 	}
 
 }

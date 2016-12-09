@@ -29,4 +29,14 @@ public class MemberDAO {
 	public int memberDelete(MemberDTO memberDTO) throws Exception{
 		return sqlSession.delete(namespace+"memberDelete", memberDTO);
 	}
+	
+	//ID 찾기
+	public MemberDTO idFind(MemberDTO memberDTO) throws Exception{
+		return sqlSession.selectOne(namespace+"idFind", memberDTO);
+	}
+	
+	//PW 찾기
+	public MemberDTO pwFind(MemberDTO memberDTO) throws Exception{
+		return sqlSession.selectOne(namespace+"pwFind", memberDTO);
+	}
 }
