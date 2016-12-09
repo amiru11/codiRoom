@@ -232,7 +232,7 @@
 				</div>
 				<div class="slider4">
 				  <div class="slide codi-item">
-				  	<table class="table table-bordered" data-toggle="modal" data-target="#viewModal" style="margin-bottom: 0;">
+				  	<table class="table table-bordered" style="margin-bottom: 0;">
 				  		<tr>
 				  			<td style="padding:0;"><img src="http://placehold.it/500x150&text=FooBar1"></td>
 				  		</tr>
