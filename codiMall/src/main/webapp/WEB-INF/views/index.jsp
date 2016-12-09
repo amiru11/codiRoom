@@ -15,13 +15,7 @@
 <script type="text/javascript">
 	var sale_curPage=1;
 	$(function(){
-		showSaleItem(sale_curPage);//메인페이지 호출시 나타나는 SaleItem
-
-	 	var message = "${message}";
-		
-		if(message != ''){
-			alert(message);
-		} 
+		showSaleItem(sale_curPage);//메인페이지 호출시 나타나는 SaleItem 
 		
 		/* 첫번째 슬라이드 */
 		$('.bxslider').bxSlider({
