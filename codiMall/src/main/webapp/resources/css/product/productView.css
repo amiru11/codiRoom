@@ -36,7 +36,7 @@
 	display:block;
 	overflow:hidden;
 	position:relative;
-	width:570px; 
+	width:500px; 
 	height:570px; 
 	text-align:center; 
 	margin:10px;
@@ -104,7 +104,6 @@
 	border-top: 2px solid #dce2eb;
     border-bottom: 2px solid #dce2eb;
     padding-top: 24px;
-    margin-left : 50px;
     padding-bottom: 24px;
     margin-bottom: 53px;
 	
@@ -131,5 +130,89 @@
     text-transform: uppercase;
     margin-top: 6px;
     display: block;
+}
+.item-price{
+	margin-bottom: 14px;
+    position: relative;
+    min-height: 120px;
+}
+.all-price-info {
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.all-price-info>p{
+	display: inline-block;
+    vertical-align: 0;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    float: left;
+}
+.now-price{
+	font: bold 40px/1em "Hanna",sans-serif;
+    color: #f54f29;
+    display: block;
+}
+.old-price{
+	clear : left;
+	text-decoration: line-through;
+    color: #b6b6b6;
+    font: normal 30px/1em "Hanna",sans-serif;
+}
+.reduction-percent{
+	font: normal 30px/1em "Hanna",sans-serif;
+    color: #353940;
+}
+#product_comments_block_extra {
+    position: absolute;
+    right: 0;
+    top: 8px;
+    text-align: right;
+}
+#product_comments_block_extra .comments_note {
+    display: block;
+    vertical-align: middle;
+    width: 100px;
+    margin-right: 34px;
+}
+#product_comments_block_extra .comments_note .star_content {
+    padding-top: 1px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.star {
+    display: block;
+    position: relative;
+    float: left;
+    width: 17px;
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: normal;
+}
+.star.star_on:after {
+    color: #f54f29;
+}
+.star:after {
+    font-family: "material-design";
+    content: "\2605";
+    display: inline-block;
+    font-weight: normal;
+    color: #b6b6b6;
+    font-size: 16px;
+}
+#product_comments_block_extra .comments_advices {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+}
+.comments_advices li {
+    display: block;
+    line-height: 30px;
+}
+#product_comments_block_extra .comments_advices a {
+    font-size: 10px;
+    text-transform: uppercase;
+    margin: 0;
+    font-weight: bold;
+    color: #b6b6b6;
 }
 /* info:E */

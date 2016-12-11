@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html >
 <html>
 <head>
@@ -252,7 +253,7 @@
 						</div>						
 					</div>
 				</div>
-				<div class="col-sm-6 right-info">
+				<div class="col-sm-6 right-info" style="padding-left : 50px;">
 					<div class="item-title clearfix">
 						<div class="item-brand pull-left">
 							<img src="${pageContext.request.contextPath}/resources/images/product/brand/esnocturne.gif" alt="">
@@ -260,6 +261,47 @@
 						<h1>${view.product_name}</h1>
 						<div class="item-manufacture">BRAND NAME</div>
 					</div>
+					<form id="view_frm" method="post">
+						<div class="infoBox">
+							<div class="item-price clearfix">
+								<div class="all-price-info">
+									<p class="now-price">
+										<fmt:formatNumber value="${view.productInfo_price}" currencySymbol="" type="currency"/>원
+									</p>
+									<p class="old-price"><fmt:formatNumber value="${view.productInfo_price*view.productInfo_saleRate}" currencySymbol="" type="currency"/>원</p>
+									<p class="reduction-percent">(<fmt:formatNumber value="${(view.productInfo_saleRate-1)*100}" pattern="#.##" />%)</p>
+								</div>
+								<div id="product_comments_block_extra" class="no-print">
+								<div class="comments_note clearfix">
+									<span style="display: none;">Rating&nbsp;</span>
+									<div class="star_content clearfix">
+										<div class="star star_on"></div>
+										<div class="star star_on"></div>
+										<div class="star star_on"></div>
+										<div class="star star_on"></div>
+										<div class="star"></div>
+									</div>
+								</div>
+								<ul class="comments_advices">
+									<li>
+										<a href="#idTab5" class="reviews" title="Read reviews">
+											Read reviews (<span>1</span>)
+										</a>
+									</li>
+								</ul>
+							</div>
+							</div>
+
+						</div>
+						
+<%-- 						<input id="inh_product_num" type="text" value="${view.product_num}"
+							name="product_num"> <input id="inh_productSize_size"
+							type="text" name="productSize_size"> <input
+							id="inh_productEach_color" type="text" name="productEach_color">
+						<input id="inh_productEach_each" type="text"
+							name="productEach_each"> <input id="inh_each_each"
+							type="text"> --%>
+					</form>
 <%-- 					<table class="table">
 						<tr>
 							<td>PRODUCT_NUM</td>
@@ -300,7 +342,7 @@
 				
 				
 				
-					</table> --%>
+					</table> --%> 
 				
 					<div id="div_hidden_each"></div>
 				
