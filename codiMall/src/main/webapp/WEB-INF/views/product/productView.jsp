@@ -11,6 +11,7 @@
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/product/productView.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/resources/js/zoomItem.js"></script>
 <script type="text/javascript">
 	$(function() {
 		
@@ -167,6 +168,45 @@
 		  }       
 		 }
 	
+
+	var currentImageIdx = 0;
+	if (currentImageIdx == "") {
+		currentImageIdx = 0;
+	}	
+	
+	var smallImages = new Object();
+
+	function changeImg(img_id, bigimg_id, idx, big_yn){
+			
+		var imgview = document.getElementById(bigimg_id);
+		var img_obj = document.getElementById(img_id);
+
+		console.log(imgview);
+		console.log(img_obj);
+		
+		currentImageIdx = parseInt(idx);
+		
+		console.log(currentImageIdx);
+		
+		if(smallImages[currentImageIdx] == undefined) {
+
+			// 이미지 객체 만들기
+			smallImages[currentImageIdx] = new Image();
+
+			if(bigimg_id == "org_bigimg"){
+				var src = img_obj.src.replace("_60.", "_960.");
+			} else {
+				var src = img_obj.src;
+			}
+			console.log("src : " + src);
+			smallImages[currentImageIdx].src = src;
+		}
+
+		imgview.src = smallImages[currentImageIdx].src;
+	}
+	
+	
+	
 </script>
 </head>
 <body>
@@ -174,7 +214,7 @@
 	<%@ include file="/resources/temp/header.jsp"%>
 	<!-- HEADER:E -->
 	
-	<div class="container" style="padding-top:20px;">
+	<div class="container" style="padding-top:100px;">
 		<div class="row">
 			<div class="col-sm-12">
 				<!-- 왼쪽 이미지부분 -->
@@ -183,21 +223,44 @@
 						<span class="image_loader" style="opacity: 0; display: none;"></span>
 						<div id="big_box" class="product_zoom spotlightActive" style="display:none">
 							<div class="product_img_zoom minus_cursor spotlight" id="big_img_area">
-								<img src="" id="big_img" alt="" style="position: relative; width: 1500px;" onclick="image_zoom.hideLayer('big_box');">
-								<span class="product_arrow_prev"><a href="#" onclick="image_zoom.rollImage('detail_thumb', 'big_img', 'prev'); return false;"><img src="//image.musinsa.com/skin/musinsa/images/d_arrow_prev_big.gif" alt="이전상품사진"></a></span>
-								<span class="product_arrow_next"><a href="#" onclick="image_zoom.rollImage('detail_thumb', 'big_img', 'next'); return false;"><img src="//image.musinsa.com/skin/musinsa/images/d_arrow_next_big.gif" alt="다음상품사진"></a></span>
+								<img src="" id="big_img" alt="" style="position: relative; width: 1200px; background-color: white;" onclick="image_zoom.hideLayer('big_box');">
 							</div>
 							<span class="btn_close_pop" onclick="image_zoom.hideLayer('big_box');">close</span>
 						</div>
 						<div id="detail_bigimg" class="product_img_basic plus_cursor">
 							<span class="product-img">
-								<img src="//image.musinsa.com/images/goods_img/20161202/456712/456712_1_500.jpg" width="500" title="" alt="나이키(NIKE) [나이키] NIKE 볼캡 BLACK_NIK-727042-010" id="bigimg" onclick="image_zoom.showLayer('big_box', 'big_img', 'detail_thumb', currentImageIdx);" style="margin-top: -250px; position: absolute; top: 50%; left: 0px;">
+								<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_60.png" width="500" title="" alt="" id="bigimg" onclick="image_zoom.showLayer('big_box', 'big_img', 'detail_thumb', currentImageIdx);" style="margin-top: -250px; position: absolute; top: 50%; left: 0px;">
 							</span>
 						</div>
+						<!-- 상품 썸네일 -->
+						<div id="detail_thumb">
+							<ul class="product_thumb">
+								<li onclick="changeImg('thum_0', 'bigimg', '0', 'N');" style="cursor: pointer;">
+									<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_60.png" alt="thum" width="60" id="thum_0" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
+								</li>
+								<li onclick="changeImg('thum_1', 'bigimg', '1', 'N');" style="cursor: pointer;">
+									<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_detail1_60.jpg" alt="thum" width="60" id="thum_1" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
+								</li>
+								<li onclick="changeImg('thum_2', 'bigimg', '2', 'N');" style="cursor: pointer;">
+									<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_detail2_60.jpg" alt="thum" width="60" id="thum_2" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
+								</li>
+								<li onclick="changeImg('thum_3', 'bigimg', '3', 'N');" style="cursor: pointer;">
+									<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_detail3_60.jpg" alt="thum" width="60" id="thum_3" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
+								</li>
+							</ul>
+						<!--//상품 썸네일-->
+						</div>						
 					</div>
 				</div>
 				<div class="col-sm-6 right-info">
-					<table class="table">
+					<div class="item-title clearfix">
+						<div class="item-brand pull-left">
+							<img src="${pageContext.request.contextPath}/resources/images/product/brand/esnocturne.gif" alt="">
+						</div>
+						<h1>${view.product_name}</h1>
+						<div class="item-manufacture">BRAND NAME</div>
+					</div>
+<%-- 					<table class="table">
 						<tr>
 							<td>PRODUCT_NUM</td>
 							<td>${view.product_num}</td>
@@ -237,7 +300,7 @@
 				
 				
 				
-					</table>
+					</table> --%>
 				
 					<div id="div_hidden_each"></div>
 				

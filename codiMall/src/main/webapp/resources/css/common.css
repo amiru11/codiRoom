@@ -18,10 +18,14 @@ img, ul, li{
     list-style: none;
 }
 #header{
-	z-index : 9999;
+	z-index : 9000;
 	background : url(/codi/resources/images/footer-bg.png);
+	-webkit-box-shadow: 0 15px 40px rgba(53, 57, 64, 0.5);
+    box-shadow: 0 15px 40px rgba(53, 57, 64, 0.5);
 }
 #footer{
 	background-image: url("/codi/resources/images/footer-bg.png");
 }
-
+.modal{
+	z-index : 9001;
+}
