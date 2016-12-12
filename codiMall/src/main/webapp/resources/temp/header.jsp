@@ -270,7 +270,7 @@ function telCheck() {
 </style>
 <div class="container-fluid">
 	<nav class="navbar navbar-inverse navbar-fixed-top"
-		style="z-index: 100;" id="header">
+		id="header">
 		<div class="container">
 			<div class="navbar-header">
 				<h1 style="margin-top: 40px;">
@@ -280,20 +280,6 @@ function telCheck() {
 				</h1>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
-	
-				<ul class="nav navbar-nav" style="margin-top: 60px; margin-left: 50px;">
-					<!--  test li s -->
-	
-					<li><a href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
-					<li><a href="${pageContext.request.contextPath}/buy/buyList">BUYLIST</a></li>
-					<li><a href="${pageContext.request.contextPath}/basket/productAdd">PRODUCTADD</a></li>
-					<li><a href="${pageContext.request.contextPath}/product/productList">ITEM</a></li>
-					<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOGIN</a></li>
-					
-	
-					<!--  test li e -->
-	
-				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a
 						href="${pageContext.request.contextPath}/board/findList?board_kind=1">고객센터</a></li>
@@ -312,9 +298,35 @@ function telCheck() {
 						<li><a href="${pageContext.request.contextPath}/member/myPage?subMenu=showMyinfo">MY PAGE</a></li>
 						<li><a href="${pageContext.request.contextPath}/member/memberLogout">LOGOUT</a></li>
 					</c:if>
+						<li style="clear: left;margin-top: -10px;float: right;">
+							<form class="navbar-form navbar-right" style="padding-right: 30px;">
+								<div class="input-group">
+									<input type="text" class="form-control"	placeholder="Search Product"> 
+									<span class="input-group-btn"> 
+										<a class="btn btn-default" type="button">
+											<span class="glyphicon glyphicon-search"></span>
+										</a>
+									</span>
+								</div>
+								<!-- /input-group -->
+							</form>						
+						</li>
+				</ul>	
+				<ul class="nav navbar-nav navbar-left" style="margin-top: 60px; margin-left: 50px;">
+					<!--  test li s -->
+	
+					<li><a href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
+					<li><a href="${pageContext.request.contextPath}/buy/buyList">BUYLIST</a></li>
+					<li><a href="${pageContext.request.contextPath}/basket/productAdd">PRODUCTADD</a></li>
+					<li><a href="${pageContext.request.contextPath}/product/productList">ITEM</a></li>
+					<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOGIN</a></li>
+					
+	
+					<!--  test li e -->
+	
 				</ul>
-				<form class="navbar-form navbar-right" style="margin-left: 200px;">
-					<!-- <div class="col-lg-6"> -->
+
+<!-- 				<form class="navbar-form navbar-right">
 					<div class="input-group">
 						<input type="text" class="form-control"
 							placeholder="Search Product"> <span
@@ -322,8 +334,8 @@ function telCheck() {
 							type="button"><span class="glyphicon glyphicon-search"></span></a>
 						</span>
 					</div>
-					<!-- /input-group -->
-				</form>
+					/input-group
+				</form> -->
 			</div>
 			<!--/.nav-collapse -->
 		</div>

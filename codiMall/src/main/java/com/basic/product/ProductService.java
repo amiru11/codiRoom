@@ -24,7 +24,6 @@ public class ProductService {
 		pageMaker.makeRow();
 		pageMaker.makePage(totalCount);
 
-
 		return productDAO.productList(pageMaker, productParamDTO);
 
 /*		System.out.println("curPage : " + curPage);

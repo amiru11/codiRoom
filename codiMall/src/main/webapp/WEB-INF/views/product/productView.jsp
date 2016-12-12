@@ -1,20 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html >
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<style type="text/css">
-table, table tr, tr td, th {
-	border: 1px solid black;
-}
-</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+<link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/product/productView.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/resources/js/zoomItem.js"></script>
 <script type="text/javascript">
 	$(function() {
-		
 		
 		$("#sel_size_a").change(function(){
 			if($("#sel_size_a").val()!=""){
@@ -169,62 +169,199 @@ table, table tr, tr td, th {
 		  }       
 		 }
 	
+
+	var currentImageIdx = 0;
+	if (currentImageIdx == "") {
+		currentImageIdx = 0;
+	}	
+	
+	var smallImages = new Object();
+
+	function changeImg(img_id, bigimg_id, idx, big_yn){
+			
+		var imgview = document.getElementById(bigimg_id);
+		var img_obj = document.getElementById(img_id);
+
+		console.log(imgview);
+		console.log(img_obj);
+		
+		currentImageIdx = parseInt(idx);
+		
+		console.log(currentImageIdx);
+		
+		if(smallImages[currentImageIdx] == undefined) {
+
+			// 이미지 객체 만들기
+			smallImages[currentImageIdx] = new Image();
+
+			if(bigimg_id == "org_bigimg"){
+				var src = img_obj.src.replace("_60.", "_960.");
+			} else {
+				var src = img_obj.src;
+			}
+			console.log("src : " + src);
+			smallImages[currentImageIdx].src = src;
+		}
+
+		imgview.src = smallImages[currentImageIdx].src;
+	}
+	
+	
+	
 </script>
 </head>
 <body>
-	<h1>TEST TABLE</h1>
-	<h1>
-		<a href="${pageContext.request.contextPath}/">HOME</a>
-	</h1>
-	<table>
-		<tr>
-			<td>PRODUCT_NUM</td>
-			<td>${view.product_num}</td>
-			<td>PRODUCT_NAME</td>
-			<td>${view.product_name}</td>
-			<td>PRODUCT_PRICE</td>
-			<td>${view.productInfo_price}</td>
-			<td>PRODUCT_SALERATE</td>
-			<td>${view.productInfo_saleRate}</td>
-		</tr>
-		<tr>
-			<td>PRODUCT_SEARCHWORD</td>
-			<td>${view.productInfo_searchWord}</td>
-			<td>PRODUCT_KINDNUM</td>
-			<td>${view.kind_num}</td>
-		</tr>
-		<tr>
-			<td><select id="sel_size_a"></select></td>
-			<td><select id="sel_size_b" style="display: none;"></select></td>
-			<td><input id="inp_each" accept="e" type="number" min="1"
-				step="1" style="display: none;"></td>
-		</tr>
-		<tr>
-			<td><form id="view_frm" method="post">
-					<input id="inh_product_num" type="text" value="${view.product_num}"
-						name="product_num"> <input id="inh_productSize_size"
-						type="text" name="productSize_size"> <input
-						id="inh_productEach_color" type="text" name="productEach_color">
-					<input id="inh_productEach_each" type="text"
-						name="productEach_each"> <input id="inh_each_each"
-						type="text">
-				</form></td>
-			<td><input id="btn_buy" type="button" value="BUY"></td>
-			<td><input id="btn_basket" type="button" value="BASKET">
-			</td>
-		</tr>
+	<!-- HEADER:S -->
+	<%@ include file="/resources/temp/header.jsp"%>
+	<!-- HEADER:E -->
+	
+	<div class="container" style="padding-top:100px;">
+		<div class="row">
+			<div class="col-sm-12">
+				<!-- 왼쪽 이미지부분 -->
+				<div class="col-sm-6 left-info">
+					<div id="image-block" class="clearfix">
+						<span class="image_loader" style="opacity: 0; display: none;"></span>
+						<div id="big_box" class="product_zoom spotlightActive" style="display:none">
+							<div class="product_img_zoom minus_cursor spotlight" id="big_img_area">
+								<img src="" id="big_img" alt="" style="position: relative; width: 1200px; background-color: white;" onclick="image_zoom.hideLayer('big_box');">
+							</div>
+							<span class="btn_close_pop" onclick="image_zoom.hideLayer('big_box');">close</span>
+						</div>
+						<div id="detail_bigimg" class="product_img_basic plus_cursor">
+							<span class="product-img">
+								<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_60.png" width="500" title="" alt="" id="bigimg" onclick="image_zoom.showLayer('big_box', 'big_img', 'detail_thumb', currentImageIdx);" style="margin-top: -250px; position: absolute; top: 50%; left: 0px;">
+							</span>
+						</div>
+						<!-- 상품 썸네일 -->
+						<div id="detail_thumb">
+							<ul class="product_thumb">
+								<li onclick="changeImg('thum_0', 'bigimg', '0', 'N');" style="cursor: pointer;">
+									<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_60.png" alt="thum" width="60" id="thum_0" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
+								</li>
+								<li onclick="changeImg('thum_1', 'bigimg', '1', 'N');" style="cursor: pointer;">
+									<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_detail1_60.jpg" alt="thum" width="60" id="thum_1" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
+								</li>
+								<li onclick="changeImg('thum_2', 'bigimg', '2', 'N');" style="cursor: pointer;">
+									<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_detail2_60.jpg" alt="thum" width="60" id="thum_2" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
+								</li>
+								<li onclick="changeImg('thum_3', 'bigimg', '3', 'N');" style="cursor: pointer;">
+									<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_detail3_60.jpg" alt="thum" width="60" id="thum_3" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
+								</li>
+							</ul>
+						<!--//상품 썸네일-->
+						</div>						
+					</div>
+				</div>
+				<div class="col-sm-6 right-info" style="padding-left : 50px;">
+					<div class="item-title clearfix">
+						<div class="item-brand pull-left">
+							<img src="${pageContext.request.contextPath}/resources/images/product/brand/esnocturne.gif" alt="">
+						</div>
+						<h1>${view.product_name}</h1>
+						<div class="item-manufacture">BRAND NAME</div>
+					</div>
+					<form id="view_frm" method="post">
+						<div class="infoBox">
+							<div class="item-price clearfix">
+								<div class="all-price-info">
+									<p class="now-price">
+										<fmt:formatNumber value="${view.productInfo_price}" currencySymbol="" type="currency"/>원
+									</p>
+									<p class="old-price"><fmt:formatNumber value="${view.productInfo_price*view.productInfo_saleRate}" currencySymbol="" type="currency"/>원</p>
+									<p class="reduction-percent">(<fmt:formatNumber value="${(view.productInfo_saleRate-1)*100}" pattern="#.##" />%)</p>
+								</div>
+								<div id="product_comments_block_extra" class="no-print">
+								<div class="comments_note clearfix">
+									<span style="display: none;">Rating&nbsp;</span>
+									<div class="star_content clearfix">
+										<div class="star star_on"></div>
+										<div class="star star_on"></div>
+										<div class="star star_on"></div>
+										<div class="star star_on"></div>
+										<div class="star"></div>
+									</div>
+								</div>
+								<ul class="comments_advices">
+									<li>
+										<a href="#idTab5" class="reviews" title="Read reviews">
+											Read reviews (<span>1</span>)
+										</a>
+									</li>
+								</ul>
+							</div>
+							</div>
+
+						</div>
+						
+<%-- 						<input id="inh_product_num" type="text" value="${view.product_num}"
+							name="product_num"> <input id="inh_productSize_size"
+							type="text" name="productSize_size"> <input
+							id="inh_productEach_color" type="text" name="productEach_color">
+						<input id="inh_productEach_each" type="text"
+							name="productEach_each"> <input id="inh_each_each"
+							type="text"> --%>
+					</form>
+<%-- 					<table class="table">
+						<tr>
+							<td>PRODUCT_NUM</td>
+							<td>${view.product_num}</td>
+							<td>PRODUCT_NAME</td>
+							<td>${view.product_name}</td>
+							<td>PRODUCT_PRICE</td>
+							<td>${view.productInfo_price}</td>
+							<td>PRODUCT_SALERATE</td>
+							<td>${view.productInfo_saleRate}</td>
+						</tr>
+						<tr>
+							<td>PRODUCT_SEARCHWORD</td>
+							<td>${view.productInfo_searchWord}</td>
+							<td>PRODUCT_KINDNUM</td>
+							<td>${view.kind_num}</td>
+						</tr>
+						<tr>
+							<td><select id="sel_size_a"></select></td>
+							<td><select id="sel_size_b" style="display: none;"></select></td>
+							<td><input id="inp_each" accept="e" type="number" min="1"
+								step="1" style="display: none;"></td>
+						</tr>
+						<tr>
+							<td><form id="view_frm" method="post">
+									<input id="inh_product_num" type="text" value="${view.product_num}"
+										name="product_num"> <input id="inh_productSize_size"
+										type="text" name="productSize_size"> <input
+										id="inh_productEach_color" type="text" name="productEach_color">
+									<input id="inh_productEach_each" type="text"
+										name="productEach_each"> <input id="inh_each_each"
+										type="text">
+								</form></td>
+							<td><input id="btn_buy" type="button" value="BUY"></td>
+							<td><input id="btn_basket" type="button" value="BASKET">
+							</td>
+						</tr>
+				
+				
+				
+					</table> --%> 
+				
+					<div id="div_hidden_each"></div>
+				
+					<button id="btn_aa">aaaaa</button>
+					<button id="btn_bb">bbbb</button>
+					<script type="text/javascript">
+						selList();
+					</script>				
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
-	</table>
+	<!-- Footer:S -->
+	<%@ include file="/resources/temp/footer.jsp"%>	
+	<!-- Footer:E -->
 
-	<div id="div_hidden_each"></div>
-
-	<button id="btn_aa">aaaaa</button>
-	<button id="btn_bb">bbbb</button>
-	<script type="text/javascript">
-		selList();
-	</script>
 
 </body>
 </html>
