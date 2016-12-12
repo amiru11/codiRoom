@@ -30,6 +30,24 @@ public class MemberController {
 	@Autowired
 	private MailService mailService;
 	
+	//ID 중복 체크
+	@RequestMapping(value = "idCheck")
+	public ResponseEntity<Map<String, Object>> idCheck(MemberDTO memberDTO){
+		Map<String, Object> m = new HashMap<String, Object>();
+		int idCheck = 0;
+		try {
+			memberDTO = memberService.idCheck(memberDTO);
+			if(memberDTO != null){
+				idCheck = 1;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		m.put("idCheck", idCheck);
+		return new ResponseEntity<Map<String, Object>>(m, HttpStatus.OK);
+	}
+	
 	//가입
 	@RequestMapping(value = "/memberJoin", method = RequestMethod.POST)
 	public String memberJoin(MemberDTO memberDTO, RedirectAttributes rd){
@@ -96,7 +114,7 @@ public class MemberController {
 	
 	//회원 수정
 	@RequestMapping(value = "memberUpdate", method = RequestMethod.POST)
-	public String memberUpdate(MemberDTO memberDTO, RedirectAttributes rd){
+	public String memberUpdate(MemberDTO memberDTO, RedirectAttributes rd, HttpSession session){
 		int result = 0;
 		String path = "";
 		String message = "";
@@ -109,6 +127,7 @@ public class MemberController {
 		if(result > 0){
 			path = "redirect:/member/myPage/resultMessage";
 			message = "회원정보 수정 성공";
+			session.setAttribute("member", memberDTO);
 		}else {
 			path = "redirect:/member/myPage/resultMessage";
 			message = "회원정보 수정 실패";
@@ -129,10 +148,9 @@ public class MemberController {
 	//회원 탈퇴
 	@RequestMapping(value = "memberDelete", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> memberDelete(MemberDTO memberDTO, RedirectAttributes rd, HttpSession session){
+	public ResponseEntity<Map<String, Object>> memberDelete(MemberDTO memberDTO, HttpSession session){
 		Map<String, Object> m = new HashMap<String, Object>();
 		int result = 0;
-		String path = "";
 		String message = "";
 		try {
 			result = memberService.memberDelete(memberDTO);
@@ -141,15 +159,13 @@ public class MemberController {
 			e.printStackTrace();
 		}
 		if(result > 0){
-			path = "redirect:/";
 			message = "회원 탈퇴 성공";
 			session.invalidate();
 		}else {
-			path = "redirect:/member/myPage/resultMessage";
 			message = "비밀번호가 일치 하지 않습니다.";
 		}
 		m.put("result", result);
-		rd.addFlashAttribute("message", message);
+		m.put("message", message);
 		return new ResponseEntity<Map<String, Object>>(m, HttpStatus.OK);
 	}
 	
@@ -160,7 +176,6 @@ public class MemberController {
 	//ID 찾기
 	@RequestMapping(value = "idFind", method = RequestMethod.POST)
 	public String idFind(MemberDTO memberDTO, String mail, RedirectAttributes rd){
-		int result = 0;
 		String path = "";
 		String message = "";
 		
@@ -192,7 +207,7 @@ public class MemberController {
 		String message = "";
 		
 		try {
-			memberDTO = memberService.pwFind(memberDTO);
+			memberDTO = memberService.idCheck(memberDTO);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -58,8 +58,11 @@ $(function() {
 				url : "${pageContext.request.contextPath}/member/memberUpdate",
 				type : "post",
 				data : {
-					id : $("#idM").val(),
+					id : "${member.id}",
 					pw : pw,
+					name : "${member.name}",
+					birth : "${member.birth}",
+					gender : "${member.gender}",
 					tel0 : tel0,
 					tel1 : tel1
 				},
@@ -96,7 +99,6 @@ function telCheck() {
 };
 
 </script>
-<input type="hidden" id="idM" value="${member.id }">
 	<label>이메일</label> <span>${member.id }</span><br>
 	<label>비밀번호</label> <input type="password" id="pwM" name="pw" maxlength="15" placeholder="비밀번호"><br>
 	<label>비밀번호 확인</label> <input type="password" id="pwcM" name="pwc" maxlength="15" placeholder="비밀번호 확인"><br>
