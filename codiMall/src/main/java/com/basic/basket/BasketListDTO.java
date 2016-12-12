@@ -6,7 +6,7 @@ import com.basic.product.ProductEachDTO;
 
 public class BasketListDTO {
 	
-	private String basket_num;
+	private int basket_num;
 	private int product_num;
 	private String product_name;
 	private int productInfo_price;
@@ -26,13 +26,15 @@ public class BasketListDTO {
 		this.productEachDTO = productEachDTO;
 	}
 
-	public String getBasket_num() {
+
+	public int getBasket_num() {
 		return basket_num;
 	}
 
-	public void setBasket_num(String basket_num) {
+	public void setBasket_num(int basket_num) {
 		this.basket_num = basket_num;
 	}
+
 	public int getProduct_num() {
 		return product_num;
 	}

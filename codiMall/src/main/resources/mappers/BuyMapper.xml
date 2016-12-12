@@ -4,13 +4,16 @@
 
 	<!-- Buy List S -->
 
-	<select id="SelBuyList" parameterType="com.basic.member.MemberDTO" resultType="com.basic.buy.BuyListDTO">
+	<select id="SelBuyList" parameterType="com.basic.member.MemberDTO"
+		resultType="com.basic.buy.BuyListDTO">
 		select DISTINCT
 		p.PRODUCT_NUM,p.PRODUCT_NAME,b.BUY_NUM,bs.BUYSTATE_SIZE,bs.BUYSTATE_COLOR,bs.BUYSTATE_EACH,bs.BUYSTATE_PRICE
-		from PRODUCT p, MEMBER m, BUY b , BUYSTATE bs
-		where bs.BUY_NUM = b.BUY_NUM and m.ID = b.ID and p.PRODUCT_NUM =
+		,bs.buystate_state from PRODUCT p, MEMBER m, BUY b , BUYSTATE bs
+		where bs.BUY_NUM =
+		b.BUY_NUM and m.ID = b.ID and p.PRODUCT_NUM =
 		b.PRODUCT_NUM
-		and m.id = #{id}
+		and m.id =
+		#{id}
 		order by b.buy_num desc
 	</select>
 
@@ -18,6 +21,67 @@
 
 
 	<!-- Buy List E -->
+
+
+	<!-- Buy first Product Each get -->
+	<select id="SelProductEachGet" parameterType="com.basic.buy.BuyNonBasketDTO"
+		resultType="int">
+		select pe.PRODUCTEACH_EACH from PRODUCT p , PRODUCTSIZE
+		ps,PRODUCTEACH
+		pe
+		where pe.PRODUCT_NUM = p.PRODUCT_NUM and
+		ps.PRODUCT_NUM = p.PRODUCT_NUM
+		and ps.PRODUCTSIZE_SIZE =
+		pe.PRODUCTSIZE_SIZE
+		and p.PRODUCT_NUM = #{product_num} and
+		pe.PRODUCTSIZE_SIZE = upper(#{productSize_size})
+		and
+		pe.PRODUCTEACH_COLOR = upper(#{productEach_color})
+	</select>
+
+	<update id="UpProductNonBasketBuy" parameterType="com.basic.buy.BuyNonBasketDTO">
+		update
+		productEach pes set pes.PRODUCTEACH_EACH =
+		((select pe.PRODUCTEACH_EACH
+		from PRODUCT p , PRODUCTSIZE
+		ps,PRODUCTEACH pe
+		where pe.PRODUCT_NUM =
+		p.PRODUCT_NUM and
+		ps.PRODUCT_NUM = p.PRODUCT_NUM
+		and ps.PRODUCTSIZE_SIZE
+		=
+		pe.PRODUCTSIZE_SIZE
+		and p.PRODUCT_NUM =
+		#{product_num} and
+		pe.PRODUCTSIZE_SIZE = upper(#{productSize_size})
+		and
+		pe.PRODUCTEACH_COLOR = upper(#{productEach_color}))
+		-
+		#{productEach_each})
+		where pes.product_num = #{product_num}
+		and
+		pes.productSize_size = upper(#{productSize_size})
+		and
+		pes.productEach_color = upper(#{productEach_color})
+	</update>
+
+	<insert id="InsNonBasketBuy" parameterType="java.util.HashMap">
+		insert into buy
+		values
+		(buy_seq.nextval,#{buyNonBasketDTO.product_num},#{memberDTO.id})
+	</insert>
+
+	<insert id="InsNonBasketBuyState" parameterType="java.util.HashMap">
+		insert into
+		buystate
+		values
+		(buy_seq.currval,#{buyNonBasketDTO.productSize_size},#{buyNonBasketDTO.productEach_color},
+		#{buyNonBasketDTO.productEach_each},#{buyNonBasketDTO.productInfo_price}/100*(100-#{buyNonBasketDTO.productInfo_saleRate})*#{buyNonBasketDTO.productEach_each},1,0,sysdate,sysdate)
+	</insert>
+
+
+
+	<!-- -->
 
 
 
@@ -45,28 +109,59 @@
 	<!-- BasketBuy S -->
 
 	<update id="UpProductBuy" parameterType="java.util.HashMap">
-		update productEach pes set
+		update productEach pes
+		set
 		pes.productEach_each = (
-		(select DISTINCT pe.PRODUCTEACH_EACH from PRODUCT
+		(select DISTINCT pe.PRODUCTEACH_EACH from
+		PRODUCT
 		p
 		, PRODUCTSIZE ps, PRODUCTEACH pe
-		where pe.PRODUCT_NUM = p.PRODUCT_NUM
+		where pe.PRODUCT_NUM =
+		p.PRODUCT_NUM
 		and ps.PRODUCT_NUM = p.PRODUCT_NUM and
 		ps.PRODUCTSIZE_SIZE =
 		pe.PRODUCTSIZE_SIZE and ps.PRODUCT_NUM =
 		pe.PRODUCT_NUM
 		and
-		p.PRODUCT_NUM = #{basketListDTO.product_num} and pe.PRODUCTSIZE_SIZE =
+		p.PRODUCT_NUM = #{basketListDTO.product_num} and
+		pe.PRODUCTSIZE_SIZE =
 		upper(#{basketListDTO.basketInfo_size})
-		and pe.PRODUCTEACH_COLOR =
+		and
+		pe.PRODUCTEACH_COLOR =
 		upper(#{basketListDTO.basketInfo_color})
 		) -
 		#{basketListDTO.basketInfo_each})
-		where pes.product_num = #{basketListDTO.product_num}
-		and upper(pes.productSize_size )= upper(#{basketListDTO.basketInfo_size})
-		and upper(pes.productEach_color )=upper( #{basketListDTO.basketInfo_color})
+		where pes.product_num =
+		#{basketListDTO.product_num}
+		and upper(pes.productSize_size )=
+		upper(#{basketListDTO.basketInfo_size})
+		and upper(pes.productEach_color
+		)=upper( #{basketListDTO.basketInfo_color})
 
 	</update>
+
+	<select id="SelProductEachGet_Bas" parameterType="com.basic.basket.BasketListDTO"
+		resultType="int">
+		select pe.PRODUCTEACH_EACH from PRODUCT p , PRODUCTSIZE
+		ps,PRODUCTEACH
+		pe
+		where pe.PRODUCT_NUM = p.PRODUCT_NUM and
+		ps.PRODUCT_NUM = p.PRODUCT_NUM
+		and ps.PRODUCTSIZE_SIZE =
+		pe.PRODUCTSIZE_SIZE
+		and p.PRODUCT_NUM =
+		#{product_num} and
+		pe.PRODUCTSIZE_SIZE = upper(#{basketInfo_size})
+		and
+		pe.PRODUCTEACH_COLOR = upper(#{basketInfo_color})
+	</select>
+
+	<update id="UpBasketEachZero" parameterType="int">
+		update basketInfo
+		set basketInfo_each = 0
+		where basket_num = #{num}
+	</update>
+
 
 
 
@@ -80,9 +175,26 @@
 		insert into buystate
 		values
 		(buy_seq.currval,#{basketListDTO.basketInfo_size},#{basketListDTO.basketInfo_color},
-		#{basketListDTO.basketInfo_each},#{basketListDTO.productInfo_price}*100/(100-#{basketListDTO.productInfo_saleRate})*#{basketListDTO.basketInfo_each},1,0,sysdate,sysdate)
+		#{basketListDTO.basketInfo_each},#{basketListDTO.productInfo_price}/100*(100-#{basketListDTO.productInfo_saleRate})*#{basketListDTO.basketInfo_each},1,0,sysdate,sysdate)
 	</insert>
 
 	<!-- BasketBuy E -->
+	
+	<!--  Cancel Buy S  -->
+	
+	<delete id="DelBuy" parameterType="int">
+	delete buy where buy_num = #{buy_num}
+	
+	</delete>
+	
+	<delete id="DelBuyState"  parameterType="int">
+	delete buyState where buy_num = #{buy_num}
+	</delete>
+	
+	
+	<!--  Cancel Buy E  -->
+	
+	
+	
 
 </mapper>

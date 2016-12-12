@@ -317,7 +317,7 @@ function telCheck() {
 	
 					<li><a href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
 					<li><a href="${pageContext.request.contextPath}/buy/buyList">BUYLIST</a></li>
-					<li><a href="${pageContext.request.contextPath}/basket/productAdd">PRODUCTADD</a></li>
+					<li><a href="${pageContext.request.contextPath}/product/productAdd">PRODUCTADD</a></li>
 					<li><a href="${pageContext.request.contextPath}/product/productList">ITEM</a></li>
 					<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOGIN</a></li>
 					

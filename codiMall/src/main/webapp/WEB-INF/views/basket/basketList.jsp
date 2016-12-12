@@ -33,7 +33,10 @@ td:LAST-OF-TYPE {
 </style>
 <script type="text/javascript">
 	$(function() {
+
+
 		$("#btn_allBuy").click(function() {
+			var count = 0;
 			$(".bas_td_check").prop("checked", true);
 			$(".bas_td_check").attr('checked', true);
 			var bas_tr_jq = $(".bas_tr_jq");
@@ -45,11 +48,22 @@ td:LAST-OF-TYPE {
 					$(bas_tr_jq[i]).find(".td_inh_bas_num").removeAttr("disabled");
 				}
 			}
-			$("#tab_form").attr("action", "${pageContext.request.contextPath}/buy/basketBuyList");
-			$("#tab_form").submit();
+			var bas_td_inp_each = document.getElementsByClassName("bas_td_inp_each");
+			for (var i = 0; i < bas_td_inp_each.length; i++) {
+				if ($(bas_td_inp_each[i]).val() == 0) {
+					count++;
+				}
+			}
+			if (count > 0) {
+				alert("수량을 1개이상 입력해주세요");
+			} else {
+				$("#tab_form").attr("action", "${pageContext.request.contextPath}/buy/basketBuyList");
+				$("#tab_form").submit();
+			}
 		});
 
 		$("#btn_checkBuy").click(function() {
+			var count = 0;
 			if ($(".bas_td_check:checked").length == 0) {
 				alert("1개이상 체크하세요");
 			} else {
@@ -60,10 +74,17 @@ td:LAST-OF-TYPE {
 					} else {
 						$(bas_tr_jq[i]).find(".td_inh_bas_num").attr("disabled", "disabled");
 						$(bas_tr_jq[i]).find(".td_inh_bas_num").removeAttr("disabled");
+						if ($(bas_tr_jq[i]).find(".bas_td_inp_each").val() == 0) {
+							count++;
+						}
 					}
 				}
-				$("#tab_form").attr("action", "${pageContext.request.contextPath}/buy/basketBuyList");
-				$("#tab_form").submit();
+				if (count > 0) {
+					alert("수량을 1개이상 입력해주세요");
+				} else {
+					$("#tab_form").attr("action", "${pageContext.request.contextPath}/buy/basketBuyList");
+					$("#tab_form").submit();
+				}
 			}
 		});
 
@@ -134,7 +155,8 @@ td:LAST-OF-TYPE {
 			});
 
 			thisTr.find(".bas_td_inp_each").focus(function() {
-				$(this).keydown(function() {
+				$(this).change(function() {
+					numcheck();
 					if ($(this).val() > 0) {
 						numcheck();
 						productEachGet(thisTr);
@@ -144,26 +166,19 @@ td:LAST-OF-TYPE {
 					}
 				});
 				$(this).keyup(function() {
-					if ($(this).val() > 0) {
-						numcheck();
-						productEachGet(thisTr);
-					} else {
-						numcheck();
-						$(this).val(1);
-					}
+					numcheck();
 				});
-				$(this).keyblur(function() {
-					if ($(this).val() > 0) {
-						numcheck();
-						productEachGet(thisTr);
-					} else {
-						numcheck();
-						$(this).val(1);
-					}
+				$(this).keydown(function() {
+					numcheck();
 				});
 			});
-
 		});
+
+		if ($(".bas_tr_jq").length == 0) {
+			$(":button").off("click");
+			$(":button").css("display", "none");
+
+		}
 
 	});
 	function productEachGet(thisTr) {
@@ -221,8 +236,8 @@ td:LAST-OF-TYPE {
 				<tr class="bas_tr_jq">
 					<td><input type="checkbox" value="${list1.basket_num}"
 						name="del_basket_num" class="bas_td_check"></td>
-					<td class="bas_td_bas_num"><input class ="td_inh_bas_num" type="hidden"
-						value="${list1.basket_num}" name="basket_num">${list1.basket_num}</td>
+					<td class="bas_td_bas_num"><input class="td_inh_bas_num"
+						type="hidden" value="${list1.basket_num}" name="basket_num">${list1.basket_num}</td>
 					<td class="bas_td_second"><input type="text"
 						class="bas_td_hid_pronum" value="${list1.product_num}"
 						name="product_num">

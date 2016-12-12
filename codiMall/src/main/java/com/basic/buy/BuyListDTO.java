@@ -7,8 +7,16 @@ public class BuyListDTO {
 	private String product_name;
 	private String buyState_size;
 	private String buyState_color;
+	private int buyState_state;
 	private int buyState_each;
 	private int buyState_price;
+	
+	public int getBuyState_state() {
+		return buyState_state;
+	}
+	public void setBuyState_state(int buyState_state) {
+		this.buyState_state = buyState_state;
+	}
 	public int getBuy_num() {
 		return buy_num;
 	}
