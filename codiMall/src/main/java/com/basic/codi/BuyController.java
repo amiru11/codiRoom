@@ -73,7 +73,7 @@ public class BuyController {
 		return path;
 	}
 	
-	@RequestMapping(value="/nonBasketBuy")
+	@RequestMapping(value="/nonBasketBuy", method = RequestMethod.POST)
 	public String nonBasketBuy(BuyNonBasketDTO buyNonBasketDTO, HttpSession session,RedirectAttributes ra){
 		
 		String message = "";
@@ -114,7 +114,7 @@ public class BuyController {
 		return path;
 	}
 	
-	@RequestMapping(value="/cancelBuy")
+	@RequestMapping(value="/cancelBuy" , method = RequestMethod.POST)
 	public String cancelBuy(@RequestParam(defaultValue="0") int buy_num,HttpSession session,RedirectAttributes ra){
 		String message="";
 		String location="";

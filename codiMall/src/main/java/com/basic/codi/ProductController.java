@@ -51,7 +51,7 @@ public class ProductController {
 		
 	}
 	
-	@RequestMapping(value = "/productserList")
+	@RequestMapping(value = "/productserList", method = RequestMethod.GET)
 	public String productserList(@RequestParam(defaultValue = "1") int curPage,
 			@RequestParam(defaultValue = "9") int perPage, @RequestParam(defaultValue = "1") int sel,
 			@RequestParam(required = false) String[] kind_num, @RequestParam(required = false) String[] color,
@@ -76,12 +76,12 @@ public class ProductController {
 	
 	
 	
-	@RequestMapping(value="/productView")
+	@RequestMapping(value="/productView", method = RequestMethod.GET)
 	public void productView(@RequestParam(required = false)int product_num,Model model){
 		model.addAttribute("view",productService.productView(product_num));
 	}
 	
-	@RequestMapping(value="/productEachAdd")
+	@RequestMapping(value="/productEachAdd", method = RequestMethod.POST)
 	public String productEachAdd(ProductEachAddDTOs productEachAddDTOs,RedirectAttributes rs){
 		String message = "";
 		int result = productService.productEachAdd(productEachAddDTOs);

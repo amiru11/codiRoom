@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -38,7 +39,7 @@ public class BasketController {
 		return path;
 	}
 
-	@RequestMapping(value = "/basketAdd")
+	@RequestMapping(value = "/basketAdd", method = RequestMethod.POST)
 	@ResponseBody
 	public String basketAdd(RedirectAttributes ra, HttpSession session, ProductEachDTO productEachDTO) {
 		String message = "";
@@ -60,7 +61,7 @@ public class BasketController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = "/basketFix")
+	@RequestMapping(value = "/basketFix", method = RequestMethod.POST)
 	public String basketFix(HttpServletRequest request, HttpSession session, RedirectAttributes ra) {
 		String message = "";
 		String path = "";
@@ -79,7 +80,7 @@ public class BasketController {
 		return path;
 	}
 
-	@RequestMapping(value = "/basketDel")
+	@RequestMapping(value = "/basketDel", method = RequestMethod.POST)
 	public String basketDel(HttpSession session, int[] del_basket_num,RedirectAttributes ra) {
 		String message = "";
 		String path = "";
