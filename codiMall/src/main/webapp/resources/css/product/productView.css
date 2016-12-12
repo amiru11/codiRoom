@@ -237,34 +237,6 @@
 #attributes .attribute_list {
     display: inline-block;
 }
-/* #color_pick_list{
-	list-style-type: none;
-	margin: 0 -4px;
-	padding-top : 0;
-}
-#color_pick_list li {
-	display: inline-block;
-    margin: 0 4px 8px;
-    clear: none;
-    width: auto;
-    position: relative;
-    padding: 0;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
-}
-#color_pick_list li>a{
-	display: block;
-    height: 37px;
-    width: 37px;
-    border-radius: 50%;
-    border : 2px solid #dce2eb;
-    transition: all 0.3s ease;
-    
-}
-#color_pick_list li>a:HOVER {
-	transform:scale(0.8,0.8);
-} */
 
 div.selector {
 	width: 110px;
@@ -274,7 +246,6 @@ div.selector {
     position: relative;
     overflow: hidden;
     border: 2px solid #dce2eb;
-    /* background: white; */
     border-radius: 50px;
     font-size: 13px;
     transition: all 0.3s ease;
@@ -339,8 +310,8 @@ div.selector {
     height: 36px;
     width: 36px;
     line-height: 36px;
-    background: #006633;
     border-radius: 50px;
+    background: #006633;
     box-shadow: 0 15px 28px #00cc66;
     transition: all 0.3s ease;
 
@@ -351,5 +322,23 @@ div.selector {
     -moz-box-shadow: 0 15px 30px rgba(53, 57, 64, 0.5);
     -webkit-box-shadow: 0 15px 30px rgba(53, 57, 64, 0.5);
     box-shadow: 0 15px 30px rgba(53, 57, 64, 0.5);
+}
+
+#btn_buy, #btn_basket{
+	margin-left: 30px;
+    width: 200px;
+    height: 60px;
+    background: #353940;
+    font : 20px "Hanna",sans-serif;
+    padding-top: 20px;
+    box-shadow: 0 15px 28px rgba(53,57,64,0.5);
+    color: white;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    
+}
+#btn_buy:HOVER, #btn_basket:HOVER{
+	background: #006633;
+    box-shadow: 0 15px 28px #00cc66;
 }
 /* info:E */

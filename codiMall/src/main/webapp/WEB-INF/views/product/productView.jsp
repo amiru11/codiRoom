@@ -18,10 +18,12 @@
 		
 		$("#sel_size_a").change(function(){
 			if($("#sel_size_a").val()!=""){
+				$("#buttonSet").css("display","none");
 				$("#quantityField").css("display","none")
 				selSize();
 				$("#colorField").fadeIn("slow");
 			}else{
+				$("#buttonSet").css("display","none");
 				$("#quantityField").css("display","none")
 				$("#colorField").css("display","none");
 				$("#sel_size_b").html("");
@@ -36,12 +38,14 @@
 		$("#sel_size_b").change(function(){
 			if($("#sel_size_b").val()!=""){
 				$("#quantityField").fadeIn("slow");
+				$("#buttonSet").fadeIn("slow");
 				$("#inh_productSize_size").val($("#sel_size_a").val());
 				$("#inh_productEach_color").val($("#sel_size_b").val());
 				$("#inp_each").val(1);
 				$("#inh_productEach_each").val($("#inp_each").val());	
 			}else{
-				$("#quantityField").css("display","none")
+				$("#quantityField").css("display","none");
+				$("#buttonSet").css("display","none");
 			}
 		});
 
@@ -105,18 +109,17 @@
 		
 			
 		$(".product_quantity_down").click(function(){//수량감소
-			var c = $("#inp_each").val();
-			if(c>1){	
-				$("#inp_each").val(c-1);
-			}else{
-				return false;
+			var c = parseInt($("#inp_each").val());
+			var d = c+1;
+			if(d>1){	
+				$("#inp_each").val(d);
 			}
 		});
 
 		$(".product_quantity_up").click(function(){//수량증가
-			var c = typeof $("#inp_each").val();
+			var c =  parseInt($("#inp_each").val());
 			var d = c+1;
-			if(c<6){	
+			if(d<6){	
 				$("#inp_each").val(d);
 			}
 			alert(c);
@@ -321,7 +324,7 @@
 											</div>
 										</div>
 									</fieldset>
-									<fieldset class="fieldset_list clearfix" id="colorField"  style="">
+									<fieldset class="fieldset_list clearfix" id="colorField"  style="display: none;">
 										<label>COLOR&nbsp;</label>
 										<div class="attribute_list">
 											<div class="selector">
@@ -330,7 +333,7 @@
 											</div>
 										</div>
 									</fieldset>
-									<fieldset class="fieldset_list clearfix" id="quantityField"  style="">
+									<fieldset class="fieldset_list clearfix" id="quantityField"  style="display: none;">
 										<label>QUANTITY&nbsp;</label>
 										<div class="attribute_list" id="quantity">
 											<input id="inp_each" accept="e" type="number" min="1" step="1">											
@@ -342,61 +345,17 @@
 											</a>
 										</div>
 									</fieldset>
+									<fieldset class="fieldset_list clearfix" id="buttonSet"  style="display: none;">
+										<div class="attribute_list">
+											<a id="btn_buy" class="btn btn-default" type="button">BUY</a>
+											<a id="btn_basket" class="btn btn-default" type="button">BASKET</a>
+										</div>
+									</fieldset>
 								</div>
 							</div>
-							
 						</div>
-						
-<%-- 						<input id="inh_product_num" type="text" value="${view.product_num}"
-							name="product_num"> <input id="inh_productSize_size"
-							type="text" name="productSize_size"> <input
-							id="inh_productEach_color" type="text" name="productEach_color">
-						<input id="inh_productEach_each" type="text"
-							name="productEach_each"> <input id="inh_each_each"
-							type="text"> --%>
 					</form>
-					<table class="table">
-						<tr>
-							<td>PRODUCT_NUM</td>
-							<td>${view.product_num}</td>
-							<td>PRODUCT_NAME</td>
-							<td>${view.product_name}</td>
-							<td>PRODUCT_PRICE</td>
-							<td>${view.productInfo_price}</td>
-							<td>PRODUCT_SALERATE</td>
-							<td>${view.productInfo_saleRate}</td>
-						</tr>
-						<tr>
-							<td>PRODUCT_SEARCHWORD</td>
-							<td>${view.productInfo_searchWord}</td>
-							<td>PRODUCT_KINDNUM</td>
-							<td>${view.kind_num}</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td><select id="sel_size_b"></select></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td><form id="view_frm" method="post">
-									<input id="inh_product_num" type="text" value="${view.product_num}"
-										name="product_num"> <input id="inh_productSize_size"
-										type="text" name="productSize_size"> <input
-										id="inh_productEach_color" type="text" name="productEach_color">
-									<input id="inh_productEach_each" type="text"
-										name="productEach_each"> <input id="inh_each_each"
-										type="text">
-								</form></td>
-							<td><input id="btn_buy" type="button" value="BUY"></td>
-							<td><input id="btn_basket" type="button" value="BASKET">
-							</td>
-						</tr>
-				
-				
-				
-					</table> 
-				
-					<div id="div_hidden_each"></div>
+					<div id="div_hidden_each" style="display: none;"></div>
 					<script type="text/javascript">
 						selList();
 					</script>				
