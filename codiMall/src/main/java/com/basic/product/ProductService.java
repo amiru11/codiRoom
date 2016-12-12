@@ -16,13 +16,14 @@ public class ProductService {
 	@Autowired
 	private ProductDAO productDAO;
 
-	public List<ProductListDTO> productList(int curPage, int perPage, ProductParamDTO productParamDTO) {
+	public List<ProductListDTO> productList(int curPage, int perPage, ProductParamDTO productParamDTO,Model model) {
 		int totalCount = productDAO.productCount(productParamDTO);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCurPage(curPage);
 		pageMaker.setPerPage(perPage);
 		pageMaker.makeRow();
 		pageMaker.makePage(totalCount);
+		model.addAttribute("pageing",pageMaker);
 
 		return productDAO.productList(pageMaker, productParamDTO);
 
