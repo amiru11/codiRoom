@@ -11,8 +11,47 @@ $(function() {
 	}
 });
 
+//ID 중복 체크
+var idCount = 0;
+function idCheck() {
+	var id = $("#id").val();
+	var idCount = 0;
+	
+	if(id == '') {
+		alert('이메일을 입력하세요.');
+		$("#id").css("color", "red");
+		return false;
+	}
+	var emailChar =  /^([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+        if(emailChar.test(id) == false){
+        	alert("이메일 형식이 아닙니다.");
+        	$("#id").css("color", "red");
+        	return false;
+        }
+	$.ajax({
+		url : "${pageContext.request.contextPath}/member/idCheck",
+		type : "post",
+		data : {
+			id : id
+		},
+		success : function(data){
+			idCount = data.idCheck;
+			if(idCount > 0){
+				alert("아이디가 중복 됩니다.");
+				$("#id").css("color", "red");
+			}else {
+				alert("사용가능한 아이디 입니다.");
+				$("#id").css("color", "black");
+			}
+		}
+	});
+}
+
 	$(function(){
 		$("#joinCom").click(function(){
+			var date = new Date();
+			var lastDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+			var startDate = (date.getFullYear()-100) + "-" + (date.getMonth()+1) + "-" + date.getDate();
 			var id = $("#id").val();
 			var pw = $("#pw").val();
 			var pwc = $("#pwc").val();
@@ -23,23 +62,24 @@ $(function() {
 			var tel1 = $("#tel1").val();
 
 			var check = false;
+			
 			if(id == '') {
 				alert('이메일을 입력하세요.');
-				$("#id").focus();
+				$("#id").css("color", "red");
 				return check;
 			}
 			var emailChar =  /^([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
 		        if(emailChar.test(id) == false){
 		        	alert("이메일 형식이 아닙니다.");
-		        	$("#id").focus();
+		        	$("#id").css("color", "red");
 		        	return check;
 		        }
 			//아이디 중복 체크 했는지
-		/* 	if(idCount == '0') {
-				alert('아이디 중복체크를 해 주세요.');
-				$("#id").focus();
-				return false;
-			} */
+			alert(idCount);
+		 	if(idCount == 1) {
+				alert('아이디가 중복 됩니다.');
+				return check;
+			}
 			if(pw == ''){
 				alert("패스워드를 입력해주세요.");
 				$("#pw").focus();
@@ -81,6 +121,16 @@ $(function() {
 				$("#birth").focus();
 				return check;
 			}
+			if(birth > lastDate){
+				alert("오늘 날짜 보다 이전 날짜를 입력해주세요.");
+				$("#birth").focus();
+				return check;
+			}
+			if(birth < startDate){
+				alert("오늘 날짜 보다 100년 이전 날짜는 선택이 안됩니다.");
+				$("#birth").focus();
+				return check;
+			}
 			//성별​​
 			if(gender == '' || gender == null) {
 				alert('성별을 선택해 주세요.');
@@ -109,7 +159,6 @@ $(function() {
 			}
 			check = true;
 			if(check == true){
-				alert(1);
 				$("#jfrm").submit();
 			}
 		});
@@ -128,10 +177,6 @@ function telCheck() {
 };
 
 
-//ID 중복 체크
-function idCheck() {
-	
-}
 
 
 
@@ -272,7 +317,7 @@ function idCheck() {
 	
 					<li><a href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
 					<li><a href="${pageContext.request.contextPath}/buy/buyList">BUYLIST</a></li>
-					<li><a href="${pageContext.request.contextPath}/basket/productAdd">PRODUCTADD</a></li>
+					<li><a href="${pageContext.request.contextPath}/product/productAdd">PRODUCTADD</a></li>
 					<li><a href="${pageContext.request.contextPath}/product/productList">ITEM</a></li>
 					<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOGIN</a></li>
 					
@@ -348,7 +393,7 @@ function idCheck() {
 				<div class="modal-body">
 					
 						<div class="form-group">
-							<input type="email" class="form-control decorative-input" id="id" name="id" maxlength="30" placeholder="이메일">
+							<input type="email" class="form-control decorative-input" id="id" name="id" maxlength="30" placeholder="이메일" onblur="idCheck()">
 						</div>
 						<div class="form-group">
 							<input type="password" class="form-control decorative-input" id="pw" name="pw" maxlength="15" placeholder="비밀번호">
@@ -360,7 +405,7 @@ function idCheck() {
 							<input type="text" class="form-control decorative-input" id="name" name="name" maxlength="10" placeholder="이름">
 						</div>
 						<div class="form-group">
-							<input type="date" class="form-control decorative-input" id="birth" name="birth" placeholder="생년월일을 입력하세요">
+							<input type="date" class="form-control decorative-input" id="birth" name="birth" placeholder="생년월일을 입력하세요" max="${lastDate }" min="${startDate }">
 						</div>
 						<div class="form-group">
 							<label for="gender">GENDER</label>

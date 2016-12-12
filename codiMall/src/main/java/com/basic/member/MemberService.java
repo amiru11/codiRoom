@@ -35,9 +35,9 @@ public class MemberService {
 		return memberDAO.idFind(memberDTO);
 	}
 	
-	//PW 찾기
-	public MemberDTO pwFind(MemberDTO memberDTO) throws Exception{
-		return memberDAO.pwFind(memberDTO);
+	//ID 중복 체크 , PW 찾기
+	public MemberDTO idCheck(MemberDTO memberDTO) throws Exception{
+		return memberDAO.idCheck(memberDTO);
 	}
 	
 }

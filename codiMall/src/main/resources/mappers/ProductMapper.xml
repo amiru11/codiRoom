@@ -95,7 +95,7 @@
 		parameterType="java.util.HashMap">
 		select * from
 		(select ROWNUM r,t.* from (select DISTINCT
-		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE from PRODUCT p ,
+		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.productInfo_saleRate from PRODUCT p ,
 		PRODUCTINFO pi , PRODUCTEACH pe , PRODUCTKIND pk
 		where pe.PRODUCT_NUM =
 		p.PRODUCT_NUM
@@ -215,8 +215,16 @@
 		pe.PRODUCT_NUM and ps.PRODUCTSIZE_SIZE =
 		pe.PRODUCTSIZE_SIZE
 		and
+		
+		
+		
+		
+		
+		
+		
 		p.PRODUCT_NUM = #{product_num} and ps.PRODUCTSIZE_SIZE =
 		#{productSize_size}
+		and pe.productEach_each not in (0)
 	</select>
 
 
@@ -227,12 +235,12 @@
 
 	<insert id="ProductAdd" parameterType="com.basic.product.ProductAddDTO">
 		insert into product
-		values(product_seq.nextval,#{product_name})
+		values(product_seq.nextval,upper(#{product_name}))
 	</insert>
 	<insert id="ProductInfoAdd" parameterType="com.basic.product.ProductAddDTO">
 		insert into
 		productInfo
-		values(product_seq.currval,#{productInfo_price},sysdate,sysdate,#{productInfo_saleRate},#{productInfo_searchWord})
+		values(product_seq.currval,#{productInfo_price},sysdate,sysdate,#{productInfo_saleRate},upper(#{productInfo_searchWord}))
 	</insert>
 	<insert id="ProductKindAdd" parameterType="com.basic.product.ProductAddDTO">
 		insert into
@@ -251,19 +259,19 @@
 		where ps.PRODUCT_NUM = p.PRODUCT_NUM and
 		ps.PRODUCT_NUM = #{product_num}
 		and
-		ps.PRODUCTSIZE_SIZE=#{productSize_size}
+		ps.PRODUCTSIZE_SIZE=upper(#{productSize_size})
 
 	</select>
 
 	<insert id="ProductSizeAdd" parameterType="com.basic.product.ProductEachAddDTO">
 		insert into
 		productSize
-		values(#{product_num},#{productSize_size})
+		values(#{product_num},upper(#{productSize_size}))
 	</insert>
 	<insert id="ProductEachAdd" parameterType="com.basic.product.ProductEachAddDTO">
 		insert into
 		productEach
-		values(#{product_num},#{productSize_size},#{productEach_color},#{productEach_each})
+		values(#{product_num},upper(#{productSize_size}),upper(#{productEach_color}),#{productEach_each})
 	</insert>
 
 	<!-- Product Size Add E -->

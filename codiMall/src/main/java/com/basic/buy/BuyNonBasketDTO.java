@@ -9,7 +9,7 @@ public class BuyNonBasketDTO {
 	private double productInfo_saleRate;
 	private String productSize_size;
 	private String productEach_color;
-	private String productEach_each;
+	private int productEach_each;
 	public String getMember_id() {
 		return member_id;
 	}
@@ -52,13 +52,13 @@ public class BuyNonBasketDTO {
 	public void setProductEach_color(String productEach_color) {
 		this.productEach_color = productEach_color;
 	}
-	public String getProductEach_each() {
+	public int getProductEach_each() {
 		return productEach_each;
 	}
-	public void setProductEach_each(String productEach_each) {
+	public void setProductEach_each(int productEach_each) {
 		this.productEach_each = productEach_each;
 	}
-	
+
 	
 	
 	

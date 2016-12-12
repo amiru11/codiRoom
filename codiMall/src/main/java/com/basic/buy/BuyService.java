@@ -23,12 +23,19 @@ public class BuyService {
 	
 	public List<BasketListDTO> basketBuyList(int[] basket_num){
 		return buyDao.basketBuyList(basket_num);
-		
+	}
+	
+	public String nonBasketBuy(BuyNonBasketDTO buyNonBasketDTO,MemberDTO memberDTO){
+		return buyDao.nonBasketBuy(buyNonBasketDTO, memberDTO);
 	}
 
-	
+
 	public String basketBuy(int[] basket_num,MemberDTO memberDTO){
 		return buyDao.basketBuy(basket_num,memberDTO);
+	}
+	
+	public String cancelBuy(int buy_num){
+		return buyDao.cancelBuy(buy_num);
 	}
 
 }

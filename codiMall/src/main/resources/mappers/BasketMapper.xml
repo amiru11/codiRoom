@@ -136,8 +136,8 @@
 		and m.ID = b.ID and m.id = #{member.id}
 		and
 		P.PRODUCT_NUM=#{product.product_num} and bi.BASKETINFO_SIZE =
-		#{basketInfo.basketInfo_size} and
-		bi.BASKETINFO_COLOR=#{basketInfo.basketInfo_color} and
+		upper(#{basketInfo.basketInfo_size}) and
+		bi.BASKETINFO_COLOR=upper(#{basketInfo.basketInfo_color}) and
 		b.BASKET_NUM not
 		in (#{basketInfo.basket_num})
 
@@ -186,7 +186,7 @@
 	<insert id="InBasketInfoAdd" parameterType="java.util.HashMap">
 		insert into
 		basketInfo values
-		(basket_seq.currval,#{productEachDTO.productSize_size},#{productEachDTO.productEach_color},#{productEachDTO.productEach_each})
+		(basket_seq.currval,upper(#{productEachDTO.productSize_size}),upper(#{productEachDTO.productEach_color}),#{productEachDTO.productEach_each})
 	</insert>
 
 	<!-- BASKET ADD E -->

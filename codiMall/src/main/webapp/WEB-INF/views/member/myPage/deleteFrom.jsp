@@ -14,11 +14,9 @@ $(function() {
 				},
 				success : function(data) {
 					if(data.result > 0){
-						window.location = "/codi/";
+						window.location = "${pageContext.request.contextPath}/";
 					}else {
-						window.location = "/";
-						data = data.trim();
-						$("#subView").html(data);
+						$("#subView").html(data.message);
 					}
 				}
 			});
@@ -27,6 +25,7 @@ $(function() {
 
 });
 </script>
+${data.result}
 <input type="hidden" id="idD" value="${member.id }">
 	<label>이메일</label> <span>${member.id }</span><br>
 	<label>비밀번호</label> <input type="password" id="pwD" name="pw" maxlength="15" placeholder="비밀번호"><br>

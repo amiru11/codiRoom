@@ -32,10 +32,9 @@ public class BuyDao {
 
 	DefaultTransactionDefinition def = null;
 	TransactionStatus status = null;
-	
-	public List<BuyListDTO> buyList(HttpSession session){
-		return sqlSession.selectList(namespace+"SelBuyList",(MemberDTO)session.getAttribute("member"));
-		
+
+	public List<BuyListDTO> buyList(HttpSession session) {
+		return sqlSession.selectList(namespace + "SelBuyList", (MemberDTO) session.getAttribute("member"));
 	}
 
 	public List<BasketListDTO> basketBuyList(int[] basket_num) {
@@ -50,6 +49,48 @@ public class BuyDao {
 		return ar2;
 	}
 
+	public String nonBasketBuy(BuyNonBasketDTO buyNonBasketDTO, MemberDTO memberDTO) {
+		System.out.println("---- non basket buy ---- start ----");
+		String message = "";
+		int result = 0;
+		int productEach = sqlSession.selectOne(namespace + "SelProductEachGet", buyNonBasketDTO);
+		if (productEach > buyNonBasketDTO.getProductEach_each()) {
+			try {
+				def = new DefaultTransactionDefinition();
+				def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+				status = transactionManager.getTransaction(def);
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("buyNonBasketDTO", buyNonBasketDTO);
+				map.put("memberDTO", memberDTO);
+				result = sqlSession.update(namespace + "UpProductNonBasketBuy", buyNonBasketDTO);
+				if (result > 0) {
+					result = sqlSession.insert(namespace + "InsNonBasketBuy", map);
+					result = sqlSession.insert(namespace + "InsNonBasketBuyState", map);
+				} else {
+					result = 0;
+				}
+				if (result > 0) {
+					transactionManager.commit(status);
+					System.out.println("success");
+					message = "구매성공";
+				} else {
+					transactionManager.rollback(status);
+					message = "구매실패";
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				transactionManager.rollback(status);
+				System.out.println("fail");
+				message = "오류발생";
+			}
+		} else {
+			message = "재고없음 구매실패";
+		}
+
+		return message;
+	}
+
 	public String basketBuy(int[] basket_num, MemberDTO memberDTO) {
 		List<Integer> ar = new ArrayList<Integer>();
 		List<BasketListDTO> ar2 = new ArrayList<BasketListDTO>();
@@ -59,7 +100,31 @@ public class BuyDao {
 		}
 		map.put("list", ar);
 		ar2 = sqlSession.selectList(namespace + "SelBasketBuyList", map);
+
+		while (true) {
+			int size = ar2.size();
+			for (int i = 0; i < ar2.size(); i++) {
+				int productEach = sqlSession.selectOne(namespace + "SelProductEachGet_Bas", ar2.get(i));
+				if (ar2.get(i).getBasketInfo_each() > productEach) {
+					int num = ar2.get(i).getBasket_num();
+					ar2.remove(i);
+					sqlSession.update(namespace + "UpBasketEachZero", num);
+					for (int j = 0; j < ar.size(); j++) {
+						if (num == ar.get(j)) {
+							ar.remove(j);
+							break;
+						}
+
+					}
+				}
+			}
+			if (size == ar2.size()) {
+				break;
+			}
+		}
 		for (int i = 0; i < ar2.size(); i++) {
+			int productEach = sqlSession.selectOne(namespace + "SelProductEachGet_Bas", ar2.get(i));
+			System.out.println("proeach---" + productEach);
 			System.out.println(i + "--basnum--" + ar2.get(i).getBasket_num());
 			System.out.println(i + "--pronum--" + ar2.get(i).getProduct_num());
 			System.out.println(i + "--price--" + ar2.get(i).getProductInfo_price());
@@ -67,11 +132,10 @@ public class BuyDao {
 			System.out.println(i + "--size--" + ar2.get(i).getBasketInfo_size());
 			System.out.println(i + "--color--" + ar2.get(i).getBasketInfo_color());
 			System.out.println(i + "--each--" + ar2.get(i).getBasketInfo_each());
-
 		}
 
 		int result = 0;
-		int upResult=0;
+		int upResult = 0;
 		String message = "";
 
 		try {
@@ -81,7 +145,7 @@ public class BuyDao {
 
 			status = transactionManager.getTransaction(def);
 
-			for (int i = 0; i < basket_num.length; i++) {
+			for (int i = 0; i < ar2.size(); i++) {
 				System.out.println("for" + i);
 				Map<String, Object> map2 = new HashMap<String, Object>();
 				map2.put("memberDTO", memberDTO);
@@ -90,30 +154,30 @@ public class BuyDao {
 				System.out.println("ins" + i + "---" + result);
 				result = result + sqlSession.insert(namespace + "InsBuyState", map2);
 				System.out.println(i + "--buystate--succecc");
-				
-				if(result>0){
-					upResult = sqlSession.update(namespace+"UpProductBuy",map2);
-					System.out.println("resultvalue-"+result);
-					System.out.println("upresult--"+i);
-				}else{
+
+				if (result > 0) {
+					upResult = sqlSession.update(namespace + "UpProductBuy", map2);
+					System.out.println("resultvalue-" + result);
+					System.out.println("upresult--" + i);
+				} else {
 					System.out.println("break");
 					break;
 				}
 			}
-			if (result == basket_num.length * 2 && upResult>0) {
+			if (result == ar2.size() * 2 && upResult > 0) {
 				System.out.println("result==basket_num.length");
 				Map<String, Object> map3 = new HashMap<String, Object>();
 				map3.put("del_basket_num", ar);
 
 				result = sqlSession.delete("BasketMapper.DelBasketInfo", map3);
-				System.out.println("result1"+result);
-				if (result == basket_num.length) {
+				System.out.println("result1" + result);
+				if (result == ar2.size()) {
 					result = sqlSession.delete("BasketMapper.DelBasket", map3);
-					System.out.println("result2"+result);
-				}else{
-					result=0;
+					System.out.println("result2" + result);
+				} else {
+					result = 0;
 				}
-				if (result == basket_num.length) {
+				if (result == ar2.size()) {
 					transactionManager.commit(status);
 					System.out.println("success");
 					message = "구매성공";
@@ -134,6 +198,38 @@ public class BuyDao {
 			message = "예외발생";
 		}
 
+		return message;
+	}
+
+	// CanCel buy
+
+	public String cancelBuy(int buy_num) {
+		String message = "";
+		int result = 0;
+		def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+		status = transactionManager.getTransaction(def);
+		try {
+			result = sqlSession.delete(namespace + "DelBuyState", buy_num);
+			if (result > 0) {
+				result = sqlSession.delete(namespace + "DelBuy", buy_num);
+				if (result > 0) {
+					transactionManager.commit(status);
+					System.out.println("Del--success");
+					message = "구매취소성공";
+				}
+			} else {
+				transactionManager.rollback(status);
+				System.out.println("Del--fail");
+				message = "오류발생";
+			}
+
+		} catch (Exception e) {
+			transactionManager.rollback(status);
+			System.out.println("fail");
+			message = "오류발생";
+		}
 		return message;
 	}
 

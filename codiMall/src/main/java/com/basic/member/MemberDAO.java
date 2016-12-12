@@ -35,8 +35,8 @@ public class MemberDAO {
 		return sqlSession.selectOne(namespace+"idFind", memberDTO);
 	}
 	
-	//PW 찾기
-	public MemberDTO pwFind(MemberDTO memberDTO) throws Exception{
-		return sqlSession.selectOne(namespace+"pwFind", memberDTO);
+	//ID 중복 체크 , PW 찾기
+	public MemberDTO idCheck(MemberDTO memberDTO) throws Exception{
+		return sqlSession.selectOne(namespace+"idCheck", memberDTO);
 	}
 }

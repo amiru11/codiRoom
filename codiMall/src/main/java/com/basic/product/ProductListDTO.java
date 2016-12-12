@@ -6,6 +6,15 @@ public class ProductListDTO {
 	private int product_num;
 	private String product_name;
 	private int productInfo_price;
+	private double productInfo_saleRate;
+	
+	
+	public double getProductInfo_saleRate() {
+		return productInfo_saleRate;
+	}
+	public void setProductInfo_saleRate(double productInfo_saleRate) {
+		this.productInfo_saleRate = productInfo_saleRate;
+	}
 	public int getR() {
 		return r;
 	}

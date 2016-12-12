@@ -1,5 +1,6 @@
 package com.basic.codi;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,13 @@ public class IndexController {
 	
 	
 	@RequestMapping(value="/", method = RequestMethod.GET)
-	public String index(){
+	public String index(Model model){
+		Calendar c = Calendar.getInstance();
+		String lastDate = c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DAY_OF_MONTH);
+		String startDate = (c.get(Calendar.YEAR)-100) + "-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DAY_OF_MONTH);
+		
+		model.addAttribute("lastDate", lastDate);
+		model.addAttribute("startDate", startDate);
 		return "index";
 	}
 
