@@ -29,6 +29,8 @@
 			javaType="double" />
 		<result column="productInfo_searchWord" property="productInfo_searchWord"
 			javaType="java.lang.String" />
+		<result column="productInfo_brand" property="productInfo_brand"
+			javaType="java.lang.String" />
 	</resultMap>
 
 	<resultMap type="com.basic.product.ProductEachDTO" id="ProductEach">
@@ -67,6 +69,8 @@
 			javaType="double" />
 		<result column="productInfo_searchWord" property="productInfo_searchWord"
 			javaType="java.lang.String" />
+		<result column="productInfo_brand" property="productInfo_brand"
+			javaType="java.lang.String" />	
 		<result column="kind_num" property="kind_num" javaType="int" />
 	</resultMap>
 	<!-- PRODUCTVIEW DTO E -->

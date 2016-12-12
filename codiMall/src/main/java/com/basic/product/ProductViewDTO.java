@@ -8,11 +8,18 @@ public class ProductViewDTO {
 	private int productInfo_price;
 	private double productInfo_saleRate;
 	private String productInfo_searchWord;
+
+	private String productInfo_brand;
 	private int kind_num;
 	
 	private List<ProductEachDTO> productEachDTOs;
 	
-	
+	public String getProductInfo_brand() {
+		return productInfo_brand;
+	}
+	public void setProductInfo_brand(String productInfo_brand) {
+		this.productInfo_brand = productInfo_brand;
+	}	
 	public int getKind_num() {
 		return kind_num;
 	}

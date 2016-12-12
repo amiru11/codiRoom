@@ -9,6 +9,15 @@ public class ProductInfoDTO {
 	private Date productInfo_rec_date;
 	private double productInfo_saleRate;
 	private String productInfo_searchWord;
+	private String productInfo_brand;
+	
+	
+	public String getProductInfo_brand() {
+		return productInfo_brand;
+	}
+	public void setProductInfo_brand(String productInfo_brand) {
+		this.productInfo_brand = productInfo_brand;
+	}
 	public int getProduct_num() {
 		return product_num;
 	}

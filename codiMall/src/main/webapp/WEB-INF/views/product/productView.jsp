@@ -18,12 +18,12 @@
 		
 		$("#sel_size_a").change(function(){
 			if($("#sel_size_a").val()!=""){
-				$("#inp_each").css("display","none")
+				$("#quantityField").css("display","none")
 				selSize();
-				$("#sel_size_b").css("display","inline-block");
+				$("#colorField").fadeIn("slow");
 			}else{
-				$("#inp_each").css("display","none")
-				$("#sel_size_b").css("display","none");
+				$("#quantityField").css("display","none")
+				$("#colorField").css("display","none");
 				$("#sel_size_b").html("");
 			}
 		});
@@ -35,13 +35,13 @@
 		});
 		$("#sel_size_b").change(function(){
 			if($("#sel_size_b").val()!=""){
-				$("#inp_each").css("display","inline-block")
+				$("#quantityField").fadeIn("slow");
 				$("#inh_productSize_size").val($("#sel_size_a").val());
 				$("#inh_productEach_color").val($("#sel_size_b").val());
 				$("#inp_each").val(1);
 				$("#inh_productEach_each").val($("#inp_each").val());	
 			}else{
-				$("#inp_each").css("display","none")
+				$("#quantityField").css("display","none")
 			}
 		});
 
@@ -103,8 +103,24 @@
 			}
 		});
 		
-		
+			
+		$(".product_quantity_down").click(function(){//수량감소
+			var c = $("#inp_each").val();
+			if(c>1){	
+				$("#inp_each").val(c-1);
+			}else{
+				return false;
+			}
+		});
 
+		$(".product_quantity_up").click(function(){//수량증가
+			var c = typeof $("#inp_each").val();
+			var d = c+1;
+			if(c<6){	
+				$("#inp_each").val(d);
+			}
+			alert(c);
+		});
 	});
 	
 	function selList(){
@@ -115,7 +131,7 @@
 		    	product_num:${view.product_num}
 		    },
 		    success: function(data) {
-		    	var x='<option value="">SIZE를 고르세요</option>';
+		    	var x='<option value="">SIZE</option>';
 		    	$.each(data, function( index, value ) {
 		    		   x=x+"<option value="+value+">"+value+"</option>";
 		    		});
@@ -136,7 +152,7 @@
 		    	productSize_size:$("#sel_size_a").val()
 		    },
 		    success:function(data) {
-		    	var x='<option value="">Color를 고르세요</option>';
+		    	var x='<option value="">COLOR</option>';
 		    	var y="";
 		    	$.each(data.eachList, function( index, value ) {
 		    		x=x+"<option value="+value.productEach_color+">"+value.productEach_color+'_'+value.productEach_each+"</option>";
@@ -170,6 +186,9 @@
 		 }
 	
 
+	
+	
+	//작은 이미지를 큰 이미지로//
 	var currentImageIdx = 0;
 	if (currentImageIdx == "") {
 		currentImageIdx = 0;
@@ -266,32 +285,66 @@
 							<div class="item-price clearfix">
 								<div class="all-price-info">
 									<p class="now-price">
-										<fmt:formatNumber value="${view.productInfo_price}" currencySymbol="" type="currency"/>원
+										<fmt:formatNumber value="${view.productInfo_price*(100-view.productInfo_saleRate)/100}" currencySymbol="" type="currency"/>원
 									</p>
-									<p class="old-price"><fmt:formatNumber value="${view.productInfo_price*view.productInfo_saleRate}" currencySymbol="" type="currency"/>원</p>
-									<p class="reduction-percent">(<fmt:formatNumber value="${(view.productInfo_saleRate-1)*100}" pattern="#.##" />%)</p>
+									<p class="old-price"><fmt:formatNumber value="${view.productInfo_price}" currencySymbol="" type="currency"/>원</p>
+									<p class="reduction-percent">(-<fmt:formatNumber value="${(view.productInfo_saleRate)}" pattern="#.##" />%)</p>
 								</div>
 								<div id="product_comments_block_extra" class="no-print">
-								<div class="comments_note clearfix">
-									<span style="display: none;">Rating&nbsp;</span>
-									<div class="star_content clearfix">
-										<div class="star star_on"></div>
-										<div class="star star_on"></div>
-										<div class="star star_on"></div>
-										<div class="star star_on"></div>
-										<div class="star"></div>
+									<div class="comments_note clearfix">
+										<span style="display: none;">Rating&nbsp;</span>
+										<div class="star_content clearfix">
+											<div class="star star_on"></div>
+											<div class="star star_on"></div>
+											<div class="star star_on"></div>
+											<div class="star star_on"></div>
+											<div class="star"></div>
+										</div>
 									</div>
+									<ul class="comments_advices">
+										<li>
+											<a href="#idTab5" class="reviews" title="Read reviews">
+												Read reviews (<span>1</span>)
+											</a>
+										</li>
+									</ul>
 								</div>
-								<ul class="comments_advices">
-									<li>
-										<a href="#idTab5" class="reviews" title="Read reviews">
-											Read reviews (<span>1</span>)
-										</a>
-									</li>
-								</ul>
 							</div>
+							<div class="product_select clearfix">
+								<div id="attributes">
+									<div class="clearfix"></div>
+									<fieldset class="fieldset_list clearfix">
+										<label>SIZE&nbsp;</label>
+										<div class="attribute_list">
+											<div class="selector" style="margin-left:25px;">
+												<select id="sel_size_a" class="form-control"></select>
+											</div>
+										</div>
+									</fieldset>
+									<fieldset class="fieldset_list clearfix" id="colorField"  style="">
+										<label>COLOR&nbsp;</label>
+										<div class="attribute_list">
+											<div class="selector">
+												<!-- <span>COLOR</span> -->
+												<select id="sel_size_b" class="form-control"></select>
+											</div>
+										</div>
+									</fieldset>
+									<fieldset class="fieldset_list clearfix" id="quantityField"  style="">
+										<label>QUANTITY&nbsp;</label>
+										<div class="attribute_list" id="quantity">
+											<input id="inp_each" accept="e" type="number" min="1" step="1">											
+											<a class="btn btn-default button-minus product_quantity_down" style="margin-left: 20px;">
+												<span><i class="glyphicon glyphicon-minus"></i></span>
+											</a>
+											<a class="btn btn-default button-plus product_quantity_up">
+												<span><i class="glyphicon glyphicon-plus" style="left:1px;"></i></span>
+											</a>
+										</div>
+									</fieldset>
+								</div>
 							</div>
-
+							
 						</div>
 						
 <%-- 						<input id="inh_product_num" type="text" value="${view.product_num}"
@@ -302,7 +355,7 @@
 							name="productEach_each"> <input id="inh_each_each"
 							type="text"> --%>
 					</form>
-<%-- 					<table class="table">
+					<table class="table">
 						<tr>
 							<td>PRODUCT_NUM</td>
 							<td>${view.product_num}</td>
@@ -320,10 +373,9 @@
 							<td>${view.kind_num}</td>
 						</tr>
 						<tr>
-							<td><select id="sel_size_a"></select></td>
-							<td><select id="sel_size_b" style="display: none;"></select></td>
-							<td><input id="inp_each" accept="e" type="number" min="1"
-								step="1" style="display: none;"></td>
+							<td></td>
+							<td><select id="sel_size_b"></select></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td><form id="view_frm" method="post">
@@ -342,12 +394,9 @@
 				
 				
 				
-					</table> --%> 
+					</table> 
 				
 					<div id="div_hidden_each"></div>
-				
-					<button id="btn_aa">aaaaa</button>
-					<button id="btn_bb">bbbb</button>
 					<script type="text/javascript">
 						selList();
 					</script>				
