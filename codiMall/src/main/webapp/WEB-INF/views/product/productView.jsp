@@ -228,8 +228,6 @@
 		imgview.src = smallImages[currentImageIdx].src;
 	}
 	
-	
-	
 </script>
 </head>
 <body>
@@ -252,23 +250,23 @@
 						</div>
 						<div id="detail_bigimg" class="product_img_basic plus_cursor">
 							<span class="product-img">
-								<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_60.png" width="500" title="" alt="" id="bigimg" onclick="image_zoom.showLayer('big_box', 'big_img', 'detail_thumb', currentImageIdx);" style="margin-top: -250px; position: absolute; top: 50%; left: 0px;">
+								<img src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_60.png" width="500" title="" alt="" id="bigimg" onclick="image_zoom.showLayer('big_box', 'big_img', 'detail_thumb', currentImageIdx);" style="margin-top: -250px; position: absolute; top: 50%; left: 0px;">
 							</span>
 						</div>
 						<!-- 상품 썸네일 -->
 						<div id="detail_thumb">
 							<ul class="product_thumb">
 								<li onclick="changeImg('thum_0', 'bigimg', '0', 'N');" style="cursor: pointer;">
-									<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_60.png" alt="thum" width="60" id="thum_0" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
+									<img src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_60.png" alt="thum" width="100" id="thum_0" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
 								</li>
 								<li onclick="changeImg('thum_1', 'bigimg', '1', 'N');" style="cursor: pointer;">
-									<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_detail1_60.jpg" alt="thum" width="60" id="thum_1" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
+									<img src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_detail1_60.jpg" alt="thum" width="100" id="thum_1" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
 								</li>
 								<li onclick="changeImg('thum_2', 'bigimg', '2', 'N');" style="cursor: pointer;">
-									<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_detail2_60.jpg" alt="thum" width="60" id="thum_2" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
+									<img src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_detail2_60.jpg" alt="thum" width="100" id="thum_2" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
 								</li>
 								<li onclick="changeImg('thum_3', 'bigimg', '3', 'N');" style="cursor: pointer;">
-									<img src="${pageContext.request.contextPath}/resources/images/product/sideBB_detail3_60.jpg" alt="thum" width="60" id="thum_3" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
+									<img src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_detail3_60.jpg" alt="thum" width="100" id="thum_3" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
 								</li>
 							</ul>
 						<!--//상품 썸네일-->
@@ -360,12 +358,77 @@
 						selList();
 					</script>				
 				</div>
+				
+			</div>
+			<div class="col-sm-12" style="margin-top: 100px;">
+				<ul class="nav nav-tabs item-nav">
+					<li class="active"><a href="#a">상세설명</a></li>
+					<li><a href="#b">배송관련</a></li>
+					<li><a href="#c">상품문의</a></li>
+				</ul>
+				<div class="jumbotron">
+					<div id="a">
+						<div class="item-contents">
+							<div class="rte-contents">
+								<h3>Product Detail</h3>
+								<p>심플한 디자인과 깔끔한 핏의 3버튼 모직코트.</p>
+								<p>어디에나 무난하고 고급스럽게 잘 어울립니다.</p>
+								<h3>Size</h3>
+								<p>M:총장94.5 / 어깨 45 / 가슴 60 / 소매 60</p>
+								<p>L:총장96 / 어깨 47 / 가슴 62.5 / 소매 62</p>
+								<h3>Material&Washing</h3>
+								<p>울 70% / 폴리 20% / 레이온 10%</p>
+								<p>드라이클리닝 권장</p>
+							</div>
+
+						</div>
+					</div>
+					<%@ include file="/resources/temp/product/productView.jspf"%>
+					
+					<div id="c">
+						<h3 style="display: inline-block;">Q&A</h3><span>상품문의</span>
+						<div id="qna">
+							<table class="table table-dafault">
+								<thead>
+									<tr>
+										<td>#</td>
+										<td>CATEGORY</td>
+										<td>TITLE</td>
+										<td>WRITER</td>
+										<td>DATE</td>
+										<td>VIEW</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td>a</td>
+										<td>b</td>
+										<td>c</td>
+										<td>16/12/13</td>
+										<td>0</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="pagination">
+								<ul class="pagination pagination-sm">
+								  <li><a href="#">1</a></li>
+								  <li><a href="#">2</a></li>
+								  <li><a href="#">3</a></li>
+								  <li><a href="#">4</a></li>
+								  <li><a href="#">5</a></li>
+								</ul>
+							</div>
+							<div class="writeComm">
+								<a href="#" class="btn btn-default" role="button">WRITE</a>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-
-
-
+	
 	<!-- Footer:S -->
 	<%@ include file="/resources/temp/footer.jsp"%>	
 	<!-- Footer:E -->

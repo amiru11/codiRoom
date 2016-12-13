@@ -1,0 +1,52 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+					<div id="b">
+						<div class="c_table">
+							<div class="left-side">
+								<div class="left-top">
+									<h3 style="display: inline-block;">DELIVERY</h3>
+									<span>배송관련</span>
+									<p>무신사 스토어는 전 제품 100% 무료배송입니다.</p>
+									<p>브랜드 및 제품에 따라 입점 업체(브랜드) 배송과 무신사 자체 배송으로 나뉩니다.</p>
+									<p>일반적인 경우 결제확인 후 1~3일 정도 소요됩니다.</p>
+									<p>예약상품, 해외배송 상품은 배송기간이 다를 수 있습니다.</p>
+								</div>
+								<div class="left-bottom">
+									<h3 style="display: inline-block;">CS CENTER</h3>
+									<span>고객센터</span><br>
+									<span>TEL.</span><p style="display: inline-block; font-size: 22px; color:#414141;">&nbsp;1544-1111</p>
+									<p>1번 배송 / 교환 / 환불관련</p>
+									<p>2번 결제 / 회원관련</p>
+									<p>상품 문의 > 각 상품 Q&A 이용</p>
+									<p>평일 : 09:00~18:00 / 토,일,공휴일 휴무</p>
+									
+								</div>
+							</div>
+							<div class="middle-side">
+									<h3 style="display: inline-block;">PAYMENT</h3>
+									<span>결제관련</span><br>
+									<p>각 상품은 현금, 카드, 무신사 적립금, 쿠폰으로 결제가 가능합니다.</p>
+									<h4>카드결제</h4>
+									<p>전체 카드사 사용가능(일부 카드사 무이자 할부)</p>
+									<h4>가상계좌(무통장 입금)</h4>
+									<p>주문 시마다 새로운 계좌번호를 발급하는 방식으로 해당 계좌에 입금 즉시 입금확인이 되는 방식입니다.</p>
+									<p>단, 1원 단위까지 정확히 입금하셔야만 입금이 정상적으로 처리됩니다. 가상 계좌 입금이 불가능한 고객의 경우 고객센터(1544-1111)로 연락하시기 바랍니다.</p>
+									<h4>해외카드결제</h4>
+									<p>대한민국 외에서 발급 된 해외 카드로도 결제가 가능합니다. (VISA, MasterCard, JCB, 은련)</p>
+									<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+							</div>
+							<div class="right-side">
+								<h3 style="display: inline-block;">EXCHANGE/REFUND</h3>
+								<span>교환/환불</span><br>
+								<h4>무신사 스토어는 입점 업체(브랜드)의 자체 배송상품과 무신사 스토어 본사 배송상품으로 구성되어 있습니다.</h4>
+								<p>이에 교환/환불 시 각 업체 쪽으로 물품을 반송하셔야 하며 반송비용은 각 업체에 따라 다를 수 있으며 마이페이지 > 주문내역을 통해 확인하실 수 있습니다</p>
+								<h4>교환 환불 시 반품 주의 사항</h4>
+								<p>구입한 제품은 7일 이내에 교환 및 환불이 가능합니다. 단, 사용흔적, 오염, 케이스(포장)손상, 라벨제거, 사은품 사용 및 분실 등의 사유가 없어야 합니다. 상품 개봉 후 소비자 부주의에 따른 제품의 파손이나 결함은 환불 및 불량으로 인한 교환 사유가 되지 않습니다.</p>
+								<p>특히 신발 박스가 없거나, 파손(테이핑)된 경우에는 교환 및 환불이 불가능합니다</p>
+								<p><img src="${pageContext.request.contextPath}/resources/images/product/changeInfo.png"></p>
+								<h4>교환</h4>
+								<p>교환 시 1:1문의나 무신사 스토어 고객센터를 통해 요청하시기 바랍니다.</p>
+								<br><br><br>
+							</div>
+						</div>
+					</div>

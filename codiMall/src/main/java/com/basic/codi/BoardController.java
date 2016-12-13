@@ -120,7 +120,7 @@ public class BoardController {
 	
 	//QNA수정//
 	@RequestMapping(value="/qnaUpdate")
-	public String qnaMod(BoardDTO boardDTO, int board_kind, @RequestParam(value="checkNum") int checkNum, @RequestParam(value="bFile_num") ArrayList<Integer> bFile_num, RedirectAttributes ra, MultipartHttpServletRequest mr, HttpSession session){
+	public String qnaMod(BoardDTO boardDTO, int board_kind, @RequestParam(value="checkNum") int checkNum, @RequestParam(required = false) ArrayList<Integer> bFile_num, RedirectAttributes ra, MultipartHttpServletRequest mr, HttpSession session){
 		String message = "";
 		try {
 			message = boardService.qnaUpdate(boardDTO, board_kind, checkNum, bFile_num, mr, session);

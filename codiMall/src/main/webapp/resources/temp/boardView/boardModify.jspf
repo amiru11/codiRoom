@@ -169,13 +169,17 @@
           						<span class="glyphicon glyphicon-chevron-down"></span> FLIE UP
         					</button>
 							<div id="fileSet" style="display: none;">
-								<a id="addFile" class="btn btn-default btn-sm" role="button">ADDFILE</a><br/>
+								<a id="addFile" class="btn btn-default btn-sm" role="button">ADDFILE</a><br/>							
+								<input type="text" value="3" id="checkNum" name="checkNum">
+							
 								
-							<c:forEach items="${fileView}" var="fileView0">
-								<p>${fileView0.bFile_num}:${fileView0.bFile_fileName}<input type="file" name="files" id="firstFile" class="sImg" style="display:inline-block;"><a id="delFile" class="btn btn-default btn-sm" role="button">DELFILE</a></p>		
-								<input type="hidden" value="0" id="checkNum" name="checkNum">
-								<input type="hidden" value="${fileView0.bFile_num}" name="bFile_num">
-							</c:forEach>
+							<c:if test="${fileView ne ''}">
+								<c:forEach items="${fileView}" var="fileView0">
+									<p>${fileView0.bFile_num}:${fileView0.bFile_fileName}<input type="file" name="files" id="firstFile" class="sImg" style="display:inline-block;"><a id="delFile" class="btn btn-default btn-sm" role="button">DELFILE</a></p>		
+									<input type="hidden" value="1" id="testNum">
+									<input type="hidden" value="${fileView0.bFile_num}" name="bFile_num">
+								</c:forEach>
+							</c:if>	
 							</div>
 						</td>
 					</tr>							

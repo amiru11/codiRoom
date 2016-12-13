@@ -17,10 +17,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>	
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/previewImage.js"></script>
 <script type="text/javascript">
-	var message = "${message}";
-	if (message != '') {
-		alert(message);
-	}
+
 	$(function() {
 		
 		$("#m_1").css("display", "none");//얘는 수정
@@ -85,13 +82,18 @@
 		
 		/* 파일체크(등록인지 수정인지) */
 		$("[type='file']").change(function(){
+			alert($("#checkNum").val());
 			$("#checkNum").val("1");
 			alert($("#checkNum").val());
 		});
 		
 		$("#addFile").click(function(){
-			$("[type='file']").change(function(){				
-				$("#checkNum").val("2");
+			$("[type='file']").change(function(){	
+				if($("#testNum").val()!=null){
+					$("#checkNum").val("2");	
+				}else{
+					$("#checkNum").val();
+				}
 				alert($("#checkNum").val());
 			});
 		});
