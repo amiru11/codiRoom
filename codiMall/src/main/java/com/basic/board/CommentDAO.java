@@ -1,10 +1,15 @@
 package com.basic.board;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.basic.product.ProductDTO;
+import com.basic.util.PageMaker;
 
 @Repository
 public class CommentDAO {
@@ -12,7 +17,7 @@ public class CommentDAO {
 	@Autowired
 	private SqlSession sqlsession;
 	private String namespace = "CommentMapper.";
-	
+	private String namespace2 = "ProductCommMapper.";
 	//리스트//
 	public List<CommentDTO> commentList(BoardDTO boardDTO){//게시물에 대한 참조번호가 필요하기때문에 파라미터로 boardDTO를 받아온다
 		return sqlsession.selectList(namespace+"commentList", boardDTO);

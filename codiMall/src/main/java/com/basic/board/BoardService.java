@@ -113,6 +113,18 @@ public class BoardService {
 				//System.out.println("파일명 : " + fileNames2.get(j));
 				result = boardDAO.qnaModFileup(boardDTO, board_kind, fileNames2);
 			}
+		}else if(checkNum==3){//파일이 안들어가있을 때 수정하기
+			for(int j = 0; j<files.size();j++){
+				mf = files.get(j);//반복문이 돌 동안 하나씩 뽑아준다
+				String fileName = UUID.randomUUID().toString()+"_" + mf.getOriginalFilename();//랜덤 아이디를 붙어주면서 fileName 만들어주기
+				File file = new File(path, fileName);
+				mf.transferTo(file);//TransferTo를 통해 파일객체에 경로+파일명 저장
+				System.out.println(file);
+				System.out.println(fileName);
+				fileNames2.add(fileName);//fileNames ArrayList에 만들어준 fileName을 담아준다
+				//System.out.println("파일명 : " + fileNames2.get(j));
+				result = boardDAO.qnaModFileup(boardDTO, board_kind, fileNames2);
+			}			
 		}
 		
 		String message = "";

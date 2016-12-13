@@ -73,9 +73,9 @@
 }
 .product_thumb li {
 	float:left; 
-	width:60px; 
-	height:72px; 
-	margin:0 5px 5px 0; 
+	width:100px; 
+	height:100px; 
+	margin:0 5px 5px 15px; 
 	text-align:center; 
 	border:1px solid #dce2eb; 
 	overflow:hidden
@@ -311,13 +311,15 @@ div.selector {
     width: 36px;
     line-height: 36px;
     border-radius: 50px;
-    background: #006633;
-    box-shadow: 0 15px 28px #00cc66;
+    border-color : #f54f29;
+    background: #f54f29;
+    box-shadow: 0 15px 28px #f54f29;
     transition: all 0.3s ease;
 
 }
 .btn.button-plus:HOVER, .btn.button-minus:HOVER {
 	background: #353940;
+    border-color : #353940;
     color: white;
     -moz-box-shadow: 0 15px 30px rgba(53, 57, 64, 0.5);
     -webkit-box-shadow: 0 15px 30px rgba(53, 57, 64, 0.5);
@@ -334,11 +336,101 @@ div.selector {
     box-shadow: 0 15px 28px rgba(53,57,64,0.5);
     color: white;
     border-radius: 50px;
+    border-color : #353940;
     transition: all 0.3s ease;
     
 }
 #btn_buy:HOVER, #btn_basket:HOVER{
-	background: #006633;
-    box-shadow: 0 15px 28px #00cc66;
+	color : #353940;
+	background: #dce2eb;
+    border-color : #dce2eb;
+    box-shadow: 0 15px 28px #dce2eb;
 }
 /* info:E */
+
+/* Detail : S */
+.item-nav{
+	border-bottom : 2px solid #dce2eb;
+	font : 20px "Hanna",sans-serif;
+	text-align: center;
+	
+}
+.item-nav li{
+	width : 25%;
+	cursor : pointer;
+	margin-bottom: -2px;
+	/* border-bottom : 2px solid #dce2eb; */
+}
+.item-nav li > a{
+	margin : 0;
+	color : #353940;
+}
+.item-nav li > a:HOVER{
+	background: #dce2eb;
+}
+.item-nav li.active > a{
+	border : 2px solid #dce2eb;
+	background: #dce2eb;
+}
+.item-nav li.active > a:HOVER {
+	border : 2px solid #dce2eb;
+	cursor : pointer;
+	background: #dce2eb;
+}
+/* Detail : E */
+
+/* 배송:S */
+.rte-contents{
+	background: url(/codi/resources/images/product/outer/16o3BEIGE.jpg);
+	background-repeat : no-repeat;
+	word-wrap: break-word;
+	display : inline-block;
+	width: 100%;	
+	font-family : "Hanna",sans-serif;
+	text-align: right;
+	padding-right: 10px;
+}
+.rte-contents p{
+	font-size: 14px;
+	color : #000;
+}
+
+.c_table{
+	width : 100%;
+	height : 600px;
+	border : 2px solid #dce2eb;
+	font-family : "Hanna",sans-serif;
+}
+.c_table p{
+	font-size: 14px;
+	color : #999999;
+}
+.left-side{
+	width : 33%;
+	padding-left : 10px;
+	border-right : 2px solid #dce2eb;
+	display: inline-block;
+}
+.left-top{
+	height: 400px;
+	border-bottom: 2px solid #dce2eb;
+	display: inline-block;
+}
+.left-bottom{
+	height: 200px;
+	display: inline-block;
+}
+.middle-side{
+	width : 33%;
+	height : 600px;
+	padding-left : 10px;
+	border-right : 2px solid #dce2eb;
+	display: inline-block;
+}
+.right-side{
+	width : 33%;
+	height : 600px;
+	padding-left : 10px;
+	display: inline-block;
+}
+/* 배송:E */

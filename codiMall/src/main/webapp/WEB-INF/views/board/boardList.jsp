@@ -16,10 +16,6 @@
 <script
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
- 	var message = "${message}";
-	if(message != ''){
-		alert(message);
-	}
 	$(function(){
 		
 		$("#wrBtn").click(function(){
