@@ -13,7 +13,7 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="username" value="mall01" />
 		<property name="password" value="mall01" />
-		<property name="url" value="jdbc:oracle:thin:@192.168.10.22:1521:xe" />
+		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 	</bean>
 	<!-- CONNECTION POOL:E -->

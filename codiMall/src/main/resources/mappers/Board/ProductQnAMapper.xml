@@ -1,46 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="QnAMapper">	
+<mapper namespace="ProductQnAMapper">
 
 	<!-- WRITE:S -->
 	<insert id="boardWrite" parameterType="com.basic.board.BoardDTO">
 		insert into board
 		values(board_seq.nextVal,#{board_title},#{board_writer},#{board_contents},#{board_category},
-			   0,sysdate,board_seq.currVal,0,0,3,0)
+			   0,sysdate,board_seq.currVal,0,0,4,#{product_num})
 	</insert>
-	
-	<!-- FILE UPLOAD:S -->
-	<insert id="fileWrite" parameterType="java.util.HashMap">
-		insert into board_files
-		values(bFile_seq.nextVal, #{bFile_refNum}, #{bFile_fileName})
-	</insert>
-	<!-- FILE UPLOAD:E -->
-	
-	<!-- 임시테이블 dual을 통해서 file_seq를 가져온다 -->
-	<select id="fileNum" resultType="int">
-		<!-- select last_number from user_sequences where sequence_name = 'freeboard_seq' -->
-		<!-- qnaBoard에서 가장 최신번호 가져오기 -->
-		<![CDATA[
-			select board_num from board where rownum <= 1 and board_kind = 3 order by board_num desc
-		]]>
-	</select>
 	<!-- WRITE:E -->
-	
-	<!-- 뷰에 보여줄 fileList -->
-	<select id="fileView" resultType="com.basic.board.BoardFileDTO" parameterType="com.basic.board.BoardDTO" >
-		<![CDATA[
-			select * from board_files where bFile_refNum = #{board_num}
-		]]>
-	</select>
-	
-	
 
 	<!-- LIST:S -->
 	<select id="boardList" resultType="com.basic.board.BoardDTO" parameterType="com.basic.util.PageMaker">
 		select * from
 		(select Rownum R, F.* from
-		(select * from board where board_kind=3 order by board_num) F)
+		(select * from board where board_kind=4 order by board_num) F)
 		where R between #{startRowNum} and #{lastLowNum}
 	</select>	
 	<!-- LIST:E -->
@@ -67,16 +41,6 @@
 	</update>	
 	<!-- UPDATE:E -->
 	
-	<!-- FILE UPDATE:S -->
-	<update id="fileUpdate" parameterType="java.util.HashMap">
-		<![CDATA[
-			update board_files set bFile_fileName = #{bFile_fileName} where bFile_refNum=#{bFile_refNum} and bFile_num=#{bFile_num}
-		]]>
-	</update>
-	<!-- FILE UPDATE:E -->
-	
-	
-	
 	<!-- DELETE:S -->
 	<delete id="boardDelete" parameterType="int" statementType="PREPARED">
 		<![CDATA[
@@ -87,34 +51,19 @@
 	
 	<!-- BOARD GETCOUNT:S -->
 	
-	<select id="boardCount" parameterType="java.util.HashMap" resultType="int">
-		<if test="type == null">
+	<select id="boardCount" parameterType="int" resultType="int">
 			<![CDATA[
-					select count(*) from board where board_kind=3
+					select count(*) from board where product_num = #{product_num}
 			]]>
-		</if>
-
-		<if test="type != null">
-		<if test="type=='board_writer'">
-				and board_writer like #{find}
-			</if>
-			<if test="type=='board_title'">
-				and board_title like #{find}
-			</if>
-			<if test="type=='board_contents'">
-				and board_contents like #{find}
-			</if>
-		</if>		
-				
 	</select>
 	<!-- BOARD GETCOUNT:E -->
 	
 	<!-- BOARD SEARCH:S -->
- 	<select id="findList" parameterType="java.util.HashMap" resultType="com.basic.board.BoardDTO" statementType="PREPARED">
+ 	<select id="findList" parameterType="java.util.Map" resultType="com.basic.board.BoardDTO" statementType="PREPARED">
 		<if test="type != null">
 			select * from 
 			(select rownum R, F.* from
-			(select * from board where board_kind=3 
+			(select * from board where board_kind=4 and product_num = #{product_num}
 			<if test="type=='board_writer'">
 				and board_writer like #{find} 
 			</if>
@@ -128,9 +77,7 @@
 			where R between #{paging.startRowNum} and  #{paging.lastLowNum}
 		</if>
 	</select> 
-	<!-- BOARD SEARCH:E -->	
+	<!-- BOARD SEARCH:E -->
 	
 
-	
-	
 </mapper>

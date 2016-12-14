@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.basic.board.BoardService;
 import com.basic.board.CommentService;
 import com.basic.product.ProductEachAddDTOs;
 import com.basic.product.ProductParamDTO;
@@ -20,10 +21,6 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
-	@Autowired
-	private CommentService commentService;
-	
 
 	@RequestMapping(value = "/productList", method = RequestMethod.GET)
 	public void productList(@RequestParam(defaultValue = "1") int curPage,
@@ -103,5 +100,8 @@ public class ProductController {
 	public void productAdd(){
 	}
 	
-
+	@RequestMapping(value="qna_form", method=RequestMethod.GET)
+	public void qna_form(@RequestParam int product_num, Model model){
+		model.addAttribute("product_num", product_num);
+	}
 }

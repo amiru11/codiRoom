@@ -15,7 +15,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/zoomItem.js"></script>
 <script type="text/javascript">
 	$(function() {
-		
+		qnaList();
 		$("#sel_size_a").change(function(){
 			if($("#sel_size_a").val()!=""){
 				$("#buttonSet").css("display","none");
@@ -124,6 +124,7 @@
 			}
 			alert(c);
 		});
+		
 	});
 	
 	function selList(){
@@ -188,8 +189,27 @@
 		  }       
 		 }
 	
-
-	
+	function qnaList(){
+		$.ajax({
+		    url : "../board/productQnAList",
+		    type : "get",
+		    data : {
+		    	curPage : 1,
+		    	perPage : 10,
+		    	product_num :  ${view.product_num}	
+		    },
+		    success: function(data) {
+		    	console.log(data);
+		    	$("#qna").html(data.trim());
+		    },
+		    error:function(request,status,error){
+		        console.log("code:"+request.status+"\n"+"error:"+error);
+		    }			
+		});
+	}
+	function goPopUp(){
+		window.open("${pageContext.request.contextPath}/product/qna_form?product_num=${view.product_num}","ITEM QnA","width=650,height=720");
+	}	
 	
 	//작은 이미지를 큰 이미지로//
 	var currentImageIdx = 0;
@@ -387,42 +407,7 @@
 					
 					<div id="c">
 						<h3 style="display: inline-block;">Q&A</h3><span>상품문의</span>
-						<div id="qna">
-							<table class="table table-dafault">
-								<thead>
-									<tr>
-										<td>#</td>
-										<td>CATEGORY</td>
-										<td>TITLE</td>
-										<td>WRITER</td>
-										<td>DATE</td>
-										<td>VIEW</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>1</td>
-										<td>a</td>
-										<td>b</td>
-										<td>c</td>
-										<td>16/12/13</td>
-										<td>0</td>
-									</tr>
-								</tbody>
-							</table>
-							<div class="pagination">
-								<ul class="pagination pagination-sm">
-								  <li><a href="#">1</a></li>
-								  <li><a href="#">2</a></li>
-								  <li><a href="#">3</a></li>
-								  <li><a href="#">4</a></li>
-								  <li><a href="#">5</a></li>
-								</ul>
-							</div>
-							<div class="writeComm">
-								<a href="#" class="btn btn-default" role="button">WRITE</a>
-							</div>
-						</div>
+						<div id="qna"></div>
 					</div>
 				</div>
 			</div>

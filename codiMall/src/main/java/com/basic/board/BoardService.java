@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.basic.board.BoardDAO;
+import com.basic.product.ProductDTO;
 import com.basic.util.PageMaker;
 
 @Service
@@ -277,7 +278,24 @@ public class BoardService {
 		}
 	}
 
-	
+	public void findList(String type, String find, int curPage, int perPage, int board_kind, int product_num, Model model) throws Exception{
+		System.out.println("product qna LIST");
+		System.out.println(product_num);
+		System.out.println(board_kind);
+		System.out.println("제발 : "+boardDAO.pboardCount(product_num));
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCurPage(curPage);
+		pageMaker.setPerPage(perPage);
+		pageMaker.makeRow();
+		pageMaker.makePage(boardDAO.pboardCount(product_num));
+		List<BoardDTO> ar;
+		ar = boardDAO.findList(type, find, board_kind, product_num, pageMaker);
+		model.addAttribute("type", type);
+		model.addAttribute("find", find);
+		model.addAttribute("paging", pageMaker);
+		model.addAttribute("list", ar);
+		model.addAttribute("board_kind", board_kind);
+	}
 	//JSON TEST//
 	public List<BoardDTO> bestList(int curPage, int perPage, Model model){
 		System.out.println("BESTLIST");

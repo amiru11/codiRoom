@@ -1,0 +1,115 @@
+@CHARSET "UTF-8";
+
+body{
+	font-family: "Hanna";
+	
+}
+.qa_write_pop .box_title {
+    padding-left: 20px;
+    border-bottom: 1px solid #ddd;
+}
+.qa_write_pop .txt_tit_page {
+    display: inline-block;
+    font-size: 18px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    margin-top: 4px;
+}
+.fr {
+    float: right;
+    padding-top: 5px;
+}
+.qa_write_pop .section_contents {
+    padding: 15px;
+}
+.qa_write_pop .qa_product {
+    border-bottom: 1px solid #ddd;
+}
+.qa_product {
+    clear: both;
+    padding-bottom: 15px;
+}
+.connect_qa_img {
+    float: left;
+    width: auto;
+    margin-right: 15px;
+}
+
+.qa_write_pop .qa_product .connect_info {
+    margin-left: 132px;
+    padding-top: 10px;
+}
+.qa_write_pop .qa_product .connect_info .box_price .txt_origin_price {
+    color: #666;
+    font-size: 12px;
+    text-decoration: line-through;
+}
+.qa_write_pop .qa_product .connect_info .box_price .txt_unit_price {
+    font-size: 12px;
+    vertical-align: bottom;
+}
+.qa_payment_off {
+    font-size: 12px;
+    vertical-align: baseline;
+    background-position: 0 2px;
+}
+.payment_off {
+    font-weight: bold;
+    color: #c00;
+    background: url(/skin/musinsa/images/ic_sale.gif) no-repeat 0 2px;
+    padding-left: 20px;
+    margin-left: 10px;
+}
+.article_info p.item_title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 90%;
+}
+.qa_write_pop .qa_product .connect_info .list_info {
+    font-weight: bold;
+}
+.qa_write_pop .qa_product .connect_info .box_price {
+    font: bold 18px;
+    color: #f60;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 12px;
+}
+.qa_write_pop .box_contents {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+.qa_write_pop ul {
+    display: table;
+    padding: 5px 0;
+}
+.qa_write_pop li {
+    display: table-cell;
+}
+.qa_write_pop textarea {
+    width: 338px;
+    height: 156px;
+    color: #333;
+    line-height: 18px;
+    vertical-align: middle;
+    padding: 2px;
+    border: 1px solid #ddd;
+}
+.qa_write_tit {
+    width: 60px;
+    padding-right: 20px;
+    text-align: right;
+    font-weight: bold;
+    background: url(/skin/musinsa/images/bg_bar.gif) no-repeat right 2px;
+}
+.qa_write_pop .box_contents .address_btn_pop {
+    padding-top: 20px;
+}
+.address_btn_pop {
+    width: 155px;
+    margin: 0 auto;
+}
+.plain-btn {
+    padding: 11px 8px 8px 9px;
+}

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.basic.basket.BasketService;
+import com.basic.board.BoardService;
+import com.basic.product.ProductDTO;
 import com.basic.product.ProductEachDTO;
 import com.basic.product.ProductEachListDTO;
 import com.basic.product.ProductService;
@@ -29,6 +31,11 @@ public class JsonController {
 	
 	@Autowired
 	private BasketService basketService;
+	
+	@Autowired
+	private BoardService boardService;
+	
+
 	
 	@RequestMapping(value="/productSize", produces = "application/json; charset=utf-8")
 	public List<String> productSizeList(@RequestParam int product_num){

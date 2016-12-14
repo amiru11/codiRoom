@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.basic.product.ProductDTO;
 import com.basic.util.PageMaker;
 
 
@@ -24,6 +25,7 @@ public class BoardDAO {
 	private String namespace1="NoticeMapper.";
 	private String namespace2="FAQMapper.";//mapper.xml의 namespace와 일치시켜줘야한다!!
 	private String namespace3="QnAMapper.";
+	private String namespace4="ProductQnAMapper.";
 	
 	//글쓰기//
 	public int boardWrite(BoardDTO boardDTO,int board_kind) throws Exception{
@@ -34,6 +36,8 @@ public class BoardDAO {
 			result = sqlSession.insert(namespace2+"boardWrite",boardDTO);
 		}else if(board_kind==3){
 			result = sqlSession.insert(namespace3+"boardWrite",boardDTO);
+		}else if(board_kind==4){
+			result = sqlSession.insert(namespace4+"boardWrite",boardDTO);
 		}
 		
 		return result;
@@ -109,6 +113,8 @@ public class BoardDAO {
 			result = sqlSession.update(namespace1+"boardUpdate",boardDTO);
 		}else if(board_kind==2){
 			result = sqlSession.update(namespace2+"boardUpdate",boardDTO);			
+		}else if(board_kind==4){
+			result = sqlSession.update(namespace4+"boardUpdate", boardDTO);
 		}
 		return result;
 	};
@@ -123,7 +129,7 @@ public class BoardDAO {
 		}else if(board_kind==3){
 			result = sqlSession.delete(namespace3+"boardDelete",board_num);
 		}else if(board_kind==4){
-			result = sqlSession.delete(namespace3+"boardDelete",board_num);
+			result = sqlSession.delete(namespace4+"boardDelete",board_num);
 		}
 		return result;
 	};
@@ -173,10 +179,24 @@ public class BoardDAO {
 			result = sqlSession.selectOne(namespace3+"boardCount");
 			System.out.println(namespace3 +"count");
 		}
-		
+		/*if(board_kind==4){
+			result = sqlSession.selectOne(namespace4+"boardCount");
+			System.out.println(namespace4 +"count");
+		}*/
 		return result;
 	};
 
+	public int pboardCount(int product_num){
+		int result = 0;
+/*		Map<String, Object> mp = new HashMap<String, Object>();
+		mp.put("product_num", product_num);*/
+		result = sqlSession.selectOne(namespace4+"boardCount",product_num);
+		System.out.println(namespace4 +"count");
+		
+		return result;
+	}
+	
+	
 	//답글쓰기//
 /*	public int boardReply(BoardDTO boardDTO,int board_kind) throws Exception{
 		int result1 = 0;
@@ -199,11 +219,12 @@ public class BoardDAO {
 	};
 	
 	//검색//
-	public List<BoardDTO> findList(String type, String find, int board_kind,PageMaker pageMaker) throws Exception{
+	public List<BoardDTO> findList(String type, String find, int board_kind, PageMaker pageMaker) throws Exception{
 		Map<String, Object> mp = new HashMap<String, Object>();
 		mp.put("type", type);
 		mp.put("find", "%"+find+"%");
 		mp.put("paging", pageMaker);
+		
 		if(board_kind==1){			
 			ar = sqlSession.selectList(namespace1+"findList", mp);
 		}else if(board_kind==2){
@@ -213,6 +234,24 @@ public class BoardDAO {
 		}
 		return ar;
 	}
+	
+	//product FIND LIST/
+	public List<BoardDTO> findList(String type, String find, int board_kind, int product_num, PageMaker pageMaker) throws Exception{
+		System.out.println("product_num" + product_num);
+		Map<String, Object> mp = new HashMap<String, Object>();
+		mp.put("type", type);
+		mp.put("find", "%"+find+"%");
+		mp.put("paging", pageMaker);
+		mp.put("product_num", product_num);
+		if(board_kind==4){
+			ar = sqlSession.selectList(namespace4+"findList", mp);
+		}
+		return ar;
+	}
+	
+	
+	
+	
 	//FAQ BEST 5//
 		public List<BoardDTO> bestList(){
 			return sqlSession.selectList(namespace2+"bestList");

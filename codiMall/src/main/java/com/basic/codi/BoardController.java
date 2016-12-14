@@ -261,4 +261,20 @@ public class BoardController {
 		return "redirect:" + callback + "?callback_func=" + callback_func + file_result;
 	}
 	
+	@RequestMapping(value="/productQnAList")
+	public String findList(@RequestParam(defaultValue="") String type, @RequestParam(defaultValue="") String find, @RequestParam(defaultValue="1") int curPage, 
+			@RequestParam(defaultValue="10") int perPage, @RequestParam(defaultValue="4") int board_kind, @RequestParam int product_num, Model model){
+		
+		try {
+			boardService.findList(type, find, curPage, perPage, board_kind, product_num, model);
+			System.out.println("product QnA");
+			System.out.println("BOARD KIND : " +board_kind);
+			System.out.println("productNum : " + product_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "board/boardResult";
+
+	}
+	
 }

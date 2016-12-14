@@ -8,7 +8,7 @@
 	<insert id="boardWrite" parameterType="com.basic.board.BoardDTO">
 		insert into board
 		values(board_seq.nextVal,#{board_title},#{board_writer},#{board_contents},#{board_category},
-			   0,sysdate,board_seq.currVal,0,0,1)
+			   0,sysdate,board_seq.currVal,0,0,1,0)
 	</insert>
 	<!-- WRITE:E -->
 
