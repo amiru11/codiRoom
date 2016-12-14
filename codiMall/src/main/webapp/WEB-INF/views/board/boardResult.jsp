@@ -14,15 +14,29 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${list}" var="list1">
-								<tr>
+								
+								<tr class="qnaTop" style="cursor:pointer;" onclick="trtoggle(this)">
+								
 									<td>${list1.board_num}</td>
 									<td>${list1.board_category}</td>
 									<td>
-										<a href="${pageContext.request.contextPath}/board/boardView?board_num=${list1.board_num}&board_kind=${list1.board_kind}">${list1.board_title}</a>
+										${list1.board_title}
 									</td>
 									<td>${list1.board_writer}</td>
 									<td>${list1.board_date}</td>
 									<td>${list1.board_counts}</td>
+								
+								</tr>
+								<tr class="qnaBottom" style="background-color: #ddd; display: none;">
+									<td colspan="6">
+										${list1.board_contents}
+									</td>
+								</tr>
+								<tr style="background-color: #ddd; display: none;">
+									<td colspan="6">
+										<textarea rows="" cols="" class="form-control"  style="background-color: #ddd; border : solid 1px white"></textarea>											
+										<input type="button" value="SUBMIT" class="commentSubmit btn btn-default">
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>

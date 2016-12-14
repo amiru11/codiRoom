@@ -27,6 +27,15 @@ public class BoardDAO {
 	private String namespace3="QnAMapper.";
 	private String namespace4="ProductQnAMapper.";
 	
+	//MAXNUM//
+	public int maxNum(BoardDTO boardDTO) throws Exception{
+		int result = 0;
+		result = sqlSession.selectOne(namespace4+"maxNum");
+		return result;
+	}
+	
+	
+	
 	//글쓰기//
 	public int boardWrite(BoardDTO boardDTO,int board_kind) throws Exception{
 		int result = 0;
@@ -36,13 +45,17 @@ public class BoardDAO {
 			result = sqlSession.insert(namespace2+"boardWrite",boardDTO);
 		}else if(board_kind==3){
 			result = sqlSession.insert(namespace3+"boardWrite",boardDTO);
-		}else if(board_kind==4){
-			result = sqlSession.insert(namespace4+"boardWrite",boardDTO);
 		}
 		
 		return result;
 	};
 
+	//상품글쓰기//
+	public int pWrite(BoardDTO boardDTO) throws Exception{
+		return sqlSession.insert(namespace4+"boardWrite",boardDTO);
+	}
+	
+	
 	//QNA 글쓰기..FILEUP//
 	public int qnaWrite(BoardDTO boardDTO, int board_kind, ArrayList<String> fileNames) throws Exception{		
 		int result = 0;

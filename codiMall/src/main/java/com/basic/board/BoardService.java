@@ -25,6 +25,29 @@ public class BoardService {
 	
 	@Autowired
 	private CommentDAO commentDAO;//해당하는 뷰에서 댓글리스트를 불러오기위해서 필요
+	
+	//상품큐앤에이등록//
+	
+	public String pQnAWrite(BoardDTO boardDTO) throws Exception {
+		int result = 0;
+		System.out.println("WRITE");
+		//boardDTO.setBoard_num(boardDAO.maxNum(boardDTO)+1);
+		//boardDTO.setBoard_ref(boardDAO.maxNum(boardDTO)+1);
+		result = boardDAO.pWrite(boardDTO);
+		
+		String message = "";
+		if(result > 0){
+			message = "등록완료!";
+		}else{
+			message = "등록실패!";
+		}
+		
+		System.out.println("결과 : "+message);
+		return message;
+	}
+	
+	
+	
 	//등록//
 	
 	public String boardWrite(BoardDTO boardDTO,int board_kind) throws Exception {

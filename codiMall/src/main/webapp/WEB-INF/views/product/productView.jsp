@@ -16,6 +16,7 @@
 <script type="text/javascript">
 	$(function() {
 		qnaList();
+		
 		$("#sel_size_a").change(function(){
 			if($("#sel_size_a").val()!=""){
 				$("#buttonSet").css("display","none");
@@ -207,9 +208,17 @@
 		    }			
 		});
 	}
+	
+	
 	function goPopUp(){
 		window.open("${pageContext.request.contextPath}/product/qna_form?product_num=${view.product_num}","ITEM QnA","width=650,height=720");
 	}	
+	
+	function trtoggle(data){
+		$(data).next("tr").toggle();
+		$(data).next("tr").next("tr").toggle();
+	}
+	
 	
 	//작은 이미지를 큰 이미지로//
 	var currentImageIdx = 0;

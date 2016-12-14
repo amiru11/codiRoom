@@ -13,6 +13,28 @@
 <script type="text/javascript">
 	$(function(){
 		console.log(${product_num});
+		
+		$("#writeQnA").click(function(){
+		 	
+ 			$.ajax({
+				url :"${pageContext.request.contextPath}/board/qnaWrite",
+				type : "GET",
+				data : {
+					board_title : $("#qtitle").val(),
+					board_writer: $("#qwriter").val(),
+					board_category:	$('input:radio[name="category"]:checked').val(),
+					board_contents:	$("#qcontents").val(),
+					product_num: ${product_num}
+				},
+				success: function(data){
+					alert(data.trim());
+					console.log(data.trim());
+					opener.location.reload();
+					close();
+				}
+			}); 
+		});
+		
 	});
 </script>
 </head>
@@ -25,7 +47,8 @@
 		        <span class="txt_tit_page">PRODUCT Q&amp;A</span><span class="fr"><a href="#" onclick="self.close(); return false;"><img src="//image.musinsa.com/skin/musinsa/images/btn_lyr_x.gif" alt="close"></a></span>
 		    </div>
 		    <!--//page title-->
-			
+			<form action="${pageContext.request.contextPath}/board/qnaWrite" name="frm">
+				<input type="hidden" value="암2" id="qwriter">
 		    <div class="section_contents">
 				        <div class="qa_product">
 		            <div class="connect_qa_img">
@@ -45,23 +68,23 @@
 		            <ul>
 		                <li class="qa_write_tit">구분</li>
 		                <li class="txt_input_qa">
-							<input type="radio" name="type" value="1"> 사이즈
-							<input type="radio" name="type" value="2"> 배송
-							<input type="radio" name="type" value="3"> 재입고
-							<input type="radio" name="type" value="99"> 기타
+							<input type="radio" class="qcategory" name="category" value="사이즈"> 사이즈
+							<input type="radio" class="qcategory" name="category" value="배송"> 배송
+							<input type="radio" class="qcategory" name="category" value="재입고"> 재입고
+							<input type="radio" class="qcategory" name="category" value="기타"> 기타
 						</li>
 		             </ul>   
 		            <ul>
 		                <li class="qa_write_tit">제목</li>
 		                <li class="txt_input_qa">
-							<input type="text" name="subject" class="tit" value=""> 
+							<input type="text" id="qtitle" name="" class="tit" value=""> 
 							<input type="checkbox" name="is_secret" value="1"> 잠금사용
 						</li>
 		             </ul>      
 		            <ul>    
 		                <li class="qa_write_tit">내용</li>
 		                <li>
-		                    <textarea name="question" rows="10" cols="45"></textarea>
+		                    <textarea id="qcontents" name="question" rows="10" cols="45"></textarea>
 		                </li>
 		            </ul>    
 		        </div>
@@ -69,10 +92,11 @@
 		    <div class="box_contents">
 		        <p><img src="//image.musinsa.com/skin/musinsa/images/guide_write.gif" alt=""></p>
 		        <div class="address_btn_pop">
-		            <a href="#" onclick="checkForm('add'); return false;" class="plain-btn btn btn-default" role="button">등록하기</a>
+		            <a href="#" id="writeQnA" class="plain-btn btn btn-default" role="button">등록하기</a>
 		            <a href="#" onclick="location.reload(); return false;" class="plain-btn btn btn-default" role="button">다시쓰기</a>
 		        </div>
 		    </div>
+		    </form>
 		<!--// 컨텐츠 영역 -->
 		</div>
 	</div>

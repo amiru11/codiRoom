@@ -90,6 +90,25 @@ public class BoardController {
 		return "board/boardWrite";
 	}
 
+	//상품QNA//
+	@RequestMapping(value="/qnaWrite", method=RequestMethod.GET)
+	public String qnaWrite(BoardDTO boardDTO, Model model){
+		
+		try {
+			String message = boardService.pQnAWrite(boardDTO);
+			System.out.println("BOARD WRITE");
+			model.addAttribute("message", message);		
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		
+		return "/board/writeResult";
+		
+	}
+	
+	
+	
 	//글쓰기//
 	@RequestMapping(value="/boardWrite")
 	public String boardWrite(BoardDTO boardDTO, int board_kind, RedirectAttributes ra){
