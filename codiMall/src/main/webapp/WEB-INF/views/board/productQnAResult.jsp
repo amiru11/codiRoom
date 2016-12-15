@@ -13,9 +13,9 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${list}" var="list1">
+							<c:forEach items="${list}" var="list1"  varStatus="i">
 								
-								<tr class="qnaTop" style="cursor:pointer;" onclick="trtoggle(this)">
+								<tr class="qnaTop" id="qna${i.index}" style="cursor:pointer;" onclick="trtoggle(this)" title="${list1.board_num}">
 								
 									<td>${list1.board_num}</td>
 									<td>${list1.board_category}</td>
@@ -27,17 +27,24 @@
 									<td>${list1.board_counts}</td>
 								
 								</tr>
+								<hr>
 								<tr class="qnaBottom" style="background-color: #ddd; display: none;">
 									<td colspan="6">
 										${list1.board_contents}
 									</td>
 								</tr>
+								<hr>
 								<tr style="background-color: #ddd; display: none;">
-									<td colspan="6">
-										<textarea rows="" cols="" class="form-control"  style="background-color: #ddd; border : solid 1px white"></textarea>											
-										<input type="button" value="SUBMIT" class="commentSubmit btn btn-default">
+									<td colspan="6">														
+										<form action="">
+											<textarea rows="" cols="" class="form-control"  style="border : none;" id="comment${i.index}"></textarea>	
+											<input type="hidden" value="${list1.board_num}" id="refNum${i.index}">
+											<input type="hidden" value="관리자" id="commentWriter${i.index}">										
+											<input type="button" value="SUBMIT" class="commentSubmit btn btn-default" onclick="commWrite(this)" name="${i.index}">
+										</form>
 									</td>
 								</tr>
+								<tr class="qna${i.index}"  style="background-color: #ddd; display: none;"></tr>
 							</c:forEach>
 						</tbody>
 					</table>

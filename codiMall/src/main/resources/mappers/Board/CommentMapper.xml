@@ -52,5 +52,17 @@
 	<!-- COMM GET COUNT :E -->
 	
 	
+	<!-- PRO COMM LIST :S -->
+	<select id="commentList2" resultType="com.basic.board.CommentDTO" parameterType="java.util.Map">
+		<![CDATA[
+				select * from
+				(select rownum R, F.* from
+				(select * from BOARD_COMMENT where comm_refNum = #{board_num} order by comm_num desc) F) 
+		]]>
+	</select>
+	<!-- COMM LIST :E -->
+	
+	
+	
 	
 </mapper>	

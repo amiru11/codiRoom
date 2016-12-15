@@ -301,7 +301,11 @@ public class BoardService {
 		}
 	}
 
-	public void findList(String type, String find, int curPage, int perPage, int board_kind, int product_num, Model model) throws Exception{
+	
+	
+	////////////////////////////////////////////////////////상품문의//////////////////////////////////////////////////////////////////
+	public void findList(String type, String find, int curPage, int perPage, 
+										int board_kind, int product_num, Model model) throws Exception{
 		System.out.println("product qna LIST");
 		System.out.println(product_num);
 		System.out.println(board_kind);
@@ -318,6 +322,15 @@ public class BoardService {
 		model.addAttribute("paging", pageMaker);
 		model.addAttribute("list", ar);
 		model.addAttribute("board_kind", board_kind);
+	}
+	
+	public void pcommList(int board_num, Model model) throws Exception{
+		System.out.println("product qna comm");
+		System.out.println("board_num : " + board_num);
+		List<CommentDTO> cr;
+		cr = commentDAO.proCommentList(board_num);
+		model.addAttribute("pComm", cr);
+		
 	}
 	//JSON TEST//
 	public List<BoardDTO> bestList(int curPage, int perPage, Model model){

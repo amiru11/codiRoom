@@ -198,6 +198,7 @@
 		    	curPage : 1,
 		    	perPage : 10,
 		    	product_num :  ${view.product_num}	
+
 		    },
 		    success: function(data) {
 		    	console.log(data);
@@ -209,15 +210,63 @@
 		});
 	}
 	
-	
 	function goPopUp(){
 		window.open("${pageContext.request.contextPath}/product/qna_form?product_num=${view.product_num}","ITEM QnA","width=650,height=720");
 	}	
 	
+	
 	function trtoggle(data){
+		
+		var a = $(data).attr("id");
+		
+		$.ajax({
+		    url : "../board/productQnAComment",
+		    type : "get",
+		    data : {
+		    	board_num : $(data).attr("title")
+
+		    },
+		    success: function(data) {
+		    	console.log(data.trim());
+		    	$("."+a).empty();
+		    	$("."+a).html(data);
+		    },
+		    error:function(request,status,error){
+		        console.log("code:"+request.status+"\n"+"error:"+error);
+		    }						
+		});
 		$(data).next("tr").toggle();
 		$(data).next("tr").next("tr").toggle();
+		$(data).next("tr").next("tr").next("tr").toggle();
+		//$("."+a).toggle();
+		//$(data).next("tr").next("tr").next("tr").toggle();
 	}
+	
+
+	function commWrite(data){
+		var b = $(data).attr("name");
+		//alert(b);
+		//alert($("#comment"+b).val());
+ 		$.ajax({
+		    url : "../board/commentWrite",
+		    type : "get",
+		    data : {
+             	comm_refNum : $("#refNum"+b).val(),
+              	comm_writer:$("#commentWriter"+b).val(),
+              	comm_contents:$("#comment"+b).val()   
+
+		    },
+		    success: function(data) {
+		    	console.log(data);
+        		alert(data.trim());
+        		location.href="${pageContext.request.contextPath}/product/productView?product_num=${view.product_num}"
+		    },
+		    error:function(request,status,error){
+		        console.log("code:"+request.status+"\n"+"error:"+error);
+		    }					
+		});	
+
+	}	
 	
 	
 	//작은 이미지를 큰 이미지로//
