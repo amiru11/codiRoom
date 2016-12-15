@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.basic.mast.MastService;
 import com.basic.member.MemberDTO;
@@ -30,11 +32,11 @@ public class MastController {
 	}
 	
 	@RequestMapping(value="/mastBuyList")
-	public String mastBuyList(HttpSession session,Model model){
+	public String mastBuyList(HttpSession session,Model model,@RequestParam(defaultValue="1") int state_num){
 		String path="";
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		if(memberDTO !=null && memberDTO.getMember_level() == 0 ){
-			model.addAttribute("list",mastService.mastBuyList());
+			model.addAttribute("list",mastService.mastBuyList(state_num));
 			path="/mast/mastBuyList";
 		}else{
 			path="redirect:/";

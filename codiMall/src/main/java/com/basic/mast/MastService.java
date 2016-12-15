@@ -11,7 +11,7 @@ public class MastService {
 	@Autowired
 	private MastDAO mastDAO;
 	
-	public List<MastBuyListDTO> mastBuyList(){
-		return mastDAO.mastBuyList();
+	public List<MastBuyListDTO> mastBuyList(int state_num){
+		return mastDAO.mastBuyList(state_num);
 	}
 }
