@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+.cart-body{
+	    padding-top: 100px;
+}
+
+
+.page-heading {
+    font: bold italic 40px/1em "hanna", sans-serif;
+    color: #353940;
+    text-transform: uppercase;
+    margin: 0 0 30px;
+    overflow: hidden;
+}
+
+.page-heading span.heading-counter {
+    font-size: 16px;
+    line-height: 20px;
+    float: right;
+    color: #cdcdcd;
+    text-transform: none;
+}
+
+ul.step {
+	font-family : "hanna";
+    margin-bottom : 30px;
+    overflow: hidden;
+    
+}
+ul.step > li {
+	border : 2px solild black;
+}
