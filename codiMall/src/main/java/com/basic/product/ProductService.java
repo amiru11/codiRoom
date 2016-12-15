@@ -24,6 +24,10 @@ public class ProductService {
 		pageMaker.makeRow();
 		pageMaker.makePage(totalCount);
 		model.addAttribute("pageing",pageMaker);
+		model.addAttribute("selKind_num",productDAO.allKindNum());
+		model.addAttribute("selColor",productDAO.allProductColor());
+		model.addAttribute("selSize",productDAO.allProductSize());
+		
 
 		return productDAO.productList(pageMaker, productParamDTO);
 
