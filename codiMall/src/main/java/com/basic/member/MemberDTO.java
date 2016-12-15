@@ -8,8 +8,15 @@ public class MemberDTO {
 	private String gender;
 	private String tel0;
 	private String tel1;
+	private int member_level;
 	
 	
+	public int getMember_level() {
+		return member_level;
+	}
+	public void setMember_level(int member_level) {
+		this.member_level = member_level;
+	}
 	public String getId() {
 		return id;
 	}

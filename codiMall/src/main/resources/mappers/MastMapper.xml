@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MastMapper">
+
+	<resultMap type="com.basic.product.ProductDTO" id="Product">
+		<id property="product_num" column="product_num" />
+		<result property="product_name" column="product_name" />
+	</resultMap>
+
+	<resultMap type="com.basic.buy.BuyDTO" id="Buy">
+		<id property="buy_num" column="buy_num" />
+		<result property="member_id" column="id" />
+		<result property="product_num" column="product_num" />
+	</resultMap>
+
+	<resultMap type="com.basic.buy.BuyStateDTO" id="BuyState">
+		<id property="buy_num" column="buy_num" />
+		<result property="buyState_size" column="buyState_size" />
+		<result property="buyState_color" column="buyState_color" />
+		<result property="buyState_each" column="buyState_each" />
+		<result property="buyState_price" column="buyState_price" />
+		<result property="buyState_expressNum" column="buyState_expressNum" />
+		<result property="buyState_pay_date" column="buyState_pay_date" />
+		<result property="buyState_result_date" column="buyState_result_date" />
+		<result property="buyState_state" column="buyState_state" />
+	</resultMap>
+
+	<resultMap type="com.basic.mast.MastBuyListDTO" id="MastBuyList">
+		<association property="productDTO" resultMap="Product" />
+		<association property="buyDTO" resultMap="Buy" />
+		<association property="buyStateDTO" resultMap="BuyState" />
+	</resultMap>
+
+	<select id="SelMastBuyList" resultMap="MastBuyList">
+		select DISTINCT
+		b.BUY_NUM,p.PRODUCT_NUM,p.PRODUCT_NAME,m.ID,bs.BUYSTATE_SIZE,bs.BUYSTATE_COLOR,bs.BUYSTATE_EACH,bs.BUYSTATE_PRICE
+		,bs.BUYSTATE_EXPRESSNUM,bs.BUYSTATE_PAY_DATE,bs.BUYSTATE_RESULT_DATE,bs.BUYSTATE_STATE
+		from PRODUCT p, buy b, BUYSTATE bs , MEMBER m
+		where bs.BUY_NUM = b.BUY_NUM and m.ID = b.ID and p.PRODUCT_NUM =
+		b.PRODUCT_NUM
+		and bs.BUYSTATE_STATE = 1
+		order by bs.buystate_pay_date desc , b.buy_num desc
+	</select>
+
+
+</mapper>
