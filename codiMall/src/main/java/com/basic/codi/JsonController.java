@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.basic.basket.BasketService;
 import com.basic.board.BoardService;
+import com.basic.mast.MastService;
 import com.basic.product.ProductDTO;
 import com.basic.product.ProductEachDTO;
 import com.basic.product.ProductEachListDTO;
@@ -35,6 +36,8 @@ public class JsonController {
 	@Autowired
 	private BoardService boardService;
 	
+	@Autowired
+	private MastService mastService;
 
 	
 	@RequestMapping(value="/productSize", produces = "application/json; charset=utf-8")
@@ -96,6 +99,14 @@ public class JsonController {
 	public Map<String, Object> allKindNum(){
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		retVal.put("kindNumList", productService.allKindNum());
+		return retVal;
+	}
+	
+	@RequestMapping(value="/mastBuyList",produces = "application/json; charset=utf-8")
+	public Map<String, Object> mastBuyList(int buyState_state){
+		System.out.println("mast");
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		retVal.put("ar", mastService.mastBuyList(buyState_state));
 		return retVal;
 	}
 	

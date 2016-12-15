@@ -17,21 +17,65 @@ tr, td, th {
 </style>
 <script type="text/javascript">
 
-	$(function() {});
+	$(function() {
+		var buyState_state = 1;
+		getBuyList(buyState_state);
+		$("#sel_buy_state").change(function() {
+			buyState_state = $(this).val();
+			getBuyList(buyState_state);
+		});
+
+	});
 
 
-	function getBuyList() {
+	function getBuyList(buyState_state) {
 		$.ajax({
-			url : "../json/productEachGet",
+			url : "../json/mastBuyList",
 			type : "post",
 			dataType : 'json',
 			data : {
-				product_num : product_num,
-				productSize_size : selSize,
-				productEach_color : selColor
+				buyState_state : buyState_state
 			},
 			success : function(data) {
-				
+				var x = "";
+				x = x + "<tr><th>buy_num</th><th>id</th><th>product_num</th><th>product_name</th><th>size</th>";
+				x = x + "<th>color</th><th>each</th><th>price</th><th>expressNum</th><th>pay_date</th><th>result_date</th>";
+				x = x + "<th>state</th>";
+				if (buyState_state == 1) {
+					x = x + "<th>state1to2</th>"
+				} else if (buyState_state == 2) {
+					x = x + "<th>expressNumFix</th></tr>";
+				}
+				$.each(data.ar, function(index, value) {
+					x = x + '<tr class="tr_buy_list">';
+					x = x + '<td>' + value.buyDTO.buy_num + '</td>';
+					x = x + '<td>' + value.buyDTO.member_id + '</td>';
+					x = x + '<td>' + value.productDTO.product_num + '</td>';
+					x = x + '<td>' + value.productDTO.product_name + '</td>';
+					x = x + '<td>' + value.buyStateDTO.buyState_size + '</td>';
+					x = x + '<td>' + value.buyStateDTO.buyState_color + '</td>';
+					x = x + '<td>' + value.buyStateDTO.buyState_each + '</td>';
+					x = x + '<td>' + value.buyStateDTO.buyState_price + '</td>';
+					x = x + '<td>' + value.buyStateDTO.buyState_expressNum + '</td>';
+					x = x + '<td>' + value.buyStateDTO.buyState_pay_date + '</td>';
+					x = x + '<td>' + value.buyStateDTO.buyState_result_date + '</td>';
+					x = x + '<td>' + value.buyStateDTO.buyState_state + '</td>';
+					if (buyState_state == 1) {
+						x = x + '<td><form action="${pageContext.request.contextPath}/mast/buyState1to2"method="post">';
+						x = x + '<input class="hid_buy_num" name="buy_num" type="hidden" value="' + value.buyDTO.buy_num + '">';
+						x = x + 'expressNum:<input type="number" name="buyState_expressNum"><Br>';
+						x = x + '<input class="btn_add" type="button" value="ADD"></form></td>';
+					}
+					else if (buyState_state == 2) {
+						x = x + '<td><form action="${pageContext.request.contextPath}/mast/expressNumFix" method="post">';
+						x = x + '<input class="hid_buy_num" name="buy_num" type="hidden" value="' + value.buyDTO.buy_num + '">';
+						x = x + 'expressNum:<input type="number" name="buyState_expressNum"><Br>';
+						x = x + '<input class="btn_add" type="button" value="ADD"></form></td>';
+					}
+					x = x + '</tr>';
+				});
+				$("#table_buy_list").html(x);
+
 			},
 			error : function(request, status, error) {
 				alert("code:" + request.status + "\n" + "error:" + error);
@@ -54,7 +98,7 @@ tr, td, th {
 		<option value="5">5환불완료</option>
 	</select>
 	<table id="table_buy_list">
-		<tr>
+		<%-- <tr>
 			<th>buy_num</th>
 			<th>id</th>
 			<th>product_num</th>
@@ -101,7 +145,7 @@ tr, td, th {
 						<input class="btn_add" type="button" value="ADD">
 					</form></td>
 			</tr>
-		</c:forEach>
+		</c:forEach> --%>
 	</table>
 
 </body>
