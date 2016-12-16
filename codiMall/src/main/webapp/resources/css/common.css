@@ -25,6 +25,7 @@ img, ul, li{
 }
 #footer{
 	background-image: url("/codi/resources/images/footer-bg.png");
+	height: 300px;
 }
 .modal{
 	z-index : 9001;

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <link
@@ -15,11 +15,35 @@
 	rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/basket/basket.css"
 	rel="stylesheet">
-<style type="text/css">
-</style>
 <script type="text/javascript">
 	$(function() {
+	
+		
+ 		$(".product_quantity_down").click(function(){//수량감소
+			var c = parseInt($(this).next("input").val());
+			
+			var d = c-1;
+			if(d>1 || d==1){	
+				$(this).next("input").val(d);
+			}else{
+				alert("더 이상 수량을 줄일 수 없습니다.");
+			}
+		});
 
+		$(".product_quantity_up").click(function(){//수량증가
+			var c = parseInt($(this).prev("input").val());
+			
+			var d = c+1;
+			
+			if(d<21){	
+				$(this).prev("input").val(d);
+			}else{
+				alert("더 이상 수량을 늘일 수 없습니다.");
+			}
+			//alert(c);
+		});
+		
+		
 
 		$("#btn_allBuy").click(function() {
 			var count = 0;
@@ -40,7 +64,7 @@
 					count++;
 				}
 			}
-			if (count > 0) {
+			if (count < 1) {
 				alert("수량을 1개이상 입력해주세요");
 			} else {
 				$("#tab_form").attr("action", "${pageContext.request.contextPath}/buy/basketBuyList");
@@ -126,8 +150,9 @@
 				var selSize = thisTr.find(".bas_td_sel_size").val();
 				var selColor = thisTr.find(".bas_td_sel_color[name=" + selSize + "]").val();
 				var each = thisTr.find(".bas_td_inp_each").val();
-				var basket_num = thisTr.find(".bas_td_bas_num").text();
+				var basket_num = thisTr.find(".td_inh_bas_num").val();
 				var product_num = thisTr.find(".bas_td_hid_pronum").val();
+				
 
 				$("#basket_num").val(basket_num);
 				$("#product_num").val(product_num);
@@ -135,7 +160,8 @@
 				$("#basketInfo_color").val(selColor);
 				$("#basketInfo_each").val(each);
 				if ($("#basketInfo_each").val() > 0) {
-					$("#basketFixFrm").submit();
+					 $("#basketFixFrm").submit();
+					//alert(basket_num);
 				}
 
 			});
@@ -196,6 +222,12 @@
 		}
 	}
 </script>
+<style>
+#third_now{
+	background: url(/codi/resources/images/basket/hgroup_img.gif) no-repeat 0 0;
+	background-position: 1px -93px;
+}
+</style>
 </head>
 <body>
 	<!-- HEADER:S -->
@@ -205,113 +237,148 @@
 	<div class="container cart-body">
 		<div class="row">
 			<div class="col-sm-12">
-				<h1 id="cart_title" class="page-heading">Shopping-cart summary
-					<span class="heading-counter">Your shopping cart contains:
-						<span id="summary_products_quantity">1 product</span>
-					</span>
-				</h1>
-				<ul class="step clearfix nav navbar-nav" id="order_step">
-					<li class="step_current  first">
-						<span><em>01.</em> 장바구니</span>
-					</li>
-					<li class="step_todo second">
-						<span><em>02.</em> 주문서 작성</span>
-					</li>
-					<li class="step_todo third">
-						<span><em>03.</em> 주문완료</span>
-					</li>
-				</ul>
-			<form id="tab_form" class="form" method="post">
+				<h1 id="cart_title" class="page-heading">Shopping-cart summary	</h1>
+				<div>
+					<ul class="step list-inline" id="order_step">
+						<li class="title_img">TITLE</li>
+						<li class="step-li first">
+							<span>주문서 작성</span>
+						</li>
+						<li class="arrow-li"></li>
+						<li class="step-li second">
+							<span> 주문서 작성</span>
+						</li>
+						<li class="arrow-li"></li>
+						<li class="step-li third third_now">
+							<span> 장바구니</span>
+						</li>
+					</ul>
+				</div>
+				<form id="tab_form" class="form" method="post">
+					<div style="	border: 2px solid #dce2eb;">
+						<h3 class="product_tit">CART INFO</h3>
+						<table class="table cart-table">
 	
-			<table class="table">
-	
-				<tr>
-					<th class="bas_th_01">전체선택<input type="checkbox" id="allCheck"></th>
-					<th class="bas_th_02">02</th>
-					<th class="bas_th_03">03</th>
-					<th class="bas_th_04">04</th>
-					<th class="bas_th_05">05</th>
-					<th class="bas_th_06">06</th>
-					<th class="bas_th_07">07</th>
-					<th class="bas_th_08">08</th>
-					<th class="bas_th_09">09</th>
-				</tr>
-				<c:forEach var="list1" items="${list}">
-	
-					<tr class="bas_tr_jq">
-						<td><input type="checkbox" value="${list1.basket_num}"
-							name="del_basket_num" class="bas_td_check"></td>
-						<td class="bas_td_bas_num"><input class="td_inh_bas_num"
-							type="hidden" value="${list1.basket_num}" name="basket_num">${list1.basket_num}</td>
-						<td class="bas_td_second"><input type="text"
-							class="bas_td_hid_pronum" value="${list1.product_num}"
-							name="product_num">
-							<div class="bas_td_hid_proeach"></div> <a
-							href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">${list1.product_name}</a></td>
-						<td>${list1.productInfo_price}</td>
-						<td>${list1.productInfo_saleRate}</td>
-						<td class="bas_td_bas_size"><select class="bas_td_sel_size">
-								<c:set var="tempname1" value="" />
+						<tr>
+							<th class="bas_th_01"><input type="checkbox" id="allCheck"></th><!-- 체크박스 -->
+							<th class="bas_th_02">번호</th><!-- 상품이미지 -->
+							<th class="bas_th_03" style="text-align: center;">상품</th><!-- 상품명 -->
+							<th class="bas_th_04">판매가</th><!-- 가격 -->
+							<th class="bas_th_05">할인율</th><!-- 할인율 -->
+							<th class="bas_th_06">사이즈</th><!-- 사이즈 -->
+							<th class="bas_th_07">색상</th><!-- 색상 -->
+							<th class="bas_th_08">주문금액</th><!-- 할인된 가격 -->
+							<th class="bas_th_09">수량</th><!-- 수량 -->
+							<th></th>
+						</tr>
+						<c:forEach var="list1" items="${list}" varStatus="i">
+		
+						<tr class="bas_tr_jq">
+							<!-- 체크박스 -->
+							<td><input type="checkbox" value="${list1.basket_num}"
+								name="del_basket_num" class="bas_td_check"></td>
+								<!-- 상품이미지 -->
+							<td class="bas_td_bas_num"><input class="td_inh_bas_num"
+								type="hidden" value="${list1.basket_num}" name="basket_num">
+									${i.count} 
+							</td>
+							<td class="bas_td_second"><input type="hidden"
+								class="bas_td_hid_pronum" value="${list1.product_num}"
+								name="product_num">
+								<div class="bas_td_hid_proeach" style="display: inline-block; margin-right: 10px; float: left;">
+									<a href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">
+										<img alt="" src="${pageContext.request.contextPath}/resources/images/noimage.jpg" width="60" height="60">
+									</a>
+								</div>
+								<div style="display: inline-block; margin-top: 20px;">
+										<p>
+											<a href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">
+											${list1.product_name}
+											</a>
+										</p>	
+										
+								</div>
+							</td>
+							<td><fmt:formatNumber value="${list1.productInfo_price}" currencySymbol="" type="currency"/>원</td>
+							<td>${list1.productInfo_saleRate}%</td>
+							<td class="bas_td_bas_size"><select class="bas_td_sel_size">
+									<c:set var="tempname1" value="" />
+									<c:forEach var="eachSize" items="${list1.productEachDTO}">
+										<c:if test="${tempname1 != eachSize.productSize_size}">
+											<option value="${eachSize.productSize_size}"
+												<c:if test="${list1.basketInfo_size == eachSize.productSize_size }">selected="selected"</c:if>>${eachSize.productSize_size}</option>
+											<c:set var="tempname1" value="${eachSize.productSize_size}" />
+										</c:if>
+									</c:forEach>
+							</select>${list1.basketInfo_size}</td>
+							<td class="bas_td_bas_color"><c:set var="tempname1" value="" />
 								<c:forEach var="eachSize" items="${list1.productEachDTO}">
 									<c:if test="${tempname1 != eachSize.productSize_size}">
-										<option value="${eachSize.productSize_size}"
-											<c:if test="${list1.basketInfo_size == eachSize.productSize_size }">selected="selected"</c:if>>${eachSize.productSize_size}</option>
 										<c:set var="tempname1" value="${eachSize.productSize_size}" />
+										<select class="bas_td_sel_color"
+											name="${eachSize.productSize_size}"
+											<c:if test="${list1.basketInfo_size != eachSize.productSize_size}"> 
+												style="display: none;"
+												</c:if>>
+											<c:forEach var="eachSize2" items="${list1.productEachDTO}">
+												<c:if test="${tempname1 == eachSize2.productSize_size}">
+													<option value="${eachSize2.productEach_color}"
+														<c:if test="${list1.basketInfo_size == eachSize.productSize_size  && list1.basketInfo_color==eachSize2.productEach_color}"> 
+												selected="selected"
+												</c:if>>${eachSize2.productEach_color}</option>
+												</c:if>
+											</c:forEach>
+										</select>
 									</c:if>
-								</c:forEach>
-						</select>${list1.basketInfo_size}</td>
-						<td class="bas_td_bas_color"><c:set var="tempname1" value="" />
-							<c:forEach var="eachSize" items="${list1.productEachDTO}">
-								<c:if test="${tempname1 != eachSize.productSize_size}">
-									<c:set var="tempname1" value="${eachSize.productSize_size}" />
-									<select class="bas_td_sel_color"
-										name="${eachSize.productSize_size}"
-										<c:if test="${list1.basketInfo_size != eachSize.productSize_size}"> 
-											style="display: none;"
-											</c:if>>
-										<c:forEach var="eachSize2" items="${list1.productEachDTO}">
-											<c:if test="${tempname1 == eachSize2.productSize_size}">
-												<option value="${eachSize2.productEach_color}"
-													<c:if test="${list1.basketInfo_size == eachSize.productSize_size  && list1.basketInfo_color==eachSize2.productEach_color}"> 
-											selected="selected"
-											</c:if>>${eachSize2.productEach_color}</option>
-											</c:if>
-										</c:forEach>
-									</select>
-								</c:if>
-							</c:forEach>${list1.basketInfo_color}</td>
-						<td><c:set var="number"
-								value="${list1.productInfo_price*list1.basketInfo_each*(100-list1.productInfo_saleRate)/100}" />
-							<fmt:parseNumber var="total" value="${number}" type="number"
-								integerOnly="true" /> ${total}
-						<td><input type="number" min="1" class="bas_td_inp_each"
-							value="${list1.basketInfo_each}" name="basketInfo_each">${list1.basketInfo_each}
-							<input type="button" class="btn_fix" value="FIX"></td>
-					</tr>
-				</c:forEach>
-			</table>
-		</form>
-		<button id="btn_allDel">전체삭제</button>
-		<button id="btn_checkDel">선택삭제</button>
-		<button id="btn_allBuy">전체구매</button>
-		<button id="btn_checkBuy">선택구매</button>
-		<form id="basketFixFrm"
-			action="${pageContext.request.contextPath}/basket/basketFix"
-			method="post">
-			<input id="product_num" type="hidden" value="" name="product_num">
-			<input id="basket_num" type="hidden" value="" name="basket_num">
-			<input id="basketInfo_size" type="hidden" value=""
-				name="basketInfo_size"> <input id="basketInfo_color"
-				type="hidden" value="" name="basketInfo_color"> <input
-				id="basketInfo_each" type="hidden" class="bas_td_inp_each" value=""
-				name="basketInfo_each">
-		</form>	
+									</c:forEach>${list1.basketInfo_color}
+								</td>
+								<td>
+									<fmt:formatNumber value="${list1.productInfo_price*list1.basketInfo_each*(100-list1.productInfo_saleRate)/100}" currencySymbol="" type="currency"/>원
+	<%-- 							
+								<c:set var="number"
+										value="${list1.productInfo_price*list1.basketInfo_each*(100-list1.productInfo_saleRate)/100}" />
+									<fmt:parseNumber var="total" value="${number}" type="number"
+										integerOnly="true" /> ${total} --%>
+								<td>
+										<div class="attribute_list" id="quantity">
+											
+											<a class="btn btn-default button-minus product_quantity_down" style="margin-left: 10px;">
+												<span><i class="glyphicon glyphicon-minus"></i></span>
+											</a>
+											<input type="number" min="1" class="bas_td_inp_each" value="${list1.basketInfo_each}" name="basketInfo_each" readonly="readonly">								
+											<a class="btn btn-default button-plus product_quantity_up">
+												<span><i class="glyphicon glyphicon-plus" style="left:1px;"></i></span>
+											</a>
+											${list1.basketInfo_each}
+											
+										</div>
+								</td>
+								<td><input type="button" class="btn_fix btn btn-default" value="변경"></td>
+							</tr>
+							</c:forEach>
+						</table>
+					</div>
+				</form>
+				<div class="button-set" style="float:right; font-family: hanna;">				
+					<button id="btn_allDel" class="btn btn-default" type="button">전체삭제</button>
+					<button id="btn_checkDel" class="btn btn-default" type="button">선택삭제</button>
+					<button id="btn_allBuy" class="btn btn-default" type="button">전체구매</button>
+					<button id="btn_checkBuy" class="btn btn-default" type="button">선택구매</button>
+					<form id="basketFixFrm"
+						action="${pageContext.request.contextPath}/basket/basketFix"
+						method="post">
+						<input id="product_num" type="hidden" value="" name="product_num">
+						<input id="basket_num" type="hidden" value="" name="basket_num">
+						<input id="basketInfo_size" type="hidden" value=""
+							name="basketInfo_size"> <input id="basketInfo_color"
+							type="hidden" value="" name="basketInfo_color"> <input
+							id="basketInfo_each" type="hidden" class="bas_td_inp_each" value=""
+							name="basketInfo_each">
+					</form>	
+				</div>
 			</div>
-		</div>
-
-		
-	</div>	
-	
+		</div>	
+	</div>
 	<!-- Footer:S -->
 	<%@ include file="/resources/temp/footer.jsp"%>
 	<!-- Footer:E -->

@@ -111,19 +111,23 @@
 			
 		$(".product_quantity_down").click(function(){//수량감소
 			var c = parseInt($("#inp_each").val());
-			var d = c+1;
-			if(d>1){	
+			var d = c-1;
+			if(d>1 || d==1){	
 				$("#inp_each").val(d);
+			}else{
+				alert("더 이상 수량을 줄일 수 없습니다.");
 			}
 		});
 
 		$(".product_quantity_up").click(function(){//수량증가
 			var c =  parseInt($("#inp_each").val());
 			var d = c+1;
-			if(d<6){	
+			if(d<21){	
 				$("#inp_each").val(d);
+			}else{
+				alert("더 이상 수량을 늘일 수 없습니다.");
 			}
-			alert(c);
+			//alert(c);
 		});
 		
 	});
@@ -412,7 +416,7 @@
 									<fieldset class="fieldset_list clearfix" id="quantityField"  style="display: none;">
 										<label>QUANTITY&nbsp;</label>
 										<div class="attribute_list" id="quantity">
-											<input id="inp_each" accept="e" type="number" min="1" step="1">											
+											<input id="inp_each" accept="e" type="number" min="1" step="1" readonly="readonly">											
 											<a class="btn btn-default button-minus product_quantity_down" style="margin-left: 20px;">
 												<span><i class="glyphicon glyphicon-minus"></i></span>
 											</a>
