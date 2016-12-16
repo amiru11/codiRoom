@@ -64,6 +64,11 @@ public class ProductService {
 	public int productEachGet(ProductEachDTO productEachDTO) {
 		return productDAO.productEachGet(productEachDTO);
 	}
+	public List<ProductBestDTO> productBestList(){
+		return productDAO.productBestList();
+	}
+	
+	
 
 	// product List seach use size and color and kind_num
 

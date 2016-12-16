@@ -70,10 +70,21 @@
 		<result column="productInfo_searchWord" property="productInfo_searchWord"
 			javaType="java.lang.String" />
 		<result column="productInfo_brand" property="productInfo_brand"
-			javaType="java.lang.String" />	
+			javaType="java.lang.String" />
 		<result column="kind_num" property="kind_num" javaType="int" />
 	</resultMap>
 	<!-- PRODUCTVIEW DTO E -->
+
+
+	<!-- ProductBestDTO S -->
+	<resultMap type="com.basic.product.ProductBestDTO" id="ProductBest">
+		<result column="sel_count" property="sel_count" />
+		<association property="productDTO" resultMap="Product" />
+		<association property="productInfoDTO" resultMap="ProductInfo" />
+	</resultMap>
+	<!-- ProductBestDTO E -->
+
+
 
 
 
@@ -95,12 +106,15 @@
 		parameterType="java.util.HashMap">
 		select * from
 		(select ROWNUM r,t.* from (select DISTINCT
-		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.productInfo_saleRate from PRODUCT p ,
+		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.productInfo_saleRate
+		from PRODUCT p ,
 		PRODUCTINFO pi , PRODUCTEACH pe , PRODUCTKIND pk
-		where pe.PRODUCT_NUM =
+		where
+		pe.PRODUCT_NUM =
 		p.PRODUCT_NUM
 		and pi.PRODUCT_NUM = p.PRODUCT_NUM
-		and pk.PRODUCT_NUM = p.PRODUCT_NUM 
+		and
+		pk.PRODUCT_NUM = p.PRODUCT_NUM
 		and pe.PRODUCTEACH_EACH not in(0)
 		<if test="productParamDTO.color != null ">
 			and UPPER(pe.PRODUCTEACH_COLOR) in
@@ -215,13 +229,13 @@
 		pe.PRODUCT_NUM and ps.PRODUCTSIZE_SIZE =
 		pe.PRODUCTSIZE_SIZE
 		and
-		
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
+
 		p.PRODUCT_NUM = #{product_num} and ps.PRODUCTSIZE_SIZE =
 		#{productSize_size}
 		and pe.productEach_each not in (0)
@@ -278,9 +292,30 @@
 
 	<!-- PRODUCT EACH UPDATE S -->
 
-	
+
 
 	<!-- PRODUCT EACH UPDATE E -->
+
+	<!-- productBest List S -->
+
+	<select id="SelProductBest" resultMap="ProductBest">
+		select * from (select
+		ROWNUM r,t.* from (select count(b.product_num)
+		sel_count,p.PRODUCT_NUM,p.PRODUCT_NAME,pi.productInfo_price,pi.PRODUCTINFO_SALERATE
+		from PRODUCT p,productinfo pi, BUY b
+		where p.PRODUCT_NUM = b.PRODUCT_NUM
+		and pi.PRODUCT_NUM = p.PRODUCT_NUM
+		group by b.PRODUCT_NUM, pi.productInfo_price, pi.PRODUCTINFO_SALERATE,
+		p.PRODUCT_NUM, p.PRODUCT_NAME
+		ORDER BY sel_count desc,p.PRODUCT_NUM desc) t)where r between 0 and 9
+	</select>
+
+
+
+	<!-- productBest List E -->
+
+
+
 
 
 	<!-- Ajax S -->

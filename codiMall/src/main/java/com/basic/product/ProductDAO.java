@@ -126,6 +126,13 @@ public class ProductDAO {
 		return sqlSession.selectOne(namespace+"SelProductEachGet", productEachDTO);
 	}
 	
+	//productBestList
+	
+	public List<ProductBestDTO> productBestList(){
+		return sqlSession.selectList(namespace+"SelProductBest");
+	}
+	
+	
 	//product List seach use size and color and  kind_num
 	
 	public List<String> allProductSize(){

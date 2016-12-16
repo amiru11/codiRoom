@@ -314,14 +314,14 @@ function telCheck() {
 				</ul>	
 				<ul class="nav navbar-nav navbar-left" style="margin-top: 60px; margin-left: 50px;">
 					<!--  test li s -->
-	
 					<li><a href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
 					<li><a href="${pageContext.request.contextPath}/buy/buyList">BUYLIST</a></li>
 					<li><a href="${pageContext.request.contextPath}/product/productAdd">PRODUCTADD</a></li>
 					<li><a href="${pageContext.request.contextPath}/product/productList">ITEM</a></li>
-					<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOGIN</a></li>
+					<li><a href="${pageContext.request.contextPath}/product/productBestList">BestIT</a></li>	
+					<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOG</a></li>
 					<c:if test="${sessionScope.member.member_level == 0 }">
-					<li><a href="${pageContext.request.contextPath}/mast/mastIndex">MASTINDEX</a></li>
+					<li><a href="${pageContext.request.contextPath}/mast/mastIndex">MASTIN</a></li>
 					</c:if>
 	
 					<!--  test li e -->
