@@ -232,5 +232,23 @@ public class BuyDao {
 		}
 		return message;
 	}
+	//buy Confirm
+	public String buyConfirm(int buy_num){
+		String message="";
+		int result =0;
+		result=sqlSession.update(namespace+"UpBuyConfirm",buy_num);
+		if(result==1){
+			message="구매확정 성공";
+		}
+		return message;
+	}
+	
+	//SelGetExpressNum
+	// get ExpressNum
+	
+	public int getExpressNum(int buy_num){
+		return sqlSession.selectOne(namespace+"SelGetExpressNum",buy_num);
+	}
+	
 
 }

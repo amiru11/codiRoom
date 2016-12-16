@@ -10,7 +10,15 @@ public class BuyListDTO {
 	private int buyState_state;
 	private int buyState_each;
 	private int buyState_price;
+	private int buyState_expressNum;
 	
+	
+	public int getBuyState_expressNum() {
+		return buyState_expressNum;
+	}
+	public void setBuyState_expressNum(int buyState_expressNum) {
+		this.buyState_expressNum = buyState_expressNum;
+	}
 	public int getBuyState_state() {
 		return buyState_state;
 	}

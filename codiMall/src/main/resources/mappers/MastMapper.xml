@@ -31,7 +31,8 @@
 		<association property="buyStateDTO" resultMap="BuyState" />
 	</resultMap>
 
-	<select id="SelMastBuyList" resultMap="MastBuyList" parameterType="java.util.HashMap">
+	<select id="SelMastBuyList" resultMap="MastBuyList"
+		parameterType="java.util.HashMap">
 		select DISTINCT
 		b.BUY_NUM,p.PRODUCT_NUM,p.PRODUCT_NAME,m.ID,bs.BUYSTATE_SIZE,bs.BUYSTATE_COLOR,bs.BUYSTATE_EACH,bs.BUYSTATE_PRICE
 		,bs.BUYSTATE_EXPRESSNUM,bs.BUYSTATE_PAY_DATE,bs.BUYSTATE_RESULT_DATE,bs.BUYSTATE_STATE
@@ -40,69 +41,47 @@
 		b.BUY_NUM and m.ID = b.ID and p.PRODUCT_NUM =
 		b.PRODUCT_NUM
 		<if test="state_num != 0">
-		and
-		bs.BUYSTATE_STATE = #{state_num}
+			and
+			bs.BUYSTATE_STATE = #{state_num}
 		</if>
 		order by bs.buystate_state asc, bs.buystate_pay_date desc , b.buy_num
 		desc
 	</select>
 
-	
+
 	<!-- update State 1 to 2 S -->
-	<update id="UpBuyState" parameterType="java.util.HashMap">
+	<update id="UpBuyState" parameterType="com.basic.buy.BuyStateDTO">
 		update buyState set
-		
-		<if test="buyState_expressNum != null">
-		buystate_expressNum = #{buyState_expressNum},
+		<if test="buyState_expressNum != 0">
+			buystate_expressNum = #{buyState_expressNum},
 		</if>
-		<if test="buyState_state != 2">
-		buystate_state = #{buyState_state+1},
-		</if>
+		<choose>
+			<when test="buyState_state == 2 and buyState_expressNum !=0">
+				buystate_state = #{buyState_state},
+			</when>
+			<otherwise>
+				buystate_state = #{buyState_state}+1,
+			</otherwise>
+		</choose>
 		buyState_result_date = sysdate
 		where buy_num = #{buy_num}
 	</update>
 
 	<!-- update State 1 to 2 E -->
 
+	<!-- update 7day auto update ssssss -->
 
-
-	<!-- update State 2 to 3 S -->
-
-	<update id="UpBuyState3" parameterType="java.util.HashMap">
+	<update id="UpBuyStateAuto" parameterType="com.basic.buy.BuyStateDTO">
 		update buyState set
-		buystate_state = 3,
-		buystate_result_date = sysdate
-		where buystate_state = 2
-		and buy_num in
-		<foreach item="item" index="index" collection="buy_num" open="("
-			separator="," close=")">
-			#{item}
-		</foreach>
+		buystate_state = 4
+		where buystate_state = 3 and
+		sysdate - buystate_result_date > 7
 	</update>
-	<!-- update State 2 to 3 E -->
 
-	<!-- update State 3 to 4 S -->
-	<update id="UpBuyState4" parameterType="java.util.HashMap">
-		update buyState set
-		buystate_state = 4,
-		buystate_result_date = sysdate
-		where buystate_state = 3
-		and buy_num = #{buy_num}
-	</update>
-	
-	<!-- update State 3 to 4 E -->
-	
-	<!-- update State 4 to 5 S -->
-	
-	<update id="UpBuyState5" parameterType="java.util.HashMap">
-		update buyState set
-		buystate_state = 5,
-		buystate_result_date = sysdate
-		where buystate_state = 4
-		and buy_num = #{buy_num}
-	</update>
-	
-	<!-- update State 4 to 5 S -->
+	<!-- update 7day auto update eeeeeee -->
+
+
+
 
 
 

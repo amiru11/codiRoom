@@ -37,5 +37,13 @@ public class BuyService {
 	public String cancelBuy(int buy_num){
 		return buyDao.cancelBuy(buy_num);
 	}
+	
+	public String buyConfirm(int buy_num){
+		return buyDao.buyConfirm(buy_num);
+	}
+	
+	public int getExpressNum(int buy_num){
+		return buyDao.getExpressNum(buy_num);
+	}
 
 }

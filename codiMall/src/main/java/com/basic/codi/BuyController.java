@@ -1,5 +1,6 @@
 package com.basic.codi;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +122,21 @@ public class BuyController {
 		
 		if(session.getAttribute("member") != null && buy_num!=0 ){
 			message=buyService.cancelBuy(buy_num);
+			location="/buy/buyList";
+			ra.addFlashAttribute("message",message);
+			ra.addFlashAttribute("location",location);	
+		}else{
+		}
+		return "redirect:/result/result";
+	}
+	
+	@RequestMapping(value="/buyConfirm",method=RequestMethod.POST)
+	public String buyConfirm(int buy_num,HttpSession session,RedirectAttributes ra){
+		String message="";
+		String location="";
+		
+		if(session.getAttribute("member") != null && buy_num!=0 ){
+			message=buyService.buyConfirm(buy_num);
 			location="/buy/buyList";
 			ra.addFlashAttribute("message",message);
 			ra.addFlashAttribute("location",location);	

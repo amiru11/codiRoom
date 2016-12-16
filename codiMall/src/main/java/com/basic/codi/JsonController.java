@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.basic.basket.BasketService;
 import com.basic.board.BoardService;
+import com.basic.buy.BuyService;
 import com.basic.mast.MastService;
 import com.basic.product.ProductDTO;
 import com.basic.product.ProductEachDTO;
@@ -38,6 +39,9 @@ public class JsonController {
 	
 	@Autowired
 	private MastService mastService;
+	
+	@Autowired
+	private BuyService buyService;
 
 	
 	@RequestMapping(value="/productSize", produces = "application/json; charset=utf-8")
@@ -102,6 +106,18 @@ public class JsonController {
 		return retVal;
 	}
 	
+	
+	/// buy
+	@RequestMapping(value="/getExpressNum")
+	public int getExpressNum(int buy_num){
+		return buyService.getExpressNum(buy_num);
+	}
+	
+	
+	
+	
+	//buy
+	
 	// mast ---------------------------------------------------------------------------------------
 	
 	@RequestMapping(value="/mastBuyList",produces = "application/json; charset=utf-8")
@@ -113,8 +129,8 @@ public class JsonController {
 	}
 	
 	@RequestMapping(value="/mastUpState")
-	public int mastUpState(int buy_num,int buyState_state,@RequestParam(required=false) Integer buyState_expressNum){
-		return 0;
+	public int mastUpState(int buy_num,int buyState_state,@RequestParam(required=false,defaultValue="0") int buyState_expressNum){
+		return mastService.mastUpState(buy_num, buyState_state, buyState_expressNum);
 	}
 	
 	
