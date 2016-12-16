@@ -10,7 +10,7 @@
 }
 </style>
 <div class="container-fluid" style="padding : 0;">
-	<div id="footer">
+	<div id="footer" style="height: 300px;">
 		<div style="margin-top: 50px; padding-top: 30px;">
 			<ul class="list-inline footer-ul">
 				<li style="margin-left: 400px;">
