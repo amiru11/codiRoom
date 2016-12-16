@@ -49,12 +49,17 @@
 
 	
 	<!-- update State 1 to 2 S -->
-	<update id="UpBuyState2" parameterType="java.util.HashMap">
+	<update id="UpBuyState" parameterType="java.util.HashMap">
 		update buyState set
-		buystate_state = 2,
-		buystate_expressNum = #{buyStateDTO.buyState_expressNum},
+		
+		<if test="buyState_expressNum != null">
+		buystate_expressNum = #{buyState_expressNum},
+		</if>
+		<if test="buyState_state != 2">
+		buystate_state = #{buyState_state+1},
+		</if>
 		buyState_result_date = sysdate
-		where buy_num = #{buyStateDTO.buy_num}
+		where buy_num = #{buy_num}
 	</update>
 
 	<!-- update State 1 to 2 E -->

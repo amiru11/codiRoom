@@ -20,5 +20,13 @@ public class MastDAO {
 		map.put("state_num", state_num);
 		return sqlSession.selectList(namespace+"SelMastBuyList",map);
 	}
+	
+	public int mastUpState(int buy_num,int buyState_state,Integer buyState_expressNum){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("buy_num", buy_num);
+		map.put("buyState_state", buyState_state);
+		map.put("buyState_expressNum", buyState_expressNum);
+		return sqlSession.update(namespace+"UpBuyState", map);
+	}
 
 }

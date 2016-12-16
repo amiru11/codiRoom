@@ -102,12 +102,19 @@ public class JsonController {
 		return retVal;
 	}
 	
+	// mast ---------------------------------------------------------------------------------------
+	
 	@RequestMapping(value="/mastBuyList",produces = "application/json; charset=utf-8")
 	public Map<String, Object> mastBuyList(int buyState_state){
 		System.out.println("mast");
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		retVal.put("ar", mastService.mastBuyList(buyState_state));
 		return retVal;
+	}
+	
+	@RequestMapping(value="/mastUpState")
+	public int mastUpState(int buy_num,int buyState_state,@RequestParam(required=false) Integer buyState_expressNum){
+		return 0;
 	}
 	
 	

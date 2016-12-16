@@ -17,16 +17,35 @@ tr, td, th {
 </style>
 <script type="text/javascript">
 
+	/*          function SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS  */
+
 	$(function() {
+
 		var buyState_state = 1;
 		getBuyList(buyState_state);
 		$("#sel_buy_state").change(function() {
 			buyState_state = $(this).val();
 			getBuyList(buyState_state);
 		});
+	
+
+			
+		
+		
+		
+
+
 
 	});
 
+	/*      function EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE     */
+
+
+	function numcheck() {
+		if ( (event.keyCode == 69) ) {
+			event.returnValue = false;
+		};
+	};
 
 	function getBuyList(buyState_state) {
 		$.ajax({
@@ -63,19 +82,67 @@ tr, td, th {
 					if (buyState_state == 1) {
 						x = x + '<td><form action="${pageContext.request.contextPath}/mast/buyState1to2"method="post">';
 						x = x + '<input class="hid_buy_num" name="buy_num" type="hidden" value="' + value.buyDTO.buy_num + '">';
-						x = x + 'expressNum:<input type="number" name="buyState_expressNum"><Br>';
+						x = x + 'expressNum:<input onkeydown="numcheck()" class="inp_expressNum" type="number" name="buyState_expressNum"><Br>';
 						x = x + '<input class="btn_add" type="button" value="ADD"></form></td>';
-					}
-					else if (buyState_state == 2) {
+					} else if (buyState_state == 2) {
 						x = x + '<td><form action="${pageContext.request.contextPath}/mast/expressNumFix" method="post">';
 						x = x + '<input class="hid_buy_num" name="buy_num" type="hidden" value="' + value.buyDTO.buy_num + '">';
-						x = x + 'expressNum:<input type="number" name="buyState_expressNum"><Br>';
+						x = x + 'expressNum:<input onkeydown="numcheck()" class="inp_expressNum" type="number" name="buyState_expressNum"><Br>';
 						x = x + '<input class="btn_add" type="button" value="ADD"></form></td>';
 					}
 					x = x + '</tr>';
 				});
 				$("#table_buy_list").html(x);
+				
+				$(".tr_buy_list").mouseenter(function(){
+					var thisTr = $(this);
+					$(thisTr).find(".btn_add").click(function(){
+						if($(thisTr).find(".inp_expressNum").val() !=""){
+							$(thisTr).find("form").submit();
+						}else{
+							alert("송장번호를 입력해주세요");
+						}
+					});
+				});
+				$(".tr_buy_list").mouseleave(function(){
+					var thisTr = $(this);
+					$(thisTr).find(".btn_add").off("click");
+				});
+				
+				
+				
+				
+				
 
+
+
+
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
+			}
+		});
+		
+	}
+	
+	function getBuyList(buy_num,buyState_state,buyState_expressNum) {
+		$.ajax({
+			url : "../json/mastUpState",
+			type : "post",
+			data : {
+				if(buyState_expressNum != null){
+				buyState_state : buyState_state,
+				}buy_num:buy_num,
+				buyState_expressNum:buyState_expressNum
+			},
+			success : function(data) {
+				if(data>0){
+					alert("success");
+					getBuyList(buyState_state*1+1);
+				}else{
+					alert("fail");
+					getBuyList(buyState_state*1+1);
+				}
 			},
 			error : function(request, status, error) {
 				alert("code:" + request.status + "\n" + "error:" + error);
@@ -93,9 +160,10 @@ tr, td, th {
 		<option value="1">1배송준비</option>
 		<option value="2">2배송중</option>
 		<option value="3">3배송완료</option>
+		<option value="4">4판매완료</option>
 		<option value="0">all</option>
-		<option value="4">4환불중</option>
-		<option value="5">5환불완료</option>
+		<option value="5">5환불중</option>
+		<option value="6">6환불완료</option>
 	</select>
 	<table id="table_buy_list">
 		<%-- <tr>
