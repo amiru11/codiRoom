@@ -264,8 +264,12 @@ function telCheck() {
 #tel0{
 	width: 80px; padding: 0; height: 50px;
 	color:#a6a6a6;
+
 	/* font-family: 'Hanna', sans-serif; */
 	/* background: #ccc; */
+}
+#tel1{
+	background-position: right -137px;
 }
 </style>
 <div class="container-fluid">
@@ -422,7 +426,6 @@ function telCheck() {
 										<option value="LGU">LGU</option>
 									</select>
 							    </span>
-							    <!-- <input id="msg" type="text" class="form-control decorative-input" name="msg" placeholder="Additional Info"> -->
 								<input type="tel" class="form-control decorative-input" id="tel1" name="tel1" maxlength="11" placeholder="'-' 없이 입력해주세요." onkeyup="telCheck()">
 								
 							</div>

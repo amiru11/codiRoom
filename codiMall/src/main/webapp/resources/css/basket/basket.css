@@ -137,3 +137,35 @@ input[type="checkbox"]{
     -webkit-box-shadow: 0 15px 30px #ff0000;
     box-shadow: 0 15px 30px #ff0000;
 }
+
+.recipient-info{
+	border : 2px solid #dce2eb;
+	margin-top : 5px;
+}
+.box_receiver_info {
+    margin-left: 25px;
+    width: 100%;
+    line-height: 24px;
+}
+.info_tit{
+	font-size: 16px;
+	width : 120px;
+	margin-right: 100px;
+}
+.payment-info{
+	border : 2px solid #dce2eb;
+	margin-top : 5px;
+}
+.box_choice{
+	margin-right: 20px;
+	cursor: pointer;
+}
+.select_cancel{
+	width : 350px;
+	border : 2px solid #dce2eb;
+	display: inline-block;
+	padding:10px;
+	margin-right : 10px;
+	margin-bottom:10px;
+	cursor : pointer;
+}

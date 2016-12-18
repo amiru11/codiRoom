@@ -141,7 +141,7 @@ public class BasketDAO {
 			Integer a = sqlSession.selectOne(namespace + "SelBasketInfo", map);
 			if (a != 0) {
 				message = "동일한 상품이 이미있습니다";
-				System.out.println(sqlSession.selectOne(namespace + "SelBasketInfo", map));
+				result = (sqlSession.selectOne(namespace + "SelBasketInfo", map));
 			} else {
 				result = sqlSession.update(namespace + "UpbasketInfo", map);
 				if (result > 0) {
