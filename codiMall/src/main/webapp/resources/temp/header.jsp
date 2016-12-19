@@ -322,7 +322,6 @@ function telCheck() {
 					<li><a href="${pageContext.request.contextPath}/buy/buyList">BUYLIST</a></li>
 					<li><a href="${pageContext.request.contextPath}/product/productAdd">PRODUCTADD</a></li>
 					<li><a href="${pageContext.request.contextPath}/product/productList">ITEM</a></li>
-					<li><a href="${pageContext.request.contextPath}/product/productBestList">BestIT</a></li>	
 					<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOG</a></li>
 					<c:if test="${sessionScope.member.member_level == 0 }">
 					<li><a href="${pageContext.request.contextPath}/mast/mastIndex">MASTIN</a></li>

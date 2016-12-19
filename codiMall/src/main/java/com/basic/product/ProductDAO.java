@@ -29,6 +29,34 @@ public class ProductDAO {
 
 	DefaultTransactionDefinition def = null;
 	TransactionStatus status = null;
+	
+	//productSale List
+	public List<ProductListDTO> productSaleList(PageMaker pageMaker){
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("pageMaker", pageMaker);
+		return sqlSession.selectList(namespace+"SelProductSaleList",hm);
+	}
+	
+	public int productSaleCount(){
+		return sqlSession.selectOne(namespace+"SelProductSaleCount");
+	}
+	
+	
+	
+	
+	//productSelect List
+	
+	public List<ProductSelectDTO> productSelectList(){
+		List<ProductSelectDTO> ar = new ArrayList<>();
+		ar = sqlSession.selectList(namespace+"SelProductSelectList");
+		for (int i = 0; i < ar.size(); i++) {
+			System.out.println(i+"-----------------"+i);
+			System.out.println(ar.get(i).getProductSelect_name());
+		}
+		return sqlSession.selectList(namespace+"SelProductSelectList");
+	}
+	
+	
 
 	public int productCount(ProductParamDTO productParamDTO) {
 		return sqlSession.selectOne(namespace + "SelProductCount", productParamDTO);
@@ -129,23 +157,38 @@ public class ProductDAO {
 	//productBestList
 	
 	public List<ProductBestDTO> productBestList(){
+		List<ProductBestDTO> ar = new ArrayList<>();
+		ar = sqlSession.selectList(namespace+"SelProductBest");
+		for (int i = 0; i < ar.size(); i++) {
+			System.out.println(i+"---------"+i);
+			System.out.println("selCount---"+ar.get(i).getSel_count());
+			System.out.println("pronum---"+ar.get(i).getProduct_num());
+			System.out.println("proPrice---"+ar.get(i).getProductInfo_price());
+		}
 		return sqlSession.selectList(namespace+"SelProductBest");
 	}
 	
 	
 	//product List seach use size and color and  kind_num
 	
-	public List<String> allProductSize(){
-		return sqlSession.selectList(namespace+"SelAllProductSize");
+	public List<String> allProductSize(int productSelect_num){
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("productSelect_num", productSelect_num);
+		return sqlSession.selectList(namespace+"SelAllProductSize",hm);
 	}
 	
-	public List<String> allProductColor(){
-		return sqlSession.selectList(namespace+"SelAllProductColor");
+	public List<String> allProductColor(int productSelect_num){
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("productSelect_num", productSelect_num);
+		return sqlSession.selectList(namespace+"SelAllProductColor",hm);
 	}
 	
-	public List<Integer> allKindNum(){
-		return sqlSession.selectList(namespace+"SelAllKindNum");
+	public List<Integer> allKindNum(int productSelect_num){
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("productSelect_num", productSelect_num);
+		return sqlSession.selectList(namespace+"SelAllKindNum",hm);
 	}
+
 	
 	
 	

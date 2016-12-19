@@ -2,10 +2,19 @@ package com.basic.product;
 
 public class ProductParamDTO {
 	private int sel;//최저가 & 최대가 & 최신순 등 정렬종류
-	private int []kind_num; //상품 종류 (상의, 하의, etc..)
+	private int productSelect_num; // 상품종류 대분류 (아우터 상의 하의 등등)
+	private int []kind_num; //상품 종류 소분류 (패딩 니트 재킷 등등)
 	private String []color; //색깔
 	private String []size; //사이즈
 	
+	
+	
+	public int getProductSelect_num() {
+		return productSelect_num;
+	}
+	public void setProductSelect_num(int productSelect_num) {
+		this.productSelect_num = productSelect_num;
+	}
 	public int getSel() {
 		return sel;
 	}

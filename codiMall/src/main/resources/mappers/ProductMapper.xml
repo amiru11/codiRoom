@@ -18,7 +18,6 @@
 	</resultMap>
 
 	<resultMap type="com.basic.product.ProductInfoDTO" id="ProductInfo">
-		<id column="product_num" property="product_num" javaType="int" />
 		<result column="productInfo_price" property="productInfo_price"
 			javaType="int" />
 		<result column="productInfo_reg_date" property="productInfo_reg_date"
@@ -76,13 +75,6 @@
 	<!-- PRODUCTVIEW DTO E -->
 
 
-	<!-- ProductBestDTO S -->
-	<resultMap type="com.basic.product.ProductBestDTO" id="ProductBest">
-		<result column="sel_count" property="sel_count" />
-		<association property="productDTO" resultMap="Product" />
-		<association property="productInfoDTO" resultMap="ProductInfo" />
-	</resultMap>
-	<!-- ProductBestDTO E -->
 
 
 
@@ -91,7 +83,7 @@
 
 	<!-- default DTO E -->
 
-	<!-- join DTO S -->
+
 
 
 
@@ -101,21 +93,36 @@
 
 	<!-- Product List DTO E -->
 
+
+
+	<!-- productSelect List S -->
+	<select id="SelProductSelectList" resultMap="ProductSelect">
+		select *from
+		productSelect order by productSelect_num asc
+
+	</select>
+
+	<!-- productSelect List E -->
+
+
+
 	<!-- Product List S -->
 	<select id="SelProductList" resultType="com.basic.product.ProductListDTO"
 		parameterType="java.util.HashMap">
-		select * from
-		(select ROWNUM r,t.* from (select DISTINCT
-		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.productInfo_saleRate
-		from PRODUCT p ,
-		PRODUCTINFO pi , PRODUCTEACH pe , PRODUCTKIND pk
-		where
-		pe.PRODUCT_NUM =
-		p.PRODUCT_NUM
-		and pi.PRODUCT_NUM = p.PRODUCT_NUM
-		and
-		pk.PRODUCT_NUM = p.PRODUCT_NUM
-		and pe.PRODUCTEACH_EACH not in(0)
+		select * from (select rownum r, z.* from (select DISTINCT
+		t.*,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE from (select
+		count(b.BUY_NUM) c,p.PRODUCT_NUM,p.PRODUCT_NAME from product p LEFT
+		OUTER JOIN buy b
+		on b.PRODUCT_NUM = p.PRODUCT_NUM group by
+		p.PRODUCT_NUM, p.PRODUCT_NAME)
+		t , PRODUCTINFO pi,PRODUCTEACH pe,
+		kind
+		k,PRODUCTKIND pk where pe.PRODUCT_NUM = t.PRODUCT_NUM and
+		pi.PRODUCT_NUM = t.PRODUCT_NUM
+		and pk.KIND_NUM = k.KIND_NUM and
+		pk.PRODUCT_NUM = t.PRODUCT_NUM
+		and k.productSelect_num =
+		#{productParamDTO.productSelect_num}
 		<if test="productParamDTO.color != null ">
 			and UPPER(pe.PRODUCTEACH_COLOR) in
 			<foreach item="item" index="index" collection="productParamDTO.color"
@@ -139,7 +146,7 @@
 		</if>
 		<choose>
 			<when test="productParamDTO.sel == 2">
-				order by p.PRODUCT_NUM asc
+				order by t.c desc,t.product_num desc
 			</when>
 			<when test="productParamDTO.sel == 3">
 				order by pi.productInfo_price asc
@@ -148,15 +155,65 @@
 				order by pi.productInfo_price desc
 			</when>
 			<otherwise>
-				order by p.PRODUCT_NUM desc
+				order by t.PRODUCT_NUM desc
 			</otherwise>
 		</choose>
-		) t ) where r BETWEEN
+		) z) where
+		r between #{pageMaker.startRowNum} and
+		#{pageMaker.lastLowNum}
+	</select>
+	<!-- Product List E -->
+
+	<!-- SaleList S -->
+	<select id="SelProductSaleList" resultType="com.basic.product.ProductListDTO"
+		parameterType="java.util.HashMap">
+		select * from (select rownum r, z.* from (select
+		DISTINCT
+		t.*,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE from (select
+		count(b.BUY_NUM) c,p.PRODUCT_NUM,p.PRODUCT_NAME from product p LEFT
+		OUTER JOIN buy b
+		on b.PRODUCT_NUM = p.PRODUCT_NUM group by
+		p.PRODUCT_NUM, p.PRODUCT_NAME)
+		t , PRODUCTINFO pi,PRODUCTEACH pe,
+		kind
+		k,PRODUCTKIND pk where pe.PRODUCT_NUM = t.PRODUCT_NUM and
+		pi.PRODUCT_NUM = t.PRODUCT_NUM
+		and pk.KIND_NUM = k.KIND_NUM and
+		pk.PRODUCT_NUM = t.PRODUCT_NUM
+		and pi.productInfo_saleRate not in(0)
+		order by t.product_num desc
+
+		) z) where r between
 		#{pageMaker.startRowNum} and
 		#{pageMaker.lastLowNum}
 
 	</select>
-	<!-- Product List E -->
+	<!-- SaleList E -->
+
+	<!-- SaleList Count -->
+	<select id="SelProductSaleCount" resultType="int">
+		select count(*) from
+		(select rownum r, z.* from (select DISTINCT
+		t.*,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE from (select
+		count(b.BUY_NUM) c,p.PRODUCT_NUM,p.PRODUCT_NAME from product p LEFT
+		OUTER JOIN buy b
+		on b.PRODUCT_NUM = p.PRODUCT_NUM group by
+		p.PRODUCT_NUM, p.PRODUCT_NAME)
+		t , PRODUCTINFO pi,PRODUCTEACH pe,
+		kind
+		k,PRODUCTKIND pk where pe.PRODUCT_NUM = t.PRODUCT_NUM and
+		pi.PRODUCT_NUM = t.PRODUCT_NUM
+		and pk.KIND_NUM = k.KIND_NUM and
+		pk.PRODUCT_NUM = t.PRODUCT_NUM
+		and pi.productInfo_saleRate not in(0)
+		order by t.product_num desc
+		) z)
+
+	</select>
+
+	<!-- SaleList Count -->
+
+
 
 	<!-- Product List Count S -->
 	<select id="SelProductCount" parameterType="com.basic.product.ProductParamDTO"
@@ -164,13 +221,17 @@
 		select count(t.product_num) from (select DISTINCT
 		p.PRODUCT_NUM,p.PRODUCT_NAME,pk.KIND_NUM,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_SEARCHWORD
 		from PRODUCT p,PRODUCTINFO pi,PRODUCTKIND pk ,PRODUCTSIZE ps,
-		PRODUCTEACH pe
-		where pe.PRODUCT_NUM = p.PRODUCT_NUM and pi.PRODUCT_NUM
+		PRODUCTEACH pe,KIND k
+		where pe.PRODUCT_NUM = p.PRODUCT_NUM and
+		pi.PRODUCT_NUM
 		= p.PRODUCT_NUM and
 		pk.PRODUCT_NUM = p.PRODUCT_NUM
-		and ps.PRODUCT_NUM =
+		and
+		ps.PRODUCT_NUM =
 		p.PRODUCT_NUM and ps.PRODUCTSIZE_SIZE =
-		pe.PRODUCTSIZE_SIZE
+		pe.PRODUCTSIZE_SIZE and pk.KIND_NUM = k.KIND_NUM
+		and
+		k.PRODUCTSELECT_NUM = #{productSelect_num}
 		<if test="color != null ">
 			and UPPER(pe.PRODUCTEACH_COLOR) in
 			<foreach item="item" index="index" collection="color" open="("
@@ -229,13 +290,6 @@
 		pe.PRODUCT_NUM and ps.PRODUCTSIZE_SIZE =
 		pe.PRODUCTSIZE_SIZE
 		and
-
-
-
-
-
-
-
 		p.PRODUCT_NUM = #{product_num} and ps.PRODUCTSIZE_SIZE =
 		#{productSize_size}
 		and pe.productEach_each not in (0)
@@ -298,16 +352,20 @@
 
 	<!-- productBest List S -->
 
-	<select id="SelProductBest" resultMap="ProductBest">
+	<select id="SelProductBest" resultType="com.basic.product.ProductBestDTO">
 		select * from (select
 		ROWNUM r,t.* from (select count(b.product_num)
 		sel_count,p.PRODUCT_NUM,p.PRODUCT_NAME,pi.productInfo_price,pi.PRODUCTINFO_SALERATE
 		from PRODUCT p,productinfo pi, BUY b
-		where p.PRODUCT_NUM = b.PRODUCT_NUM
+		where p.PRODUCT_NUM =
+		b.PRODUCT_NUM
 		and pi.PRODUCT_NUM = p.PRODUCT_NUM
-		group by b.PRODUCT_NUM, pi.productInfo_price, pi.PRODUCTINFO_SALERATE,
-		p.PRODUCT_NUM, p.PRODUCT_NAME
-		ORDER BY sel_count desc,p.PRODUCT_NUM desc) t)where r between 0 and 9
+		group by b.PRODUCT_NUM,
+		pi.productInfo_price, pi.PRODUCTINFO_SALERATE,
+		p.PRODUCT_NUM,
+		p.PRODUCT_NAME
+		ORDER BY sel_count desc,p.PRODUCT_NUM desc) t)where r
+		between 0 and 9
 	</select>
 
 
@@ -335,27 +393,46 @@
 
 	</select>
 
-	<select id="SelAllProductSize" resultType="java.lang.String">
+	<select id="SelAllProductSize" resultType="java.lang.String"
+		parameterType="java.util.HashMap">
 		select DISTINCT
-		ps.PRODUCTSIZE_SIZE from product p ,
+		ps.PRODUCTSIZE_SIZE from product p ,PRODUCTKIND pk,kind
+		k,
 		PRODUCTSIZE ps
-		where ps.PRODUCT_NUM
-		= p.PRODUCT_NUM
+		where pk.KIND_NUM = k.KIND_NUM
+		and pk.PRODUCT_NUM = p.PRODUCT_NUM
+		and ps.PRODUCT_NUM = p.PRODUCT_NUM
+		<if test="productSelect_num != 0">
+			and k.PRODUCTSELECT_NUM  = #{productSelect_num}
+		</if>
 	</select>
 
-	<select id="SelAllProductColor" resultType="java.lang.String">
+	<select id="SelAllProductColor" resultType="java.lang.String"
+		parameterType="java.util.HashMap">
 		select DISTINCT
-		pe.PRODUCTEACH_COLOR from PRODUCT p , PRODUCTEACH pe
+		pe.PRODUCTEACH_COLOR from PRODUCT p , PRODUCTEACH
+		pe,PRODUCTKIND pk,kind k
 		where
+		pk.KIND_NUM = k.KIND_NUM and
+		pk.PRODUCT_NUM = p.PRODUCT_NUM and
 		pe.PRODUCT_NUM = p.PRODUCT_NUM
-		and pe.PRODUCTEACH_EACH not in(0)
+		and
+		pe.PRODUCTEACH_EACH not in(0)
+		<if test="productSelect_num != 0">
+			and k.PRODUCTSELECT_NUM  = #{productSelect_num}
+		</if>
 	</select>
 
-	<select id="SelAllKindNum" resultType="int">
+	<select id="SelAllKindNum" resultType="int" parameterType="java.util.HashMap">
 		select DISTINCT
-		pk.KIND_NUM from PRODUCT p , PRODUCTKIND pk
-		where pk.PRODUCT_NUM =
-		p.PRODUCT_NUM
+		pk.KIND_NUM from PRODUCT p , PRODUCTKIND pk,kind k
+		where pk.PRODUCT_NUM = p.PRODUCT_NUM
+		and pk.KIND_NUM = k.KIND_NUM
+		and
+		pk.PRODUCT_NUM = p.PRODUCT_NUM
+		<if test="productSelect_num !=0">
+			and k.PRODUCTSELECT_NUM = #{productSelect_num}
+		</if>
 	</select>
 
 

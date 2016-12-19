@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,10 +39,10 @@ table, table tr, tr td, th {
 		});
 
 		$("#sel_size").change(function() {
-			if($(this).val()!=""){
-				selColor($("#inh_pro_val").val());	
+			if ($(this).val() != "") {
+				selColor($("#inh_pro_val").val());
 			}
-			
+
 		});
 
 		$("#btn_basketAdd").click(function() {
@@ -161,11 +162,10 @@ table, table tr, tr td, th {
 		<nav class="navbar" style="border-bottom: 1px solid #eeeeee;">
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav sub-header">
-					<li><a>아우터</a></li>
-					<li><a>상의</a></li>
-					<li><a>하의</a></li>
-					<li><a>가방</a></li>
-					<li><a>신발</a></li>
+					<c:forEach var="list1" items="${productSelectList}">
+						<li><a
+							href="${pageContext.request.contextPath}/product/productList?productSelect_num=${list1.productSelect_num}">${list1.productSelect_name}</a></li>
+					</c:forEach>
 					<li><a>할인상품</a></li>
 					<li><a>신상품</a></li>
 				</ul>
@@ -173,12 +173,10 @@ table, table tr, tr td, th {
 		</nav>
 		<div class="item row">
 			<div class="col-lg-12">
-				<div class="left col-lg-4" style="margin-top: 0;">
-					
-				</div>
+				<div class="left col-lg-4" style="margin-top: 0;"></div>
 				<div class="right col-lg-8" style="margin-top: 0; width: 850px;">
 					<!-- 상품 리스트:S -->
-				
+
 
 					<div id="item-table">
 						<ul class="list-inline" style="width: 850px;">
@@ -186,7 +184,7 @@ table, table tr, tr td, th {
 								<li style="padding-left: 20px;" class="viewItem">
 									<div class="mc" style="border: 1px solid #eee;">
 										<span class="img"> <a
-											href="${pageContext.request.contextPath}/product/productView?product_num=${list1.productDTO.product_num}">
+											href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">
 												<img src="http://placehold.it/500x150&text=FooBar1"
 												width="250" height="250">
 										</a>
@@ -194,19 +192,19 @@ table, table tr, tr td, th {
 										<div class="item-info" style="padding-left: 10px;">
 											<p style="padding-top: 10px;">
 												<a
-													href="${pageContext.request.contextPath}/product/productView?product_num=${list1.productDTO.product_num}">${list1.productDTO.product_name}</a>
+													href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">${list1.product_name}</a>
 											</p>
 											<p>브랜드</p>
 											<p>
 												<span> <fmt:formatNumber
-														value="${list1.productInfoDTO.productInfo_price}"
-														currencySymbol="" type="currency" />원
+														value="${list1.productInfo_price}" currencySymbol=""
+														type="currency" />원
 												</span> <strong style="color: #b5172e;">→<c:set
 														var="number"
-														value="${list1.productInfoDTO.productInfo_price*(100-list1.productInfoDTO.productInfo_saleRate)/100}" />
+														value="${list1.productInfo_price*(100-list1.productInfo_saleRate)/100}" />
 													<fmt:parseNumber var="total" value="${number}"
 														type="number" integerOnly="true" /> ${total}
-													원(${list1.productInfoDTO.productInfo_saleRate}%)
+													원(${list1.productInfo_saleRate}%)
 												</strong>
 											</p>
 										</div>
@@ -219,7 +217,7 @@ table, table tr, tr td, th {
 										data-toggle="modal" data-target="#basketModal"
 							data-backdrop="true"
 										</c:if>>
-											<input type="hidden" value="${list1.productDTO.product_num}"
+											<input type="hidden" value="${list1.product_num}"
 												class="inh_product_num" name="product_num"> <span
 												style="font-size: 20px; color: #ffffff;">ADD TO CART</span>
 										</div>

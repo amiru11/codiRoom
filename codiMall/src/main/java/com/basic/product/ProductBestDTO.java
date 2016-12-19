@@ -1,26 +1,48 @@
 package com.basic.product;
 
 public class ProductBestDTO {
+	
+	private int r;
 	private int sel_count;
-	private ProductDTO productDTO;
-	private ProductInfoDTO productInfoDTO;
+	private int product_num;
+	private String product_name;
+	private int productInfo_price;
+	private double productInfo_saleRate;
+	public int getR() {
+		return r;
+	}
+	public void setR(int r) {
+		this.r = r;
+	}
 	public int getSel_count() {
 		return sel_count;
 	}
 	public void setSel_count(int sel_count) {
 		this.sel_count = sel_count;
 	}
-	public ProductDTO getProductDTO() {
-		return productDTO;
+	public int getProduct_num() {
+		return product_num;
 	}
-	public void setProductDTO(ProductDTO productDTO) {
-		this.productDTO = productDTO;
+	public void setProduct_num(int product_num) {
+		this.product_num = product_num;
 	}
-	public ProductInfoDTO getProductInfoDTO() {
-		return productInfoDTO;
+	public String getProduct_name() {
+		return product_name;
 	}
-	public void setProductInfoDTO(ProductInfoDTO productInfoDTO) {
-		this.productInfoDTO = productInfoDTO;
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+	public int getProductInfo_price() {
+		return productInfo_price;
+	}
+	public void setProductInfo_price(int productInfo_price) {
+		this.productInfo_price = productInfo_price;
+	}
+	public double getProductInfo_saleRate() {
+		return productInfo_saleRate;
+	}
+	public void setProductInfo_saleRate(double productInfo_saleRate) {
+		this.productInfo_saleRate = productInfo_saleRate;
 	}
 	
 	
