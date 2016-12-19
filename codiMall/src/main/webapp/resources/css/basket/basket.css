@@ -33,6 +33,7 @@ ul.step {
     background: url(/codi/resources/images/basket/hgroup_img.gif) no-repeat 0 0;
     text-indent: -9999px;
 }
+
 ul.step > li {
        height: 45px;
 }
@@ -110,9 +111,9 @@ input[type="checkbox"]{
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
 }
+/* CART LIST:E */
 
-
-
+/* BUY LIST:S */
 .btn.button-plus, .btn.button-minus {
     color : white;
     font-size: 15px;
@@ -147,6 +148,9 @@ input[type="checkbox"]{
     width: 100%;
     line-height: 24px;
 }
+.info_hidden{
+	display: none;
+}
 .info_tit{
 	font-size: 16px;
 	width : 120px;
@@ -168,4 +172,48 @@ input[type="checkbox"]{
 	margin-right : 10px;
 	margin-bottom:10px;
 	cursor : pointer;
+}
+/* 약관동의 */
+.box_check_agree{
+	margin-top : 10px;
+}
+.box_summary_agree{
+	border : 2px solid #dce2eb;
+	background-color: #eff3f5;	
+	margin-bottom : 0;
+}
+.box_detail_agree{
+	border-left:2px solid #dce2eb;
+	border-right:2px solid #dce2eb;
+	border-bottom : 2px solid #dce2eb;
+	background-color: #eff3f5;
+	color : #b2b2b2;
+}
+
+#btn_buy{	
+	width: 158px;
+    line-height: 58px;
+    text-align: center;
+    font-size: 16px;
+    background: #000;
+    color : white;
+    margin-top : 10px;
+}
+#btn_buy:HOVER {
+	background: #eff3f5;
+    border-color : #eff3f5;
+    color: #000;
+    -moz-box-shadow: 0 15px 30px #b2b2b2;
+    -webkit-box-shadow: 0 15px 30px #b2b2b2;
+    box-shadow: 0 15px 30px #b2b2b2;	
+}
+.btn_cancel{
+	border:none; background-color:transparent; 
+	padding:0; 
+	color:  #00704a;
+	
+}
+.btn_cancel:HOVER{
+	
+	font-weight: bold;
 }

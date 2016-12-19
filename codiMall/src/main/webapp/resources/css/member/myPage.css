@@ -1,0 +1,62 @@
+@CHARSET "UTF-8";
+#subView > h2{
+	text-align: center;
+	margin-bottom: 50px;
+}
+.my_info{
+	border-top : 1px solid #dce2eb;
+	border-left : 1px solid #dce2eb;
+	border-right : 1px solid #dce2eb;
+	/* margin-bottom: 30px; */
+	padding : 30px;
+}
+.my_info > strong{
+	color: #222;
+    display: block;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.my_info > p > input[type='text']{
+	font-size: 16px;
+    padding: 20px;
+    height: 56px;
+}
+.my_info > p > input[type='password']{
+	font-size: 16px;
+    padding: 20px;
+    height: 56px;
+}
+.my_info > p > input[id='info_name']{
+	width : 49%;
+	float:left;
+	height: 45px;
+}
+.user_gender {
+    border: 1px solid #b0b0b0;
+    border-radius: 3px;
+    float: left;
+    margin-left: 10%;
+    overflow: hidden;
+    width: 22.711%;
+}
+.user_gender a {
+    color: #b0b0b0;
+    display: block;
+    float: left;
+    line-height: 45px;
+    text-align: center;
+    text-decoration : none;
+    width: 50%;
+}
+.user_gender a.on {
+    background: #f4f4f2;
+    color: #222;
+}
+.user_gender a.male {
+    border-right: 1px solid #ddd;
+    box-sizing: border-box;
+    width: 50%;
+}
+#my_name{
+	height: 130px;
+}

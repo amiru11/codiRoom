@@ -30,6 +30,10 @@
 .divide_hr{
 	border : 0.8px solid #dce2eb;
 }
+.thirdAgreeDetail {
+    height: 100px;
+    overflow-y: scroll;
+} 
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -51,9 +55,6 @@
 			$("#claim_refund").css("background-color","white");
 		});
 		
-		$(".box_choice").click(function(){
-			$("#buy_info").toggle();
-		});
 	});
 	
 	/* 주소지 찾기 */
@@ -66,7 +67,52 @@
 			}
 		}).open();
 	}
+	
+	
+	function payInfoShow(data){
+		$("#buy_info").css("display","block");
+		if(data=='credit'){			
+			$("#"+data+"_info").css("display","block");
+			$("#account_info").css("display","none");
+			$("#transfer_info").css("display","none");
+			$("#payco_info").css("display","none");
+		}else if(data=='account'){
+			$("#"+data+"_info").css("display","block");
+			$("#credit_info").css("display","none");
+			$("#transfer_info").css("display","none");
+			$("#payco_info").css("display","none");			
+		}else if(data=='transfer'){
+			$("#"+data+"_info").css("display","block");
+			$("#credit_info").css("display","none");
+			$("#account_info").css("display","none");
+			$("#payco_info").css("display","none");
+		}else if(data=='payco'){
+			$("#"+data+"_info").css("display","block");
+			$("#credit_info").css("display","none");
+			$("#account_info").css("display","none");
+			$("#transfer_info").css("display","none");
+		}
+	}
+	
+	function ToggleThirdAgree(){
+		console.log($("#thirdBtn").html());
+		if($("#thirdBtn").html()=='자세히'){
+			$("#thirdBtn").html('닫기');
+		}else{
+			$("#thirdBtn").html('자세히');
+		}
+		$("#thirdAgreeDetail").toggle();
+	}
+	
+	function CheckAgree(){
+		console.log($(":input[name='all_agree']").prop('checked'));
 		
+		if($(":input[name='all_agree']").prop('checked')==true){
+			$("input[name^='agree_']").prop("checked",true);
+		}else{			
+			$("input[name^='agree_']").prop("checked",false);	
+		}
+	}
 </script>
 </head>
 <body>
@@ -95,7 +141,7 @@
 					</ul>
 				</div>
 				<form id="tab_form" method="post">
-					<div style="	border: 2px solid #dce2eb;">
+					<div style="border: 2px solid #dce2eb;">
 						<h3 class="product_tit">PRODUCT INFO</h3>
 						<table class="table cart-table">
 						<tr>
@@ -199,16 +245,16 @@
 								<li class="info_tit">결제 방법</li>
 								<li class="cell_discount_detail">
 									<label class="box_choice">
-										<input type="radio" id="credit-card" name="paymentType" onclick=""> 신용 카드
+										<input type="radio" id="credit-card" name="paymentType" onclick="payInfoShow('credit')"> 신용 카드
 									</label>
 									<label class="box_choice">
-										<input type="radio" id="virtual-account" name="paymentType" onclick=""> 가상계좌
+										<input type="radio" id="virtual-account" name="paymentType" onclick="payInfoShow('account');"> 가상계좌
 									</label>
 									<label class="box_choice">
-										<input type="radio" id="transfer-account" name="paymentType" onclick=""> 계좌이체
+										<input type="radio" id="transfer-account" name="paymentType" onclick="payInfoShow('transfer');"> 계좌이체
 									</label>
 									<label class="box_choice">
-										<input type="radio" id="payco" name="paymentType" onclick=""> 페이코
+										<input type="radio" id="payco" name="paymentType" onclick="payInfoShow('payco');"> 페이코
 									</label>
 								</li>
 							</ul>
@@ -216,7 +262,7 @@
 							<ul id="buy_info" class="box_receiver_info list-inline" style="display: none;">
 								<li class="info_tit" style="vertical-align: top;">결제 안내</li>
 								<li style="width : 800px;"><!-- 라디오버튼 클릭시 나타나게해야함 -->
-									<div id="credit_info">
+									<div id="credit_info" class="info_hidden">
 										<p class="txt_tit_payment" style="font-size:16px; font-weight: bold;">안전결제(ISP)? (국민카드/BC카드/우리카드)</p>
 										<p class="txt_desc_payment" style="line-height: 18px; color : #ccc;">
 											온라인 쇼핑시 주민등록번호, 비밀번호 등의 주요 개인정보를 입력하지 않고 고객님이 사전에 미리 설정한 안전결제(ISP) 비밀번호만 입력, 결제하도록 하여 개인정보 유출 및 카드 도용을 방지하는 서비스입니다.
@@ -226,20 +272,20 @@
 											온라인 쇼핑시 주민등록번호, 비밀번호 등의 주요 개인 정보를 입력하지 않고 고객님이 사전에 미리 설정한 전자 상거래용 안심 클릭 비밀번호를 입력하여 카드 사용자 본인 여부를 확인함으로써 온라인상에서의 카드 도용을 방지하는 서비스입니다.
 										</p>
 									</div>
-									<div id="account_info">
+									<div id="account_info" class="info_hidden">
 										<p class="txt_tit_payment" style="font-size:16px; font-weight: bold;">가상 계좌 안내</p>
 										<p class="txt_desc_payment" style="line-height: 18px; color : #ccc;">
 											무통장입금(가상 계좌)는 각 주문별로 새로운 계좌번호가 생성되는 방식으로 해당계좌로 주문금액을 입금하시면 자동으로 입금확인처리됩니다. 단, 자동으로 처리되기 때문에 주문금액과 정확히 동일한 금액을 입금하셔야만 입금이 가능합니다. 주문금액이 87,950원일 경우 88,000원이나 90,000원을 입금하시면 입금되지 않습니다. 인터넷뱅킹, 텔레뱅킹, ATM/CD 기계, 은행 창구 등에서 입금하실 수 있습니다.
 										</p>
 									</div>
-									<div id="transfer_info">
+									<div id="transfer_info" class="info_hidden">
 										<p class="txt_tit_payment" style="font-size:16px; font-weight: bold;">계좌이체(에스크로) 안내</p>
 										<p class="txt_desc_payment" style="line-height: 18px; color : #ccc;">
 											계좌이체는 ATM이나 은행 홈페이지에 접속하지 않고 무신사 홈페이지 내에서 즉시 결제, 출금되는 결제 방식입니다.
 											현재 약 20여 개의 은행이 가능하며 현금영수증 발행은 결제 시 즉시 발급받으실 수 있습니다.
 										</p>
 									</div>
-									<div id="payco_info">
+									<div id="payco_info" class="info_hidden">
 										<p class="txt_tit_payment" style="font-size:16px; font-weight: bold;">PAYCO 결제 안내</p>
 										<p class="txt_desc_payment" style="line-height: 18px; color : #ccc;">
 											PAYCO는 NHN엔터테인먼트가 만든 안전한 간편결제 서비스입니다. 본인인증한 휴대폰과 카드 명의자가 동일해야 결제 가능하며, 결제금액 제한은 없습니다.
@@ -284,12 +330,36 @@
 							<hr class="divide_hr">
 							<ul class="box_receiver_info list-inline">
 								<li class="info_tit" style="vertical-align: top;">주문자 동의</li>
-								<li style="width: 800px;"></li>
+								<li style="width: 800px;">
+									<label>
+										<input type="checkbox" name="all_agree" onclick="CheckAgree();"> <span class="font_basic">전체 동의</span>
+									</label>
+									<p class="box_check_agree individual">
+										<label>
+											<input type="checkbox" name="agree_third" checked="checked"> <span>개인정보 제3자 제공 동의(필수)</span>
+										</label>
+									</p>
+									<p class="box_summary_agree">배송 등 거래를 위해 판매자에게 개인정보가 공유됩니다. <a href="#" onclick="ToggleThirdAgree(); return false;"><span class="detail_close" id="thirdBtn">자세히</span></a></p>
+									<p class="box_detail_agree thirdAgreeDetail" id="thirdAgreeDetail" style="display: none;">
+										무신사의 회원계정으로 상품 및 서비스를 구매하고자 할 경우, 무신사((주)그랩)는 거래 당사자간 원활한 의사소통 및 배송, 상담 등 거래이행을 위하여 필요한 최소한의 개인정보만을 무신사 입점업체 판매자 및 배송업체에 아래와 같이 공유하고 있습니다.<br>
+										1. 무신사((주)그랩)는 귀하께서 무신사 입점업체 판매자로부터 상품 및 서비스를 구매하고자 할 경우, 정보통신망 이용촉진 및 정보보호 등에 관한 법률 제 24조의 2(개인정보 공유동의 등)에 따라 아래와 같은 사항은 안내하고 동의를 받아 귀하의 개인정보를 판매자에게 공유합니다. "개인정보 제3자 공유 동의"를 체크하시면 개인정보 공유에 대해 동의한 것으로 간주합니다.<br>
+										2. 개인정보를 공유받는자 : 입점업체 상호명(주문마다 변경)<br>
+										3. 공유하는 개인정보 항목 : 구매자 성명, 전화번호, ID, 휴대폰 번호, 상품 구매정보, 상품 수취인 정보(성명, 주소, 전화번호)<br>
+										4. 개인정보를 공유받는 자의 이용 목적 : 판매자와 구매자의 거래의 원활한 진행, 본인의사의 확인, 고객 상담 및 불만처리, 상품과 경품 배송을 위한 배송지 확인 등<br>
+										5. 개인정보를 공유받는 자의 개인정보 보유 및 이용 기간 : 개인정보 수집 및 이용 목적 달성 시까지 보관합니다.<br>
+										6. 동의 거부 시 불이익 : 본 개인정보 공유에 동의하지 않으시는 경우, 동의를 거부할 수 있으며, 이 경우 거래가 제한됩니다.
+									</p>
+									<p class="box_check_agree condition">
+										<label>
+											<input type="checkbox" name="agree_pay"> <span>위 상품 정보 및 거래 조건을 확인하였으며, 구매 진행에 동의 합니다.(필수)</span>
+										</label>
+									</p>									
+								</li>
 							</ul>
 						</div>		
 					</div>
-					<div class="button-set" style="float:right; font-family: hanna;">
-						<input type="button" value="구매하기" id="btn_buy" class="btn btn-default">
+					<div class="button-set" style="font-family: hanna;">
+						<input type="button" value="구매하기" id="btn_buy" class="btn btn-default center-block">
 					</div>
 				</form>	
 			</div>

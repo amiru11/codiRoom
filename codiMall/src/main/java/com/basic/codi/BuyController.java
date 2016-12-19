@@ -39,7 +39,7 @@ public class BuyController {
 		}
 		return path;
 	}
-
+	
 	@RequestMapping(value = "/basketBuyList", method = RequestMethod.POST)
 	public String basketBuyList(int[] basket_num, HttpSession session, Model model, RedirectAttributes ra) {
 		String message = "";
@@ -91,7 +91,7 @@ public class BuyController {
 
 		return path;
 	}
-
+	// 주문완료페이지로 가게 바꾸겠습니다~
 	@RequestMapping(value = "/basketBuy", method = RequestMethod.POST)
 	public String basketBuy(int[] basket_num, HttpSession session, RedirectAttributes ra) {
 		String message = "";
