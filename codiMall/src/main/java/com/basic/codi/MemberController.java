@@ -103,7 +103,8 @@ public class MemberController {
 	
 	//마이페이지
 	@RequestMapping(value = "myPage")
-	public String myPage(@RequestParam String subMenu, Model model){
+	public String myPage(Model model){
+		String subMenu = "내 정보";
 		model.addAttribute("subMenu", subMenu);
 		return "/member/myPage";
 	}

@@ -1,4 +1,6 @@
 @CHARSET "UTF-8";
+
+
 #subView > h2{
 	text-align: center;
 	margin-bottom: 50px;
@@ -13,10 +15,12 @@
 .my_info > strong{
 	color: #222;
     display: block;
+    font-family: nbg, "맑은 고딕", HelveticaNeue, DroidSans, sans-serif, Helvetica;
     font-size: 18px;
     margin-bottom: 10px;
 }
 .my_info > p > input[type='text']{
+
 	font-size: 16px;
     padding: 20px;
     height: 56px;
@@ -29,13 +33,31 @@
 .my_info > p > input[id='info_name']{
 	width : 49%;
 	float:left;
-	height: 45px;
+	height: 47px;
+
+}
+.my_info > p > input[type='date']{
+	font-size: 16px;
+    padding: 20px;
+    height: 56px;
+}
+.my_info > select{
+	font-size: 16px;
+    padding: 20px;
+    height: 56px;
+}
+#tel1M{
+	font-size: 16px;
+    padding: 20px;
+    height: 56px;
+    background: none;
 }
 .user_gender {
     border: 1px solid #b0b0b0;
     border-radius: 3px;
     float: left;
     margin-left: 10%;
+    margin-top: -10px;
     overflow: hidden;
     width: 22.711%;
 }
@@ -60,3 +82,106 @@
 #my_name{
 	height: 130px;
 }
+.address_btn{
+	background: url(/codi/resources/images/footer-bg.png);
+	border-radius: 3px; 
+	color: #fff; 
+	display: inline-block; 
+	float: left; 
+	height: 56px; 
+	text-align: center; 
+	width: 27.464%;    
+	margin-bottom: 10px;
+	-moz-transition: all 1.0s ease;
+    -o-transition: all 1.0s ease;
+    -webkit-transition: all 1.0s ease;
+    transition: all 1.0s ease;
+}
+.address_btn:HOVER{
+	background: #eee;
+	opacity: 1;
+	color : #000;	
+	
+}
+.info_btn{
+	background:url(/codi/resources/images/footer-bg.png);
+	color : white;
+	-moz-transition: all 1.5s ease;
+    -o-transition: all 1.5s ease;
+    -webkit-transition: all 1.5s ease;
+    transition: all 1.5s ease;
+}
+.info_btn:HOVER{
+	background: transparent;
+	color : #000;	
+}
+#subheader{
+	background : url(/codi/resources/images/subMenu2_bg.png);
+	background-position: 50% 135px;
+	height: 178px;
+	capacity : 1;
+}
+.sub_tit_inner{
+	height: 74px;
+    margin: 0 auto;
+    padding-top: 50px;
+    position: relative;
+    width: 1100px;
+}
+.sub_tit_inner h4{
+	font: bold 36px Avenir, Arial, georgia;
+    color: #fefefe;
+    position: relative;
+}
+#subheader ul.smap {
+    position: absolute;
+    right: 0;
+    top: 78px;
+}
+#subheader ul.smap li {
+    vertical-align: middle;
+    float: left;
+    height: 16px;
+    line-height: 16px;
+    margin: 0 2.5px;
+}
+#subheader ul.smap li a{
+	text-decoration: none;
+	color : #fefefe;
+}
+
+#listMenu{
+	float: right;
+    font-weight: bold;
+    width: 220px;
+        margin-top: 100px;
+    margin-bottom: 90px;
+}
+#listMenu > ul{
+	border-top : 2px solid #222;
+}
+#listMenu > ul > li{
+	border-bottom: 1px solid #ddd;
+    width: 220px;
+}
+#listMenu > ul > li > a {
+    color: #444;
+    display: block;
+    font-size: 14px;
+    padding: 20px 30px 20px 15px;
+    position: relative;
+    width: 175px;
+    text-decoration: none;
+    cursor: pointer;
+}
+#listMenu > ul > li > a:HOVER{
+	color: #006633;
+}
+
+
+
+
+
+
+
+

@@ -3,8 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
-<html>
-<head>
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
@@ -51,36 +50,14 @@
 	});
 
 </script>
-</head>
-<body>
-	<!-- HEADER:S -->
-	<%@ include file="/resources/temp/header.jsp"%>
-	<!-- HEADER:E -->
-	<div class="container cart-body">
-		<div class="row">
-			<div class="col-sm-12">
-				<h1 id="cart_title" class="page-heading">Buy List</h1>		
-				<div>
-					<ul class="step list-inline" id="order_step">
-						<li id="buy_tit" class="title_img">TITLE</li>
-						<li id="first_now" class="step-li first">
-							<span>주문 완료</span>
-						</li>
-						<li class="arrow-li"></li>
-						<li id="second_now" class="step-li second">
-							<span> 주문서 작성</span>
-						</li>
-						<li class="arrow-li"></li>
-						<li class="step-li third">
-							<span> 장바구니</span>
-						</li>
-					</ul>
-				</div>				
+
+
+				<h2>주문/배송</h2>			
 				<form id="tab_form" method="post">
 					<table class="table cart-table">
 						<tr>
-							<th class="buy_th_01">구매번호</th>
-							<th class="buy_th_02">상품번호</th>
+							<th class="buy_th_01">주문번호</th>
+							<!-- <th class="buy_th_02">상품번호</th> -->
 							<th class="buy_th_03">상품명</th>
 							<th class="buy_th_04">사이즈</th>
 							<th class="buy_th_05">색상</th>
@@ -92,9 +69,9 @@
 							<tr class="buy_tr_ds">
 								<td><input class="inh_buy_num" type="hidden"
 									value="${list1.buy_num}" name="buy_num" disabled="disabled">${list1.buy_num}</td>
-								<td>${list1.product_num}</td>
+								<%-- <td>${list1.product_num}</td> --%>
 								<td>
-									<div class="bas_td_hid_proeach" style="display: inline-block; float: left;" >
+									<div class="bas_td_hid_proeach" style="display: inline-block; float: left; width:150px;" >
 										<a href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">
 											<img alt="" src="${pageContext.request.contextPath}/resources/images/noimage.jpg" width="60" height="60">
 										</a>
@@ -113,7 +90,7 @@
 								<td>${list1.buyState_color}</td>
 								<td>${list1.buyState_each}</td>
 								<td><fmt:formatNumber value="${list1.buyState_price}" currencySymbol="" type="currency"/>원</td>
-								<td><c:if test="${1 == list1.buyState_state }">
+								<td style="width:50px;"><c:if test="${1 == list1.buyState_state }">
 										<input class="btn_cancel" type="button" value="주문취소">
 									</c:if> <c:if test="${2 == list1.buyState_state }">
 										<a href="https://www.doortodoor.co.kr/parcel/doortodoor.do?fsp_action=PARC_ACT_002&fsp_cmd=retrieveInvNoACT&invc_no=${list1.buyState_expressNum}" target="_blank"><input class="btn_adress_num" type="button" value="송장번호">
@@ -135,12 +112,29 @@
 						</c:forEach>
 					</table>
 				</form>					
+
+
+<!-- 	<div class="container cart-body">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1 id="cart_title" class="page-heading">Buy List</h1>		
+				<div>
+					<ul class="step list-inline" id="order_step">
+						<li id="buy_tit" class="title_img">TITLE</li>
+						<li id="first_now" class="step-li first">
+							<span>주문 완료</span>
+						</li>
+						<li class="arrow-li"></li>
+						<li id="second_now" class="step-li second">
+							<span> 주문서 작성</span>
+						</li>
+						<li class="arrow-li"></li>
+						<li class="step-li third">
+							<span> 장바구니</span>
+						</li>
+					</ul>
+				</div>				
+
 			</div>
 		</div>
-	</div>	
-
-	<!-- Footer:S -->
-	<%@ include file="/resources/temp/footer.jsp"%>
-	<!-- Footer:E -->
-</body>
-</html>
+	</div>	 -->
