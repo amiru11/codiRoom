@@ -21,6 +21,8 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	
+	
 	@RequestMapping(value="/productSaleList",method=RequestMethod.GET)
 	public void productSaleListG(Model model){
 		model.addAttribute("productSelectList",productService.productSelectList());

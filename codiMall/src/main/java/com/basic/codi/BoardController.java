@@ -34,6 +34,20 @@ public class BoardController {
 	@Autowired
 	private CommentService commentService;
 	
+	//멤버별 문의리스트//
+	@RequestMapping(value="/memberBoardList")
+	public String memberBoardList(@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="10") int perPage, @RequestParam String name, Model model){
+		try {
+			boardService.memberBoardList(curPage, perPage, name, model);
+			System.out.println("BOARD CONTROLLER");
+			System.out.println("회원별 QNA리스트입니당");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/member/myPage/myQnAList";
+	}	
+	
+	
 	//리스트//
 	@RequestMapping(value="/boardList")
 	public String boardList(@RequestParam String type, @RequestParam String find,@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="10") int perPage, @RequestParam int board, Model model){

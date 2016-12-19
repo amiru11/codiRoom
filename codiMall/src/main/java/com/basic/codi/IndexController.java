@@ -50,5 +50,8 @@ public class IndexController {
 		return new ResponseEntity<List<BoardDTO>>(list,HttpStatus.OK);//보통 이런식으로 설정해준ㄷ아!!@ 에러시에도 설정해줄수있다;
 	}	
 	
-	
+	@RequestMapping(value="/product/qna_form", method= RequestMethod.GET)
+	public void qna_form(@RequestParam int product_num,Model model){
+		model.addAttribute("product_num", product_num);
+	}
 }

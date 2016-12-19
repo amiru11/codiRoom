@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.basic.member.MemberDTO;
 import com.basic.product.ProductDTO;
 import com.basic.util.PageMaker;
 
@@ -34,8 +35,22 @@ public class BoardDAO {
 		return result;
 	}
 	
-	
-	
+	//멤버별상품문의내역//
+	public List<BoardDTO> memberBoardList(String name,PageMaker pageMaker) throws Exception{
+		System.out.println("멤버 DAO");
+		Map<String, Object> mp = new HashMap<String, Object>();
+		mp.put("paging", pageMaker);
+		mp.put("name", name);
+		ar = sqlSession.selectList(namespace4+"memberBoardList", mp);
+		
+		return ar;
+	}	
+	//멤버별상품문의카운팅//
+	public int memberBoardCount(String name){
+		int result = 0;
+		result = sqlSession.selectOne(namespace4+"memberBoardCount",name);
+		return result;
+	}
 	//글쓰기//
 	public int boardWrite(BoardDTO boardDTO,int board_kind) throws Exception{
 		int result = 0;

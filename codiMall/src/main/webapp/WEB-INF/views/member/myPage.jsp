@@ -49,7 +49,20 @@ $(function() {
 		});
 	});
 	
-	
+	$("#myQnAList").click(function() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/memberBoardList",
+			type : "post",
+			data : {name : $("#hiddenName").val()},
+			success : function(data){
+				data = data.trim();
+				//$("#subView").empty();
+				$("#subView").html(data);
+				$(".sub_tit_h4").html('문의 내역');
+				console.log(data);
+			}
+		});
+	});	
 	
 /* 	if(subMenuV =='showMyinfo'){		
 		$("#showMyinfo").css("color","#006633");
@@ -77,7 +90,7 @@ function openDaumPostcode(){
 	<!-- HEADER:S -->
 	<%@ include file="/resources/temp/header.jsp"%>
 	<!-- HEADER:E -->
-	
+	<input type="hidden" value="${sessionScope.member.name}" id="hiddenName">
 	<!-- SUBHEADER:S -->
 		<div class="jumbotron" id="subheader">		
 			<div class="sub_tit_inner">
@@ -118,7 +131,7 @@ function openDaumPostcode(){
 							<ul>
 								<li class="infoSub-header"><a id="showMyinfo">내 정보</a></li>
 								<li class=""><a id="buyList">주문/배송</a></li>
-								<li class=""><a id="qnaList">문의 내역</a></li>
+								<li class=""><a id="myQnAList">문의 내역</a></li>
 							</ul>
 						</nav>	
 					</div>

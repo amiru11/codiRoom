@@ -13,7 +13,7 @@
 <script type="text/javascript">
 	$(function(){
 		console.log(${product_num});
-		
+		console.log($("#qproduct_num").val());
 		$("#writeQnA").click(function(){
 		 	
  			$.ajax({
@@ -24,7 +24,7 @@
 					board_writer: $("#qwriter").val(),
 					board_category:	$('input:radio[name="category"]:checked').val(),
 					board_contents:	$("#qcontents").val(),
-					product_num: ${product_num}
+					product_num: $("#qproduct_num").val()
 				},
 				success: function(data){
 					alert(data.trim());
@@ -48,7 +48,8 @@
 		    </div>
 		    <!--//page title-->
 			<form action="${pageContext.request.contextPath}/board/qnaWrite" name="frm">
-				<input type="hidden" value="암2" id="qwriter">
+				<input type="hidden" value="관리자" id="qwriter">
+				<input type="hidden" value="${product_num}" id="qproduct_num">
 		    <div class="section_contents">
 				        <div class="qa_product">
 		            <div class="connect_qa_img">

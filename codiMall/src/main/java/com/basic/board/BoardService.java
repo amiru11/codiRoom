@@ -356,4 +356,21 @@ public class BoardService {
 		
 	}
 	
+	//////////////////////////////////////////////////회원별 문의내역///////////////////////////////////////////////
+	public void memberBoardList(int curPage, int perPage, String name, Model model) throws Exception{
+			System.out.println("회원별 문의내역 리스트입니다.");
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCurPage(curPage);
+			pageMaker.setPerPage(perPage);
+			pageMaker.makeRow();
+			pageMaker.makePage(boardDAO.memberBoardCount(name));
+			List<BoardDTO> ar;
+			ar = boardDAO.memberBoardList(name, pageMaker);
+			model.addAttribute("paging", pageMaker);
+			model.addAttribute("list", ar);
+	}
+	
+	
+	
+	
 }
