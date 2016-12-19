@@ -7,28 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>마이 페이지</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/member/myPage.css" rel="stylesheet">
-<style type="text/css">
-.sub-header > li > a{
-    display: block;
-    font-size: 14px;
-    color: #444444;
-    display: block;
-    text-align: center;
-    width: 100px;
-    line-height: 20px;
-    margin-left : 50px;
-}
-.sub-header > li > a:HOVER {
-	cursor : pointer;
-	color: #006633;
-    font-weight: bold;
-    background: none;
-}
-</style>
 </head>
 <script type="text/javascript">
 
@@ -36,7 +19,7 @@
 
 //회원 정보 수정
 $(function() {
-	
+	//alert($("#sub_tit_h4").html());
 	$("#showMyinfo").click(function() {
 		$.ajax({
 			url : "${pageContext.request.contextPath}/member/myPage/showMyinfo",
@@ -45,17 +28,48 @@ $(function() {
 				data = data.trim();
 				$("#subView").empty();
 				$("#subView").html(data);
-				console.log(data);
+				$(".sub_tit_h4").html('내 정보');
+				//console.log(data);
 			}
 		});
 	});
-	if(${subMenu == 'showMyinfo'}){		
+	
+	$("#buyList").click(function() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/buy/buyList",
+			type : "get",
+			success : function(data){
+				
+				data = data.trim();
+				$("#subView").empty();
+				$("#subView").html(data);
+				$(".sub_tit_h4").html('주문/배송');
+				//console.log(data);
+			}
+		});
+	});
+	
+	
+	
+/* 	if(subMenuV =='showMyinfo'){		
 		$("#showMyinfo").css("color","#006633");
 		$("#showMyinfo").css("font-weight","bold");
-	}
+	}else if(subMenuV =='buyList'){
+		$("#buyList").css("color","#006633");
+		$("#buyList").css("font-weight","bold");
+	} */
 });
 
-
+/* 주소지 찾기 */
+function openDaumPostcode(){
+	new daum.Postcode({
+		oncomplete : function(data){
+			/* document.getElementById('post1').value=data.postcode; */
+			document.getElementById('addr').value=data.address;
+			document.getElementById('addr2').focus();
+		}
+	}).open();
+}
 
 
 </script>
@@ -64,30 +78,50 @@ $(function() {
 	<%@ include file="/resources/temp/header.jsp"%>
 	<!-- HEADER:E -->
 	
-	<!-- 서브 메뉴 부분 -->
-	<div class="container" style="padding-top: 30px; font-family: 'hanna';">
-		<nav class="navbar" style="border-bottom: 2px solid #dce2eb;">
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav sub-header">
-						<li style="margin-left : 200px;"><a>주문/배송</a></li>
-						<li><a>장바구니</a></li>
-						<li><a>문의 내역</a></li>
-						<li><a id="showMyinfo">내 정보</a></li>
+	<!-- SUBHEADER:S -->
+		<div class="jumbotron" id="subheader">		
+			<div class="sub_tit_inner">
+				<h4 class="sub_tit_h4">${subMenu}</h4>
+				<ul class="smap">
+					<li><a href="/"><img src="${pageContext.request.contextPath}/resources/images/icon_home_w.png" alt="홈으로"></a></li>
+					<li><img class="arrow" src="${pageContext.request.contextPath}/resources/images/icon_arrow_w.png" alt="작은 맵 화살표"></li>
+					<li><a href="${pageContext.request.contextPath}/board/findList?board_kind=${board_kind}"><span class="sub_tit_h4">${subMenu}</span></a></li>
 				</ul>
 			</div>
-		</nav>
+		</div>
+	<!-- SUBHEADER:E -->	
+	
+	<!-- 서브 메뉴 부분 -->
+	<div class="container" style="padding-top: 30px; font-family: 'hanna';">
+<%-- 		<nav class="navbar" style="border-bottom: 2px solid #dce2eb;">
+			<div class="navbar-collapse collapse">
+				<ul id="infoSub-header" class="nav navbar-nav">
+						<li style="margin-left: 300px;"><a id="buyList">주문/배송</a></li>
+						<li><a>문의 내역</a></li>
+						<li><a id="showMyinfo">내 정보</a></li>
+						<li><input type="hidden" value="${subMenu}" id="subMenuV"></li>
+				</ul>
+			</div>
+		</nav> --%>
 		
 		<!-- 서브 내용 -->
 		<div class="row">
 			<div class="col-sm-12">
-				<div class="center-block">
-					<div id="subView" class="center-block" style="width: 600px;">
-						<c:if test="${subMenu == 'showMyinfo'}">
+					<div id="subView" class="col-sm-8">
+						<c:if test="${subMenu == '내 정보'}">
 							<c:import url="/member/myPage/showMyinfo"></c:import>
 						</c:if>
 						${message}
 					</div>
-				</div>
+					<div class="col-sm-4">
+						<nav id="listMenu">
+							<ul>
+								<li class="infoSub-header"><a id="showMyinfo">내 정보</a></li>
+								<li class=""><a id="buyList">주문/배송</a></li>
+								<li class=""><a id="qnaList">문의 내역</a></li>
+							</ul>
+						</nav>	
+					</div>
 			</div>
 		</div>
 	</div>

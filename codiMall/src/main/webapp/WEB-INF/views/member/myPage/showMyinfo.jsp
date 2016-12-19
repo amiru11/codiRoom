@@ -2,8 +2,9 @@
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
 $(function() {
-	
-	if(${member.gender} == '남'){
+	var gender = $("#gender").val();
+	console.log(gender);
+	if(gender == 'men'){
 		$(".male").addClass("on");
 	}else{
 		$(".female").addClass("on");
@@ -75,6 +76,7 @@ $(function() {
 				},
 				success : function(data){
 					data = data.trim();
+					$("#subView").empty();
 					$("#subView").html(data);
 				}
 			});
@@ -87,6 +89,7 @@ $(function() {
 			type : "post",
 			success : function(data) {
 				data = data.trim();
+				$("#subView").empty();
 				$("#subView").html(data);
 			}
 		});
@@ -111,26 +114,44 @@ function telCheck() {
 	<div id="my_pw" class="my_info"><strong>비밀번호</strong><p><input type="password" id="pwM"  class="form-control" name="pw" maxlength="15" placeholder="비밀번호" value="${member.pw}"></p></div>
 	<div id="my_pwRe" class="my_info"><strong>비밀번호 확인</strong><p><input type="password" id="pwcM" class="form-control" name="pwc" maxlength="15" placeholder="비밀번호 확인"></p></div>
 	<div id="my_name" class="my_info">
-		<strong>이름</strong><p>
-		<input type="text" id="info_name" class="form-control" readonly="readonly" value="${member.name}"></p>
+		<strong style="width: 40%;display: inline-block;">이름</strong>
+		<strong style="width: 40%;display: inline-block;margin-left: 160px;">성별</strong>
+		<p>
+			<input type="text" id="info_name" class="form-control" readonly="readonly" value="${member.name}">
+		</p>
 		<div class="user_gender">
-			<a class="male  on" href="">남</a>
-			<a class="female  " href="">여</a>
-			<input type="hidden" name="gender" id="gender" value="M">
+			<a class="male  disabled" href="">남</a>
+			<a class="female  disabled" href="">여</a>
+			<input type="hidden" name="gender" id="gender" value="${member.gender}">
 		</div>
 	</div>								
-	<div id="my_birth" class="my_info"><strong>생년월일</strong><p>${member.birth}</p></div>
-	<div id="my_gender" class="my_info"><strong>성별</strong><p>${member.gender}</p></div>
+	<div id="my_birth" class="my_info"><strong>생년월일</strong><p><input type="date" class="form-control" value="${member.birth}"></p></div>
 	<div id="my_tel" class="my_info">
-		<strong>핸드폰</strong>
-		<select id="tel0M" name="tel0">
-				<option value="${member.tel0}">${member.tel0}</option>
-				<option value="">통신사 선택</option>
-				<option value="SKT">SKT</option>
-				<option value="KT">KT</option>
-				<option value="LGU">LGU</option>
-		</select>
-		<input type="text" id="tel1M" name="tel1" maxlength="11" placeholder="'-' 없이 입력해주세요." value="${member.tel1}" onkeyup="telCheck()">
+		<strong>휴대폰</strong>
+		<div class="form-group input-group">
+			<span class="input-group-addon" style="background: none; border:none; padding:0;">
+			    <select class="form-control" id="tel0M" name="tel0" style="width: 80px; padding: 0; height: 56px;border-radius: 4px;" >
+					<option value="${member.tel0}">${member.tel0}</option>
+					<option value="">통신사 선택</option>
+					<option value="SKT">SKT</option>
+					<option value="KT">KT</option>
+					<option value="LGU">LGU</option>
+				</select>
+		    </span>
+			<input type="tel" class="form-control decorative-input" id="tel1M" name="tel1" maxlength="11" placeholder="'-' 없이 입력해주세요." value="${member.tel1}" onkeyup="telCheck()">
+		</div>
 	</div>
-	<button type="button" id="update">회원 수정</button>
-	<button type="button" id="delete">회원 탈퇴</button>
+		<div id="my_email" class="my_info"  style="border-bottom: 1px solid #dce2eb;">
+			<strong>주소(선택사항)</strong>
+			<p>
+				<input type="button" onclick="openDaumPostcode()" value="우편번호 찾기" class="btn btn-default address_btn" >
+				<input type="text" id="addr" class="address form-control" readonly="readonly" name="a1" style="width: 67.57%;float: right;">
+				<input type="text" id="addr2" class="address form-control" name="a2" >
+			</p>
+		</div>
+	<div class="center-block" style="margin-top:50px;">
+
+			<button type="button" class="btn btn-lg btn-default center-block info_btn" style="width:100%;height:55px;" id="update">회원 수정</button>
+			<button type="button"  class="btn btn-lg btn-default center-block info_btn" style="width:100%;height:55px;" id="delete">회원 탈퇴</button>
+
+	</div>

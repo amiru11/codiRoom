@@ -4,7 +4,8 @@
 }
 
 #subheader{
-	background : url(/codi/resources/images/subMenu_bg.png);
+	background : url(/codi/resources/images/subMenu2_bg.png);
+	background-position: 50% 135px;
 	height: 178px;
 	capacity : 1;
 }
