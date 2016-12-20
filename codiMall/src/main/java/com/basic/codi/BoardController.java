@@ -40,13 +40,36 @@ public class BoardController {
 		try {
 			boardService.memberBoardList(curPage, perPage, name, model);
 			System.out.println("BOARD CONTROLLER");
-			System.out.println("회원별 QNA리스트입니당");
+			System.out.println("회원별 상품QNA리스트입니당");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "/member/myPage/myQnAList";
 	}	
-	
+
+	//멤버별 문의리스트2//
+	@RequestMapping(value="/memberBoardList2")
+	public String memberBoardList2(@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="10") int perPage, @RequestParam String name, Model model){
+		try {
+			boardService.memberBoardList2(curPage, perPage, name, model);
+			System.out.println("BOARD CONTROLLER");
+			System.out.println("회원별  일반QNA리스트입니당");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/member/myPage/myQnAList2";
+	}		
+	//멤버별 문의뷰//
+	@RequestMapping(value="/viewMyqna")
+	public String viewMyqna(BoardDTO boardDTO, int board_kind, Model model){
+		try {
+			System.out.println("QNA VIEW");
+			boardService.boardView(boardDTO, board_kind, model);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/member/myPage/myQnAView";
+	}
 	
 	//리스트//
 	@RequestMapping(value="/boardList")
@@ -179,6 +202,10 @@ public class BoardController {
 		return "board/boardView";
 	}
 	
+	
+	
+	
+	
 	//글보기//
 	@RequestMapping(value="/boardView")
 	public String boardView(BoardDTO boardDTO, int board_kind, Model model){
@@ -294,6 +321,9 @@ public class BoardController {
 		return "redirect:" + callback + "?callback_func=" + callback_func + file_result;
 	}
 	
+	
+	
+	//상품문의 리스트//
 	@RequestMapping(value="/productQnAList")
 	public String findList(@RequestParam(defaultValue="") String type, @RequestParam(defaultValue="") String find, @RequestParam(defaultValue="1") int curPage, 
 			@RequestParam(defaultValue="10") int perPage, @RequestParam(defaultValue="4") int board_kind, @RequestParam int product_num,  Model model){
@@ -309,7 +339,7 @@ public class BoardController {
 		return "board/productQnAResult";
 
 	}
-	
+	//상품문의 댓글 리스트//
 	@RequestMapping(value="/productQnAComment")
 	public String pComm(@RequestParam int board_num, Model model){
 		

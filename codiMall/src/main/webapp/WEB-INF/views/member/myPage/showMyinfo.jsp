@@ -115,7 +115,7 @@ function telCheck() {
 	<div id="my_pwRe" class="my_info"><strong>비밀번호 확인</strong><p><input type="password" id="pwcM" class="form-control" name="pwc" maxlength="15" placeholder="비밀번호 확인"></p></div>
 	<div id="my_name" class="my_info">
 		<strong style="width: 40%;display: inline-block;">이름</strong>
-		<strong style="width: 40%;display: inline-block;margin-left: 160px;">성별</strong>
+		<strong style="width: 40%;display: inline-block;    margin-left: 120px;">성별</strong>
 		<p>
 			<input type="text" id="info_name" class="form-control" readonly="readonly" value="${member.name}">
 		</p>

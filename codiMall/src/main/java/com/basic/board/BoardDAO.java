@@ -51,6 +51,26 @@ public class BoardDAO {
 		result = sqlSession.selectOne(namespace4+"memberBoardCount",name);
 		return result;
 	}
+	
+	//멤버별상품문의내역//
+	public List<BoardDTO> memberBoardList2(String name,PageMaker pageMaker) throws Exception{
+		System.out.println("멤버 DAO");
+		Map<String, Object> mp = new HashMap<String, Object>();
+		mp.put("paging", pageMaker);
+		mp.put("name", name);
+		ar = sqlSession.selectList(namespace3+"memberBoardList2", mp);
+		
+		return ar;
+	}	
+	//멤버별상품문의카운팅//
+	public int memberBoardCount2(String name){
+		int result = 0;
+		result = sqlSession.selectOne(namespace3+"memberBoardCount2",name);
+		return result;
+	}
+	
+	
+	
 	//글쓰기//
 	public int boardWrite(BoardDTO boardDTO,int board_kind) throws Exception{
 		int result = 0;

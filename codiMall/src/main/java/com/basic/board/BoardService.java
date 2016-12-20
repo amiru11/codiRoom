@@ -358,7 +358,7 @@ public class BoardService {
 	
 	//////////////////////////////////////////////////회원별 문의내역///////////////////////////////////////////////
 	public void memberBoardList(int curPage, int perPage, String name, Model model) throws Exception{
-			System.out.println("회원별 문의내역 리스트입니다.");
+			System.out.println("회원별 상품 문의내역 리스트입니다.");
 			PageMaker pageMaker = new PageMaker();
 			pageMaker.setCurPage(curPage);
 			pageMaker.setPerPage(perPage);
@@ -370,7 +370,18 @@ public class BoardService {
 			model.addAttribute("list", ar);
 	}
 	
-	
+	public void memberBoardList2(int curPage, int perPage, String name, Model model) throws Exception{
+		System.out.println("회원별 일반 문의내역 리스트입니다.");
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCurPage(curPage);
+		pageMaker.setPerPage(perPage);
+		pageMaker.makeRow();
+		pageMaker.makePage(boardDAO.memberBoardCount2(name));
+		List<BoardDTO> ar;
+		ar = boardDAO.memberBoardList2(name, pageMaker);
+		model.addAttribute("paging", pageMaker);
+		model.addAttribute("list", ar);
+}	
 	
 	
 }
