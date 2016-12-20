@@ -74,6 +74,15 @@ var requestSubmitted = false;
 			$("#form_all").submit();
 		});
 		
+		$(".a_prev").click(function(){
+			$(".inh_curPage").val($(this).find(".inh_prev").val());
+			$("#form_all").submit();
+		});
+		$(".a_next").click(function(){
+			$(".inh_curPage").val($(this).find(".inh_next").val());
+			$("#form_all").submit();
+		});
+		
 		
 		
 		$("#checkForm").find(":checkbox").change(function(){
@@ -126,72 +135,6 @@ var requestSubmitted = false;
 		$("#inp_each").blur(function() {
 			eachCheck();
 		});
-
-
-
-
-		//$(".sel_type").click(function(){//검색타입 글자클릭시 라디오버튼 바뀌게
-		//	$(".sel_radio").attr("checked",null);//checked속성을 전부 다 지워준다.
-		//	$(this).prev("input").attr("checked","checked");//그다음 해당하는 radio에 checked를 해준다
-		//});
-
-	/* $.ajax({
-		url : "../json/allKindNum",
-		type : "post",
-		dataType : 'json',
-		data : {
-		},
-		success : function(data) {
-			$("#div_ck_kind").html("");
-			var x = "";
-			$.each(data.kindNumList, function(index, value) {
-				x = x + value + '<input type="checkbox" value="' + value + '" name="kind_num"><BR>'
-			});
-			$("#div_ck_kind").html(x);
-		},
-		error : function(request, status, error) {
-			alert("code:" + request.status + "\n" + "error:" + error);
-		}
-	});
-
-	$.ajax({
-		url : "../json/allProductSize",
-		type : "post",
-		dataType : 'json',
-		data : {
-		},
-		success : function(data) {
-			$("#div_ck_size").html("");
-			var x = "";
-			$.each(data.sizeList, function(index, value) {
-				x = x + value + '<input type="checkbox" value="' + value + '" name="size"><BR>'
-			});
-			$("#div_ck_size").html(x);
-		},
-		error : function(request, status, error) {
-			alert("code:" + request.status + "\n" + "error:" + error);
-		}
-	});
-
-
-	$.ajax({
-		url : "../json/allProductColor",
-		type : "post",
-		dataType : 'json',
-		data : {
-		},
-		success : function(data) {
-			$("#div_ck_color").html("");
-			var x = "";
-			$.each(data.colorList, function(index, value) {
-				x = x + value + '<input type="checkbox" value="' + value + '" name="color"><BR>'
-			});
-			$("#div_ck_color").html(x);
-		},
-		error : function(request, status, error) {
-			alert("code:" + request.status + "\n" + "error:" + error);
-		}
-	}); */
 	});
 	
 	function selCheck(){
@@ -429,19 +372,7 @@ var requestSubmitted = false;
 							<ul class="pagination">
 
 								<li><c:if test="${pageing.curBlock>1}">
-										<a
-											href="${pageContext.request.contextPath}/product/productList?perPage=${pageing.perPage}&curPage=${pageing.startNum-1}
-											<c:forEach items="${kind_num}" var="kind">
-											&kind_num=${kind}
-											</c:forEach>
-											<c:forEach items="${size}" var="siz">
-											&size=${siz}
-											</c:forEach>
-											<c:forEach items="${color}" var="colo">
-											&color=${colo}
-											</c:forEach>
-											"
-											aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+										<a class="a_prev" aria-label="Previous" style="cursor:pointer"><input class="inh_prev" type="hidden" value="${pageing.startNum-1}"> <span aria-hidden="true">&laquo;</span>
 										</a>
 									</c:if></li>
 								<li><c:forEach begin="${pageing.startNum}" step="1"
@@ -450,18 +381,7 @@ var requestSubmitted = false;
 										<a style="cursor:pointer" class="N_pageing">${i}</a>
 									</c:forEach></li>
 								<li><c:if test="${pageing.curBlock<pageing.totalBlock}">
-										<a
-											href="${pageContext.request.contextPath}/product/productList?perPage=${pageing.perPage}&curPage=${pageing.lastNum+1}
-											<c:forEach items="${kind_num}" var="kind">
-											&kind_num=${kind}
-											</c:forEach>
-											<c:forEach items="${size}" var="siz">
-											&size=${siz}
-											</c:forEach>
-											<c:forEach items="${color}" var="colo">
-											&color=${colo}
-											</c:forEach>"
-											aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+										<a class="a_next" aria-label="Next" style="cursor:pointer"> <input class="inh_next" type="hidden" value="${pageing.lastNum+1}"><span aria-hidden="true">&raquo;</span>
 										</a>
 									</c:if></li>
 							</ul>
@@ -471,6 +391,7 @@ var requestSubmitted = false;
 				</div>
 			</div>
 		</div>
+		
 
 
 	</div>
@@ -507,7 +428,7 @@ var requestSubmitted = false;
 			</div>
 		</div>
 	</div>
-
+	
 	<!--  hidden form (POST로 넘기기위한 숨겨진 FORM 지저분한 주소창방지용)  -->
 	<form id="form_all" name="formAll" action="${pageContext.request.contextPath}/product/productList"
 		method="post" style="display: none;">
@@ -515,7 +436,7 @@ var requestSubmitted = false;
 			value="" name="curPage">
 		<input class="inh_sel" type="hidden" name="sel">
 		<input class="inh_productSelect_num" type="hidden"
-			value="${productSelect_num}">
+			value="${productSelect_num}" name="productSelect_num">
 		<div id="hid_div_kind_num">
 			<c:forEach var="kindList1" items="${kind_num}">
 				<input class="inh_kind_num" type="hidden" value="${kindList1}"
@@ -546,6 +467,8 @@ var requestSubmitted = false;
 		<input id="inphid_productSelect_num" type="hidden"
 			name="productSelect_num">
 	</form>
+
+	
 
 </body>
 </html>

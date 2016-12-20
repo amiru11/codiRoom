@@ -111,5 +111,15 @@ public class ProductService {
 	public List<Integer> allKindNum() {
 		return productDAO.allKindNum(0);
 	}
+	
+	
+	// auto add
+	public int autoAdd(){
+		return productDAO.autoAdd();
+	}
+	
+	public void proAdd(){
+		productDAO.proAdd();
+	}
 
 }

@@ -92,6 +92,7 @@ public class BuyDao {
 	}
 
 	public String basketBuy(int[] basket_num, MemberDTO memberDTO) {
+		boolean eachCheck = true;
 		List<Integer> ar = new ArrayList<Integer>();
 		List<BasketListDTO> ar2 = new ArrayList<BasketListDTO>();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -100,28 +101,22 @@ public class BuyDao {
 		}
 		map.put("list", ar);
 		ar2 = sqlSession.selectList(namespace + "SelBasketBuyList", map);
+		int size = ar2.size();
+		System.out.println("arsize--first--"+ar2.size());
 
-		while (true) {
-			int size = ar2.size();
+		
 			for (int i = 0; i < ar2.size(); i++) {
 				int productEach = sqlSession.selectOne(namespace + "SelProductEachGet_Bas", ar2.get(i));
+				System.out.println("proeach--"+productEach);
 				if (ar2.get(i).getBasketInfo_each() > productEach) {
 					int num = ar2.get(i).getBasket_num();
 					ar2.remove(i);
 					sqlSession.update(namespace + "UpBasketEachZero", num);
-					for (int j = 0; j < ar.size(); j++) {
-						if (num == ar.get(j)) {
-							ar.remove(j);
-							break;
-						}
-
-					}
+					eachCheck=false;
 				}
 			}
-			if (size == ar2.size()) {
-				break;
-			}
-		}
+	
+		
 		for (int i = 0; i < ar2.size(); i++) {
 			int productEach = sqlSession.selectOne(namespace + "SelProductEachGet_Bas", ar2.get(i));
 			System.out.println("proeach---" + productEach);
@@ -137,65 +132,71 @@ public class BuyDao {
 		int result = 0;
 		int upResult = 0;
 		String message = "";
+		System.out.println("arsize--last--"+ar2.size());
+		if (eachCheck) {
+			
 
-		try {
-			System.out.println("try in");
-			def = new DefaultTransactionDefinition();
-			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+			try {
+				System.out.println("try in");
+				def = new DefaultTransactionDefinition();
+				def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 
-			status = transactionManager.getTransaction(def);
+				status = transactionManager.getTransaction(def);
 
-			for (int i = 0; i < ar2.size(); i++) {
-				System.out.println("for" + i);
-				Map<String, Object> map2 = new HashMap<String, Object>();
-				map2.put("memberDTO", memberDTO);
-				map2.put("basketListDTO", ar2.get(i));
-				result = result + sqlSession.insert(namespace + "InsBuy", map2);
-				System.out.println("ins" + i + "---" + result);
-				result = result + sqlSession.insert(namespace + "InsBuyState", map2);
-				System.out.println(i + "--buystate--succecc");
+				for (int i = 0; i < ar2.size(); i++) {
+					System.out.println("for" + i);
+					Map<String, Object> map2 = new HashMap<String, Object>();
+					map2.put("memberDTO", memberDTO);
+					map2.put("basketListDTO", ar2.get(i));
+					result = result + sqlSession.insert(namespace + "InsBuy", map2);
+					System.out.println("ins" + i + "---" + result);
+					result = result + sqlSession.insert(namespace + "InsBuyState", map2);
+					System.out.println(i + "--buystate--succecc");
 
-				if (result > 0) {
-					upResult = sqlSession.update(namespace + "UpProductBuy", map2);
-					System.out.println("resultvalue-" + result);
-					System.out.println("upresult--" + i);
-				} else {
-					System.out.println("break");
-					break;
+					if (result > 0) {
+						upResult = sqlSession.update(namespace + "UpProductBuy", map2);
+						System.out.println("resultvalue-" + result);
+						System.out.println("upresult--" + i);
+					} else {
+						System.out.println("break");
+						break;
+					}
 				}
-			}
-			if (result == ar2.size() * 2 && upResult > 0) {
-				System.out.println("result==basket_num.length");
-				Map<String, Object> map3 = new HashMap<String, Object>();
-				map3.put("del_basket_num", ar);
+				if (result == ar2.size() * 2 && upResult > 0) {
+					System.out.println("result==basket_num.length");
+					Map<String, Object> map3 = new HashMap<String, Object>();
+					map3.put("del_basket_num", ar);
 
-				result = sqlSession.delete("BasketMapper.DelBasketInfo", map3);
-				System.out.println("result1" + result);
-				if (result == ar2.size()) {
-					result = sqlSession.delete("BasketMapper.DelBasket", map3);
-					System.out.println("result2" + result);
+					result = sqlSession.delete("BasketMapper.DelBasketInfo", map3);
+					System.out.println("result1" + result);
+					if (result == ar2.size()) {
+						result = sqlSession.delete("BasketMapper.DelBasket", map3);
+						System.out.println("result2" + result);
+					} else {
+						result = 0;
+					}
+					if (result == ar2.size()) {
+						transactionManager.commit(status);
+						System.out.println("success");
+						message = "구매성공";
+					} else {
+						message = "오류발생";
+						transactionManager.rollback(status);
+					}
 				} else {
-					result = 0;
-				}
-				if (result == ar2.size()) {
-					transactionManager.commit(status);
-					System.out.println("success");
-					message = "구매성공";
-				} else {
-					message = "오류발생";
 					transactionManager.rollback(status);
+					System.out.println("fail");
+					message = "오류발생";
 				}
-			} else {
-				transactionManager.rollback(status);
-				System.out.println("fail");
-				message = "오류발생";
-			}
 
-		} catch (Exception e) {
-			// TODO: handle exception
-			transactionManager.rollback(status);
-			System.out.println("Exception");
-			message = "예외발생";
+			} catch (Exception e) {
+				// TODO: handle exception
+				transactionManager.rollback(status);
+				System.out.println("Exception");
+				message = "예외발생";
+			}
+		}else{
+			message="재고부족 구매실패";
 		}
 
 		return message;
@@ -232,23 +233,23 @@ public class BuyDao {
 		}
 		return message;
 	}
-	//buy Confirm
-	public String buyConfirm(int buy_num){
-		String message="";
-		int result =0;
-		result=sqlSession.update(namespace+"UpBuyConfirm",buy_num);
-		if(result==1){
-			message="구매확정 성공";
+
+	// buy Confirm
+	public String buyConfirm(int buy_num) {
+		String message = "";
+		int result = 0;
+		result = sqlSession.update(namespace + "UpBuyConfirm", buy_num);
+		if (result == 1) {
+			message = "구매확정 성공";
 		}
 		return message;
 	}
-	
-	//SelGetExpressNum
+
+	// SelGetExpressNum
 	// get ExpressNum
-	
-	public int getExpressNum(int buy_num){
-		return sqlSession.selectOne(namespace+"SelGetExpressNum",buy_num);
+
+	public int getExpressNum(int buy_num) {
+		return sqlSession.selectOne(namespace + "SelGetExpressNum", buy_num);
 	}
-	
 
 }

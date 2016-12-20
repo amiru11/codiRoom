@@ -1,5 +1,7 @@
 package com.basic.codi;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.basic.member.MemberDTO;
+import com.basic.product.ProductAddDTO;
 import com.basic.product.ProductEachAddDTOs;
 import com.basic.product.ProductParamDTO;
 
@@ -20,8 +24,6 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
-	
 	
 	@RequestMapping(value="/productSaleList",method=RequestMethod.GET)
 	public void productSaleListG(Model model){
@@ -116,12 +118,37 @@ public class ProductController {
 			message = "등록실패";
 		}
 		rs.addFlashAttribute("message", message);
-		return "redirect:/product/productEachAdd";
+		return "redirect:/product/productAdd";
 	}
 
 	@RequestMapping(value = "/productAdd", method = RequestMethod.GET)
 	public void productAdd() {
 	}
+	@RequestMapping(value="/productAdd",method=RequestMethod.POST)
+	public String productAddAction(HttpSession session,ProductAddDTO productAddDTO,RedirectAttributes ra ){
+		String location="";
+		String message="";
+		String path="";
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		if(memberDTO !=null && memberDTO.getMember_level() == 0 ){
+			int result = productService.productAdd(productAddDTO);
+			if(result>0){
+				message="상품 등록성공";
+				location="/product/productAdd";
+			}else{
+				message = "상품등록 실패";
+				location="/product/productAdd";
+			}
+			ra.addFlashAttribute("location",location);
+			ra.addFlashAttribute("message",message);
+			
+			path="redirect:/result/result";
+		}else{
+			path="redirect:/";
+		}
+		return path;
+	}
+	
 
 	@RequestMapping(value = "/productBestList")
 	public void productBestList(Model model) {

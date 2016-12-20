@@ -12,6 +12,10 @@ table, table tr, tr td, th {
 </style>
 <script type="text/javascript">
 	$(function() {
+		var message = "${message}";
+		if(message != ""){
+			alert(message);
+		}
 
 		$("#btn_add_proeach").click(function() {
 			$(".div_proeach").clone().appendTo("#div_first_proe");
@@ -46,8 +50,8 @@ table, table tr, tr td, th {
 		PRODUCT<BR> PRODUCT_NUM<input type="number" name="product_num"><br>
 		<hr>
 		<input type="button" id="btn_add_proeach" value="ADD">
-		<div id="div_first_proe">
-			<div class="div_proeach">
+		<div id="div_first_proe" style="width: 1000px">
+			<div class="div_proeach" style="display: inline-block;">
 				<br> PRODUCTEACH_SIZE<input type="text" name="productSize_size"><br>
 				PRODUCTEACH_COLOR<input type="text" name="productEach_color"><br>
 				PRODUCTEACH_EACH<input type="number" name="productEach_each"><br>
