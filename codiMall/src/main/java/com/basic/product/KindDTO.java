@@ -3,6 +3,14 @@ package com.basic.product;
 public class KindDTO {
 	private int kind_num;
 	private String kind_name;
+	private int productSelect_num;
+	
+	public int getProductSelect_num() {
+		return productSelect_num;
+	}
+	public void setProductSelect_num(int productSelect_num) {
+		this.productSelect_num = productSelect_num;
+	}
 	public int getKind_num() {
 		return kind_num;
 	}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CodiMapper">
+	<resultMap type="com.basic.product.ProductSelectDTO" id="ProductSelect">
+		<id column="productSelect_num" property="productSelect_num"
+			javaType="int" />
+		<result column="productSelect_name" property="productSelect_name"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.KindDTO" id="Kind">
+		<id column="kind_num" property="kind_num" javaType="int" />
+		<result column="kind_name" property="kind_name" javaType="java.lang.String" />
+		<result column="productSelect_num" property="productSelect_num"
+			javaType="int" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductPicDTO" id="ProductPic">
+		<result column="productPic_pic" property="productPic_pic"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductDTO" id="Product">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="product_name" property="product_name" javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.codiCl.CodiProductDTO" id="CodiProduct">
+		<association property="productDTO" resultMap="Product" />
+		<association property="productPicDTO" resultMap="ProductPic" />
+
+	</resultMap>
+
+	<select id="SelProductSelectList" resultMap="ProductSelect">
+		select * from productSelect
+	</select>
+
+	<select id="SelkindList" resultMap="Kind" parameterType="java.util.HashMap">
+		select * from kind where productSelect_num = #{productSelect_num}
+	</select>
+
+	<select id="SelCodiProductList" resultMap="CodiProduct" parameterType="java.util.HashMap">
+		select p.product_num,p.product_name,pic.productPic_pic from product p,productPic pic,productKind pk
+		where p.product_num = pic.product_num and pk.product_num = p.product_num
+		and pk.kind_num = #{kind_num}
+	</select>
+
+
+</mapper>

@@ -15,6 +15,7 @@
 	<resultMap type="com.basic.product.KindDTO" id="Kind">
 		<id column="kind_num" property="kind_num" javaType="int" />
 		<result column="kind_name" property="kind_name" javaType="java.lang.String" />
+		<result column="productSelect_num" property="productSelect_num" javaType="int" />
 	</resultMap>
 
 	<resultMap type="com.basic.product.ProductInfoDTO" id="ProductInfo">

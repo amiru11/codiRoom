@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.basic.basket.BasketService;
 import com.basic.board.BoardService;
 import com.basic.buy.BuyService;
+import com.basic.codiCl.CodiService;
 import com.basic.mast.MastService;
 import com.basic.product.ProductDTO;
 import com.basic.product.ProductEachDTO;
@@ -42,6 +43,9 @@ public class JsonController {
 	
 	@Autowired
 	private BuyService buyService;
+	
+	@Autowired
+	private CodiService codiService;
 
 	
 	@RequestMapping(value="/productSize", produces = "application/json; charset=utf-8")
@@ -133,6 +137,29 @@ public class JsonController {
 		return mastService.mastUpState(buy_num, buyState_state, buyState_expressNum);
 	}
 	
+	
+	//codi-----------------------------------------------------------------------------
+	
+	@RequestMapping(value="/codiProductList")
+	public Map<String, Object> codiProductList(int kind_num){
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		retVal.put("ar", codiService.codiProductList(kind_num));
+		return retVal;
+	}
+	
+	@RequestMapping(value="/codiKindList")
+	public Map<String, Object> codiKindList(int productSelect_num){
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		retVal.put("ar", codiService.codiKindList(productSelect_num));
+		return retVal;
+	}
+	
+	@RequestMapping(value="/codiProductSelectList")
+	public Map<String, Object> codiProductSelectList(){
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		retVal.put("ar", codiService.codiSelectList());
+		return retVal;
+	}
 	
 	
 }
