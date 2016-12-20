@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CodiMapper">
+
+	<!-- Codi List -->
+	<select id="codiList" resultType="com.basic.fashion.CodiDTO" parameterType="com.basic.util.PageMaker">
+		select * from
+		(select Rownum R, C.* from
+		(select * from codi where board_kind=2 order by board_num) C)
+		where R between #{startRowNum} and #{lastLowNum}
+	</select>
+	
+	<!-- Codi 등록 -->
+	<insert id="codiCreate" parameterType="com.basic.fashion.CodiDTO">
+	
+	
+	</insert>
+
+</mapper>
