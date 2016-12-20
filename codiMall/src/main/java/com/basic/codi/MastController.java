@@ -44,4 +44,14 @@ public class MastController {
 		return path;
 		
 	}
+	
+	@RequestMapping(value="/calendar")
+	public String mastCalender(){
+		String path="";
+			path="/mast/calendar";
+		return path;
+	}
+	
+	
+	
 }

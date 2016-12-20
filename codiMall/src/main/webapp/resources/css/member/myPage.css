@@ -46,6 +46,38 @@
     padding: 20px;
     height: 56px;
 }
+.inList-group{
+	padding-left: 30px;
+}
+.inList-group > li{
+	font-size: 12px;
+    list-style-type: disc;
+    padding: 6px 0 6px;
+}
+.inList-group > li > a{
+	text-decoration: none;
+	color : #000;
+	cursor: pointer;
+}
+.inList-group > li > a:HOVER{
+	color: #006633;
+}
+#myQnAList > span{
+	height: 7px;
+    margin-top: -3px;
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    width: 12px;
+}
+#myQnAList > span.sbox_arrow_up {
+    background: url(/codi/resources/images/sbox_arrow_up.png);
+}
+
+#myQnAList > span.sbox_arrow_down {
+    background: url(/codi/resources/images/sbox_arrow_down.png);
+}
+
 #tel1M{
 	font-size: 16px;
     padding: 20px;

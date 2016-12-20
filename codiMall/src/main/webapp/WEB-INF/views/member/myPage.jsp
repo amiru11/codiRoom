@@ -49,21 +49,36 @@ $(function() {
 		});
 	});
 	
-	$("#myQnAList").click(function() {
+	$("#myproQnAList").click(function() {
 		$.ajax({
 			url : "${pageContext.request.contextPath}/board/memberBoardList",
 			type : "post",
 			data : {name : $("#hiddenName").val()},
 			success : function(data){
 				data = data.trim();
-				//$("#subView").empty();
+				$("#subView").empty();
 				$("#subView").html(data);
-				$(".sub_tit_h4").html('문의 내역');
+				$(".sub_tit_h4").html('상품 문의 내역');
 				console.log(data);
 			}
 		});
 	});	
 	
+	$("#myhomeQnAList").click(function() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/memberBoardList2",
+			type : "post",
+			data : {name : $("#hiddenName").val()},
+			success : function(data){
+				data = data.trim();
+				$("#subView").empty();
+				$("#subView").html(data);
+				$(".sub_tit_h4").html('일반 문의 내역');
+				console.log(data);
+			}
+		});
+	});	
+
 /* 	if(subMenuV =='showMyinfo'){		
 		$("#showMyinfo").css("color","#006633");
 		$("#showMyinfo").css("font-weight","bold");
@@ -84,7 +99,15 @@ function openDaumPostcode(){
 	}).open();
 }
 
-
+function qnaToggle(){
+	$(".inList-group").slideToggle();
+	if($(".sbox_arrow_down").attr("class")=='sbox_arrow_down'){
+		$(".sbox_arrow_down").attr("class","sbox_arrow_up");
+	}else{
+		$(".sbox_arrow_up").attr("class","sbox_arrow_down");
+	}
+	//
+}
 </script>
 <body>
 	<!-- HEADER:S -->
@@ -96,9 +119,9 @@ function openDaumPostcode(){
 			<div class="sub_tit_inner">
 				<h4 class="sub_tit_h4">${subMenu}</h4>
 				<ul class="smap">
-					<li><a href="/"><img src="${pageContext.request.contextPath}/resources/images/icon_home_w.png" alt="홈으로"></a></li>
+					<li><a href="/codi"><img src="${pageContext.request.contextPath}/resources/images/icon_home_w.png" alt="홈으로"></a></li>
 					<li><img class="arrow" src="${pageContext.request.contextPath}/resources/images/icon_arrow_w.png" alt="작은 맵 화살표"></li>
-					<li><a href="${pageContext.request.contextPath}/board/findList?board_kind=${board_kind}"><span class="sub_tit_h4">${subMenu}</span></a></li>
+					<li><span class="sub_tit_h4" style="color:white;">${subMenu}</span></li>
 				</ul>
 			</div>
 		</div>
@@ -131,7 +154,15 @@ function openDaumPostcode(){
 							<ul>
 								<li class="infoSub-header"><a id="showMyinfo">내 정보</a></li>
 								<li class=""><a id="buyList">주문/배송</a></li>
-								<li class=""><a id="myQnAList">문의 내역</a></li>
+								<li class="">
+									<a id="myQnAList" onclick="qnaToggle();">문의 내역
+										<span class="sbox_arrow_down"></span>
+									</a>
+									<ul class="inList-group" style="display: none;">
+										<li><a id="myproQnAList">상품 문의 내역</a></li>
+										<li><a id="myhomeQnAList">일반 문의 내역</a></li>
+									</ul>
+								</li>
 							</ul>
 						</nav>	
 					</div>

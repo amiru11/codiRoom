@@ -2,7 +2,38 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>  
-				<h2>문의 내역</h2>  
+<script>
+function trtoggle(data){
+	
+	var a = $(data).attr("id");
+	
+	$.ajax({
+	    url : "/codi/board/productQnAComment",
+	    type : "post",
+	    data : {
+	    	board_num : $(data).attr("title")
+
+	    },
+	    success: function(data) {
+	    	console.log(data.trim());
+	    	$("."+a).empty();
+	    	$("."+a).html(data);
+	    },
+	    error:function(request,status,error){
+	        console.log("code:"+request.status+"\n"+"error:"+error);
+	    }						
+	});
+	$(data).next("tr").toggle();
+	$(data).next("tr").next("tr").toggle();
+	//$(data).next("tr").next("tr").next("tr").toggle();
+	//$("."+a).toggle();
+	//$(data).next("tr").next("tr").next("tr").toggle();
+}
+</script>
+
+
+
+				<h2>${subMenu}</h2>  
 				<table class="table">
 						<thead>
 							<tr>
@@ -36,7 +67,7 @@
 									</td>
 								</tr>
 								
-								<tr style="background-color: #ddd; display: none;">
+<%-- 								<tr style="background-color: #ddd; display: none;">
 									<td colspan="6">														
 										<form action="">
 											<textarea rows="" cols="" class="form-control"  style="border : none;" id="comment${i.index}"></textarea>	
@@ -45,7 +76,7 @@
 											<input type="button" value="SUBMIT" class="commentSubmit btn btn-default" onclick="commWrite(this)" name="${i.index}">
 										</form>
 									</td>
-								</tr>
+								</tr> --%>
 								<tr class="qna${i.index}"  style="background-color: #ddd; display: none;"></tr>
 							</c:forEach>
 						</tbody>
@@ -59,7 +90,7 @@
 							  <li><a href="#">5</a></li>
 							</ul>
 						</div>
-						<div class="writeComm">
+<!-- 						<div class="writeComm">
 							<input type="button" onclick="goPopUp()" id="goPopup" class="btn btn-default" value="WRITE">
 							
-						</div>
+						</div> -->
