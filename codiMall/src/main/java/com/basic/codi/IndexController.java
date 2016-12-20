@@ -3,6 +3,8 @@ package com.basic.codi;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ public class IndexController {
 	
 	
 	@RequestMapping(value="/", method = RequestMethod.GET)
-	public String index(Model model){
+	public String index(Model model, HttpSession session){
 		Calendar c = Calendar.getInstance();
 		String lastDate = c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DAY_OF_MONTH);
 		String startDate = (c.get(Calendar.YEAR)-100) + "-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DAY_OF_MONTH);

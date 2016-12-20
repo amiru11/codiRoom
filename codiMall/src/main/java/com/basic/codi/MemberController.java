@@ -1,10 +1,23 @@
 package com.basic.codi;
 
+import java.awt.List;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Base64;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -239,5 +252,52 @@ public class MemberController {
 		rd.addFlashAttribute("message", message);
 		return path;
 	}
-
+	
+	@RequestMapping(value = "naverLogin")
+	public void naverLogin(){}
+	
+	@RequestMapping(value = "facebookLogin")
+	public void facebookLogin(){}
+	
+	@RequestMapping(value = "f1")
+	public void f1(){}
+	
+	@RequestMapping(value = "scan")
+	public void scan(){}
+	
+	@RequestMapping(value = "scanA")
+	public void scanA(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+		try {
+			MemberDTO memberDTO = (MemberDTO) request.getSession().getAttribute("member");
+			//data 이미지
+            String data = request.getParameter("data");
+            //data 이미지에서 필요 없는 앞부분 없앤 것
+            data = data.replaceAll("data:image/png;base64,", "");
+            //byte 단위로 ?
+            byte[] bt = Base64.getDecoder().decode(data.getBytes());
+            // ?
+            ByteArrayInputStream is = new ByteArrayInputStream(bt);
+            //이미지로 전환
+            BufferedImage image = ImageIO.read(is);
+            //파일 이름 생성 및 저장
+            Calendar c = Calendar.getInstance();
+            String fileTime = c.get(Calendar.YEAR) + String.valueOf((c.get(Calendar.MONTH)+1)) + c.get(Calendar.DAY_OF_MONTH);;
+            //파일 저장 경로
+            String path = session.getServletContext().getRealPath("/resources/codiUpload");
+            File file = new File(path, memberDTO.getId() + "_" + fileTime +".png");
+            //실제 파일로 이미지 저장
+            ImageIO.write(image, "png", file);
+            
+            
+/*            response.setContentType("image/png");
+            response.setHeader("Content-Disposition", "attachment; filename=" +"11"+ ".png");
+            IOUtils.copy(is,  response.getOutputStream());
+            response.flushBuffer();
+            System.out.println(response.getBufferSize());
+            System.out.println(response.getLocale());
+            System.out.println(response.getOutputStream());*/
+        } catch (Exception e) {
+            
+        }
+	}
 }
