@@ -15,7 +15,8 @@
 	<resultMap type="com.basic.product.KindDTO" id="Kind">
 		<id column="kind_num" property="kind_num" javaType="int" />
 		<result column="kind_name" property="kind_name" javaType="java.lang.String" />
-		<result column="productSelect_num" property="productSelect_num" javaType="int" />
+		<result column="productSelect_num" property="productSelect_num"
+			javaType="int" />
 	</resultMap>
 
 	<resultMap type="com.basic.product.ProductInfoDTO" id="ProductInfo">
@@ -50,7 +51,7 @@
 
 	<resultMap type="com.basic.product.ProductPicDTO" id="ProductPic">
 		<id column="product_num" property="product_num" javaType="int" />
-		<result column="productPic_pic" property="ProductPic_pic"
+		<result column="productPic_pic" property="productPic_pic"
 			javaType="java.lang.String" />
 	</resultMap>
 
@@ -91,6 +92,12 @@
 
 
 	<!-- Product List DTO S -->
+	<resultMap type="com.basic.product.ProductListDTO" id="ProductList">
+		<result column="r" property="r" />
+		<association property="productDTO" resultMap="Product" />
+		<association property="productInfoDTO" resultMap="ProductInfo" />
+		<association property="productPicDTO" resultMap="ProductPic" />
+	</resultMap>
 
 	<!-- Product List DTO E -->
 
@@ -108,19 +115,26 @@
 
 
 	<!-- Product List S -->
-	<select id="SelProductList" resultType="com.basic.product.ProductListDTO"
+	<select id="SelProductList" resultMap="ProductList"
 		parameterType="java.util.HashMap">
 		select * from (select rownum r, z.* from (select DISTINCT
-		t.*,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE from (select
-		count(b.BUY_NUM) c,p.PRODUCT_NUM,p.PRODUCT_NAME from product p LEFT
+		t.*,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,pc.PRODUCTPIC_PIC
+		from (select
+		count(b.BUY_NUM) c,p.PRODUCT_NUM,p.PRODUCT_NAME from
+		product p LEFT
 		OUTER JOIN buy b
-		on b.PRODUCT_NUM = p.PRODUCT_NUM group by
+		on b.PRODUCT_NUM = p.PRODUCT_NUM group
+		by
 		p.PRODUCT_NUM, p.PRODUCT_NAME)
-		t , PRODUCTINFO pi,PRODUCTEACH pe,
+		t , PRODUCTINFO pi,PRODUCTEACH
+		pe,PRODUCTPIC pc,
 		kind
-		k,PRODUCTKIND pk where pe.PRODUCT_NUM = t.PRODUCT_NUM and
+		k,PRODUCTKIND pk where
+		pc.PRODUCT_NUM = t.PRODUCT_NUM and
+		pe.PRODUCT_NUM = t.PRODUCT_NUM and
 		pi.PRODUCT_NUM = t.PRODUCT_NUM
-		and pk.KIND_NUM = k.KIND_NUM and
+		and pk.KIND_NUM =
+		k.KIND_NUM and
 		pk.PRODUCT_NUM = t.PRODUCT_NUM
 		and k.productSelect_num =
 		#{productParamDTO.productSelect_num}
@@ -372,21 +386,24 @@
 
 
 	<!-- productBest List E -->
-	
-	
-	
-	
 
-<!-- TEST FILE UPLOAD S  -->
-<insert id="InsTestFileUp" parameterType="com.basic.product.ProductPicDTO">
-insert into productPic values(#{product_num},#{productPic_pic}) 
-</insert>
-<select id="SelGetTestProductNum" parameterType="int" resultType="int">
-select product_num from product where product_num = #{product_num}
 
-</select>
 
-<!-- TEST FILE UPLOAD S  -->
+
+
+	<!-- TEST FILE UPLOAD S -->
+	<insert id="InsTestFileUp" parameterType="com.basic.product.ProductPicDTO">
+		insert into productPic
+		values(#{product_num},#{productPic_pic})
+	</insert>
+	<select id="SelGetTestProductNum" parameterType="int"
+		resultType="int">
+		select product_num from product where product_num =
+		#{product_num}
+
+	</select>
+
+	<!-- TEST FILE UPLOAD S -->
 
 
 
@@ -418,10 +435,11 @@ select product_num from product where product_num = #{product_num}
 		k,
 		PRODUCTSIZE ps
 		where pk.KIND_NUM = k.KIND_NUM
-		and pk.PRODUCT_NUM = p.PRODUCT_NUM
+		and pk.PRODUCT_NUM =
+		p.PRODUCT_NUM
 		and ps.PRODUCT_NUM = p.PRODUCT_NUM
 		<if test="productSelect_num != 0">
-			and k.PRODUCTSELECT_NUM  = #{productSelect_num}
+			and k.PRODUCTSELECT_NUM = #{productSelect_num}
 		</if>
 	</select>
 
@@ -437,7 +455,7 @@ select product_num from product where product_num = #{product_num}
 		and
 		pe.PRODUCTEACH_EACH not in(0)
 		<if test="productSelect_num != 0">
-			and k.PRODUCTSELECT_NUM  = #{productSelect_num}
+			and k.PRODUCTSELECT_NUM = #{productSelect_num}
 		</if>
 	</select>
 

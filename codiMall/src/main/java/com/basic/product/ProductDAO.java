@@ -70,6 +70,13 @@ public class ProductDAO {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		hm.put("pageMaker", pageMaker);
 		hm.put("productParamDTO", productParamDTO);
+		List<ProductListDTO> ar = sqlSession.selectList(namespace + "SelProductList", hm);
+		for (int i = 0; i < ar.size(); i++) {
+			System.out.println(ar.get(i).getProductDTO().getProduct_num());
+			System.out.println(ar.get(i).getProductInfoDTO().getProductInfo_saleRate());
+			System.out.println(ar.get(i).getProductPicDTO().getProductPic_pic());
+			
+		}
 		return sqlSession.selectList(namespace + "SelProductList", hm);
 	}
 
