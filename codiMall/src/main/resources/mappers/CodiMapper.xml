@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="CodiMapper">
-<<<<<<< HEAD
 	<resultMap type="com.basic.product.ProductSelectDTO" id="ProductSelect">
 		<id column="productSelect_num" property="productSelect_num"
 			javaType="int" />
@@ -46,8 +45,6 @@
 		and pk.kind_num = #{kind_num}
 	</select>
 
-=======
-
 	<!-- Codi List -->
 	<select id="codiList" resultType="com.basic.fashion.CodiDTO" parameterType="com.basic.util.PageMaker">
 		select * from
@@ -61,6 +58,5 @@
 	
 	
 	</insert>
->>>>>>> refs/heads/Mir1212
 
 </mapper>
