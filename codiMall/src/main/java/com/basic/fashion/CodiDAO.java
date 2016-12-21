@@ -47,11 +47,12 @@ public class CodiDAO {
 	public List<CodiDTO> codiProductList(int kind_num){
 		Map<String, Integer> map = new HashMap<>();
 		map.put("kind_num", kind_num);
+		System.out.println(1);
 		System.out.println("kind_num---"+kind_num);
 		List<CodiDTO> ar = sqlSession.selectList(namespace+"SelCodiProductList", map);
 		for (int i = 0; i < ar.size(); i++) {
+			System.out.println(10);
 			System.out.println(i+"------"+ar.get(i).getProductDTO().getProduct_name());
-			
 		}
 		
 		return ar;

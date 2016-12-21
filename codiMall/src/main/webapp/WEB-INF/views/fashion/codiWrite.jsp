@@ -19,23 +19,16 @@
 </style>
 <script type="text/javascript">
 
+
+
 //상품 리스트
-$(".sel_kindsel").on('change',function(){
-	alert(123);
-});
+
+//페이지 열리면 실행
 $(function(){
-	
 	getProductSelectList();
-	$("#sel_prosel").on('change',function(){
-		alert($(this).val());
-		getKindList($(this).val());
-		
-	});
-	
-	
-	
 });
 
+//첫번째 메뉴
 function getProductSelectList(){
 	$.ajax({
 		url : "../json/codiProductSelectList",
@@ -45,26 +38,26 @@ function getProductSelectList(){
 		},
 		success : function(data) {
 			$("#div_productSelect").html("");
-			var x="<select id='sel_prosel' name='productSelect_num'>";
-			$.each(data.ar, function( index, value ) {
-	    		x=x+"<option value='"+value.productSelect_num;
-	    		x=x+"'>"+value.productSelect_name+"</option>"
-	    	});
-			x=x+"</select>"
-			$("#div_productSelect").html(x);
-			$("#sel_prosel").on('change',function(){
-				getKindList($("#sel_prosel").val());
-				getCodiProductList(1);
+			var productSelect = "";
+			var id = "";
+			var productSelect_num = "";
+			$.each(data.ar, function(index, value) {
+				productSelect += "<li><a id='productSelect_"+index+"' onclick='productView("+value.productSelect_num+");' name='1'>" + value.productSelect_name + "</a></li>";
 			});
+			$("#ul_productSelect").append(productSelect);
 		},
 		error : function(request, status, error) {
 			alert("code:" + request.status + "\n" + "error:" + error);
 		}
 	});
-	
-	
 }
 
+//첫번째 메뉴 온클릭
+function productView(productSelect_num) {
+	getKindList(productSelect_num);
+}
+
+//두번째 메뉴
 function getKindList(productSelect_num){
 	$.ajax({
 		url : "../json/codiKindList",
@@ -74,18 +67,14 @@ function getKindList(productSelect_num){
 			productSelect_num:productSelect_num
 		},
 		success : function(data) {
-			$("#div_kind").html("");
-			var x="<select class='sel_kindsel' name='kind_num'>";
+			$("#ul_kind").html("");
+			var kind = "";
+			var id = "";
+			var kind_num = "";
 			$.each(data.ar, function( index, value ) {
-				alert(value.kind_num);
-	    		x=x+"<option value='"+value.kind_num+"'>"+value.kind_name+"</option>"
+				kind += "<li><a id='kind_" + index + "' onclick='kindView("+value.kind_num+")'>"+value.kind_name+"</a></li>"
 	    	});
-			x=x+"</select>"
-			$("#div_kind").html(x);
-			$(".sel_kindsel").on('change',function(){
-				alert($(this).val());
-				getCodiProductList($(this).val());
-			});
+			$("#ul_kind").html(kind);
 		},
 		error : function(request, status, error) {
 			alert("code:" + request.status + "\n" + "error:" + error);
@@ -93,6 +82,12 @@ function getKindList(productSelect_num){
 	});
 }
 
+//두번째 메뉴 온클릭
+function kindView(kin_num) {
+	getCodiProductList(kin_num);
+}
+
+//마지막 메뉴 상품 리스트
 function getCodiProductList(kind_num){
 	$.ajax({
 		url : "../json/codiProductList",
@@ -103,12 +98,14 @@ function getCodiProductList(kind_num){
 		},
 		success : function(data) {
 			$("#div_product").html("");
-			var x="<table>";
+			var productList = "";
 			$.each(data.ar, function( index, value ) {
-	    		x=x+"<tr><td>"+value.productDTO.product_num+"</td><td>"+value.productDTO.product_name+"</td></tr>"
+				productList += "<div id='product_"+value.productDTO.product_num+"' style='background : url(${pageContext.request.contextPath}/resources/images/"+value.productPicDTO.productPic_pic+")'>";
+				productList += "<span>"+value.productDTO.product_name+"</span>";
+				productList += "</div>";
+	    		alert(value.productDTO.product_num+"___"+value.productDTO.product_name+"___"+value.productPicDTO.productPic_pic);
 	    	});
-			x=x+"</table>"
-			$("#div_product").html(x);
+			$("#div_product").html(productList);
 		},
 		error : function(request, status, error) {
 			alert("code:" + request.status + "\n" + "error:" + error);
@@ -155,9 +152,15 @@ $(function() {
 });
 
 </script>
+<style type="text/css">
+.ppp{
+	float: right;
+}
+
+</style>
 </head>
 <body>
-<div style="background-color: black; width: 500px; height: 500px;" id="a">
+<div style="background-color: red; width: 500px; height: 500px;" id="a">
 	<div class="divv" id="div1" style="background : url(${pageContext.request.contextPath}/resources/images/btn_search.png); position: absolute; margin-left: 200px; margin-top: 200px; width: 200px; height: 200px;">
 		<input id="t1" type="text" value="" readonly="readonly">
 		<input id="t2" type="text" value="" readonly="readonly">
@@ -168,16 +171,22 @@ $(function() {
 	</div>
 	
 	<!-- 상품 리스트 -->
-	<div id="div_productSelect"></div>
-	<div id="div_kind">
-	<select class="sel_kindsel" style="display: none;"></select></div>
-	<div id="div_product"></div>
+	<div class="ppp">
+		<ul  id="ul_productSelect">
+		
+		</ul>
+	</div>
+	<div class="ppp">
+		<ul id="ul_kind"></ul>
+	</div>
+	<div id="div_product">
+	</div>
 	
 </div>
 	<button>코디 생성</button><br>
 	
 	<canvas width="501px" height="501px"></canvas>
-
+<a></a>
 
 
    
