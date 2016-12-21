@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReviewMapper">
+
+<!--review write  -->
+<insert id="reviewWrite" parameterType="com.basic.review.ReviewDTO">
+	insert into review values(review_seq.nextval,#{review_writer},#{review_star}, 
+	#{review_contents},#{review_product},sysdate,#{review_img})
+</insert>
+<!--reviewList  -->
+<select id="reviewList" resultType="com.basic.review.ReviewDTO" parameterType="java.util.HashMap">
+	select * from
+		(select Rownum R, F.* from
+		(select * from review order by review_num desc) F)
+		where review_product=#{review_product} and R between #{startRowNum} and #{lastLowNum}
+</select>
+<!--review view  -->
+<select id="review" parameterType="int" resultType="com.basic.review.ReviewDTO">
+	select * from review where review_num=#{review_num}
+</select>
+<!--review update  -->
+<update id="reviewUpdate" parameterType="com.basic.review.ReviewDTO">
+	update review set review_contents=#{review_contents},
+	review_star=#{review_star},review_reg_date=sysdate,review_img=#{review_img}
+	where review_num=#{review_num}
+</update>
+<!--review delete  -->
+<delete id="reviewDel" parameterType="int">
+	delete review where review_num=#{review_num}
+</delete>
+<!--review count  -->
+<select id="reviewCount" parameterType="com.basic.review.ReviewDTO" resultType="int">			
+			select count(*) from review
+								
+</select>
+</mapper>

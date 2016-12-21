@@ -271,6 +271,26 @@
 		});	
 
 	}	
+	//reviewList
+	function reviewList(){
+		$.ajax({
+		    url : "../review/reviewList",
+		    type : "get",
+		    data : {
+		    	curPage : 1,
+		    	perPage : 10,
+		    	product_num :  ${view.product_num}
+
+		    },
+		    success: function(data) {
+		    	console.log(data);
+		    	$("#e").html(data.trim());
+		    },
+		    error:function(request,status,error){
+		        console.log("code:"+request.status+"\n"+"error:"+error);
+		    }			
+		});
+	}
 	
 	
 	//작은 이미지를 큰 이미지로//
@@ -447,6 +467,7 @@
 					<li class="active"><a href="#a">상세설명</a></li>
 					<li><a href="#b">배송관련</a></li>
 					<li><a href="#c">상품문의</a></li>
+					<li onclick="reviewList()"><a href="#e">상품리뷰</a></li>
 				</ul>
 				<div class="jumbotron">
 					<div id="a">
@@ -471,6 +492,9 @@
 						<h3 style="display: inline-block;">Q&A</h3><span>상품문의</span>
 						<div id="qna"></div>
 					</div>
+						<div id="e">
+							<h3>상품리뷰</h3>
+						</div>
 				</div>
 			</div>
 		</div>
