@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.basic.util.PageMaker;
@@ -114,6 +115,7 @@ public class ProductService {
 	
 	
 	// auto add
+	/*
 	public int autoAdd(){
 		return productDAO.autoAdd();
 	}
@@ -121,5 +123,11 @@ public class ProductService {
 	public void proAdd(){
 		productDAO.proAdd();
 	}
+	
+	//test pic add
+	
+	public void testPicAdd(MultipartHttpServletRequest mpr , HttpSession session){
+		productDAO.testPicADD(mpr, session);
+	}*/
 
 }

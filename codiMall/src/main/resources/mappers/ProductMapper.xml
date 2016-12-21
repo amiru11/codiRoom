@@ -372,6 +372,23 @@
 
 
 	<!-- productBest List E -->
+	
+	
+	
+	
+
+<!-- TEST FILE UPLOAD S  -->
+<insert id="InsTestFileUp" parameterType="com.basic.product.ProductPicDTO">
+insert into productPic values(#{product_num},#{productPic_pic}) 
+</insert>
+<select id="SelGetTestProductNum" parameterType="int" resultType="int">
+select product_num from product where product_num = #{product_num}
+
+</select>
+
+<!-- TEST FILE UPLOAD S  -->
+
+
 
 
 

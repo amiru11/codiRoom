@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.basic.member.MemberDTO;
@@ -155,5 +156,17 @@ public class ProductController {
 		model.addAttribute("productSelectList",productService.productSelectList());
 		model.addAttribute("list", productService.productBestList());
 	}
+	
+	/*//test pic add method.Get
+	@RequestMapping(value="/testPicAdd",method=RequestMethod.GET)
+	public void testPicAdd(){		
+	}
+	
+	//test pic add method.Get
+	@RequestMapping(value="/testPicAdd",method=RequestMethod.POST)
+	public void testPicAdd(MultipartHttpServletRequest mpr, HttpSession session){
+		productService.testPicAdd(mpr, session);
+	}*/
+	
 
 }
