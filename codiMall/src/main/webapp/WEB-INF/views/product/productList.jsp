@@ -323,27 +323,27 @@ var requestSubmitted = false;
 								<li style="padding-left: 20px;" class="viewItem">
 									<div class="mc" style="border: 1px solid #eee;">
 										<span class="img"> <a
-											href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">
-												<img src="http://placehold.it/500x150&text=FooBar1"
+											href="${pageContext.request.contextPath}/product/productView?product_num=${list1.productDTO.product_num}">
+												<img src="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}"
 												width="250" height="250">
 										</a>
 										</span>
 										<div class="item-info" style="padding-left: 10px;">
 											<p style="padding-top: 10px;">
 												<a
-													href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">${list1.product_name}</a>
+													href="${pageContext.request.contextPath}/product/productView?product_num=${list1.productDTO.product_num}">${list1.productDTO.product_name}</a>
 											</p>
 											<p>브랜드</p>
 											<p>
 												<span> <fmt:formatNumber
-														value="${list1.productInfo_price}" currencySymbol=""
+														value="${list1.productInfoDTO.productInfo_price}" currencySymbol=""
 														type="currency" />원
 												</span> <strong style="color: #b5172e;">→<c:set
 														var="number"
-														value="${list1.productInfo_price*(100-list1.productInfo_saleRate)/100}" />
+														value="${list1.productInfoDTO.productInfo_price*(100-list1.productInfoDTO.productInfo_saleRate)/100}" />
 													<fmt:parseNumber var="total" value="${number}"
 														type="number" integerOnly="true" /> ${total}
-													원(${list1.productInfo_saleRate}%)
+													원(${list1.productInfoDTO.productInfo_saleRate}%)
 												</strong>
 											</p>
 										</div>
@@ -356,7 +356,7 @@ var requestSubmitted = false;
 										data-toggle="modal" data-target="#basketModal"
 							data-backdrop="true"
 										</c:if>>
-											<input type="hidden" value="${list1.product_num}"
+											<input type="hidden" value="${list1.productDTO.product_num}"
 												class="inh_product_num" name="product_num"> <span
 												style="font-size: 20px; color: #ffffff;">ADD TO CART</span>
 										</div>

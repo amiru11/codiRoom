@@ -1,11 +1,15 @@
 package com.basic.product;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +20,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.basic.member.MemberDTO;
 import com.basic.util.PageMaker;
@@ -64,6 +70,13 @@ public class ProductDAO {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		hm.put("pageMaker", pageMaker);
 		hm.put("productParamDTO", productParamDTO);
+		List<ProductListDTO> ar = sqlSession.selectList(namespace + "SelProductList", hm);
+		for (int i = 0; i < ar.size(); i++) {
+			System.out.println(ar.get(i).getProductDTO().getProduct_num());
+			System.out.println(ar.get(i).getProductInfoDTO().getProductInfo_saleRate());
+			System.out.println(ar.get(i).getProductPicDTO().getProductPic_pic());
+			
+		}
 		return sqlSession.selectList(namespace + "SelProductList", hm);
 	}
 
@@ -194,34 +207,34 @@ public class ProductDAO {
 	}
 
 	// AUTO ADD FUNCTION
-	public void proAdd(){
+	/*public void proAdd() {
 		for (int i = 7; i < 14; i++) {
-			System.out.println("i---start---"+i);
+			System.out.println("i---start---" + i);
 			for (int j = 0; j < 50; j++) {
-				
+
 				Calendar c = Calendar.getInstance();
 				Random r = new Random(c.getTimeInMillis());
-				//65~90
-				int a = r.nextInt(26)+65;
+				// 65~90
+				int a = r.nextInt(26) + 65;
 				char c1 = (char) a;
 				for (int k = 0; k < 10000000; k++) {
 				}
-				a =r.nextInt(26)+65;
+				a = r.nextInt(26) + 65;
 				char c2 = (char) a;
 				for (int k = 0; k < 10000000; k++) {
 				}
-				a =r.nextInt(26)+65;
+				a = r.nextInt(26) + 65;
 				char c3 = (char) a;
-				String name = String.valueOf(c1)+String.valueOf(c2)+String.valueOf(c3);
-				
+				String name = String.valueOf(c1) + String.valueOf(c2) + String.valueOf(c3);
+
 				ProductAddDTO productAddDTO = new ProductAddDTO();
 				productAddDTO.setKind_num(i);
-				productAddDTO.setProduct_name(name+i+j);
-				productAddDTO.setProductInfo_price(i*10000+j*1000);
-				productAddDTO.setProductInfo_searchWord(String.valueOf(c1)+String.valueOf(c2)+String.valueOf(c3));
-				productAddDTO.setProductInfo_SaleRate(r.nextInt(100)/10);
-				
-				System.out.println("j---start---"+j);
+				productAddDTO.setProduct_name(name + i + j);
+				productAddDTO.setProductInfo_price(i * 10000 + j * 1000);
+				productAddDTO.setProductInfo_searchWord(String.valueOf(c1) + String.valueOf(c2) + String.valueOf(c3));
+				productAddDTO.setProductInfo_SaleRate(r.nextInt(100) / 10);
+
+				System.out.println("j---start---" + j);
 				def = new DefaultTransactionDefinition();
 				def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 
@@ -244,20 +257,18 @@ public class ProductDAO {
 					// TODO: handle exception
 					transactionManager.rollback(status);
 					result = 0;
-				}
-				finally {
+				} finally {
 					for (int k = 0; k < 120000000; k++) {
 						for (int k2 = 0; k2 < 1; k2++) {
 						}
 					}
 				}
-				
+
 			}
 		}
-		
-	}
-	
 
+	}*/
+/*
 	public int autoAdd() {
 		String colorArray[] = { "RED", "ORANGE", "YELLOW", "GREEN", "BLUE", "NAVY", "PURPLE", "BLACK", "GRAY", "IVORY",
 				"BROWN" };
@@ -279,7 +290,7 @@ public class ProductDAO {
 
 					int result = 0;
 					try {
-						
+
 						def = new DefaultTransactionDefinition();
 						def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 						status = transactionManager.getTransaction(def);
@@ -321,6 +332,76 @@ public class ProductDAO {
 		}
 
 		return 0;
+	}*/
+/*
+	public void testPicADD(MultipartHttpServletRequest mpr, HttpSession session) {
+		String savePath = session.getServletContext().getRealPath("resources/upload");
+		// 위에가 리얼패스 아래는 임시용 배포전 아래꺼 삭제
+
+		// 이동전의 폴더
+		String inFolder = "C:\\Users\\NotePerson\\Desktop\\a_z\\testPic\\";
+		// 이동후의 폴더
+		String outFolder = "C:\\Users\\NotePerson\\git\\codiMall\\codiMall\\src\\main\\webapp\\resources\\testPic";
+
+		savePath = "C:\\Users\\NotePerson\\git\\codiMall\\codiMall\\src\\main\\webapp\\resources\\testPic";
+
+		
+		 * File f = new
+		 * File("C:\\Users\\NotePerson\\Desktop\\a_z\\testPic\\a.jpg");
+		 * System.out.println("File----" + f.getPath());
+		 * System.out.println("fgetname--" + f.getName());
+		 * System.out.println("fabsoloutpath---" + f.getAbsolutePath());
+		 
+		int result = 0;
+		int alp = 97;
+		for (int j = 1; j < 800; j++) {
+			UUID uid = UUID.randomUUID();
+			String saveName = uid.toString();
+			saveName = saveName + ".jpg";
+			char a = (char) alp;
+			ProductPicDTO productPicDTO = new ProductPicDTO();
+			Integer product_num = sqlSession.selectOne(namespace + "SelGetTestProductNum", j);
+			if (product_num != null) {
+				productPicDTO.setProduct_num(product_num);
+				productPicDTO.setProductPic_pic(saveName);
+				result = sqlSession.insert(namespace + "InsTestFileUp", productPicDTO);
+				if (result > 0) {
+					System.out.println("success");
+					fileCopy("C:\\Users\\NotePerson\\Desktop\\a_z\\testPic\\" + a + ".jpg",
+							outFolder + "\\" + saveName);
+				} else {
+					System.out.println("fail");
+				}
+				alp++;
+				if (alp == 123) {
+					alp = 97;
+				}
+				System.out.println((char)alp+"c-----n"+alp);
+				for (int k = 0; k < 10000; k++) {
+					for (int k2 = 0; k2 < 1; k2++) {
+					}
+				}
+			}
+		}
+
 	}
+
+	public static void fileCopy(String inFileName, String outFileName) {
+		try {
+			FileInputStream fis = new FileInputStream(inFileName);
+			FileOutputStream fos = new FileOutputStream(outFileName);
+
+			int data = 0;
+			while ((data = fis.read()) != -1) {
+				fos.write(data);
+			}
+			fis.close();
+			fos.close();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}*/
 
 }
