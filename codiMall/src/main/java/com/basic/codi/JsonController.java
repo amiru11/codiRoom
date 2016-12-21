@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.basic.basket.BasketService;
 import com.basic.board.BoardService;
 import com.basic.buy.BuyService;
-import com.basic.codiCl.CodiService;
+import com.basic.fashion.CodiService;
 import com.basic.mast.MastService;
 import com.basic.product.ProductDTO;
 import com.basic.product.ProductEachDTO;

@@ -374,16 +374,12 @@ function testAPI() {
 					<li><a href="${pageContext.request.contextPath}/buy/buyList">BUYLIST</a></li>
 					<li><a href="${pageContext.request.contextPath}/product/productAdd">PRODUCTADD</a></li>
 					<li><a href="${pageContext.request.contextPath}/product/productList">ITEM</a></li>
-<<<<<<< HEAD
 					<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOG</a></li>
-					<li><a href="${pageContext.request.contextPath}/codi/codiMake">CODI</a></li>
 					<c:if test="${sessionScope.member.member_level == 0 }">
 					<li><a href="${pageContext.request.contextPath}/mast/mastIndex">MASTIN</a></li>
 					</c:if>
-=======
 					<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOGIN</a></li>
 					<li><a href="${pageContext.request.contextPath}/fashion/codiList">CODI</a></li>
->>>>>>> refs/heads/Mir1212
 	
 					<!--  test li e -->
 	

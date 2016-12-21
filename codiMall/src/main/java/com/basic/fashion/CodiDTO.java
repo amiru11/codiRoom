@@ -1,5 +1,8 @@
 package com.basic.fashion;
 
+import com.basic.product.ProductDTO;
+import com.basic.product.ProductPicDTO;
+
 public class CodiDTO {
 	private int num;
 	private String fileName;
@@ -7,6 +10,8 @@ public class CodiDTO {
 	private String product;
 	private String title;
 	private int count;
+	private ProductDTO productDTO;
+	private ProductPicDTO productPicDTO;
 	
 	
 	public int getNum() {
@@ -44,5 +49,17 @@ public class CodiDTO {
 	}
 	public void setCount(int count) {
 		this.count = count;
+	}
+	public ProductDTO getProductDTO() {
+		return productDTO;
+	}
+	public void setProductDTO(ProductDTO productDTO) {
+		this.productDTO = productDTO;
+	}
+	public ProductPicDTO getProductPicDTO() {
+		return productPicDTO;
+	}
+	public void setProductPicDTO(ProductPicDTO productPicDTO) {
+		this.productPicDTO = productPicDTO;
 	}
 }

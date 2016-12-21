@@ -11,13 +11,10 @@ import java.util.Base64;
 import java.util.Calendar;
 
 import javax.imageio.ImageIO;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.basic.fashion.CodiDTO;
@@ -29,7 +26,7 @@ import com.basic.util.PageMaker;
 @RequestMapping(value = "fashion")
 public class CodiController {
 	
-	@Inject
+	@Autowired
 	private CodiService codiService;
 	
 	//코디 리스트
@@ -87,15 +84,5 @@ public class CodiController {
             
         }
 	}
-	
-/*	@RequestMapping(value="/codi")
-	public class CodiController {
-		
-		@Autowired
-		private CodiService codiService;
-		
-		@RequestMapping(value="/codiMake")
-		public void codiMake(){
-		}*/
 	
 }

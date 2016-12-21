@@ -25,10 +25,9 @@
 		<result column="product_name" property="product_name" javaType="java.lang.String" />
 	</resultMap>
 
-	<resultMap type="com.basic.codiCl.CodiProductDTO" id="CodiProduct">
+	<resultMap type="com.basic.fashion.CodiDTO" id="CodiProduct">
 		<association property="productDTO" resultMap="Product" />
 		<association property="productPicDTO" resultMap="ProductPic" />
-
 	</resultMap>
 
 	<select id="SelProductSelectList" resultMap="ProductSelect">
