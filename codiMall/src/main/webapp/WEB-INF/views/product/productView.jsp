@@ -467,7 +467,7 @@
 					<li class="active"><a href="#a">상세설명</a></li>
 					<li><a href="#b">배송관련</a></li>
 					<li><a href="#c">상품문의</a></li>
-					<li onclick="reviewList()"><a href="#e">상품리뷰</a></li>
+					<li><a href="#e">상품리뷰</a></li>
 				</ul>
 				<div class="jumbotron">
 					<div id="a">
