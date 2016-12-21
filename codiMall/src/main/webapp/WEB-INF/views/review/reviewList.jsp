@@ -1,4 +1,6 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <style type="text/css">
 	.star_img{
 		width: 44px;
@@ -14,10 +16,6 @@
 	}
 </style>
 <!--modal-->
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!--modal end  -->
   <script type="text/javascript">
 	
 			$(function() {
@@ -25,7 +23,7 @@
 				$("#rw_btn").click(function () {			
 					alert("리뷰클쓰기")
 					/*reviewWriteForm ajax로 페이지를 불러옴  */
-					$("#reviewWrite").load("reviewWriteForm",function(responseText){
+					$("#reviewWrite").load("/codi/review/reviewWriteForm",function(responseText){
 						 $("#myModal").modal();	
 						 	
 							/*글쓰기 버튼 type을 submit*/
@@ -38,7 +36,7 @@
 				$(".review").click(function () {
 					var aa = $(this).find('input').val();
 					alert(aa);
-				$("#rvView").load("review?review_num="+aa,function(responseText){
+				$("#rvView").load("/codi/review/review?review_num="+aa,function(responseText){
 					 $("#myModal").modal();
 				   $("#ud_btn").click(function () {
 						  alert(aa);

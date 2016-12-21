@@ -24,9 +24,9 @@
 	작성자 :<input type="text" name="review_writer"><br>
 	<input type="hidden" name="review_product" value="5">
 	<textarea rows="" cols="" name="review_contents" style="width: 400px;height: 200px;">
-키: km <br>
-몸무계: kg <br>
-색상&싸이즈: <br>
+키: km 
+몸무계: kg 
+색상&싸이즈: 
 사용후기:
 	</textarea><br>
         </div>

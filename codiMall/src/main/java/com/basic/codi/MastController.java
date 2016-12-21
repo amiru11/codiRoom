@@ -52,6 +52,11 @@ public class MastController {
 		return path;
 	}
 	
-	
+	@RequestMapping(value="/boardList")
+	public String boardList(){
+		String path = "";
+		path = "mast/mastBoard";
+		return path;
+	}
 	
 }

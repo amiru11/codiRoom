@@ -16,7 +16,7 @@
 <script type="text/javascript">
 	$(function() {
 		qnaList();
-		
+		reviewList();
 		$("#sel_size_a").change(function(){
 			if($("#sel_size_a").val()!=""){
 				$("#buttonSet").css("display","none");
