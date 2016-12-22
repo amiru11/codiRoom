@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,41 +46,111 @@
     border-color: initial;
 }
 </style>
+<script type="text/javascript">
+	var board_kind = '';
+	$(function(){
+		
+		listAjax();
+ 		$(".sel_type").click(function(){
+ 			alert($(this).prop("id"));
+ 			subAjax(this);
+ 		});
+	});
+	
+	
+	
+	function listAjax(){
+		board_kind = ${board_kind};
+		$.ajax({
+			url : "resultBoard",
+			type : "get",
+			data : {
+				curPage : 1,
+				perPage : 10,
+				board_kind : ${board_kind}
+			},
+			success : function(data){
+				var data = data.trim();
+				console.log(data);
+				$("#section").empty();
+				$("#section").html(data);
+				$("#1").parent("li").removeClass("active");
+				$("#2").parent("li").removeClass("active");
+				$("#3").parent("li").removeClass("active");
+				$("#4").parent("li").removeClass("active");
+				$("#"+board_kind).parent("li").addClass("active");
+			}
+		});
+	}
+		function subAjax(data){
+			alert(board_kind);
+			board_kind = $(data).prop("id");
+			$.ajax({
+				url : "resultBoard",
+				type : "get",
+				data : {
+					curPage : 1,
+					perPage : 10,
+					board_kind : $(data).prop("id")
+				},
+				success : function(data){
+					var data = data.trim();
+					console.log(data);
+					$("#section").empty();
+					$("#section").html(data);
+					$("#1").parent("li").removeClass("active");
+					$("#2").parent("li").removeClass("active");
+					$("#3").parent("li").removeClass("active");
+					$("#4").parent("li").removeClass("active");
+					$("#"+board_kind).parent("li").addClass("active");
+				}
+			});                                                                                                                                                                                               	
+	}
+</script>
 </head>
 <body style="height:1200px;">
 	<div class="container-fluid" style="padding : 0; height: 100%">
-			<%@ include file="/resources/temp/mast/sideBar.jspf"%>
-			<div class="container" style="padding-top: 120px;">
-				<div id="view">
-				<header id="topbar" class="text-center bg-white alt ph10 br-b-ddd">
-					<nav class="navbar">
-						<div class="navbar-collapse collapse"
-							style="padding-left: 0; border-bottom: 1px solid #eee;">
-							<ul id="category-type" class="nav navbar-nav" style="vertical-align: top; margin-left: 350px;">
-								<li class="category-li active"><a class="sel_type">Notice</a></li>
-								<li class="category-li"><a class="sel_type">FAQ</a></li>
-								<li class="category-li"><a class="sel_type">QNA</a></li>
-								<li class="category-li"><a class="sel_type">PRODUCT BOARD</a></li>
-								<li class="category-li"><a class="sel_type">Dashboard</a></li>
-							</ul>
-						</div>
-					</nav>
-				<div class="mt-30 hidden-xs">
-					<a href="" class="subBtn btn btn-default btn-lg">
-						<span class="fa fa-list"></span> List
-					</a>
-					<a href="" class="subBtn btn btn-default btn-lg">
-						<span class="fa fa-pencil"></span> Write
-					</a>
-					<a href="" class="subBtn btn btn-default btn-lg">
-						<span class="fa fa-wrench"></span> Update
-					</a>
+		<div class="row"  style="height: 100%;">
+				<div class="col-sm-2">
+					<%@ include file="/resources/temp/mast/sideBar.jspf"%>
 				</div>
-				</header>
-			</div>
-			</div>
-	
-	</div>
+				<div class="col-sm-8" style="margin: 20px;">
+					<div class="container">
+						<div id="view">
+							<header id="topbar" class="text-center bg-white alt ph10 br-b-ddd">
+								<nav class="navbar">
+									<div class="navbar-collapse collapse"
+										style="padding-left: 0; border-bottom: 1px solid #eee;">
+										<ul id="category-type" class="nav navbar-nav" style="vertical-align: top; margin-left: 350px;">
+											<li class="category-li"><a id="1" class="sel_type">Notice</a></li>
+											<li class="category-li"><a id="2" class="sel_type">FAQ</a></li>
+											<li class="category-li"><a id="3" class="sel_type">QNA</a></li>
+											<li class="category-li"><a id="4" class="sel_type">PRODUCT BOARD</a></li>
+											<li class="category-li"><a id="sub5" class="sel_type">Dashboard</a></li>
+										</ul>
+									</div>
+								</nav>
+							<div class="mt-30 hidden-xs">
+								<a href="" class="subBtn btn btn-default btn-lg">
+									<span class="fa fa-list"></span> List
+								</a>
+								<a href="" class="subBtn btn btn-default btn-lg">
+									<span class="fa fa-pencil"></span> Write
+								</a>
+								<a href="" class="subBtn btn btn-default btn-lg">
+									<span class="fa fa-wrench"></span> Update
+								</a>
+							</div>
+							</header>
+						
+							<section id="section" class="jumbotron">						
+							</section>
+						</div>
+					</div>				
+				</div>
 
+		</div>		
+
+	</div>
 </body>
 </html>

@@ -1,17 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-		<header class="navbar undefined bg-alert navbar-fixed-top">
-				<div class="navbar-branding dark bg-alert" id="adminHead">
-					<a href="" class="navbar-brand text-uppercase" style="padding-top:22px;">AdminPage</a><span
-						id="fabar" class="fa fa-bars"></span>
-				</div>
-				<ul class="nav navbar-nav navbar-left"></ul>
-			</header>
-			
 			<div id="sidebar_left" class="" style="height: 100%;">
 				<div class="sidebar-left-content nano-content" tabindex="0">
 					<ul class="nav sidebar-menu">
-						<li class="sidebar-label pt35" style="padding-top: 100px;"></li>
+						<li class="sidebar-label pt35" style="padding-top: 75px; background-color: #43c7d7;"><span id="toggle_sidemenu_l" class="fa fa-bars"></span><span>ADMIN</span></li>
+						<li><a id="goHome" class="side-btn" href="/codi"><span
+								class="fa fa-home"></span><span class="sidebar-title">Home</span></a>
+						</li>	
 						<li><a id="goCalendar" class="side-btn"><span
 								class="fa fa-calendar"></span><span class="sidebar-title">Calendar</span></a>
 						</li>
@@ -19,9 +14,9 @@
 								class="fa fa-file-text-o"></span><span class="sidebar-title">Board</span><span class="carett"></span></a>
 								<ul id="sub-1">
 									<li><a href="boardList">dashboard</a></li>
-									<li><a>Notice</a></li>
-									<li><a>FAQ</a></li>
-									<li><a>QnA</a></li>
+									<li><a href="boardList">Notice</a></li>
+									<li><a href="boardList?board_kind=2">FAQ</a></li>
+									<li><a href="boardList?board_kind=3">QnA</a></li>
 									<li><a>Product Board</a></li>
 								</ul>
 						</li>

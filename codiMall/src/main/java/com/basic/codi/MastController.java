@@ -19,6 +19,9 @@ public class MastController {
 	@Autowired
 	private MastService mastService;
 	
+	
+	
+	
 	@RequestMapping(value="/mastIndex")
 	public String mastIndex(HttpSession session){
 		String path="";
@@ -53,10 +56,28 @@ public class MastController {
 	}
 	
 	@RequestMapping(value="/boardList")
-	public String boardList(){
-		String path = "";
-		path = "mast/mastBoard";
-		return path;
+	public String boardList(@RequestParam(defaultValue="1") int curPage, 
+			@RequestParam(defaultValue="10") int perPage, @RequestParam(defaultValue="1") int board_kind,Model model){
+			model.addAttribute("board_kind", board_kind);
+		return "mast/mastBoard";
 	}
 	
+	@RequestMapping(value="/resultBoard")
+	public String resultBoard(@RequestParam(defaultValue="") String type, @RequestParam(defaultValue="") String find, @RequestParam(defaultValue="1") int curPage, 
+			@RequestParam(defaultValue="10") int perPage, @RequestParam int board_kind, Model model){
+		try {
+			mastService.findList(type, find, curPage, perPage, board_kind, model);
+			System.out.println("BOARD SEARCH");
+			System.out.println("BOARD KIND : " +board_kind);
+			System.out.println("TYPE : "+type);
+			System.out.println("FIND : "+find);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		
+		String path = "";
+		path = "mast/resultBoard";
+		return path;
+	}
+
 }

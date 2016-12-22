@@ -23,3 +23,13 @@
 			$("#sub-4").css("display","none");
 			$("#sub-"+data).slideToggle();
 		}
+		
+
+		
+		
+		/* subMenu active 변화 */
+		function aaa(){
+			$(".sel_type").click(function(){
+				$(this).parent().addClass("active");
+			});			
+		}

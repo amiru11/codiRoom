@@ -7,16 +7,6 @@
     min-height: 100%;
     background: #f1f4f8;
 }
-.navbar-branding {
-    position: relative;
-    overflow: hidden;
-    float: left;
-    width: 220px;
-    height: 70px;
-    margin-right: 10px;
-    background-color: #43c7d7;
-    color: #fff;
-}
 #fabar{	
     margin-left: 50px;
     font-size: 20px;
@@ -24,10 +14,7 @@
 }
 #sidebar_left{
 	background-color: #2b333e;
-	margin-left: -250px;
-    left: 250px;
-    width: 220px;
-    position: fixed;
+  	/* width: inherit; */
     height: 100%;
     overflow-y: auto;
     z-index: 1000;
@@ -67,7 +54,7 @@
     background-color: #303F52;
     clear: both;
     display: none;
-    width: 220px;
+    /* width: 220px; */
     height: auto;
     list-style: none;
 }

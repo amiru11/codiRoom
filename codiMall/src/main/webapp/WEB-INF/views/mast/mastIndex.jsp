@@ -48,12 +48,18 @@ table, table tr, tr td, th {
 </head>
 <body style="height:1200px;">
 	<div class="container-fluid" style="padding : 0; height: 100%">
-			<%@ include file="/resources/temp/mast/sideBar.jspf"%>
-			<div class="container" style="padding-top:100px;">
-				<div id="view">
-				
+		<div class="row" style="height: 100%;">
+				<div class="col-sm-2" style="height: 100%;">
+					<%@ include file="/resources/temp/mast/sideBar.jspf"%>
 				</div>
-			</div>
+				<div class="com-sm-8" style="margin: 20px;height: 100%;">
+					<div class="container" >
+						<div id="view">
+						
+						</div>
+					</div>		
+				</div>			
+		</div>
 	
 	</div>
 
