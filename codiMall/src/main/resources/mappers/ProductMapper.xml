@@ -400,7 +400,6 @@
 		resultType="int">
 		select product_num from product where product_num =
 		#{product_num}
-
 	</select>
 
 	<!-- TEST FILE UPLOAD S -->
@@ -470,8 +469,33 @@
 			and k.PRODUCTSELECT_NUM = #{productSelect_num}
 		</if>
 	</select>
+<!--상품검색  -->
+<select id="searchList" parameterType="java.util.HashMap" resultType="com.basic.product.ProductListDTO" statementType="PREPARED">
+		select * from (select rownum r, z.* from (select
+		DISTINCT
+		t.*,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE from (select
+		count(b.BUY_NUM) c,p.PRODUCT_NUM,p.PRODUCT_NAME from product p LEFT
+		OUTER JOIN buy b
+		on b.PRODUCT_NUM = p.PRODUCT_NUM group by
+		p.PRODUCT_NUM, p.PRODUCT_NAME)
+		t , PRODUCTINFO pi,PRODUCTEACH pe,
+		kind
+		k,PRODUCTKIND pk where pe.PRODUCT_NUM = t.PRODUCT_NUM and
+		pi.PRODUCT_NUM = t.PRODUCT_NUM
+		and pk.KIND_NUM = k.KIND_NUM and
+		pk.PRODUCT_NUM = t.PRODUCT_NUM
+		and pi.productInfo_saleRate not in(0)
+		order by t.product_num desc
 
-
+		) z) where PRODUCT_NAME like #{find} and r between
+		#{pageMaker.startRowNum} and
+		#{pageMaker.lastLowNum}
+</select>
+<!--상품검색count  -->
+<select id="searchCount" parameterType="String" resultType="int">
+		select count(*) from PRODUCT
+			where product_name like #{find}
+</select>
 	<!-- Ajax E -->
 
 

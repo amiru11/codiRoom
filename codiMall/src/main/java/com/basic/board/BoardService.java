@@ -279,8 +279,14 @@ public class BoardService {
 		System.out.println("마지막 숫자 : "+pageMaker.getLastLowNum());
 		System.out.println("글의 총 갯수 : "+boardDAO.boardCount(board_kind));
 		ar = boardDAO.findList(type, find, board_kind, pageMaker);
-		model.addAttribute("type", type);
-		model.addAttribute("find", find);
+		if(type ==null){
+			model.addAttribute("find", find);
+		}else if(find == null){
+			model.addAttribute("type", type);
+		}else{	
+			model.addAttribute("type", type);
+			model.addAttribute("find", find);
+		}
 		model.addAttribute("paging", pageMaker);
 		model.addAttribute("list", ar);
 		model.addAttribute("board_kind", board_kind);

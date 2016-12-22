@@ -25,9 +25,9 @@ public class ReviewDAO {
 	public List<ReviewDTO> reviewList(ReviewDTO reviewDTO,PageMaker pageMaker){
 		System.out.println("reviewDAO접속");
 		Map<String, Object> rm = new HashMap<>();
-		rm.put("review_product", reviewDTO.getReview_product());
-		rm.put("startRowNum", pageMaker.getStartNum());
-		rm.put("lastLowNum", pageMaker.getLastNum());
+		rm.put("review", reviewDTO);
+		rm.put("page", pageMaker);
+		rm.put("page", pageMaker);
 		List<ReviewDTO> ar =sqlSession.selectList(namespace+"reviewList",rm);
 		return ar;	
 	}

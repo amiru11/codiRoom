@@ -35,7 +35,9 @@
 								</tr>
 								<hr>
 								<tr style="background-color: #ddd; display: none;">
-									<td colspan="6">														
+									<td colspan="6">	
+									<input type="button" value="삭제" onclick="del()">
+									<input type="text" value="${list1.board_num}" name="delnum">												
 										<form action="">
 											<textarea rows="" cols="" class="form-control"  style="border : none;" id="comment${i.index}"></textarea>	
 											<input type="hidden" value="${list1.board_num}" id="refNum${i.index}">

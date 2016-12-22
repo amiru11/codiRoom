@@ -8,9 +8,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.basic.review.ReviewDAO;
 import com.basic.util.PageMaker;
 
 @Service
@@ -129,5 +131,24 @@ public class ProductService {
 	public void testPicAdd(MultipartHttpServletRequest mpr , HttpSession session){
 		productDAO.testPicADD(mpr, session);
 	}*/
+	
+	/*상품검색*/
+	@RequestMapping(value="productSearchList")
+	public void productSearchList(int curPage,int perPage,String find,Model model){
+		System.out.println("상품검색서비스접속");
+		System.out.println("상품검색어 :"+find);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCurPage(curPage);
+		pageMaker.setPerPage(perPage);
+		pageMaker.makeRow();
+		pageMaker.makePage(productDAO.searchCount(find));
+		List<ProductListDTO> ar=productDAO.productSearchList(find, pageMaker);
+		for(int i=0;i<ar.size(); i++){
+			System.out.println("상품이름 :"+ar.get(i).getProductDTO().getProduct_num());
+		}
+		model.addAttribute("pegeing", pageMaker);
+		model.addAttribute("list1",ar);
+		model.addAttribute("find",find);	
+	}
 
 }

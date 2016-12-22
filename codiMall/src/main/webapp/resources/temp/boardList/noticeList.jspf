@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-md-8">			
 				<nav class="nav nav-default">
-					<form action="findList" method="post" role="search" class="navbar-form navbar-right">
+					<form name="fname" action="findList" method="post" role="search" class="navbar-form navbar-right">
 								<select name="type" class="form-control">
 									<option value="title">TITLE</option>
 									<option value="writer">WRITER</option>
@@ -12,9 +12,10 @@
 								</select>
 						
 						    <div class="input-group">
-						      <input type="text" class="form-control" placeholder="Search for...">
+						     <input type="text" class="form-control" placeholder="Search for..." id="search" name="find">
+						     <input type="hidden" name="board_kind" value="1">
 						      <span class="input-group-btn">
-						        <a class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></a>
+						        <a class="btn btn-default" type="button" id="search_btn"><span class="glyphicon glyphicon-search"></span></a>
 						      </span>
 						    </div>
 					</form>
