@@ -9,10 +9,11 @@
 							<p>	알고 싶으신 내용이 있으시면 키워드를 입력하셔서 검색해 주세요.</p>
 						</div>
 						
-						<form action="findList" method="post" role="search">
+						<form name="fname" action="findList" method="post" role="search">
 							    <div class="search_input">
-							      <input type="text" placeholder="Search for...">
-							      <a href="#" class="sch_btn" id="sch_btn">검색</a>
+							      <input type="text" placeholder="Search for..." name="find" id="search">
+							      <input type="hidden" name="board_kind" value="2">
+							      <a href="#" class="sch_btn" id="search_btn">검색</a>
 							    </div>
 						</form>
 					</div>
@@ -34,13 +35,18 @@
 							</div>
 							<div class="inner-searchR">
 								<strong>분류별 키워드</strong><br>
-								<select class="form-control">
-									<option value="">전체</option>
-									<option value="코디/상품">코디/상품</option>
-									<option value="주문/배송">주문/배송</option>
-									<option value="입금/결제">입금/결제</option>
-									<option value="기타">기타</option>
+								<form name="gname" action="findList" method="get">
+								 <input type="hidden" placeholder="Search for..." name="find" id="search" value="">
+								<select class="form-control" id="group" name="type">								
+									<option value="" class="groupk">전체</option>
+									<option value="코디/상품" class="groupk">코디/상품</option>
+									<option value="주문/배송" class="groupk">주문/배송</option>
+									<option value="입금/결제" class="groupk">입금/결제</option>
+									<option value="기타" class="groupk">기타</option>			
 								</select>
+								<input type="hidden" value="2" name="board_kind">
+								<input type="hidden" value="${type}" id="type">
+								</form>
 							</div>
 						</div>
 					</div>

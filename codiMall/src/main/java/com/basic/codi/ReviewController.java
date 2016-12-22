@@ -22,17 +22,19 @@ public class ReviewController {
 	private ReviewService reviewService;
 	
 	@RequestMapping (value="/reviewWriteForm")
-	public void reviewWriteform(){
+	public void reviewWriteform(ReviewDTO reviewDTO,Model model){
+		model.addAttribute("review_product", reviewDTO.getReview_product());
 		System.out.println("모달 접속");
 	}
 	
 	@RequestMapping(value="/reviewWrite")
-	public String reviewWrite(ReviewDTO reviewDTO, RedirectAttributes rt, MultipartHttpServletRequest mr, HttpSession session){
+	public String reviewWrite(ReviewDTO reviewDTO, RedirectAttributes rt, MultipartHttpServletRequest mr, HttpSession session,Model model){
 		System.out.println("reviewWrite접속");
 		System.out.println("리뷰 작성자 :"+reviewDTO.getReview_writer());
 		System.out.println("리뷰 내용 :"+reviewDTO.getReview_contents());
 		System.out.println("리뷰 별점 :"+reviewDTO.getReview_star());
 		System.out.println("파일명 :"+mr.getFile("reviewfile"));
+		model.addAttribute("review_product",reviewDTO.getReview_product());
 		String messege;
 		try {
 			messege = reviewService.reviewWrite(reviewDTO, mr, session);
@@ -40,8 +42,8 @@ public class ReviewController {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return "redirect:/review/reviewList";
+		} 
+		return "redirect:/product/productView?product_num="+reviewDTO.getReview_product();
 	}
 	
 	@RequestMapping(value="/review")
@@ -52,6 +54,7 @@ public class ReviewController {
 	@RequestMapping(value="/reviewList")
 	public String reviewList(ReviewDTO reviewDTO,Model model ,@RequestParam(defaultValue="1") int curPage,@RequestParam(defaultValue="10")int perPage){
 		System.out.println("review컨트롤러접속");
+		model.addAttribute("review_product",reviewDTO.getReview_product());
 		reviewService.reviewList(reviewDTO, curPage, perPage, model);
 		return "review/reviewList";
 	}
@@ -68,9 +71,10 @@ public class ReviewController {
 		System.out.println("reviewUpdate접속");
 		System.out.println("새파일명 :"+mr.getFile("reviewfile").getOriginalFilename());
 		System.out.println("기존 파일이름:"+fileimg);
+		System.out.println("상품번호 :"+reviewDTO.getReview_product());
 		String messege=reviewService.reviewUpdate(reviewDTO, mr, session, fileimg);
-		rt.addFlashAttribute("message", messege);	
-		return "redirect:/review/reviewList";				
+		rt.addFlashAttribute("message", messege);
+		return "redirect:/product/productView?product_num="+reviewDTO.getReview_product();				
 	}
 	
 	@RequestMapping(value="reviewDelete")
@@ -78,8 +82,8 @@ public class ReviewController {
 		System.out.println("delete컨트롤러 접속");
 		System.out.println(reviewDTO.getReview_num());
 		String messege=reviewService.reviewDel(reviewDTO);
-		rt.addFlashAttribute("messege",messege);
-		return "redirect:/review/reviewList";
+		rt.addFlashAttribute("message",messege);
+		return "redirect:/product/productView?product_num="+reviewDTO.getReview_product();
 		
 	}
 

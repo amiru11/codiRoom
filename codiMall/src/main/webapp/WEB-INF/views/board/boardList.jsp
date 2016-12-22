@@ -17,6 +17,24 @@
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+		$("#search_btn").click(function () {
+			var search = $("#search").val();
+			if(search ==""){
+				alert("검색어를 입력해주세요");
+			}else{
+				var m = document.fname;
+				m.submit();
+				/* $(".table").hide();
+				$(".center-block").hide();	 */
+				/*  $("#findList").load("findList.jsp",function(responseText){
+					
+				}); */
+			}
+		});
+		$("#group").change(function() {		
+			var g = document.gname;			
+			g.submit();			
+		});
 		
 		$("#wrBtn").click(function(){
 			location.href="${pageContext.request.contextPath}/board/boardWrite?board_kind=${board_kind}";

@@ -23,17 +23,15 @@ public class ReviewService {
 	//리뷰리스트
 		public void reviewList(ReviewDTO reviewDTO,int curPage,int perPage,Model model){
 			System.out.println("reviewService접속");
+			System.out.println("review상품번호 :"+reviewDTO.getReview_product());
 			PageMaker pageMaker = new PageMaker();
 			pageMaker.setCurPage(curPage);
 			pageMaker.setPerPage(perPage);
 			pageMaker.makeRow();
 			pageMaker.makePage(reviewDAO.reviewCount());
 			List<ReviewDTO> ar=reviewDAO.reviewList(reviewDTO, pageMaker);
-			for(int i=0;i>ar.size();i++){
-				System.out.println("리뷰num :"+ar.get(i).getReview_num());
-				System.out.println("리뷰writer :"+ar.get(i).getReview_writer());
-				System.out.println("리뷰contents :"+ar.get(i).getReview_contents());
-				
+			for(int i=0;i<ar.size();i++){
+				System.out.println("리뷰num :"+ar.get(i).getReview_num());		
 			}
 			model.addAttribute("reviewList",ar);
 			model.addAttribute("paging", pageMaker);
@@ -43,6 +41,7 @@ public class ReviewService {
 		//리뷰 글쓰기
 		public String reviewWrite(ReviewDTO reviewDTO, MultipartHttpServletRequest mr, HttpSession session) throws Exception {
 			int result = 0;
+			if(!mr.getFile("reviewfile").getOriginalFilename().equals("")){
 			String path = session.getServletContext().getRealPath("resources/upload");//파일저장경로 만들어주기
 			System.out.println("이미지경로 :"+mr.getFile("reviewfile"));
 			MultipartFile reviewfile = mr.getFile("reviewfile");			
@@ -51,7 +50,9 @@ public class ReviewService {
 					reviewfile.transferTo(file);//TransferTo를 통해 파일객체에 경로+파일명 저장
 					System.out.println("파일 :"+file);				
 					reviewDTO.setReview_img(fileName);
+			}
 			result = reviewDAO.reviewWrite(reviewDTO);
+			
 			String message = "";
 			if(result > 0){
 				message = "등록완료!";
@@ -95,9 +96,9 @@ public class ReviewService {
 			int result = reviewDAO.reviewUpdate(reviewDTO);
 			String message = "";
 			if(result > 0){
-				message = "등록완료!";
+				message = "수정완료!";
 			}else{
-				message = "등록실패!";
+				message = "수정실패!";
 			}
 			
 			System.out.println("결과 : "+message);
@@ -111,9 +112,9 @@ public class ReviewService {
 			int result = reviewDAO.reviewDel(reviewDTO);
 			String message = "";
 			if(result > 0){
-				message = "등록완료!";
+				message = "삭제완료!";
 			}else{
-				message = "등록실패!";
+				message = "삭제실패!";
 			}
 			
 			System.out.println("결과 : "+message);

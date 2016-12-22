@@ -13,17 +13,21 @@
         <div class="modal-body">
         <p>작성날짜:${review.review_reg_date}</p>
         <p>작성날짜:${review.review_writer}</p>
+        <c:if test="${!review.review_img eq null}">
           <div>
           	<img id="review_file" src="${pageContext.request.contextPath}/resources/upload/${review.review_img}">
           </div>
+        </c:if>
           <div>
           	<p>구매한 옵션:</p>
           	<p>${review.review_contents}</p>
           </div>
         </div>
         <div class="modal-footer">
+        <c:if test="${sessionScope.member.id eq review.review_writer}">
         	<button id="ud_btn">수정</button>
         	<button id="del_btn">삭제</button>
+        </c:if>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>

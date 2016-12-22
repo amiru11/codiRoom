@@ -403,5 +403,22 @@ public class ProductDAO {
 			e.printStackTrace();
 		}
 	}*/
+	
+	/*상품검색*/
+	public List<ProductListDTO> productSearchList(String find,PageMaker pageMaker){
+		System.out.println("상품검색DAO");
+		System.out.println("상품검색어 :"+find);
+		
+		Map<String, Object> mr = new HashMap<>();
+		mr.put("find", "%"+find+"%");
+		mr.put("pageMaker", pageMaker);		
+		return sqlSession.selectList(namespace+"searchList",mr);
+		
+	}
+	public int searchCount(String find){
+		Map<String, Object> mr = new HashMap<>();
+		mr.put("find", "%"+find+"%");
+		return sqlSession.selectOne(namespace+"searchCount",mr);
+	}
 
 }
