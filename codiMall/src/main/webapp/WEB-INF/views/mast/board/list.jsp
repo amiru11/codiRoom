@@ -21,7 +21,8 @@
 													<td><c:forEach begin="1" end="${list.board_depth}">
 												&nbsp;&nbsp;&nbsp;&nbsp;
 										</c:forEach> <a
-														href="${pageContext.request.contextPath}/board/boardView?board_num=${list.board_num}&board_kind=${list.board_kind}">${list.board_title}</a>
+														id="${list.board_num}" class="${list.board_kind}" onclick="goView(this);" href="${pageContext.request.contextPath}/mast/board/view?board_num=${list.board_num}&board_kind=${list.board_kind}">${list.board_title}</a>
+														
 													</td>
 													<td>${list.board_writer}</td>
 													<td>${list.board_date}</td>

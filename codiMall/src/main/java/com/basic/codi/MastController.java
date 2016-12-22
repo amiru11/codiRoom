@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.basic.board.BoardDTO;
 import com.basic.mast.MastService;
 import com.basic.member.MemberDTO;
 
@@ -55,11 +55,15 @@ public class MastController {
 		return path;
 	}
 	
+	
+	
+	
+/////////////////////////////////////////////////////////////게시판/////////////////////////////////////////////////////////	
 	@RequestMapping(value="/boardList")
 	public String boardList(@RequestParam(defaultValue="1") int curPage, 
 			@RequestParam(defaultValue="10") int perPage, @RequestParam(defaultValue="1") int board_kind,Model model){
 			model.addAttribute("board_kind", board_kind);
-		return "mast/mastBoard";
+		return "mast/board/mastBoard";
 	}
 	
 	@RequestMapping(value="/resultBoard")
@@ -76,8 +80,18 @@ public class MastController {
 		}		
 		
 		String path = "";
-		path = "mast/resultBoard";
+		path = "mast/board/list";
 		return path;
 	}
-
+	//글보기//
+	@RequestMapping(value="/boardView")
+	public String boardView(BoardDTO boardDTO, int board_kind, Model model){
+		try {
+			mastService.boardView(boardDTO, board_kind, model);
+			System.out.println("BOARD VIEW");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "mast/board/view";
+	}
 }
