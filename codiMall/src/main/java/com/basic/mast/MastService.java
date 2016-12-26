@@ -81,7 +81,7 @@ public class MastService {
 		pageMaker.makeRow();
 		pageMaker.makePage(boardDAO.boardCount(board_kind));
 		List<BoardDTO> ar;
-		List<BoardDTO> br;
+		//List<BoardDTO> br;
 		ar = boardDAO.findList(type, find, board_kind, pageMaker);
 		model.addAttribute("type", type);
 		model.addAttribute("find", find);
@@ -93,13 +93,19 @@ public class MastService {
 			model.addAttribute("boardName", "NOTICE");
 		} else if (board_kind == 2) {
 			model.addAttribute("boardName", "FAQ");
-			// BEST 5//
-			br = boardDAO.bestList();
-			for (int i = 0; i < br.size(); i++) {
-				System.out.println("bestTITLE : " + br.get(i).getBoard_title());
+			//BEST 5//
+			/*br = boardDAO.bestList();
+			for(int i = 0; i<br.size();i++){
+				System.out.println("bestTITLE : "+br.get(i).getBoard_title());
+
 			}
+
 			model.addAttribute("bestList", br);
 		} else if (board_kind == 3) {
+=======
+			model.addAttribute("bestList", br);*/
+		}else if(board_kind==3){
+
 			model.addAttribute("boardName", "QNA");
 		}
 	}
@@ -107,8 +113,15 @@ public class MastService {
 	// 뷰//
 	public BoardDTO boardView(BoardDTO boardDTO, int board_kind, Model model) throws Exception {
 
+
 		boardDTO = boardDAO.boardView(boardDTO, board_kind);
 		boardDAO.boardViewUpdate(boardDTO);
+
+
+		
+		boardDTO = boardDAO.boardView(boardDTO,board_kind);
+		//boardDAO.boardViewUpdate(boardDTO);
+		
 
 		List<CommentDTO> cr = commentDAO.commentList(boardDTO);
 
@@ -122,5 +135,39 @@ public class MastService {
 		}
 		return boardDTO;
 	}
+
+
+	//등록//
+	
+	public String boardWrite(BoardDTO boardDTO,int board_kind) throws Exception {
+		int result = 0;
+		System.out.println("WRITE");
+		result = boardDAO.boardWrite(boardDTO, board_kind);
+		System.out.println("BOARD NUM : "+board_kind);
+		String message = "";
+		if(result > 0){
+			message = "등록완료!";
+		}else{
+			message = "등록실패!";
+		}
+		
+		System.out.println("결과 : "+message);
+		return message;
+	}	
+	
+	
+	//삭제//
+	public String boardDel(int board_num,int board_kind) throws Exception {
+		int result = 0;		
+		result = boardDAO.boardDel(board_num,board_kind);
+		String message = "";
+		if(result > 0){
+			message = "삭제완료!";
+		}else{
+			message = "삭제실패!";
+		}
+		return message;		
+	}
+	
 
 }

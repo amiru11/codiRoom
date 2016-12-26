@@ -1,9 +1,15 @@
 package com.basic.codi;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.File;
+import java.util.UUID;
+
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +18,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.basic.board.BoardDTO;
+import com.basic.board.PhotoDTO;
 import com.basic.mast.MastService;
 import com.basic.member.MemberDTO;
 
@@ -184,4 +192,81 @@ public class MastController {
 		}
 		return "mast/board/view";
 	}
+	
+	//글쓰기//
+	@RequestMapping(value="/boardWrite")
+	public String boardWrite(BoardDTO boardDTO, int board_kind, RedirectAttributes ra){
+		try {
+			String message = mastService.boardWrite(boardDTO, board_kind);
+			System.out.println("BOARD WRITE");
+			System.out.println("BOARD NUM : " +board_kind);
+			ra.addFlashAttribute("message", message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String path = "";
+		path = "mast/boardList?board_kind=";
+		return "redirect:/"+path+board_kind;
+	}
+	
+	//글삭제//
+	@RequestMapping(value="/boardDelete")
+	public String boardDelete(int board_num, int board_kind, RedirectAttributes ra){
+		String path = "";
+		
+		try {
+			String message = mastService.boardDel(board_num,board_kind);
+			System.out.println("mastBOARD DEL");
+			System.out.println("글 삭제 : " + message);
+			ra.addFlashAttribute("message", message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		path = "mast/boardList?board_kind=";
+		return "redirect:/"+path+board_kind;
+	}
+	
+	
+	//SMART EDITOR//
+	@RequestMapping(value="/seWrite")
+	public String fileUpload(PhotoDTO photoDTO, HttpSession session){
+		String callback = photoDTO.getCallback();
+		String callback_func = photoDTO.getCallback_func();
+		String file_result = "";
+		try {
+		if(photoDTO.getFiledata() != null && photoDTO.getFiledata().getOriginalFilename() != null && !photoDTO.getFiledata().getOriginalFilename().equals("")){
+			//파일이 존재하면
+			
+			//파일명
+			String original_name = photoDTO.getFiledata().getOriginalFilename();
+			//확장자를 찾는 구간
+			String ext = original_name.substring(original_name.lastIndexOf(".")+1);
+			//파일 기본 경로
+			String defaultPath = session.getServletContext().getRealPath("/");
+			//파일 상세경로
+			String path = defaultPath + "resources" + File.separator + "upload"; //separator는 구분자!!
+			
+			File file = new File(path);
+			
+			//디렉토리 존재하지 않을 경우, 디렉토리 생성
+			if(!file.exists()){
+				file.mkdirs();
+			}
+			//서버에 업로드 할 파일명
+			String realName = UUID.randomUUID().toString() + "." + ext;//기존이름을 버리고 랜덤이름을 붙여서 새로운 이름을 만들어줌
+			
+			//서버에 파일쓰기//
+			
+				photoDTO.getFiledata().transferTo(new File(path+realName));
+				file_result += "&bNewLine=true&sFileName=" + original_name + "&sFileURL=/codi/resources/upload" + realName;
+			
+			}else{
+				file_result += "&errstr=error";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:" + callback + "?callback_func=" + callback_func + file_result;
+	}
+	
 }

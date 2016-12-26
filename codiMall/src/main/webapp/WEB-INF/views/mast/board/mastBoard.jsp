@@ -4,15 +4,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<link href="${pageContext.request.contextPath}/resources/css/mast/mast.css" rel="stylesheet">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/mast.js"></script>
+<link href="${pageContext.request.contextPath}/resources/css/mast/mast.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
-<script src="${pageContext.request.contextPath}/resources/js/mast.js"></script>
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>게시판 관리</title>
 <style type="text/css">
+body{
+	font-family: 'hanna';
+}
 .category-li:HOVER{
 	background: none;
 }
@@ -39,25 +44,122 @@
     text-transform: uppercase;
     letter-spacing: 0.02em;
     transition: 0.3s ease-out;
-}
-.subBtn:HOVER{
-	color: #30b5e1;
+    color: #30b5e1;
     background-color: #fff;
     border-color: initial;
+}
+.subBtn:HOVER{
+	color: #fff;
+    background-color: #30b5e1;
+    border-color: initial;
+}
+.container .jumbotron, .container-fluid .jumbotron{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+.pagination>li>a, .pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: transparent;
+    border: none; 
 }
 </style>
 <script type="text/javascript">
 	var board_kind = '';
+    var editor_object = [];
 	$(function(){
 		
-		listAjax();
+		listAjax();//ajax로 보드종류에 따른 리스트뿌리기
  		$(".sel_type").click(function(){
- 			alert($(this).prop("id"));
+ 			//alert($(this).prop("id"));
  			subAjax(this);
  		});
+ 		
+ 		
+ 		$("#goReply").click(function(){//코멘트열기
+ 			$("#replySet").toggle();
+ 		});
+	    
+		$("#goList").click(function(){
+			listAjax();
+		});
+	     	     
+		//글쓰기버튼 클릭이벤트
+	    $("#goWrite").click(function(){
+	        //id가 smarteditor인 textarea에 에디터에서 대입
+	        editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
+	         
+	        // 이부분에 에디터 validation 검증
+	         
+	        //폼 submit
+	        document.writeFrm.submit();
+	    });
+ 		
 	});
 	
+	//체크박스에 체크해주기
+	function delBtn(data){
+		board_kind = ${board_kind};
+		var board_num = parseInt($(data).next().val());
+		var con = confirm('삭제하시겠습니까?');
+		if(con == true){
+			$(data).next().prop("checked",true);
+			$.ajax({
+				//삭제시켜버리기
+				url : "boardDelete",
+				type : "get",
+				data : {
+					board_num : board_num,
+					board_kind : board_kind
+				},
+				success : function(data){
+					var data = data.trim();
+					console.log(data);
+					$("#section").empty();
+					$("#section").html(data);
+					$("#1").parent("li").removeClass("active");
+					$("#2").parent("li").removeClass("active");
+					$("#3").parent("li").removeClass("active");
+					$("#4").parent("li").removeClass("active");
+					$("#"+board_kind).parent("li").addClass("active");
+
+				}
+			});
+		}else{
+			$(data).next().prop("checked",false);
+		}
+		
+		
+	}
 	
+	function goList(){
+		$.ajax({
+			url : "resultBoard",
+			type : "get",
+			data : {
+				curPage : 1,
+				perPage : 10,
+				board_kind : $("#data2").val()
+			},
+			success : function(data){
+				var data = data.trim();
+				//console.log(data);
+				$("#section").empty();
+				$("#section").html(data);
+				$("#1").parent("li").removeClass("active");
+				$("#2").parent("li").removeClass("active");
+				$("#3").parent("li").removeClass("active");
+				$("#4").parent("li").removeClass("active");
+				$("#"+board_kind).parent("li").addClass("active");
+
+			}
+		});
+	}
 	
 	function listAjax(){
 		board_kind = ${board_kind};
@@ -71,7 +173,7 @@
 			},
 			success : function(data){
 				var data = data.trim();
-				console.log(data);
+				//console.log(data);
 				$("#section").empty();
 				$("#section").html(data);
 				$("#1").parent("li").removeClass("active");
@@ -84,7 +186,7 @@
 		});
 	}
 		function subAjax(data){
-			alert(board_kind);
+			//alert(board_kind);
 			board_kind = $(data).prop("id");
 			$.ajax({
 				url : "resultBoard",
@@ -117,7 +219,11 @@
 				},
 				success : function(data){
 					var data = data.trim();
+<<<<<<< HEAD
 					console.log(data);
+=======
+				//	console.log(data);
+>>>>>>> refs/heads/sub
 					$("#section").empty();
 					$("#section").html(data);
 					$("#1").parent("li").removeClass("active");
@@ -137,13 +243,13 @@
 					<%@ include file="/resources/temp/mast/sideBar.jspf"%>
 				</div>
 				<div class="col-sm-8" style="margin: 20px;">
-					<div class="container">
+					<div class="container-fluid">
 						<div id="view">
 							<header id="topbar" class="text-center bg-white alt ph10 br-b-ddd">
 								<nav class="navbar">
 									<div class="navbar-collapse collapse"
 										style="padding-left: 0; border-bottom: 1px solid #eee;">
-										<ul id="category-type" class="nav navbar-nav" style="vertical-align: top; margin-left: 350px;">
+										<ul id="category-type" class="nav navbar-nav" style="vertical-align: top;">
 											<li class="category-li"><a id="1" class="sel_type">Notice</a></li>
 											<li class="category-li"><a id="2" class="sel_type">FAQ</a></li>
 											<li class="category-li"><a id="3" class="sel_type">QNA</a></li>
@@ -152,17 +258,31 @@
 										</ul>
 									</div>
 								</nav>
+<<<<<<< HEAD
 							<div class="mt-30 hidden-xs">
+=======
+<!-- 							<div class="mt-30 hidden-xs">
+>>>>>>> refs/heads/sub
 								<a id="subList" class="subBtn btn btn-default btn-lg">
 									<span class="fa fa-list"></span> List
 								</a>
 								<a id="subView" class="subBtn btn btn-default btn-lg">
 									<span class="fa fa-wrench"></span> View
+<<<<<<< HEAD
+=======
 								</a>
+								<a id="subWrite" class="subBtn btn btn-default btn-lg">
+									<span class="fa fa-pencil"></span> Write
+>>>>>>> refs/heads/sub
+								</a>
+<<<<<<< HEAD
 								<a id="subWrite" class="subBtn btn btn-default btn-lg">
 									<span class="fa fa-pencil"></span> Write
 								</a>
 							</div>
+=======
+							</div> -->
+>>>>>>> refs/heads/sub
 							</header>
 						
 							<section id="section" class="jumbotron">						
