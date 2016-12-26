@@ -79,6 +79,7 @@
 				$("#3").parent("li").removeClass("active");
 				$("#4").parent("li").removeClass("active");
 				$("#"+board_kind).parent("li").addClass("active");
+
 			}
 		});
 	}
@@ -106,12 +107,33 @@
 				}
 			});                                                                                                                                                                                               	
 	}
+		function goView(data){
+			$.ajax({
+				url : "${pageContext.request.contextPath}/mast/boardView",
+				type : "get",
+				data : {
+					board_num : $(data).prop("id"),//a태그의 id
+					board_kind : $(data).prop("class")//a태그의 class
+				},
+				success : function(data){
+					var data = data.trim();
+					console.log(data);
+					$("#section").empty();
+					$("#section").html(data);
+					$("#1").parent("li").removeClass("active");
+					$("#2").parent("li").removeClass("active");
+					$("#3").parent("li").removeClass("active");
+					$("#4").parent("li").removeClass("active");
+					$("#"+board_kind).parent("li").addClass("active");
+				}			
+			});
+		} 
 </script>
 </head>
 <body style="height:1200px;">
 	<div class="container-fluid" style="padding : 0; height: 100%">
 		<div class="row"  style="height: 100%;">
-				<div class="col-sm-2">
+				<div class="col-sm-2" style="height: 100%;">
 					<%@ include file="/resources/temp/mast/sideBar.jspf"%>
 				</div>
 				<div class="col-sm-8" style="margin: 20px;">
@@ -131,14 +153,14 @@
 									</div>
 								</nav>
 							<div class="mt-30 hidden-xs">
-								<a href="" class="subBtn btn btn-default btn-lg">
+								<a id="subList" class="subBtn btn btn-default btn-lg">
 									<span class="fa fa-list"></span> List
 								</a>
-								<a href="" class="subBtn btn btn-default btn-lg">
-									<span class="fa fa-pencil"></span> Write
+								<a id="subView" class="subBtn btn btn-default btn-lg">
+									<span class="fa fa-wrench"></span> View
 								</a>
-								<a href="" class="subBtn btn btn-default btn-lg">
-									<span class="fa fa-wrench"></span> Update
+								<a id="subWrite" class="subBtn btn btn-default btn-lg">
+									<span class="fa fa-pencil"></span> Write
 								</a>
 							</div>
 							</header>

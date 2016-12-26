@@ -57,7 +57,7 @@ table, table tr, tr td, th {
 						<div id="view">
 						
 						</div>
-					</div>		
+					</div>
 				</div>			
 		</div>
 	

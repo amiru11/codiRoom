@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>        
 <!DOCTYPE html>
+<script>
+
+</script>
 
 								<!-- boardList:S -->
 								<table class="table">
@@ -12,21 +15,26 @@
 												<th>WRITER</th>
 												<th>DATE</th>
 												<th>VIEW</th>
+												<th></th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${list}" var="list">
+											<c:forEach items="${list}" var="list" varStatus="i">
 												<tr>
-													<td>${list.board_num}</td>
+													<td>${i.count}<%-- ${list.board_num} --%></td>
 													<td><c:forEach begin="1" end="${list.board_depth}">
 												&nbsp;&nbsp;&nbsp;&nbsp;
 										</c:forEach> <a
-														id="${list.board_num}" class="${list.board_kind}" onclick="goView(this);" href="${pageContext.request.contextPath}/mast/board/view?board_num=${list.board_num}&board_kind=${list.board_kind}">${list.board_title}</a>
+														id="${list.board_num}" class="${list.board_kind}" onclick="goView(this);" style="cursor : pointer;">${list.board_title}</a>
 														
 													</td>
 													<td>${list.board_writer}</td>
 													<td>${list.board_date}</td>
 													<td>${list.board_counts}</td>
+													<td>
+														<input type="button" role="button" class="btn btn-danger btn-sm" value="DELETE">
+														<input type="checkbox" class="checkSet">
+													</td>
 												</tr>
 											</c:forEach>
 										</tbody>
