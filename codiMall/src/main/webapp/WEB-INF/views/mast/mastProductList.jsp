@@ -258,25 +258,25 @@ th {
 								action="${pageContext.request.contextPath}/mast/mastProductList"
 								method="post">
 								<div id="div_hid_sel">
-									<input type="number" name="sel" min="1">
+									sel <input type="number" name="sel" min="1">
 								</div>
 								<div id="div_hid_mtpsel">
-									<input type="number" name="mtpSel" min="1">
+									mtpSel <input type="number" name="mtpSel" min="1">
 								</div>
 								<div id="div_hid_prosel">
-									<input type="number" name="productSelect_num" min="1">
+									productSelect_num <input type="number" name="productSelect_num" min="1">
 								</div>
 								<div id="div_hid_kind">
-									<input type="number" name="kind_num" min="1">
+									kind_num <input type="number" name="kind_num" min="1">
 								</div>
 								<div id="div_hid_pro">
-									<input type="number" name="product_num" min="1">
+									product_num <input type="number" name="product_num" min="1">
 								</div>
 								<div id="div_hid_size">
-									<input type="text" name="productSize_size">
+									productSize_size <input type="text" name="productSize_size">
 								</div>
 								<div id="div_hid_color">
-									<input type="text" name="productEach_color">
+									productEach_color <input type="text" name="productEach_color">
 								</div>
 								<button>SUBMII</button>
 							</form>

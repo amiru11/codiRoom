@@ -445,11 +445,14 @@
 		resultType="com.basic.product.ProductSizeDTO">
 		select
 		DISTINCT productSize_size from PRODUCTSIZE
-		order by case when
+		order by
+		case when
 		productSize_size = 'SSS' then 1 when productSize_size = 'SS'
 		then 2 when productSize_size = 'S' then 3
-		when productSize_size = 'M' then 4 when productSize_size = 'L' then
-		5 when productSize_size = 'XL' then 6 when productSize_size =
+		when productSize_size = 'M'
+		then 4 when productSize_size = 'L' then
+		5 when productSize_size = 'XL'
+		then 6 when productSize_size =
 		'XXL' then 7
 		end
 	</select>
@@ -457,7 +460,8 @@
 		resultType="com.basic.product.ProductEachDTO">
 		select
 		DISTINCT productEach_color from PRODUCTeach
-		ORDER BY productEach_color asc
+		ORDER BY
+		productEach_color asc
 	</select>
 
 
@@ -523,15 +527,77 @@
 		) z)order by case when
 		pe_productSize_size = 'SSS' then 1 when pe_productSize_size = 'SS'
 		then 2 when pe_productSize_size = 'S' then 3
-		when pe_productSize_size = 'M' then 4 when pe_productSize_size = 'L' then
-		5 when pe_productSize_size = 'XL' then 6 when pe_productSize_size =
-		'XXL' then 7
+		when pe_productSize_size =
+		'M' then 4 when pe_productSize_size = 'L' then
+		5 when
+		pe_productSize_size = 'XL' then 6 when pe_productSize_size =
+		'XXL' then
+		7
 		end,pe_productEach_color asc
 
 
 	</select>
 
 	<!-- Mast product All Info E -->
+
+	<!-- MastProductList each 0 S -->
+	<select id="SelMastProductListEach0" resultMap="ProductAllInfo2">
+		select DISTINCT er.* from(select z.* from(select
+		DISTINCT 
+		selCount,pse.PRODUCTSELECT_NUM as
+		pse_productSelect_num,pse.PRODUCTSELECT_NAME as pse_productSelect_name
+		,k.KIND_NUM as k_kind_num,k.KIND_NAME as k_kind_name,t.PRODUCT_NUM as
+		p_product_num,
+		t.PRODUCT_NAME as p_product_name,pi.PRODUCTINFO_PRICE as
+		pi_PRODUCTINFO_price,pi.PRODUCTINFO_REC_DATE as
+		pi_PRODUCTINFO_rec_date,pi.PRODUCTINFO_REG_DATE as
+		pi_PRODUCTINFO_reg_date,
+		pi.PRODUCTINFO_SALERATE as
+		pi_PRODUCTINFO_salerate,
+		pi.PRODUCTINFO_SEARCHWORD as
+		pi_PRODUCTINFO_searchword,pi.PRODUCTINFO_BRAND as
+		pi_PRODUCTINFO_brand,pc.PRODUCTPIC_PIC as pc_PRODUCTPIC_PIC,
+		pe.PRODUCTSIZE_SIZE as pe_productSize_size,pe.PRODUCTEACH_COLOR as
+		pe_productEach_color,pe.PRODUCTEACH_EACH as pe_productEach_each
+		from
+		(select count(b.buy_num) selCount,p.PRODUCT_NUM,p.product_name
+		from
+		product p LEFT OUTER JOIN buy b
+		ON b.product_num = p.PRODUCT_NUM
+		group
+		by p.PRODUCT_NUM, p.product_name)
+		t ,PRODUCTINFO pi,PRODUCTPIC pc
+		,
+		PRODUCTKIND pk , PRODUCTSELECT pse
+		,kind k,productEach
+		pe
+		where
+		t.product_num = pe.product_num and
+		t.PRODUCT_NUM =
+		pe.PRODUCT_NUM and
+		t.PRODUCT_NUM =
+		pi.PRODUCT_NUM
+		and
+		t.PRODUCT_NUM =
+		pe.PRODUCT_NUM
+		and
+		t.PRODUCT_NUM =
+		pc.PRODUCT_NUM
+		and
+		t.PRODUCT_NUM =
+		pk.PRODUCT_NUM
+		and
+		pse.PRODUCTSELECT_NUM =
+		k.PRODUCTSELECT_NUM
+		and
+		pk.KIND_NUM = k.KIND_NUM
+    and pe.PRODUCTEACH_EACH = 0
+		) z) er order by p_product_num desc,case when pe_productSize_size = 'SSS' then 1 when pe_productSize_size = 'SS' then 2 when pe_productSize_size = 'S' then 3
+     when pe_productSize_size = 'M' then 4 when pe_productSize_size = 'L' then 5 when pe_productSize_size = 'XL' then 6 when pe_productSize_size = 'XXL' then 7
+    end,pe_productEach_color asc
+	</select>
+	<!-- MastProductList each 0 E -->
+	
 
 
 
@@ -606,10 +672,12 @@
 		productEach_each = #{productEach_each}
 		where product_num=#{product_num}
 		and productSize_size = #{productSize_size}
-		and productEach_color = #{productEach_color}
+		and productEach_color =
+		#{productEach_color}
 	</update>
 	<update id="UpProductInfoDate" parameterType="int">
-		update productInfo set
+		update productInfo
+		set
 		productInfo_rec_date = sysdate
 		where product_num = #{product_num}
 	</update>

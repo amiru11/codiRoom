@@ -45,6 +45,13 @@ public class MastService {
 		return mastDAO.mastProductList(map, pageMaker);
 	}
 
+	// mast ProductList Each 0 sssssssssssssss ---------------------------------
+	public void mastProductListEach0(Model model) {
+		model.addAttribute("list",mastDAO.mastProductListEach0());	
+	}
+
+	// mast ProductList Each 0 eeeeeeeeee---------------------------------
+
 	public MastProductViewDTO mastProductAllInfo(int product_num) {
 		return mastDAO.mastProductAllInfo(product_num);
 	}
@@ -56,8 +63,9 @@ public class MastService {
 	public int mastUpState(int buy_num, int buyState_state, Integer buyState_expressNum) {
 		return mastDAO.mastUpState(buy_num, buyState_state, buyState_expressNum);
 	}
-	
-	public int mastProductEachFix(int product_num,String productSize_size,String productEach_color,int productEach_each){
+
+	public int mastProductEachFix(int product_num, String productSize_size, String productEach_color,
+			int productEach_each) {
 		return mastDAO.mastProductEachFix(product_num, productSize_size, productEach_color, productEach_each);
 	}
 

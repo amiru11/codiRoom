@@ -80,11 +80,26 @@ public class MastController {
 			System.out.println("mtpSel---"+mtpSel);
 			System.out.println("curPage---"+curPage);
 			System.out.println("perPage---"+perPage);
-			System.out.println("kind_num---"+kind_num);
-			System.out.println("productSelect_num---"+productSelect_num);
-			System.out.println("productNim---"+product_num);
-			System.out.println("productEach_color---"+productEach_color);
-			System.out.println("productEach_Size---"+productSize_size);
+			System.out.println("kind_num---"+kind_num+"---"+kind_num.length);
+			System.out.println("productSelect_num---"+productSelect_num+"---"+productSelect_num.length);
+			System.out.println("productNim---"+product_num+"---"+product_num.length);
+			System.out.println("productEach_color---"+productEach_color+"---"+productEach_color.length);
+			System.out.println("productEach_Size---"+productSize_size+"---"+productSize_size.length);
+			if(kind_num.length==0){
+				kind_num=null;
+			}
+			if(product_num.length==0){
+				product_num=null;
+			}
+			if(productSelect_num.length==0){
+				productSelect_num=null;
+			}
+			if(productEach_color.length==0){
+				productEach_color=null;
+			}
+			if(productSize_size.length==0){
+				productSize_size=null;
+			}
 			Map<String,Object> map = new HashMap<>();
 			map.put("curPage", curPage);
 			map.put("perPage", perPage);
@@ -102,6 +117,12 @@ public class MastController {
 		}
 		return path;
 	}
+	
+	@RequestMapping(value="/mastProductListEach0",method=RequestMethod.GET)
+	public void mastProductListEach0G(Model model){
+		mastService.mastProductListEach0(model);
+	}
+	
 
 	@RequestMapping(value = "/mastBuyList")
 	public String mastBuyList(HttpSession session, Model model, @RequestParam(defaultValue = "1") int state_num) {

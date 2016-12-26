@@ -6,7 +6,7 @@ import java.util.List;
 import com.basic.product.ProductEachDTO;
 
 public class MastProductViewDTO {
-	
+
 	private int selCount;
 	private int productSelect_num;
 	private String productSelect_name;
@@ -22,6 +22,8 @@ public class MastProductViewDTO {
 	private String productInfo_brand;
 	private String productPic_pic;
 	private List<ProductEachDTO> productEachDTOs;
+	
+	
 	public int getSelCount() {
 		return selCount;
 	}

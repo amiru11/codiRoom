@@ -85,6 +85,17 @@ public class MastDAO {
 	
 	//  mast product List E------------------------------
 	
+	// mast product List Each 0  S -----------------------------------------
+	public List<MastProductViewDTO> mastProductListEach0(){
+		List<MastProductViewDTO> ar = sqlSession.selectList(namespace+"SelMastProductListEach0");
+		System.out.println(ar.size());
+		return sqlSession.selectList(namespace+"SelMastProductListEach0");
+	}
+	
+	// mast product List Each 0  E -----------------------------------------
+	
+	
+	
 	public MastProductViewDTO mastProductAllInfo(int product_num){
 		System.out.println(product_num);
 		MastProductViewDTO mastProductViewDTO = sqlSession.selectOne(namespace+"SelMastProductInfoAll",product_num);
