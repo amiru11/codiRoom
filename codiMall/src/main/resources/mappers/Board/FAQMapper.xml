@@ -71,10 +71,10 @@
 			select * from 
 			(select rownum R, F.* from
 			(select * from board where board_kind=2 
-			<if test="type == ''">
+			<if test="type == '' ">
 				and board_contents like #{find} or board_title like #{find}
 				</if>
-				 <if test="find == ''">
+				 <if test="find == '' ">
 				and board_category = #{type}
 				</if> 
 			order by board_ref desc, board_step asc) F)

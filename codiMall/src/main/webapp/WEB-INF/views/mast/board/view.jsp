@@ -45,12 +45,12 @@
 								<div class="text-right">
 									<form action="${pageContext.request.contextPath}/board/boardDelete"
 										name="delFrm" method="post">
-										<a id="goList" class="btn btn-md btn-primary" role="button" onclick="goList();">LIST</a>
-										<a id="goMod" class="btn btn-md btn-primary" role="button">MODIFY</a>
+										<a id="goList" class="btn btn-md btn-info" role="button" onclick="goList();">LIST</a>
+										<a id="goMod" class="btn btn-md btn-info" role="button">MODIFY</a>
 	 									<c:if test="${view.board_kind eq 3}">
-										<a id="goReply" class="btn btn-md btn-primary" role="button">COMMENT</a>
+										<a id="goReply" class="btn btn-md btn-info" role="button" onclick="goComment();">COMMENT</a>
 										</c:if> 
-										<a id="goDel" class="btn btn-md btn-primary" role="button">DELETE</a>
+										<a id="goDel" class="btn btn-md btn-info" role="button">DELETE</a>
 										<input type="hidden" value="${view.board_num}" name="board_num" id="data1">
 										<input type="hidden" value="${view.board_kind}" name="board_kind" id="data2">
 									</form>
@@ -66,8 +66,8 @@
 									<div class="listCommentForm">
 										<span class="text-left">${comment.comm_writer}|${comment.comm_date}</span> 
 										<input type="hidden" value="${comment.comm_num}" id="delNum${i.index}">
-										<a class="delComment goUp${i.index}" name="delNum${i.index}"><span class="glyphicon glyphicon-remove" style="float : right; font-size: 14px;"></span></a>
-										<a class="upComment goUp${i.index}" name="goUp${i.index}"><span class="glyphicon glyphicon-edit" style="float : right; font-size: 14px;"></span></a>
+										<a class="delComment goUp${i.index}" name="delNum${i.index}"><span class="comm-remove glyphicon glyphicon-remove" style="float : right; font-size: 17px; color:#30b5e1;"></span></a>
+										<%-- <a class="upComment goUp${i.index}" name="goUp${i.index}"><span class="glyphicon glyphicon-edit" style="float : right; font-size: 14px;"></span></a> --%>
 										<p style="border-bottom:1px solid #ddd;" class="list_contents goUp${i.index}">${comment.comm_contents}</p>
 										<div class="upCommentForm" id="goUp${i.index}" style="display:none;">
 											<textarea rows="" cols="" class="up_contents${i.index} form-control">${comment.comm_contents}</textarea>

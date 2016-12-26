@@ -68,6 +68,12 @@ body{
     background-color: transparent;
     border: none; 
 }
+.comm-remove{
+	cursor: pointer;
+}
+.comm-remove:HOVER {
+	opacity: 0.5;
+}
 </style>
 <script type="text/javascript">
 	var board_kind = '';
@@ -79,12 +85,7 @@ body{
  			//alert($(this).prop("id"));
  			subAjax(this);
  		});
- 		
- 		
- 		$("#goReply").click(function(){//코멘트열기
- 			$("#replySet").toggle();
- 		});
-	    
+ 			    
 		$("#goList").click(function(){
 			listAjax();
 		});
@@ -101,6 +102,11 @@ body{
 	    });
  		
 	});
+	
+	function goComment(){
+		$("#replySet").toggle();
+	}
+	
 	
 	//체크박스에 체크해주기
 	function delBtn(data){
@@ -219,11 +225,11 @@ body{
 				},
 				success : function(data){
 					var data = data.trim();
-<<<<<<< HEAD
+
 					console.log(data);
-=======
+
 				//	console.log(data);
->>>>>>> refs/heads/sub
+
 					$("#section").empty();
 					$("#section").html(data);
 					$("#1").parent("li").removeClass("active");
@@ -258,31 +264,6 @@ body{
 										</ul>
 									</div>
 								</nav>
-<<<<<<< HEAD
-							<div class="mt-30 hidden-xs">
-=======
-<!-- 							<div class="mt-30 hidden-xs">
->>>>>>> refs/heads/sub
-								<a id="subList" class="subBtn btn btn-default btn-lg">
-									<span class="fa fa-list"></span> List
-								</a>
-								<a id="subView" class="subBtn btn btn-default btn-lg">
-									<span class="fa fa-wrench"></span> View
-<<<<<<< HEAD
-=======
-								</a>
-								<a id="subWrite" class="subBtn btn btn-default btn-lg">
-									<span class="fa fa-pencil"></span> Write
->>>>>>> refs/heads/sub
-								</a>
-<<<<<<< HEAD
-								<a id="subWrite" class="subBtn btn btn-default btn-lg">
-									<span class="fa fa-pencil"></span> Write
-								</a>
-							</div>
-=======
-							</div> -->
->>>>>>> refs/heads/sub
 							</header>
 						
 							<section id="section" class="jumbotron">						

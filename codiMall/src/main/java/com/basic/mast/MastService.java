@@ -102,7 +102,7 @@ public class MastService {
 
 			model.addAttribute("bestList", br);
 		} else if (board_kind == 3) {
-=======
+
 			model.addAttribute("bestList", br);*/
 		}else if(board_kind==3){
 
@@ -113,24 +113,18 @@ public class MastService {
 	// 뷰//
 	public BoardDTO boardView(BoardDTO boardDTO, int board_kind, Model model) throws Exception {
 
-
-		boardDTO = boardDAO.boardView(boardDTO, board_kind);
-		boardDAO.boardViewUpdate(boardDTO);
-
-
-		
 		boardDTO = boardDAO.boardView(boardDTO,board_kind);
 		//boardDAO.boardViewUpdate(boardDTO);
-		
+
 
 		List<CommentDTO> cr = commentDAO.commentList(boardDTO);
 
 		model.addAttribute("view", boardDTO);
 		if (board_kind == 3) {// QNA
 			model.addAttribute("fileView", boardDAO.fileView(boardDTO));// 이미지파일도
-																		// 뷰에서
-																		// 같이
-																		// 보기위해서
+			// 뷰에서
+			// 같이
+			// 보기위해서
 			model.addAttribute("commentList", cr);// 해당뷰에서 필요한 댓글리스트 불러오기
 		}
 		return boardDTO;
