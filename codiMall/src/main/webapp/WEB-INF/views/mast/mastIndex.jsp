@@ -65,12 +65,3 @@ table, table tr, tr td, th {
 
 </body>
 </html>
-		<%-- 	<h1>BUYLIST</h1>
-	<h1>
-		<a href="${pageContext.request.contextPath}/">HOME</a>
-	</h1>
-	<h1>
-		<a href="${pageContext.request.contextPath}/mast/mastBuyList"><button>BUYLIST</button></a>
-	</h1>
-	
- --%>

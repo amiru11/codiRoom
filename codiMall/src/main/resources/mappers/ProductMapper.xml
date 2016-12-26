@@ -440,6 +440,13 @@
 		<if test="productSelect_num != 0">
 			and k.PRODUCTSELECT_NUM = #{productSelect_num}
 		</if>
+		order by case when
+		ps.productSize_size = 'SSS' then 1 when ps.productSize_size = 'SS'
+		then 2 when ps.productSize_size = 'S' then 3
+		when ps.productSize_size = 'M' then 4 when ps.productSize_size = 'L' then
+		5 when ps.productSize_size = 'XL' then 6 when ps.productSize_size =
+		'XXL' then 7
+		end
 	</select>
 
 	<select id="SelAllProductColor" resultType="java.lang.String"
@@ -456,6 +463,7 @@
 		<if test="productSelect_num != 0">
 			and k.PRODUCTSELECT_NUM = #{productSelect_num}
 		</if>
+		order by pe.productEach_color asc
 	</select>
 
 	<select id="SelAllKindNum" resultType="int" parameterType="java.util.HashMap">
