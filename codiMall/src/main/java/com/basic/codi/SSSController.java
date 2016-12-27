@@ -7,12 +7,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import java.io.File;
+import java.sql.Date;
 import java.util.UUID;
 
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.basic.board.BoardDTO;
 import com.basic.board.PhotoDTO;
 import com.basic.mast.MastService;
+import com.basic.mast.SSSSSService;
 import com.basic.member.MemberDTO;
 
 @Controller
@@ -31,6 +34,9 @@ public class SSSController {
 
 	@Autowired
 	private MastService mastService;
+	
+	@Autowired
+	private SSSSSService sssssService;
 	
 	@RequestMapping(value="/mastProductList", method=RequestMethod.GET)
 	public String mastProductListG(HttpServletRequest request,Model model) {
@@ -114,6 +120,36 @@ public class SSSController {
 			path = "redirect:/";
 		}
 		return path;
-
+	}
+	
+	@RequestMapping(value = "/mastBuyListPay",method=RequestMethod.GET)
+	public String mastBuyListPay(HttpSession session, Model model) {
+		String path = "";
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		if (memberDTO != null && memberDTO.getMember_level() == 0) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("first_date", null);
+			map.put("last_date", null);
+			model.addAttribute("list",sssssService.mastBuyPayList(map));
+			path = "/mast/mastBuyListPay";
+		} else {
+			path = "redirect:/";
+		}
+		return path;
+	}
+	@RequestMapping(value = "/mastBuyListPay",method=RequestMethod.POST)
+	public String tttttteeeessss(HttpSession session,@RequestParam(required=false)Date first_date,@RequestParam(required=false)Date last_date,Model model){
+		String path = "";
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		if (memberDTO != null && memberDTO.getMember_level() == 0) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("first_date", first_date);
+			map.put("last_date", last_date);
+			model.addAttribute("list",sssssService.mastBuyPayList(map));
+			path = "/mast/mastBuyListPay";
+		} else {
+			path = "redirect:/";
+		}
+		return path;
 	}
 }

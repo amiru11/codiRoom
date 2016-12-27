@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SSSSMapper">
+
+	<!-- Product REsult MAP S -->
+
+	<resultMap type="com.basic.product.ProductSelectDTO" id="ProductSelect">
+		<id column="productSelect_num" property="productSelect_num"
+			javaType="int" />
+		<result column="productSelect_name" property="productSelect_name"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.KindDTO" id="Kind">
+		<id column="kind_num" property="kind_num" javaType="int" />
+		<result column="kind_name" property="kind_name" javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductInfoDTO" id="ProductInfo">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="productInfo_price" property="productInfo_price"
+			javaType="int" />
+		<result column="productInfo_reg_date" property="productInfo_reg_date"
+			javaType="java.sql.Date" />
+		<result column="productInfo_rec_date" property="productInfo_rec_date"
+			javaType="java.sql.Date" />
+		<result column="productInfo_saleRate" property="productInfo_saleRate"
+			javaType="double" />
+		<result column="productInfo_searchWord" property="productInfo_searchWord"
+			javaType="java.lang.String" />
+		<result column="productInfo_brand" property="productInfo_brand"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductEachDTO" id="ProductEach">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="productSize_size" property="productSize_size"
+			javaType="java.lang.String" />
+		<result column="productEach_color" property="productEach_color"
+			javaType="java.lang.String" />
+		<result column="productEach_each" property="productEach_each"
+			javaType="int" />
+	</resultMap>
+	<resultMap type="com.basic.product.ProductSizeDTO" id="ProductSize">
+		<result column="productSize_size" property="productSize_size"
+			javaType="java.lang.String" />
+	</resultMap>
+
+
+	<resultMap type="com.basic.product.ProductPicDTO" id="ProductPic">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="productPic_pic" property="productPic_pic"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductDTO" id="Product">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="product_name" property="product_name" javaType="java.lang.String" />
+	</resultMap>
+
+
+	<resultMap type="com.basic.product.ProductAllDTO" id="ProductAll">
+		<result property="r" column="r" />
+		<result property="selCount" column="selCount" />
+		<association property="productSelectDTO" javaType="com.basic.product.ProductSelectDTO"
+			resultMap="ProductSelect" />
+		<association property="kindDTO" javaType="com.basic.product.KindDTO"
+			resultMap="Kind" />
+		<association property="productDTO" javaType="com.basic.product.ProductDTO"
+			resultMap="Product" />
+		<association property="productInfoDTO" javaType="com.basic.product.ProductInfoDTO"
+			resultMap="ProductInfo" />
+		<association property="productPicDTO" javaType="com.basic.product.ProductPicDTO"
+			resultMap="ProductPic" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductAllDTO" id="ProductAllInfo">
+		<result property="r" column="r" />
+		<result property="selCount" column="selCount" />
+		<association property="productSelectDTO" javaType="com.basic.product.ProductSelectDTO"
+			resultMap="ProductSelect" />
+		<association property="kindDTO" javaType="com.basic.product.KindDTO"
+			resultMap="Kind" />
+		<association property="productDTO" javaType="com.basic.product.ProductDTO"
+			resultMap="Product" />
+		<association property="productInfoDTO" javaType="com.basic.product.ProductInfoDTO"
+			resultMap="ProductInfo" />
+		<association property="productPicDTO" javaType="com.basic.product.ProductPicDTO"
+			resultMap="ProductPic" />
+		<collection property="productEachDTOs" ofType="com.basic.product.ProductEachDTO">
+			<result column="productSize_size" property="productSize_size"
+				javaType="java.lang.String" />
+			<result column="productEach_color" property="productEach_color"
+				javaType="java.lang.String" />
+			<result column="productEach_each" property="productEach_each"
+				javaType="int" />
+		</collection>
+
+
+	</resultMap>
+
+	<!-- 2222222222222222222222222222222222 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS -->
+
+	<resultMap type="com.basic.product.ProductSelectDTO" id="ProductSelect2">
+		<id column="pse_productSelect_num" property="productSelect_num"
+			javaType="int" />
+		<result column="pse_productSelect_name" property="productSelect_name"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.KindDTO" id="Kind2">
+		<id column="k_kind_num" property="kind_num" javaType="int" />
+		<result column="k_kind_name" property="kind_name" javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductInfoDTO" id="ProductInfo2">
+		<result column="pi_productInfo_price" property="productInfo_price"
+			javaType="int" />
+		<result column="pi_productInfo_reg_date" property="productInfo_reg_date"
+			javaType="java.sql.Date" />
+		<result column="pi_productInfo_rec_date" property="productInfo_rec_date"
+			javaType="java.sql.Date" />
+		<result column="pi_productInfo_saleRate" property="productInfo_saleRate"
+			javaType="double" />
+		<result column="pi_productInfo_searchWord" property="productInfo_searchWord"
+			javaType="java.lang.String" />
+		<result column="pi_productInfo_brand" property="productInfo_brand"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductEachDTO" id="ProductEach2">
+		<result column="pe_productSize_size" property="productSize_size"
+			javaType="java.lang.String" />
+		<result column="pe_productEach_color" property="productEach_color"
+			javaType="java.lang.String" />
+		<result column="pe_productEach_each" property="productEach_each"
+			javaType="int" />
+	</resultMap>
+	<resultMap type="com.basic.product.ProductSizeDTO" id="ProductSize2">
+		<result column="ps_productSize_size" property="productSize_size"
+			javaType="java.lang.String" />
+	</resultMap>
+
+
+	<resultMap type="com.basic.product.ProductPicDTO" id="ProductPic2">
+		<result column="pc_productPic_pic" property="productPic_pic"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductDTO" id="Product2">
+		<id column="p_product_num" property="product_num" javaType="int" />
+		<result column="p_product_name" property="product_name"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.mast.MastProductViewDTO" id="ProductAllInfo2">
+		<result property="selCount" column="selCount" />
+		<result column="pse_productSelect_num" property="productSelect_num"
+			javaType="int" />
+		<result column="pse_productSelect_name" property="productSelect_name"
+			javaType="java.lang.String" />
+		<result column="k_kind_num" property="kind_num" javaType="int" />
+		<result column="k_kind_name" property="kind_name" javaType="java.lang.String" />
+		<result column="p_product_num" property="product_num" javaType="int" />
+		<result column="p_product_name" property="product_name"
+			javaType="java.lang.String" />
+		<result column="pi_productInfo_price" property="productInfo_price"
+			javaType="int" />
+		<result column="pi_productInfo_reg_date" property="productInfo_reg_date"
+			javaType="java.sql.Date" />
+		<result column="pi_productInfo_rec_date" property="productInfo_rec_date"
+			javaType="java.sql.Date" />
+		<result column="pi_productInfo_saleRate" property="productInfo_saleRate"
+			javaType="double" />
+		<result column="pi_productInfo_searchWord" property="productInfo_searchWord"
+			javaType="java.lang.String" />
+		<result column="pi_productInfo_brand" property="productInfo_brand"
+			javaType="java.lang.String" />
+		<result column="pc_productPic_pic" property="productPic_pic"
+			javaType="java.lang.String" />
+		<collection property="productEachDTOs" ofType="com.basic.product.ProductEachDTO">
+			<result column="pe_productSize_size" property="productSize_size"
+				javaType="java.lang.String" />
+			<result column="pe_productEach_color" property="productEach_color"
+				javaType="java.lang.String" />
+			<result column="pe_productEach_each" property="productEach_each"
+				javaType="int" />
+		</collection>
+
+
+	</resultMap>
+
+	<!-- 22222222222222222222222222222222222 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE -->
+
+
+
+	<!-- Product REsult MAP E -->
+
+
+	<resultMap type="com.basic.buy.BuyDTO" id="Buy">
+		<id property="buy_num" column="buy_num" />
+		<result property="member_id" column="id" />
+		<result property="product_num" column="product_num" />
+	</resultMap>
+
+	<resultMap type="com.basic.buy.BuyStateDTO" id="BuyState">
+		<id property="buy_num" column="buy_num" />
+		<result property="buyState_size" column="buyState_size" />
+		<result property="buyState_color" column="buyState_color" />
+		<result property="buyState_each" column="buyState_each" />
+		<result property="buyState_price" column="buyState_price" />
+		<result property="buyState_expressNum" column="buyState_expressNum" />
+		<result property="buyState_pay_date" column="buyState_pay_date" />
+		<result property="buyState_result_date" column="buyState_result_date" />
+		<result property="buyState_state" column="buyState_state" />
+	</resultMap>
+
+	<resultMap type="com.basic.mast.MastBuyListDTO" id="MastBuyList">
+		<association property="productDTO" resultMap="Product" />
+		<association property="buyDTO" resultMap="Buy" />
+		<association property="buyStateDTO" resultMap="BuyState" />
+	</resultMap>
+
+
+
+	<select id="SelMastBuyPayList" resultMap="MastBuyList"
+		parameterType="java.util.HashMap">
+		select b.ID,p.*,bs.* from buy b, BUYSTATE bs,PRODUCT p
+		WHERE bs.BUY_NUM = b.BUY_NUM
+    and p.PRODUCT_NUM = b.PRODUCT_NUM
+		and bs.BUYSTATE_STATE = 4
+		and bs.BUYSTATE_RESULT_DATE BETWEEN 
+		<if test="first_date != null">
+		#{first_date}
+		</if>
+		<if test="first_date == null">
+		sysdate-100
+		</if>
+		 and <if test="last_date != null">
+		#{last_date}
+		</if>
+		<if test="last_date == null">
+		sysdate
+		</if>
+	</select>
+
+</mapper>

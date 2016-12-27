@@ -43,6 +43,9 @@
 	</div>
 	<div id="div_product">
 	</div>
+	<div id ="divasdasd_test">
+	
+	</div>
 </div>
 
 	<!-- 코디저장 할 것들 -->
@@ -248,6 +251,12 @@ document.querySelector("button").addEventListener("click", function() {
        	});
 	});
 });
+
+////   T       E         S        T          T        E        S       T
+function ccclliikk(a){
+	var x =""
+	$("#divasdasd_test").append("<div style='background : url(${pageContext.request.contextPath}/resources/testPic/"+a"); position: absolute; width: 200px; height: 200px' onmousedown='move(this,"+index+");'>";")
+}
     
 </script>
 

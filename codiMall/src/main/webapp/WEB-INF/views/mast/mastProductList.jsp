@@ -407,6 +407,15 @@ font-weight: bold;
 							</nav>
 						</div>
 						<!--      -->
+						<!--     임시 페이지 이동   -->
+						<a href="${pageContext.request.contextPath}/mast/mastProductList">MAST product List</a><br>
+						<a href="${pageContext.request.contextPath}/mast/mastProductListEach0">MAST productEach0</a><br>
+						<a href="${pageContext.request.contextPath}/mast/mastBuyList">MAST BuyList</a><br>
+						<a href="${pageContext.request.contextPath}/mast/mastBuyListPay">MAST BuyListPay</a><br>
+						
+						
+						
+						
 						<div id="selector">
 							<div id="div_sel_sel"
 								style="float: left; width: 10%; height: 100px; overflow: scroll; text-align: right;">

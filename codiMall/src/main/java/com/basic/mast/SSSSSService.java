@@ -25,6 +25,9 @@ public class SSSSSService {
 
 	@Autowired
 	private CommentDAO commentDAO;
+	
+	@Autowired
+	private SSSDAO sssdao;
 
 	public List<ProductAllDTO> mastProductList(Map<String, Object> map, Model model) {
 		PageMaker pageMaker = new PageMaker();
@@ -72,6 +75,17 @@ public class SSSSSService {
 			int productEach_each) {
 		return mastDAO.mastProductEachFix(product_num, productSize_size, productEach_color, productEach_each);
 	}
+	//mast buy Pay List S
+	public List<MastBuyListDTO> mastBuyPayList(Map<String, Object> map){
+		return sssdao.mastBuyPayList(map);
+	}
+	
+	
+	//mast buy Pay List E
+	
+	
+	
+	
 
 	////////////////////////////////////////////////////////////// 게시판/////////////////////////////////////////////////////////////
 	// 검색//
