@@ -705,7 +705,62 @@
 	
 
 
+	<!-- MEMBER: S -->
 
+		<!-- MEMBERSEARCH : S -->
+	 	<select id="findList" parameterType="java.util.HashMap" resultType="com.basic.member.MemberDTO" statementType="PREPARED">
+			<if test="type != null">
+				select * from 
+				(select rownum R, F.* from
+				(select * from member
+				<where>
+					<if test="type=='id'">
+						and board_writer like #{find} 
+					</if>
+					<if test="type=='name'">
+						and board_title like #{find}
+					</if>
+					<if test="type=='member_level'">
+						and board_contents like #{find}
+					</if>
+				</where>
+				) F)
+				where R between #{paging.startRowNum} and  #{paging.lastLowNum}
+			</if>
+		</select> 
+		<!-- MEMBERSEARCH : E -->
+		
+		<!-- MEMBERCOUNT : S -->
+		<select id="memberCount" parameterType="java.util.HashMap" resultType="int">
+			<if test="type == null">
+				<![CDATA[
+						select count(*) from member 
+				]]>
+			</if>			
+			<if test="type != null">
+				<where>
+					<if test="type=='id'">
+						and board_writer like #{find}
+					</if>
+					<if test="type=='name'">
+						and board_title like #{find}
+					</if>
+					<if test="type=='member_level'">
+						and board_contents like #{find}
+					</if>
+				</where>
+			</if>				
+		</select>
+		<!-- MEMBERCOUNT : E -->
+		
+		<!-- MEMBERUPDATE : S -->
+		<!-- MEMBERUPDATE : E -->
+		
+		<!-- MEMBERDELETE : S -->
+		<!-- MEMBERDELETE : E -->
+		
+		
+	<!-- MEMBER: E -->
 
 
 

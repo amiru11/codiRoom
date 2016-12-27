@@ -1,9 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<style>
+#admin{
+	color : black;
+}
+#admin:HOVER{
+	color : #fff;
+	background: transparent;
+}
+</style>    
 			<div id="sidebar_left" class="" style="height: 100%;">
 				<div class="sidebar-left-content nano-content" tabindex="0">
 					<ul class="nav sidebar-menu">
-						<li class="sidebar-label pt35" style="padding-top: 75px; background-color: #43c7d7;"><span id="toggle_sidemenu_l" class="fa fa-bars"></span><span>ADMIN</span></li>
+						<li class="sidebar-label pt35" style="font-size: 30px;padding: 15px;background-color: #43c7d7;"><a href="${pageContext.request.contextPath}/mast/mastIndex" id="admin"><span id="toggle_sidemenu_l" class="fa fa-bars"></span><span>ADMIN</span></a></li>
 						<li><a id="goHome" class="side-btn" href="/codi"><span
 								class="fa fa-home"></span><span class="sidebar-title">Home</span></a>
 						</li>	
@@ -20,14 +29,14 @@
 									<li><a>Product Board</a></li>
 								</ul>
 						</li>
-						<li><a id="goMember" class="side-btn" onclick="gotoggle(2);"><span
+						<li><a id="goMember" class="side-btn" href="${pageContext.request.contextPath}/mast/mastMember"><span
 								class="fa fa-users"></span><span class="sidebar-title">Member</span></a>
-								<ul id="sub-2">
+<!-- 								<ul id="sub-2">
 									<li><a>dashboard</a></li>
 									<li><a>Member List</a></li>
 									<li><a>write</a></li>
 									<li><a>comment</a></li>
-								</ul>
+								</ul> -->
 						</li>
 						<li class=""><a href="${pageContext.request.contextPath}/mast/mastProductList" id="goProduct" class="side-btn" onclick="gotoggle(3);"><span
 								class="fa fa-shopping-basket "></span><span class="sidebar-title">Product</span></a>
