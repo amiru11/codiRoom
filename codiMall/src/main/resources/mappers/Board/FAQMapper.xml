@@ -82,7 +82,26 @@
 		</if>
 	</select> 
 	<!-- BOARD SEARCH:E -->
-
+	<!-- BOARD SEARCH:S -->
+ 	<select id="findList2" parameterType="java.util.HashMap" resultType="com.basic.board.BoardDTO" statementType="PREPARED">
+		<if test="type != null">
+			select * from 
+			(select rownum R, F.* from
+			(select * from board where board_kind=2
+			<if test="type=='writer'">
+				and board_writer like #{find} 
+			</if>
+			<if test="type=='title'">
+				and board_title like #{find}
+			</if>
+			<if test="type=='contents'">
+				and board_contents like #{find}
+			</if>
+			order by board_ref desc, board_step asc) F)
+			where R between #{paging.startRowNum} and  #{paging.lastLowNum}
+		</if>
+	</select> 
+	<!-- BOARD SEARCH:E -->
 	<!-- 자주묻는 질문 best5 -->
 	<select id="bestList" resultType="com.basic.board.BoardDTO">
 		<![CDATA[

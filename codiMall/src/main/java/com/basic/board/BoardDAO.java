@@ -284,7 +284,7 @@ public class BoardDAO {
 		if(board_kind==1){			
 			ar = sqlSession.selectList(namespace1+"findList", mp);
 		}else if(board_kind==2){
-			ar = sqlSession.selectList(namespace2+"findList", mp);
+			ar = sqlSession.selectList(namespace2+"findList2", mp);
 		}else if(board_kind==3){
 			ar = sqlSession.selectList(namespace3+"findList", mp);
 		}

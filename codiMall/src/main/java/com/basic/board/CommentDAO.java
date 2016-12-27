@@ -22,6 +22,13 @@ public class CommentDAO {
 	public List<CommentDTO> commentList(BoardDTO boardDTO){//게시물에 대한 참조번호가 필요하기때문에 파라미터로 boardDTO를 받아온다
 		return sqlsession.selectList(namespace+"commentList", boardDTO);
 	}
+	
+	//mast리스트//
+/*	public List<CommentDTO> commentList2(int comm_refNum){
+		Map<String, Object> mp = new HashMap<String, Object>();
+		mp.put("comm_refNum", comm_refNum);
+		return sqlsession.selectList(namespace+"commentList2", mp);
+	}*/
 	//댓글쓰기//
 	public int commentWrite(CommentDTO commentDTO){
 		return sqlsession.insert(namespace+"commentWrite", commentDTO);
@@ -37,6 +44,9 @@ public class CommentDAO {
 	
 	//상품QnA댓글리스트//
 	public List<CommentDTO> proCommentList(int board_num){
+		System.out.println("DAO");
+		System.out.println("commList");
+		System.out.println("board_num : " + board_num);
 		Map<String, Object> mp = new HashMap<String, Object>();
 		mp.put("board_num", board_num);
 		return sqlsession.selectList(namespace+"commentList2", mp);

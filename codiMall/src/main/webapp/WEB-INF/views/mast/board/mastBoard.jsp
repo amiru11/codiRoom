@@ -79,6 +79,10 @@ body{
 	var board_kind = '';
     var editor_object = [];
 	$(function(){
+		if(${message ne null}){
+			alert('${message}');
+		}
+		
 		
 		listAjax();//ajax로 보드종류에 따른 리스트뿌리기
  		$(".sel_type").click(function(){
@@ -90,18 +94,26 @@ body{
 			listAjax();
 		});
 	     	     
-		//글쓰기버튼 클릭이벤트
-	    $("#goWrite").click(function(){
-	        //id가 smarteditor인 textarea에 에디터에서 대입
-	        editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
-	         
-	        // 이부분에 에디터 validation 검증
-	         
-	        //폼 submit
-	        document.writeFrm.submit();
-	    });
- 		
+		//답글버튼 클릭이벤트
+		$(".com-btn").on("click",function(){
+			
+		});
 	});
+	
+	function comBtn(data){
+		alert($(data).next("input").val());
+		$.ajax({
+			url : "${pageContext.request.contextPath}/mast/mastCommList",
+			type : "GET",
+			data : {
+				board_num : $(data).next("input").val()
+			},
+			success : function(data){
+				console.log(data.trim());
+				
+			}
+		});
+	}
 	
 	function goComment(){
 		$("#replySet").toggle();
@@ -141,6 +153,16 @@ body{
 		}
 		
 		
+	}
+	
+	function goWrite(){
+	    //id가 smarteditor인 textarea에 에디터에서 대입
+        editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
+         
+        // 이부분에 에디터 validation 검증
+         
+        //폼 submit
+        document.writeFrm.submit();
 	}
 	
 	function goList(){

@@ -81,13 +81,14 @@
 								</c:forEach>
 								<!-- COMMENT LIST:E -->
 								
-								<!-- comment WRITE -->
+								<!-- comment WRITE:S -->
 								<div class="text-right">
 									<textarea rows="" cols="" id="comm_contents" class="form-control"></textarea>
 									<input type="hidden" value="관리자" id="comm_writer"><!-- 나중에 로그인시 세션으로 해주기 -->
 									<input type="hidden" value="${view.board_num}" id="comm_refNum">
 									<a id="goComment" class="btn btn-sm btn-default" role="button">SUBMIT</a>
 								</div>
+								<!-- comment WRITE:E -->
 							</td>
 						</tr>
 						<!-- 댓글 부분 :E -->

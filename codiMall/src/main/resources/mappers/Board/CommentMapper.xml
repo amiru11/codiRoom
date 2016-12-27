@@ -16,6 +16,15 @@
 	</select>
 	<!-- COMM LIST :E -->
 
+	<!-- COMM LIST2 :S -->
+<!-- 	<select id="commentList2" resultType="com.basic.board.CommentDTO" parameterType="java.util.Map">
+		<![CDATA[
+				select * from
+				(select rownum R, F.* from
+				(select * from BOARD_COMMENT where comm_refNum = #{comm_refNum} order by comm_num desc) F) 
+		]]>
+	</select> -->
+	<!-- COMM LIST :E -->
 
 	<!-- COMMWRITE :S -->
 	<insert id="commentWrite" parameterType="com.basic.board.CommentDTO"> 

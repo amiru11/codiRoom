@@ -157,13 +157,14 @@ public class MastController {
 	
 	
 /////////////////////////////////////////////////////////////게시판/////////////////////////////////////////////////////////	
+	//사이드메뉴에서 게시판 메뉴 클릭시//
 	@RequestMapping(value="/boardList")
 	public String boardList(@RequestParam(defaultValue="1") int curPage, 
 			@RequestParam(defaultValue="10") int perPage, @RequestParam(defaultValue="1") int board_kind,Model model){
 			model.addAttribute("board_kind", board_kind);
 		return "mast/board/mastBoard";
 	}
-	
+	//subMenu로 이동시//
 	@RequestMapping(value="/resultBoard")
 	public String resultBoard(@RequestParam(defaultValue="") String type, @RequestParam(defaultValue="") String find, @RequestParam(defaultValue="1") int curPage, 
 			@RequestParam(defaultValue="10") int perPage, @RequestParam int board_kind, Model model){
@@ -268,5 +269,19 @@ public class MastController {
 		}
 		return "redirect:" + callback + "?callback_func=" + callback_func + file_result;
 	}
+	
+	//QNA답글 리스트//
+	@RequestMapping(value="/mastCommList")
+	public String commList(@RequestParam int board_num, Model model){
+		System.out.println("controller");
+		System.out.println("commList");	
+		System.out.println("board_num : " + board_num);
+		try {
+				mastService.commList2(board_num, model);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		return "mast/board/mastCommList";
+	}	
 	
 }
