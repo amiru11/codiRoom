@@ -29,7 +29,7 @@
 				success: function(data){
 					alert(data.trim());
 					console.log(data.trim());
-					opener.location.reload();
+					opener.location.reload();//부모창리프래쉬
 					close();
 				}
 			}); 

@@ -46,16 +46,12 @@
 
 	<!-- Codi List -->
 	<select id="codiList" resultType="com.basic.fashion.CodiDTO" parameterType="com.basic.util.PageMaker">
-		select * from
-		(select Rownum R, C.* from
-		(select * from codi where board_kind=2 order by board_num) C)
-		where R between #{startRowNum} and #{lastLowNum}
+		select * from codi
 	</select>
 	
 	<!-- Codi 등록 -->
 	<insert id="codiCreate" parameterType="com.basic.fashion.CodiDTO">
-	
-	
+		insert into codi values(codi_seq.nextval, #{fileName}, #{member_id}, #{title}, #{product}, 0)
 	</insert>
 
 </mapper>

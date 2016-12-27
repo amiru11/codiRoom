@@ -15,10 +15,62 @@
 	canvas {
 		border: 1px solid black;
 		background-color: black;
+		display: none;
 	}
 </style>
 <script type="text/javascript">
 
+
+</script>
+<style type="text/css">
+.ppp{
+	float: right;
+}
+
+</style>
+</head>
+<body>
+<div style="background-color: red; width: 1000px; height: 1000px;" id="a">
+	<div style="background-color: blue; width: 500px; height: 500px;"></div>
+	<!-- 상품 리스트 -->
+	<div class="ppp">
+		<ul  id="ul_productSelect">
+		
+		</ul>
+	</div>
+	<div class="ppp">
+		<ul id="ul_kind"></ul>
+	</div>
+	<div id="div_product">
+	</div>
+</div>
+
+	<!-- 코디저장 할 것들 -->
+		태그 걸꺼 : <input type="text" id="title" value="#" placeholder="# 태그 입력">
+		<input type="hidden" id="product_num">
+	<button>코디 생성</button><br>
+	
+	<canvas width="501px" height="501px"></canvas>
+<a></a>
+
+
+   
+   
+<script type="text/javascript">
+
+//코디 리스트 값 배열
+var codi = [];
+function codiArray(ar) {
+	var check = true;
+ 	for(var i=0; i<codi.length; i++){
+		if(ar == codi[i]){
+			check = false;
+		}
+	}
+ 	if(check){
+ 		codi.push(ar);
+ 	}
+}
 
 
 //상품 리스트
@@ -100,12 +152,14 @@ function getCodiProductList(kind_num){
 			$("#div_product").html("");
 			var productList = "";
 			$.each(data.ar, function( index, value ) {
-				productList += "<div id='product_"+value.productDTO.product_num+"' style='background : url(${pageContext.request.contextPath}/resources/images/"+value.productPicDTO.productPic_pic+")'>";
-				productList += "<span>"+value.productDTO.product_name+"</span>";
-				productList += "</div>";
-	    		alert(value.productDTO.product_num+"___"+value.productDTO.product_name+"___"+value.productPicDTO.productPic_pic);
+				productList += "<div class='product' id='product_"+index+"' style='background : url(${pageContext.request.contextPath}/resources/testPic/"+value.productPicDTO.productPic_pic+"); position: absolute; width: 200px; height: 200px' onmousedown='move(this,"+index+");'>";
+				productList += "<input id='x-"+index+"' type='text' value='' readonly='readonly'><input id='y-"+index+"' type='text' value='' readonly='readonly'>";
+				productList += "<input type='hidden' id='product_num_"+index+"' name='product_num' value='"+value.productDTO.product_num+"'>"
+				//productList += "<span>"+value.productDTO.product_name+"</span>";
+				productList += "</div><br><br><br><br><br><br><br><br><br><br>";
 	    	});
 			$("#div_product").html(productList);
+			
 		},
 		error : function(request, status, error) {
 			alert("code:" + request.status + "\n" + "error:" + error);
@@ -113,107 +167,88 @@ function getCodiProductList(kind_num){
 	});
 }
 
-
-
 //이미지 무빙
-$(function() {
-    $(".divv").on("mouseenter",function(event) {
-       var x = event.pageX;
-       var y = event.pageY;
-       
-       
-       $(this).mousedown(function(event) {
-          x = event.pageX;
-          y = event.pageY;
-          var t=$(this).attr("id");
-          t="#"+t+"t1";
-          var v=$(t).val();
-          
-          
-          var aa = $(this).css('margin-left').replace(/[^0-9]/g, "");
-          var bb = $(this).css('margin-top').replace(/[^0-9]/g, "");
-          $(this).mousemove(function(event) {
-             $("#t1").val($("#div1").css('margin-left').replace(/[^0-9]/g, ""));
-             $("#t2").val($("#div1").css('margin-left').replace(/[^0-9]/g, ""));
-             $(this).css({
-                "margin-left" : aa * 1 + ((event.pageX) * 1 - x * 1) * 1,
-                "margin-top" : bb * 1 + ((event.pageY) * 1 - y * 1) * 1
-             });
-          });
-       });
-       $(this).mouseup(function(event) {
-          $(this).off("mousemove");
-       });
-       $(this).mouseout(function(event) {
-          $(this).off("mousemove");
-       });
+function move(a,index) {
+    var product_num = $("#product_num_"+ index).val();
+	var x = event.pageX;
+	var y = event.pageY;
+	var product = $(a).attr("id");
+	var xVal = $(a).css('left').replace(/[^0-9]/g, "");
+	var yVal = $(a).css('top').replace(/[^0-9]/g, "");
+        
+        
+	$(a).mousemove(function(event) {
+        $("#x-"+index).val($("#"+product).css('left').replace(/[^0-9]/g, ""));
+        $("#y-"+index).val($("#"+product).css('top').replace(/[^0-9]/g, ""));
+        $(a).css({
+           "left" : xVal * 1 + ((event.pageX) * 1 - x * 1) * 1,
+           "top" : yVal * 1 + ((event.pageY) * 1 - y * 1) * 1
+        });
+        	$(a).on("mouseup mouseout", function(event) {
+        		$(a).off("mousemove");
+		        xVal = $(a).css('left').replace(/[^0-9]/g, "");
+		        yVal = $(a).css('top').replace(/[^0-9]/g, "");
 
-    });
-});
-
-</script>
-<style type="text/css">
-.ppp{
-	float: right;
+			       	if(xVal < 500 && yVal < 500){
+			    		 //번호를 배열에 넣음
+			        	 codiArray(product_num);
+			    	 }else {
+			    		 for(var i=0; i<codi.length; i++){
+			    			 if(product_num == codi[i]){
+			    					codi.splice(i,1);
+			    				}
+			    		 }
+			    		 console.log(codi);
+			    	 }
+			});
+     });
 }
 
-</style>
-</head>
-<body>
-<div style="background-color: red; width: 500px; height: 500px;" id="a">
-	<div class="divv" id="div1" style="background : url(${pageContext.request.contextPath}/resources/images/btn_search.png); position: absolute; margin-left: 200px; margin-top: 200px; width: 200px; height: 200px;">
-		<input id="t1" type="text" value="" readonly="readonly">
-		<input id="t2" type="text" value="" readonly="readonly">
-	   <!-- <img alt="" src=""> -->
-	</div>
-	<div class="divv" style="background-color: gray; width: 100px; height: 100px;">
-		<img alt="" src="${pageContext.request.contextPath}/resources/images/btn_search.png">
-	</div>
+function Check() {
+	var title = $("#title").val();
+	var product_num = $("#product_num").val();
+	var check = false;
 	
-	<!-- 상품 리스트 -->
-	<div class="ppp">
-		<ul  id="ul_productSelect">
-		
-		</ul>
-	</div>
-	<div class="ppp">
-		<ul id="ul_kind"></ul>
-	</div>
-	<div id="div_product">
-	</div>
 	
-</div>
-	<button>코디 생성</button><br>
+}
+
+var canvas = document.querySelector("canvas");
 	
-	<canvas width="501px" height="501px"></canvas>
-<a></a>
-
-
-   
-   
-<script type="text/javascript">
-    var canvas = document.querySelector("canvas");
-
-    document.querySelector("button").addEventListener("click", function() {
-        html2canvas(document.querySelector("#a"), {canvas: canvas}).then(function(canvas) {
-        	var data = canvas.toDataURL();
-        	alert(data);
-            $.ajax({
-                type: "POST",
-                data : {
-                	data : data
-                },
-                url: "${pageContext.request.contextPath}/fashion/codiCreate",
-                dataType:"json",
-                success: function(response, textStatus, xhr) {
-              alert('success');
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                 alert('fail');
-                }
-            }); 
-        });
-    }, false);
+document.querySelector("button").addEventListener("click", function() {
+	html2canvas(document.querySelector("#a"), {canvas: canvas}).then(function(canvas) {
+		$("#product_num").val(codi);
+		var data = canvas.toDataURL();
+		var product_num = $("#product_num").val();
+		var title = $("#title").val();
+		//코디 태그 검사 및 코디 올라가 있는지 검사
+		if(title == ""){
+			alert("# 태그를 입력해주세요.");
+			return false;
+		}
+		if(product_num == ""){
+			alert("상품을 올려 주세요.");
+			return false;
+		}
+		//코디 등록
+       	$.ajax({
+       		type: "POST",
+               data : {
+               	data : data,
+               	product : product_num,
+               	title : title
+               },
+               url: "${pageContext.request.contextPath}/fashion/codiCreate",
+               success: function(data) {
+               	alert(data.message);
+					if(data.result = 1){
+						opener.location.reload();//부모창리프래쉬
+						window.close();//윈도우 클로즈
+					}
+               }
+       	});
+	});
+});
+    
 </script>
 
 </body>
