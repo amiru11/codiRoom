@@ -135,6 +135,7 @@ var requestSubmitted = false;
 			eachCheck();
 		});
 	});
+	//function end ------------------------------------------------------------------------------------------ 
 	
 	function selCheck(){
 		
@@ -223,6 +224,21 @@ var requestSubmitted = false;
 			$("#inp_each").val(b);
 		} else {
 		}
+	}
+	function sideBar(){
+		var currentPosition = parseInt($("#div_sidebar").css("top"));
+		
+		var position2 = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
+		$("#div_sidebar").stop().animate({
+			"top" : position2 + currentPosition + "px"
+		}, 500);
+		
+		$(window).scroll(function() {
+			var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
+			$("#div_sidebar").stop().animate({
+				"top" : position + currentPosition + "px"
+			}, 500);
+		});
 	}
 </script>
 

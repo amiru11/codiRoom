@@ -237,11 +237,12 @@
 		sysdate-100
 		</if>
 		 and <if test="last_date != null">
-		#{last_date}
+		#{last_date}+1
 		</if>
 		<if test="last_date == null">
-		sysdate
+		sysdate+1
 		</if>
+		order by bs.BUYSTATE_RESULT_DATE desc
 	</select>
 
 </mapper>

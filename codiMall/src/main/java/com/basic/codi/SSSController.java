@@ -131,6 +131,8 @@ public class SSSController {
 			map.put("first_date", null);
 			map.put("last_date", null);
 			model.addAttribute("list",sssssService.mastBuyPayList(map));
+			model.addAttribute("first_date", null);
+			model.addAttribute("last_date", null);
 			path = "/mast/mastBuyListPay";
 		} else {
 			path = "redirect:/";
@@ -146,6 +148,8 @@ public class SSSController {
 			map.put("first_date", first_date);
 			map.put("last_date", last_date);
 			model.addAttribute("list",sssssService.mastBuyPayList(map));
+			model.addAttribute("first_date", first_date);
+			model.addAttribute("last_date", last_date);
 			path = "/mast/mastBuyListPay";
 		} else {
 			path = "redirect:/";

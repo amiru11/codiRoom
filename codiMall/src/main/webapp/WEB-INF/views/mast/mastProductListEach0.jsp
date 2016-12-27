@@ -66,6 +66,7 @@ th {
 				<div class="container">
 					<div id="view">
 						<!--      -->
+						<H1>each0</H1>
 						<div id="div_product_list">
 							<c:forEach var="list1" items="${list}">
 								<div style="width: 330px; border: 1px solid black; float: left;">
