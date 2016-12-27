@@ -204,7 +204,7 @@ public class MastDAO {
 		return ar;
 	}
 	//페이징시 회원수세기//
-	public int memberCount(){
+	public int memberCount() throws Exception{
 		int result = 0;
 		result = sqlSession.selectOne(namespace+"memberCount");
 
@@ -214,6 +214,13 @@ public class MastDAO {
 		}*/
 		return result;
 	};
+	
+	//회원삭제//
+	public int memberDelete(String id) throws Exception{
+		Map<String, Object> mp = new HashMap<String, Object>();
+		mp.put("id", id);
+		return sqlSession.delete(namespace+"memberDelete", id);
+	}
 	
 	
 }

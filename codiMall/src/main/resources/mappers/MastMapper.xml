@@ -715,13 +715,13 @@
 				(select * from member
 				<where>
 					<if test="type=='id'">
-						and board_writer like #{find} 
+						and id like #{find} 
 					</if>
 					<if test="type=='name'">
-						and board_title like #{find}
+						and name like #{find}
 					</if>
 					<if test="type=='member_level'">
-						and board_contents like #{find}
+						and member_level like #{find}
 					</if>
 				</where>
 				) F)
@@ -740,13 +740,13 @@
 			<if test="type != null">
 				<where>
 					<if test="type=='id'">
-						and board_writer like #{find}
+						and id like #{find}
 					</if>
 					<if test="type=='name'">
-						and board_title like #{find}
+						and name like #{find}
 					</if>
 					<if test="type=='member_level'">
-						and board_contents like #{find}
+						and member_level like #{find}
 					</if>
 				</where>
 			</if>				
@@ -754,9 +754,18 @@
 		<!-- MEMBERCOUNT : E -->
 		
 		<!-- MEMBERUPDATE : S -->
+		<update id="memberUpdate" parameterType="java.util.HashMap">
+			update member set member_level = #{member_level}
+			where id=#{id}
+		</update>
 		<!-- MEMBERUPDATE : E -->
 		
 		<!-- MEMBERDELETE : S -->
+		<delete id="memberDelete" parameterType="java.util.HashMap"  statementType="PREPARED">
+			<![CDATA[
+					delete member where id=#{id}
+			]]>		
+		</delete>
 		<!-- MEMBERDELETE : E -->
 		
 		

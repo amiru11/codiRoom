@@ -180,6 +180,9 @@ public class MastService {
 	
 	
 	//////////////////////////////////////////////////////회원관리////////////////////////////////////////////////////////
+	
+	
+	//검색과 리스트//
 	public void findMemberList(String type, String find, int curPage, int perPage,  Model model)
 			throws Exception {
 		System.out.println("FINDMEMBERLIST");
@@ -198,7 +201,18 @@ public class MastService {
 		
 	}
 	
-	
+	//회원삭제//
+	public String memberDelete(String id) throws Exception{
+		int result = 0;
+		result = mastDAO.memberDelete(id);
+		String message = "";
+		if(result > 0){
+			message = "삭제완료!";
+		}else{
+			message = "삭제실패!";
+		}
+		return message;		
+	}
 	
 	
 	

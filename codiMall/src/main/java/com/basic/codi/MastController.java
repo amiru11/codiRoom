@@ -184,12 +184,13 @@ public class MastController {
 			}
 		return "mast/board/mastCommList";
 	}	
-	
+///////////////////////////////////////////////////회원관리//////////////////////////////////////////	
+	//회원인덱스
 	@RequestMapping(value="/mastMember")
 	public String mastMember(){
 		return "mast/member/mastMember";
 	}
-	
+	//회원검색&리스트
 	@RequestMapping(value="/mastMemberList")
 	public String memberList(@RequestParam(defaultValue="") String type, @RequestParam(defaultValue="") String find, @RequestParam(defaultValue="1") int curPage, 
 			@RequestParam(defaultValue="10") int perPage, Model model){
@@ -204,6 +205,18 @@ public class MastController {
 		
 		return path;
 	}
-	
-	
+	//회원삭제
+	@RequestMapping(value="/mastMemberDelete")
+	public String memberDelete(@RequestParam String id, RedirectAttributes ra){
+		String message = "";
+		try {
+			message = mastService.memberDelete(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String path = "mast/mastMemberList";
+		ra.addFlashAttribute("message", message);
+		System.out.println(message);
+		return "redirect:/"+path;
+	}
 }
