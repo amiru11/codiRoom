@@ -15,7 +15,9 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
 
+import com.basic.board.BoardDTO;
 import com.basic.buy.BuyStateDTO;
+import com.basic.member.MemberDTO;
 import com.basic.product.KindDTO;
 import com.basic.product.ProductAllDTO;
 import com.basic.product.ProductDTO;
@@ -38,6 +40,7 @@ public class MastDAO {
 	TransactionStatus status = null;
 
 
+	private List<MemberDTO> ar;
 	// mast productList   S -------------------------------
 
 	public List<ProductAllDTO> mastProductList(Map<String, Object> map,PageMaker pageMaker) {
@@ -161,4 +164,30 @@ public class MastDAO {
 		
 	}
 
+	
+	
+	/////////////////////////////////////////////////////////회원관리///////////////////////////////////////////////////////
+	
+	//회원리스트//
+	public List<MemberDTO> findList(String type, String find,  PageMaker pageMaker) throws Exception{
+		Map<String, Object> mp = new HashMap<String, Object>();
+		mp.put("type", type);
+		mp.put("find", "%"+find+"%");
+		mp.put("paging", pageMaker);
+		ar = sqlSession.selectList(namespace+"findList", mp);
+		return ar;
+	}
+	//페이징시 회원수세기//
+	public int memberCount(){
+		int result = 0;
+		result = sqlSession.selectOne(namespace+"memberCount");
+
+		/*if(board_kind==4){
+			result = sqlSession.selectOne(namespace4+"boardCount");
+			System.out.println(namespace4 +"count");
+		}*/
+		return result;
+	};
+	
+	
 }

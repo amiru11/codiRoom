@@ -284,4 +284,25 @@ public class MastController {
 		return "mast/board/mastCommList";
 	}	
 	
+	@RequestMapping(value="/mastMember")
+	public String mastMember(){
+		return "mast/member/mastMember";
+	}
+	
+	@RequestMapping(value="/mastMemberList")
+	public String memberList(@RequestParam(defaultValue="") String type, @RequestParam(defaultValue="") String find, @RequestParam(defaultValue="1") int curPage, 
+			@RequestParam(defaultValue="10") int perPage, Model model){
+		
+		try {
+			mastService.findMemberList(type, find, curPage, perPage, model);
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+		}
+		String path = "mast/member/list";
+		
+		return path;
+	}
+	
+	
 }

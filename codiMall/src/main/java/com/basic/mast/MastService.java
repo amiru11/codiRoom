@@ -11,6 +11,7 @@ import com.basic.board.BoardDAO;
 import com.basic.board.BoardDTO;
 import com.basic.board.CommentDAO;
 import com.basic.board.CommentDTO;
+import com.basic.member.MemberDTO;
 import com.basic.product.ProductAllDTO;
 import com.basic.util.PageMaker;
 
@@ -176,4 +177,37 @@ public class MastService {
 		}
 		model.addAttribute("commentList", cr);
 	}
+	
+	
+	//////////////////////////////////////////////////////회원관리////////////////////////////////////////////////////////
+	public void findMemberList(String type, String find, int curPage, int perPage,  Model model)
+			throws Exception {
+		System.out.println("FINDMEMBERLIST");
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCurPage(curPage);
+		pageMaker.setPerPage(perPage);
+		pageMaker.makeRow();
+		pageMaker.makePage(mastDAO.memberCount());
+		List<MemberDTO> ar;
+		
+		ar = mastDAO.findList(type, find, pageMaker);
+		model.addAttribute("type", type);
+		model.addAttribute("find", find);
+		model.addAttribute("paging", pageMaker);
+		model.addAttribute("list", ar);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

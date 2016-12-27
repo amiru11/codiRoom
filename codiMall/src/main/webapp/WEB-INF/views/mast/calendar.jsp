@@ -21,4 +21,10 @@ $('#calendar').fullCalendar({
 	eventLimit: true, // allow "more" link when too many events
 });
 </script>
+<style>
+.fc-toolbar.fc-header-toolbar {
+    height: 60px;
+    margin-bottom: 1em;
+}
+</style>
 <div id="calendar"></div>

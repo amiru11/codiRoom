@@ -24,19 +24,22 @@ table, table tr, tr td, th {
 <script type="text/javascript">
 
 	$(function() {
+		calendar();
 		$("#goCalendar").click(function(){
-			$.ajax({
-				
-				url : "${pageContext.request.contextPath}/mast/calendar",
-				success : function(data){
-					$("#view").empty();
-					$("#view").html(data);
-					console.log(data);
-				}
-			});
-			
+				calendar();
 		});		
 	});
+	
+	function calendar(){
+		$.ajax({
+			url : "${pageContext.request.contextPath}/mast/calendar",
+			success : function(data){
+				$("#view").empty();
+				$("#view").html(data);
+				console.log(data);
+			}			
+		});
+	}
 </script>
 <style type="text/css">
 .nav >li >a.side-btn{
@@ -47,6 +50,10 @@ table, table tr, tr td, th {
     overflow: hidden;
     cursor: pointer;
     font-size: 18px;
+}
+.fc-toolbar.fc-header-toolbar {
+    height: 60px;
+    margin-bottom: 1em;
 }
 </style>
 </head>
@@ -59,7 +66,7 @@ table, table tr, tr td, th {
 				<div class="com-sm-8" style="margin: 20px;height: 100%;">
 					<div class="container" >
 						<div id="view">
-						
+							
 						</div>
 					</div>
 				</div>			
