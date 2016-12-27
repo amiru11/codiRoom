@@ -118,7 +118,7 @@
 	<select id="SelProductList" resultMap="ProductList"
 		parameterType="java.util.HashMap">
 		select * from (select rownum r, z.* from (select DISTINCT
-		t.*,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,pc.PRODUCTPIC_PIC
+		(PRODUCTINFO_PRICE*(100-productInfo_saleRate)/100) realPrice,t.*,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,pc.PRODUCTPIC_PIC
 		from (select
 		count(b.BUY_NUM) c,p.PRODUCT_NUM,p.PRODUCT_NAME from
 		product p LEFT
@@ -164,10 +164,10 @@
 				order by t.c desc,t.product_num desc
 			</when>
 			<when test="productParamDTO.sel == 3">
-				order by pi.productInfo_price asc
+				order by realPrice asc
 			</when>
 			<when test="productParamDTO.sel == 4">
-				order by pi.productInfo_price desc
+				order by realPrice desc
 			</when>
 			<otherwise>
 				order by t.PRODUCT_NUM desc

@@ -20,6 +20,7 @@ import com.basic.buy.BuyService;
 import com.basic.fashion.CodiService;
 import com.basic.mast.MastProductViewDTO;
 import com.basic.mast.MastService;
+import com.basic.mast.SSSSSService;
 import com.basic.product.ProductDTO;
 import com.basic.product.ProductEachDTO;
 import com.basic.product.ProductEachListDTO;
@@ -47,6 +48,9 @@ public class JsonController {
 
 	@Autowired
 	private CodiService codiService;
+	
+	@Autowired 
+	private SSSSSService ssssssService;
 
 	@RequestMapping(value = "/productSize", produces = "application/json; charset=utf-8")
 	public List<String> productSizeList(@RequestParam int product_num) {
@@ -151,6 +155,20 @@ public class JsonController {
 		System.out.println(productEach_each);
 		
 		return mastService.mastProductEachFix(product_num, productSize_size, productEach_color, productEach_each);
+	}
+	@RequestMapping(value="/mastProductInfoFix")
+	public int mastProductInfoFix(int product_num,int productInfo_price,double productInfo_saleRate,String productInfo_searchWord){
+		System.out.println("product_num----"+product_num);
+		System.out.println("productInfo_sale----"+productInfo_saleRate);
+		System.out.println("product_price----"+productInfo_price);
+		System.out.println("product_searchWord----"+productInfo_searchWord);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("product_num", product_num);
+		map.put("productInfo_price", productInfo_price);
+		map.put("productInfo_saleRate", productInfo_saleRate);
+		map.put("productInfo_searchWord",productInfo_searchWord);
+		return ssssssService.mastProductInfoFix(map);
 	}
 	
 	

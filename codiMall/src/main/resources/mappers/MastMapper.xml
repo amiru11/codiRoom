@@ -225,7 +225,7 @@
 	<!-- Mast Product S -->
 	<select id="SelMastProductList" parameterType="java.util.HashMap"
 		resultMap="ProductAll">
-		select * from(select ROWNUM r, z.* from(select DISTINCT
+		select * from(select ROWNUM r, z.* from(select DISTINCT (PRODUCTINFO_PRICE*(100-productInfo_saleRate)/100) realPrice,
 		selCount,pse.PRODUCTSELECT_NUM,pse.PRODUCTSELECT_NAME,k.KIND_NUM,k.KIND_NAME,t.PRODUCT_NUM,
 		t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_DATE,pi.PRODUCTINFO_SALERATE,
 		pi.PRODUCTINFO_SEARCHWORD,pi.PRODUCTINFO_BRAND,pc.PRODUCTPIC_PIC
@@ -320,11 +320,11 @@
 			<when test="sel == 4">
 				order by pi.productInfo_saleRate asc
 			</when>
-			<when test="sel == 6">
-				order by pi.productInfo_price desc
+			<when test="sel == 5">
+				order by realPrice desc
 			</when>
-			<when test="sel == 7">
-				order by pi.productInfo_price asc
+			<when test="sel == 6">
+				order by realPrice asc
 			</when>
 			<otherwise>
 				order by t.product_num desc
@@ -439,7 +439,7 @@
 	</select>
 	<select id="SelMastProductSelList" parameterType="java.util.HashMap"
 		resultType="com.basic.product.ProductDTO">
-		select distinct * from product
+		select distinct * from product order by product_num desc
 	</select>
 	<select id="SelMastProductSizeSelList" parameterType="java.util.HashMap"
 		resultType="com.basic.product.ProductSizeDTO">
@@ -681,7 +681,28 @@
 		productInfo_rec_date = sysdate
 		where product_num = #{product_num}
 	</update>
+	
 	<!-- Product Each Fix E -->
+	
+	<!-- Product Info Fix S -->
+	<update id="UpProductInfoFix" parameterType="java.util.HashMap">
+	update productInfo set productInfo_price = #{productInfo_price},
+	productInfo_saleRate = #{productInfo_saleRate},
+	productInfo_searchWord = #{productInfo_searchWord}
+	where product_num = #{product_num}
+	</update>
+	<update id="UpProductInfoDate2" parameterType="java.util.HashMap">
+		update productInfo
+		set
+		productInfo_rec_date = sysdate
+		where product_num = #{product_num}
+	</update>
+	
+	
+	
+	
+	<!-- Product Info Fix E -->
+	
 
 
 

@@ -81,6 +81,32 @@ public class MastDAO {
 	public List<ProductEachDTO> mastProductColorList(){
 		return sqlSession.selectList(namespace+"SelMastProductColorSelList");
 	}
+	
+	public int mastProductInfoFix(Map<String, Object> map){
+		int result = 0;
+		def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+		status = transactionManager.getTransaction(def);
+
+		try {
+			result = sqlSession.update(namespace+"UpProductInfoFix",map);
+			if(result>0){
+				result = sqlSession.update(namespace+"UpProductInfoDate2",map);
+			}
+			if (result > 0) {
+				transactionManager.commit(status);
+				System.out.println("success");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			transactionManager.rollback(status);
+			System.out.println("fail");
+			result = 0;
+		}
+		return result;
+
+	}
 
 	
 	//  mast product List E------------------------------
