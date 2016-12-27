@@ -1,14 +1,19 @@
 package com.basic.codi;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
-import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +21,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.basic.fashion.CodiDTO;
 import com.basic.fashion.CodiService;
@@ -45,12 +51,15 @@ public class CodiController {
 	
 	//코디 생성 페이지
 	@RequestMapping(value = "codiWrite")
-	public void codiWrite(){
-		
-	}
+	public void codiWrite(){}
 	
+	//코디 등록 페이지
 	@RequestMapping(value = "codiCreate")
-	public void codiCreate(HttpServletRequest request, HttpSession session){
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> codiCreate(CodiDTO codiDTO, HttpServletRequest request, HttpSession session, Model model){
+		Map<String, Object> m = new HashMap<String, Object>();
+		int result = 0;
+		String message = "";
 		try {
 			MemberDTO memberDTO = (MemberDTO) request.getSession().getAttribute("member");
 			//data 이미지
@@ -64,25 +73,33 @@ public class CodiController {
             //이미지로 전환
             BufferedImage image = ImageIO.read(is);
             //파일 이름 생성 및 저장
-            Calendar c = Calendar.getInstance();
-            String fileTime = c.get(Calendar.YEAR) + String.valueOf((c.get(Calendar.MONTH)+1)) + c.get(Calendar.DAY_OF_MONTH);;
+            Date today = new Date();
+            SimpleDateFormat dateForm= new SimpleDateFormat("yyyyMMdd-hhmmss");
             //파일 저장 경로
             String path = session.getServletContext().getRealPath("/resources/codiUpload");
-            File file = new File(path, memberDTO.getId() + "_" + fileTime +".png");
+            System.out.println(path);
+            String filename = memberDTO.getId() + "_" + dateForm.format(today) +".png";
+            File file = new File(path, filename);
             //실제 파일로 이미지 저장
             ImageIO.write(image, "png", file);
             
+            codiDTO.setFileName(filename);
+            codiDTO.setMember_id(memberDTO.getId());
             
-/*            response.setContentType("image/png");
-            response.setHeader("Content-Disposition", "attachment; filename=" +"11"+ ".png");
-            IOUtils.copy(is,  response.getOutputStream());
-            response.flushBuffer();
-            System.out.println(response.getBufferSize());
-            System.out.println(response.getLocale());
-            System.out.println(response.getOutputStream());*/
+            //DB에 저장
+            result = codiService.codiCreate(codiDTO, model);
+            if(result > 0){
+            	message = "코디 등록 성공";
+            }else {
+            	message = "코디 등록 실패";
+            }
+            m.put("result", result);
+            m.put("message", message);
         } catch (Exception e) {
-            
+            m.put("result", result);
+            m.put("message", message);
         }
+		return new ResponseEntity<Map<String, Object>>(m, HttpStatus.OK);
 	}
 	
 }

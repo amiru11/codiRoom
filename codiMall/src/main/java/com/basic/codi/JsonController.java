@@ -139,7 +139,6 @@ public class JsonController {
 	
 	
 	//codi-----------------------------------------------------------------------------
-	
 	@RequestMapping(value="/codiProductList")
 	public Map<String, Object> codiProductList(int kind_num){
 		Map<String, Object> retVal = new HashMap<String, Object>();

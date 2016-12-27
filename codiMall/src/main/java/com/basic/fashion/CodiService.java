@@ -23,17 +23,18 @@ public class CodiService {
 		model.addAttribute("list", ar);
 	}
 	
+	//코디 저장
+	public int codiCreate(CodiDTO codiDTO, Model model) throws Exception{
+		return codiDAO.codiCreate(codiDTO);
+	}
+	
 	//상품 리스트
 	public List<CodiDTO> codiProductList(int kind_num){
 		return codiDAO.codiProductList(kind_num);
-
 	}
-	
 	public List<KindDTO> codiKindList(int productSelect_num){
 		return codiDAO.codiKindList(productSelect_num);
-
 	}
-	
 	public List<ProductSelectDTO> codiSelectList(){
 		return codiDAO.codiSelectList();
 	}

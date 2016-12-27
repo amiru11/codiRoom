@@ -24,7 +24,7 @@
 
 	<!-- 바디 부분 -->
 	<h2>코디</h2>
-	<h1><a href="" onclick="window.open('${pageContext.request.contextPath}/fashion/codiWrite','codi','width=1000,height=700');return false;">코디 생성</a></h1>
+	<h1><a href="" onclick="window.open('${pageContext.request.contextPath}/fashion/codiWrite','codi','width=1200,height=700');return false;">코디 생성</a></h1>
 	
 	<!-- 코디 리스트 -->
 	<c:if test="">

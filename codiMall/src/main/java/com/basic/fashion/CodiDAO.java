@@ -34,8 +34,8 @@ public class CodiDAO {
 	}
 	
 	//등록
-	public void codiWrite() throws Exception{
-		
+	public int codiCreate(CodiDTO codiDTO) throws Exception{
+		return sqlSession.insert(namespace + "codiCreate", codiDTO);
 	}
 	
 	//삭제
@@ -47,26 +47,15 @@ public class CodiDAO {
 	public List<CodiDTO> codiProductList(int kind_num){
 		Map<String, Integer> map = new HashMap<>();
 		map.put("kind_num", kind_num);
-		System.out.println(1);
-		System.out.println("kind_num---"+kind_num);
 		List<CodiDTO> ar = sqlSession.selectList(namespace+"SelCodiProductList", map);
-		for (int i = 0; i < ar.size(); i++) {
-			System.out.println(10);
-			System.out.println(i+"------"+ar.get(i).getProductDTO().getProduct_name());
-		}
-		
 		return ar;
 	}
-	
 	public List<KindDTO> codiKindList(int productSelect_num){
-		System.out.println(productSelect_num);
 		Map<String, Integer> map = new HashMap<>();
 		map.put("productSelect_num", productSelect_num);
 		List<KindDTO> ar = sqlSession.selectList(namespace+"SelkindList", map);
-		System.out.println(ar.get(0).getKind_name());
 		return ar;
 	}
-	
 	public List<ProductSelectDTO> codiSelectList(){
 		return sqlSession.selectList(namespace+"SelProductSelectList");
 	}
