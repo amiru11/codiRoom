@@ -9,6 +9,8 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/productSideBar.js"></script>
 <link
 	href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -20,15 +22,14 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/pagination.css"
 	rel="stylesheet">
-<style type="text/css">
-table, table tr, tr td, th {
-	border: 1px solid black;
-}
-</style>
+<link
+	href="${pageContext.request.contextPath}/resources/css/product/productSideBar.css"
+	rel="stylesheet">
 <script type="text/javascript">
 var requestSubmitted = false;
 
 	$(function() {
+		sideBar();
 		$(document).keydown(function(e) {
 		    key = (e) ? e.keyCode : event.keyCode;
 		     
@@ -242,8 +243,10 @@ var requestSubmitted = false;
 								class="inhA_proselNum" type="hidden"
 								value="${list1.productSelect_num}">${list1.productSelect_name}</a></li>
 					</c:forEach>
-					<li><a href="${pageContext.request.contextPath}/product/productSaleList">할인상품</a></li>
-					<li><a href="${pageContext.request.contextPath}/product/productBestList">BSET</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/product/productSaleList">할인상품</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/product/productBestList">BSET</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -272,7 +275,8 @@ var requestSubmitted = false;
 							<div id="div_ck_size"
 								style="width: 200px; height: 100px; overflow: scroll;">
 								<c:forEach var="sizeList" items="${selSize}">
-								${sizeList}<input class="inCk_size" type="checkbox" value="${sizeList}"
+								${sizeList}<input class="inCk_size" type="checkbox"
+										value="${sizeList}"
 										<c:forEach var = "size2" items="${size}">
 								<c:if test="${sizeList ==size2}">
 								checked="checked"
@@ -286,7 +290,8 @@ var requestSubmitted = false;
 							<div id="div_ck_color"
 								style="width: 200px; height: 100px; overflow: scroll;">
 								<c:forEach var="colorList" items="${selColor}">
-								${colorList}<input class="inCk_color" type="checkbox" value="${colorList}"
+								${colorList}<input class="inCk_color" type="checkbox"
+										value="${colorList}"
 										<c:forEach var = "color2" items="${color}">
 								<c:if test="${colorList ==color2}">
 								checked="checked"
@@ -306,12 +311,16 @@ var requestSubmitted = false;
 						<div class="navbar-collapse collapse"
 							style="padding-left: 0; border-bottom: 1px solid #eee;">
 							<ul class="nav navbar-nav category-type">
-								<li><a style="cursor:pointer" class="sel_type"><input class="inhc_sel" type="hidden" value="1">최신순</a></li>
-								<li><a style="cursor:pointer" class="sel_type"><input class="inhc_sel" type="hidden" value="2">인기순</a></li>
-								<li><a style="cursor:pointer" class="sel_type"><input class="inhc_sel" type="hidden" value="3">낮은 가격 순</a></li>
+								<li><a style="cursor: pointer" class="sel_type"><input
+										class="inhc_sel" type="hidden" value="1">최신순</a></li>
+								<li><a style="cursor: pointer" class="sel_type"><input
+										class="inhc_sel" type="hidden" value="2">인기순</a></li>
+								<li><a style="cursor: pointer" class="sel_type"><input
+										class="inhc_sel" type="hidden" value="3">낮은 가격 순</a></li>
 								<li>
 									<!-- <input name="sel" type="radio" class="sel_radio" value="5"> -->
-									<a style="cursor:pointer" class="sel_type"><input class="inhc_sel" type="hidden" value="4">높은 가격 순</a>
+									<a style="cursor: pointer" class="sel_type"><input
+										class="inhc_sel" type="hidden" value="4">높은 가격 순</a>
 								</li>
 							</ul>
 						</div>
@@ -324,7 +333,8 @@ var requestSubmitted = false;
 									<div class="mc" style="border: 1px solid #eee;">
 										<span class="img"> <a
 											href="${pageContext.request.contextPath}/product/productView?product_num=${list1.productDTO.product_num}">
-												<img src="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}"
+												<img
+												src="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}"
 												width="250" height="250">
 										</a>
 										</span>
@@ -336,15 +346,19 @@ var requestSubmitted = false;
 											<p>브랜드</p>
 											<p>
 												<span> <fmt:formatNumber
-														value="${list1.productInfoDTO.productInfo_price}" currencySymbol=""
-														type="currency" />원
-												</span> <strong style="color: #b5172e;">→<c:set
-														var="number"
-														value="${list1.productInfoDTO.productInfo_price*(100-list1.productInfoDTO.productInfo_saleRate)/100}" />
-													<fmt:parseNumber var="total" value="${number}"
-														type="number" integerOnly="true" /> ${total}
-													원(${list1.productInfoDTO.productInfo_saleRate}%)
-												</strong>
+														value="${list1.productInfoDTO.productInfo_price}"
+														currencySymbol="" type="currency" />원
+												</span>
+												<c:if
+													test="${list1.productInfoDTO.productInfo_saleRate > 0  }">
+													<strong style="color: #b5172e;">→<c:set
+															var="number"
+															value="${list1.productInfoDTO.productInfo_price*(100-list1.productInfoDTO.productInfo_saleRate)/100}" />
+														<fmt:parseNumber var="total" value="${number}"
+															type="number" integerOnly="true" /> ${total}
+														원(${list1.productInfoDTO.productInfo_saleRate}%)
+													</strong>
+												</c:if>
 											</p>
 										</div>
 										<div class="div_cart cart"
@@ -370,20 +384,27 @@ var requestSubmitted = false;
 					<div class="center-block">
 						<nav aria-label="Page navigation">
 							<ul class="pagination">
+								<c:if test="${!empty list}">
 
-								<li><c:if test="${pageing.curBlock>1}">
-										<a class="a_prev" aria-label="Previous" style="cursor:pointer"><input class="inh_prev" type="hidden" value="${pageing.startNum-1}"> <span aria-hidden="true">&laquo;</span>
-										</a>
-									</c:if></li>
-								<li><c:forEach begin="${pageing.startNum}" step="1"
-										end="${pageing.lastNum}" var="i">
+									<li><c:if test="${pageing.curBlock>1}">
+											<a class="a_prev" aria-label="Previous"
+												style="cursor: pointer"><input class="inh_prev"
+												type="hidden" value="${pageing.startNum-1}"> <span
+												aria-hidden="true">&laquo;</span> </a>
+										</c:if></li>
+									<li><c:forEach begin="${pageing.startNum}" step="1"
+											end="${pageing.lastNum}" var="i">
 
-										<a style="cursor:pointer" class="N_pageing">${i}</a>
-									</c:forEach></li>
-								<li><c:if test="${pageing.curBlock<pageing.totalBlock}">
-										<a class="a_next" aria-label="Next" style="cursor:pointer"> <input class="inh_next" type="hidden" value="${pageing.lastNum+1}"><span aria-hidden="true">&raquo;</span>
-										</a>
-									</c:if></li>
+											<a style="cursor: pointer" class="N_pageing">${i}</a>
+										</c:forEach></li>
+									<li><c:if test="${pageing.curBlock<pageing.totalBlock}">
+											<a class="a_next" aria-label="Next" style="cursor: pointer">
+												<input class="inh_next" type="hidden"
+												value="${pageing.lastNum+1}"><span
+												aria-hidden="true">&raquo;</span>
+											</a>
+										</c:if></li>
+								</c:if>
 							</ul>
 						</nav>
 					</div>
@@ -391,7 +412,7 @@ var requestSubmitted = false;
 				</div>
 			</div>
 		</div>
-		
+
 
 
 	</div>
@@ -428,14 +449,14 @@ var requestSubmitted = false;
 			</div>
 		</div>
 	</div>
-	
+
 	<!--  hidden form (POST로 넘기기위한 숨겨진 FORM 지저분한 주소창방지용)  -->
-	<form id="form_all" name="formAll" action="${pageContext.request.contextPath}/product/productList"
+	<form id="form_all" name="formAll"
+		action="${pageContext.request.contextPath}/product/productList"
 		method="post" style="display: none;">
-		<input class="inh_curPage" type="hidden"
-			value="" name="curPage">
-		<input class="inh_sel" type="hidden" name="sel">
-		<input class="inh_productSelect_num" type="hidden"
+		<input class="inh_curPage" type="hidden" value="" name="curPage">
+		<input class="inh_sel" type="hidden" name="sel"> <input
+			class="inh_productSelect_num" type="hidden"
 			value="${productSelect_num}" name="productSelect_num">
 		<div id="hid_div_kind_num">
 			<c:forEach var="kindList1" items="${kind_num}">
@@ -461,14 +482,17 @@ var requestSubmitted = false;
 	</form>
 
 	<!--   hiddenForm2   productSelect 전용 -->
-	<form id="hidd_form_prosel" name="formProsel" 
+	<form id="hidd_form_prosel" name="formProsel"
 		action="${pageContext.request.contextPath}/product/productList"
 		method="post" style="display: none;">
 		<input id="inphid_productSelect_num" type="hidden"
 			name="productSelect_num">
 	</form>
 
-	
+	<!--   side bar  -->
+	<%@ include file="/resources/temp/product/productSideBar.jspf"%>
+
+
 
 </body>
 </html>

@@ -2,10 +2,200 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MastMapper">
 
-	<resultMap type="com.basic.product.ProductDTO" id="Product">
-		<id property="product_num" column="product_num" />
-		<result property="product_name" column="product_name" />
+	<!-- Product REsult MAP S -->
+
+	<resultMap type="com.basic.product.ProductSelectDTO" id="ProductSelect">
+		<id column="productSelect_num" property="productSelect_num"
+			javaType="int" />
+		<result column="productSelect_name" property="productSelect_name"
+			javaType="java.lang.String" />
 	</resultMap>
+
+	<resultMap type="com.basic.product.KindDTO" id="Kind">
+		<id column="kind_num" property="kind_num" javaType="int" />
+		<result column="kind_name" property="kind_name" javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductInfoDTO" id="ProductInfo">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="productInfo_price" property="productInfo_price"
+			javaType="int" />
+		<result column="productInfo_reg_date" property="productInfo_reg_date"
+			javaType="java.sql.Date" />
+		<result column="productInfo_rec_date" property="productInfo_rec_date"
+			javaType="java.sql.Date" />
+		<result column="productInfo_saleRate" property="productInfo_saleRate"
+			javaType="double" />
+		<result column="productInfo_searchWord" property="productInfo_searchWord"
+			javaType="java.lang.String" />
+		<result column="productInfo_brand" property="productInfo_brand"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductEachDTO" id="ProductEach">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="productSize_size" property="productSize_size"
+			javaType="java.lang.String" />
+		<result column="productEach_color" property="productEach_color"
+			javaType="java.lang.String" />
+		<result column="productEach_each" property="productEach_each"
+			javaType="int" />
+	</resultMap>
+	<resultMap type="com.basic.product.ProductSizeDTO" id="ProductSize">
+		<result column="productSize_size" property="productSize_size"
+			javaType="java.lang.String" />
+	</resultMap>
+
+
+	<resultMap type="com.basic.product.ProductPicDTO" id="ProductPic">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="productPic_pic" property="productPic_pic"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductDTO" id="Product">
+		<id column="product_num" property="product_num" javaType="int" />
+		<result column="product_name" property="product_name" javaType="java.lang.String" />
+	</resultMap>
+
+
+	<resultMap type="com.basic.product.ProductAllDTO" id="ProductAll">
+		<result property="r" column="r" />
+		<result property="selCount" column="selCount" />
+		<association property="productSelectDTO" javaType="com.basic.product.ProductSelectDTO"
+			resultMap="ProductSelect" />
+		<association property="kindDTO" javaType="com.basic.product.KindDTO"
+			resultMap="Kind" />
+		<association property="productDTO" javaType="com.basic.product.ProductDTO"
+			resultMap="Product" />
+		<association property="productInfoDTO" javaType="com.basic.product.ProductInfoDTO"
+			resultMap="ProductInfo" />
+		<association property="productPicDTO" javaType="com.basic.product.ProductPicDTO"
+			resultMap="ProductPic" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductAllDTO" id="ProductAllInfo">
+		<result property="r" column="r" />
+		<result property="selCount" column="selCount" />
+		<association property="productSelectDTO" javaType="com.basic.product.ProductSelectDTO"
+			resultMap="ProductSelect" />
+		<association property="kindDTO" javaType="com.basic.product.KindDTO"
+			resultMap="Kind" />
+		<association property="productDTO" javaType="com.basic.product.ProductDTO"
+			resultMap="Product" />
+		<association property="productInfoDTO" javaType="com.basic.product.ProductInfoDTO"
+			resultMap="ProductInfo" />
+		<association property="productPicDTO" javaType="com.basic.product.ProductPicDTO"
+			resultMap="ProductPic" />
+		<collection property="productEachDTOs" ofType="com.basic.product.ProductEachDTO">
+			<result column="productSize_size" property="productSize_size"
+				javaType="java.lang.String" />
+			<result column="productEach_color" property="productEach_color"
+				javaType="java.lang.String" />
+			<result column="productEach_each" property="productEach_each"
+				javaType="int" />
+		</collection>
+
+
+	</resultMap>
+
+	<!-- 2222222222222222222222222222222222 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS -->
+
+	<resultMap type="com.basic.product.ProductSelectDTO" id="ProductSelect2">
+		<id column="pse_productSelect_num" property="productSelect_num"
+			javaType="int" />
+		<result column="pse_productSelect_name" property="productSelect_name"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.KindDTO" id="Kind2">
+		<id column="k_kind_num" property="kind_num" javaType="int" />
+		<result column="k_kind_name" property="kind_name" javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductInfoDTO" id="ProductInfo2">
+		<result column="pi_productInfo_price" property="productInfo_price"
+			javaType="int" />
+		<result column="pi_productInfo_reg_date" property="productInfo_reg_date"
+			javaType="java.sql.Date" />
+		<result column="pi_productInfo_rec_date" property="productInfo_rec_date"
+			javaType="java.sql.Date" />
+		<result column="pi_productInfo_saleRate" property="productInfo_saleRate"
+			javaType="double" />
+		<result column="pi_productInfo_searchWord" property="productInfo_searchWord"
+			javaType="java.lang.String" />
+		<result column="pi_productInfo_brand" property="productInfo_brand"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductEachDTO" id="ProductEach2">
+		<result column="pe_productSize_size" property="productSize_size"
+			javaType="java.lang.String" />
+		<result column="pe_productEach_color" property="productEach_color"
+			javaType="java.lang.String" />
+		<result column="pe_productEach_each" property="productEach_each"
+			javaType="int" />
+	</resultMap>
+	<resultMap type="com.basic.product.ProductSizeDTO" id="ProductSize2">
+		<result column="ps_productSize_size" property="productSize_size"
+			javaType="java.lang.String" />
+	</resultMap>
+
+
+	<resultMap type="com.basic.product.ProductPicDTO" id="ProductPic2">
+		<result column="pc_productPic_pic" property="productPic_pic"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.product.ProductDTO" id="Product2">
+		<id column="p_product_num" property="product_num" javaType="int" />
+		<result column="p_product_name" property="product_name"
+			javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap type="com.basic.mast.MastProductViewDTO" id="ProductAllInfo2">
+		<result property="selCount" column="selCount" />
+		<result column="pse_productSelect_num" property="productSelect_num"
+			javaType="int" />
+		<result column="pse_productSelect_name" property="productSelect_name"
+			javaType="java.lang.String" />
+		<result column="k_kind_num" property="kind_num" javaType="int" />
+		<result column="k_kind_name" property="kind_name" javaType="java.lang.String" />
+		<result column="p_product_num" property="product_num" javaType="int" />
+		<result column="p_product_name" property="product_name"
+			javaType="java.lang.String" />
+		<result column="pi_productInfo_price" property="productInfo_price"
+			javaType="int" />
+		<result column="pi_productInfo_reg_date" property="productInfo_reg_date"
+			javaType="java.sql.Date" />
+		<result column="pi_productInfo_rec_date" property="productInfo_rec_date"
+			javaType="java.sql.Date" />
+		<result column="pi_productInfo_saleRate" property="productInfo_saleRate"
+			javaType="double" />
+		<result column="pi_productInfo_searchWord" property="productInfo_searchWord"
+			javaType="java.lang.String" />
+		<result column="pi_productInfo_brand" property="productInfo_brand"
+			javaType="java.lang.String" />
+		<result column="pc_productPic_pic" property="productPic_pic"
+			javaType="java.lang.String" />
+		<collection property="productEachDTOs" ofType="com.basic.product.ProductEachDTO">
+			<result column="pe_productSize_size" property="productSize_size"
+				javaType="java.lang.String" />
+			<result column="pe_productEach_color" property="productEach_color"
+				javaType="java.lang.String" />
+			<result column="pe_productEach_each" property="productEach_each"
+				javaType="int" />
+		</collection>
+
+
+	</resultMap>
+
+	<!-- 22222222222222222222222222222222222 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE -->
+
+
+
+	<!-- Product REsult MAP E -->
+
 
 	<resultMap type="com.basic.buy.BuyDTO" id="Buy">
 		<id property="buy_num" column="buy_num" />
@@ -30,6 +220,400 @@
 		<association property="buyDTO" resultMap="Buy" />
 		<association property="buyStateDTO" resultMap="BuyState" />
 	</resultMap>
+
+
+	<!-- Mast Product S -->
+	<select id="SelMastProductList" parameterType="java.util.HashMap"
+		resultMap="ProductAll">
+		select * from(select ROWNUM r, z.* from(select DISTINCT
+		selCount,pse.PRODUCTSELECT_NUM,pse.PRODUCTSELECT_NAME,k.KIND_NUM,k.KIND_NAME,t.PRODUCT_NUM,
+		t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_DATE,pi.PRODUCTINFO_SALERATE,
+		pi.PRODUCTINFO_SEARCHWORD,pi.PRODUCTINFO_BRAND,pc.PRODUCTPIC_PIC
+		from
+		(select count(b.buy_num) selCount,p.PRODUCT_NUM,p.product_name
+		from
+		product p LEFT OUTER JOIN buy b
+		ON b.product_num = p.PRODUCT_NUM
+		group
+		by p.PRODUCT_NUM, p.product_name)
+		t ,PRODUCTINFO pi,PRODUCTPIC pc
+		,
+		PRODUCTKIND pk , PRODUCTSELECT pse
+		,kind k,ProductSize ps,productEach
+		pe
+		where t.PRODUCT_NUM =
+		pi.PRODUCT_NUM
+		and t.PRODUCT_NUM =
+		ps.PRODUCT_NUM
+		and t.PRODUCT_NUM = pe.PRODUCT_NUM
+		and
+		ps.PRODUCTSize_size = pe.PRODUCTSize_size
+		and t.PRODUCT_NUM =
+		pc.PRODUCT_NUM
+		and t.PRODUCT_NUM =
+		pk.PRODUCT_NUM
+		and
+		pse.PRODUCTSELECT_NUM = k.PRODUCTSELECT_NUM
+		and
+		pk.KIND_NUM = k.KIND_NUM
+		<if test="kind_num != null">
+			and k.kind_num in
+			<foreach item="item" index="index" collection="kind_num"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="product_num != null">
+			and t.product_num in
+			<foreach item="item" index="index" collection="product_num"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="productSelect_num != null">
+			and k.productSelect_num in
+			<foreach item="item" index="index" collection="productSelect_num"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="productSize_size != null">
+			and ps.productSize_size in
+			<foreach item="item" index="index" collection="productSize_size"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="productEach_color != null">
+			and pe.productEach_color in
+			<foreach item="item" index="index" collection="productEach_color"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<choose>
+			<when test="mtpSel == 2">
+				and pi.productInfo_saleRate not in (0)
+			</when>
+			<when test="mtpSel == 3">
+				and pi.productInfo_saleRate in (0)
+			</when>
+			<when test="mtpSel == 4">
+				and pi.productEach_each not in (0)
+			</when>
+			<when test="mtpSel == 5">
+				and pi.productEach_each in (0)
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="sel==1">
+				order by t.product_num desc
+			</when>
+			<when test="sel==2">
+				order by t.product_num asc
+			</when>
+			<when test="sel == 3">
+				order by pi.productInfo_saleRate desc
+			</when>
+			<when test="sel == 4">
+				order by pi.productInfo_saleRate asc
+			</when>
+			<when test="sel == 6">
+				order by pi.productInfo_price desc
+			</when>
+			<when test="sel == 7">
+				order by pi.productInfo_price asc
+			</when>
+			<otherwise>
+				order by t.product_num desc
+			</otherwise>
+		</choose>
+		) z)where r between #{pageMaker.startRowNum} and
+		#{pageMaker.lastLowNum}
+
+
+	</select>
+
+
+	<select id="SelMastProductCount" parameterType="java.util.HashMap"
+		resultType="int">
+		select
+		count(z.PRODUCT_NUM) from (select DISTINCT
+		selCount,pse.PRODUCTSELECT_NUM,pse.PRODUCTSELECT_NAME,k.KIND_NUM,k.KIND_NAME,t.PRODUCT_NUM,
+		t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_DATE,pi.PRODUCTINFO_SALERATE,
+		pi.PRODUCTINFO_SEARCHWORD,pi.PRODUCTINFO_BRAND,pc.PRODUCTPIC_PIC
+		from
+		(select count(b.buy_num) selCount,p.PRODUCT_NUM,p.product_name
+		from
+		product p LEFT OUTER JOIN buy b
+		ON b.product_num = p.PRODUCT_NUM
+		group
+		by p.PRODUCT_NUM, p.product_name)
+		t ,PRODUCTINFO pi,PRODUCTPIC pc
+		,
+		PRODUCTKIND pk , PRODUCTSELECT pse
+		,kind k,ProductSize ps,productEach
+		pe
+		where t.PRODUCT_NUM =
+		pi.PRODUCT_NUM
+		and t.PRODUCT_NUM =
+		ps.PRODUCT_NUM
+		and t.PRODUCT_NUM = pe.PRODUCT_NUM
+		and
+		ps.PRODUCTSize_size = pe.PRODUCTSize_size
+		and t.PRODUCT_NUM =
+		pc.PRODUCT_NUM
+		and t.PRODUCT_NUM =
+		pk.PRODUCT_NUM
+		and
+		pse.PRODUCTSELECT_NUM = k.PRODUCTSELECT_NUM
+		and
+		pk.KIND_NUM = k.KIND_NUM
+		<if test="kind_num != null">
+			and k.kind_num in
+			<foreach item="item" index="index" collection="kind_num"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="product_num != null">
+			and t.product_num in
+			<foreach item="item" index="index" collection="product_num"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="productSelect_num != null">
+			and k.productSelect_num in
+			<foreach item="item" index="index" collection="productSelect_num"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="productSize_size != null">
+			and ps.productSize_size in
+			<foreach item="item" index="index" collection="productSize_size"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="productEach_color != null">
+			and pe.productEach_color in
+			<foreach item="item" index="index" collection="productEach_color"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<choose>
+			<when test="mtpSel == 2">
+				and pi.productInfo_saleRate not in (0)
+			</when>
+			<when test="mtpSel == 3">
+				and pi.productInfo_saleRate in (0)
+			</when>
+			<when test="mtpSel == 4">
+				and pi.productEach_each not in (0)
+			</when>
+			<when test="mtpSel == 5">
+				and pi.productEach_each in (0)
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		)z
+
+	</select>
+
+	<!-- Mast Product E -->
+
+	<!-- Mast product selector List S -->
+	<select id="SelMastProductSelectSelList" parameterType="java.util.HashMap"
+		resultType="com.basic.product.ProductSelectDTO">
+		select * from productSelect
+	</select>
+	<select id="SelMastKindSelList" parameterType="java.util.HashMap"
+		resultType="com.basic.product.KindDTO">
+		select distinct kind_num,kind_name from kind
+	</select>
+	<select id="SelMastProductSelList" parameterType="java.util.HashMap"
+		resultType="com.basic.product.ProductDTO">
+		select distinct * from product
+	</select>
+	<select id="SelMastProductSizeSelList" parameterType="java.util.HashMap"
+		resultType="com.basic.product.ProductSizeDTO">
+		select
+		DISTINCT productSize_size from PRODUCTSIZE
+		order by
+		case when
+		productSize_size = 'SSS' then 1 when productSize_size = 'SS'
+		then 2 when productSize_size = 'S' then 3
+		when productSize_size = 'M'
+		then 4 when productSize_size = 'L' then
+		5 when productSize_size = 'XL'
+		then 6 when productSize_size =
+		'XXL' then 7
+		end
+	</select>
+	<select id="SelMastProductColorSelList" parameterType="java.util.HashMap"
+		resultType="com.basic.product.ProductEachDTO">
+		select
+		DISTINCT productEach_color from PRODUCTeach
+		ORDER BY
+		productEach_color asc
+	</select>
+
+
+
+
+
+	<!-- Mast product selector List E -->
+
+
+	<!-- Mast product All Info S -->
+	<select id="SelMastProductInfoAll" parameterType="int"
+		resultMap="ProductAllInfo2">
+		select DISTINCT * from(select ROWNUM r, z.* from(select
+		DISTINCT
+		selCount,pse.PRODUCTSELECT_NUM as
+		pse_productSelect_num,pse.PRODUCTSELECT_NAME as pse_productSelect_name
+		,k.KIND_NUM as k_kind_num,k.KIND_NAME as k_kind_name,t.PRODUCT_NUM as
+		p_product_num,
+		t.PRODUCT_NAME as p_product_name,pi.PRODUCTINFO_PRICE as
+		pi_PRODUCTINFO_price,pi.PRODUCTINFO_REC_DATE as
+		pi_PRODUCTINFO_rec_date,pi.PRODUCTINFO_REG_DATE as
+		pi_PRODUCTINFO_reg_date,
+		pi.PRODUCTINFO_SALERATE as
+		pi_PRODUCTINFO_salerate,
+		pi.PRODUCTINFO_SEARCHWORD as
+		pi_PRODUCTINFO_searchword,pi.PRODUCTINFO_BRAND as
+		pi_PRODUCTINFO_brand,pc.PRODUCTPIC_PIC as pc_PRODUCTPIC_PIC,
+		pe.PRODUCTSIZE_SIZE as pe_productSize_size,pe.PRODUCTEACH_COLOR as
+		pe_productEach_color,pe.PRODUCTEACH_EACH as pe_productEach_each
+		from
+		(select count(b.buy_num) selCount,p.PRODUCT_NUM,p.product_name
+		from
+		product p LEFT OUTER JOIN buy b
+		ON b.product_num = p.PRODUCT_NUM
+		group
+		by p.PRODUCT_NUM, p.product_name)
+		t ,PRODUCTINFO pi,PRODUCTPIC pc
+		,
+		PRODUCTKIND pk , PRODUCTSELECT pse
+		,kind k,productEach
+		pe
+		where
+		t.product_num = pe.product_num and
+		t.product_num = #{product_num} and
+		t.PRODUCT_NUM =
+		pe.PRODUCT_NUM and
+		t.PRODUCT_NUM =
+		pi.PRODUCT_NUM
+		and
+		t.PRODUCT_NUM =
+		pe.PRODUCT_NUM
+		and
+		t.PRODUCT_NUM =
+		pc.PRODUCT_NUM
+		and
+		t.PRODUCT_NUM =
+		pk.PRODUCT_NUM
+		and
+		pse.PRODUCTSELECT_NUM =
+		k.PRODUCTSELECT_NUM
+		and
+		pk.KIND_NUM = k.KIND_NUM
+		) z)order by case when
+		pe_productSize_size = 'SSS' then 1 when pe_productSize_size = 'SS'
+		then 2 when pe_productSize_size = 'S' then 3
+		when pe_productSize_size =
+		'M' then 4 when pe_productSize_size = 'L' then
+		5 when
+		pe_productSize_size = 'XL' then 6 when pe_productSize_size =
+		'XXL' then
+		7
+		end,pe_productEach_color asc
+
+
+	</select>
+
+	<!-- Mast product All Info E -->
+
+	<!-- MastProductList each 0 S -->
+	<select id="SelMastProductListEach0" resultMap="ProductAllInfo2">
+		select DISTINCT er.* from(select z.* from(select
+		DISTINCT 
+		selCount,pse.PRODUCTSELECT_NUM as
+		pse_productSelect_num,pse.PRODUCTSELECT_NAME as pse_productSelect_name
+		,k.KIND_NUM as k_kind_num,k.KIND_NAME as k_kind_name,t.PRODUCT_NUM as
+		p_product_num,
+		t.PRODUCT_NAME as p_product_name,pi.PRODUCTINFO_PRICE as
+		pi_PRODUCTINFO_price,pi.PRODUCTINFO_REC_DATE as
+		pi_PRODUCTINFO_rec_date,pi.PRODUCTINFO_REG_DATE as
+		pi_PRODUCTINFO_reg_date,
+		pi.PRODUCTINFO_SALERATE as
+		pi_PRODUCTINFO_salerate,
+		pi.PRODUCTINFO_SEARCHWORD as
+		pi_PRODUCTINFO_searchword,pi.PRODUCTINFO_BRAND as
+		pi_PRODUCTINFO_brand,pc.PRODUCTPIC_PIC as pc_PRODUCTPIC_PIC,
+		pe.PRODUCTSIZE_SIZE as pe_productSize_size,pe.PRODUCTEACH_COLOR as
+		pe_productEach_color,pe.PRODUCTEACH_EACH as pe_productEach_each
+		from
+		(select count(b.buy_num) selCount,p.PRODUCT_NUM,p.product_name
+		from
+		product p LEFT OUTER JOIN buy b
+		ON b.product_num = p.PRODUCT_NUM
+		group
+		by p.PRODUCT_NUM, p.product_name)
+		t ,PRODUCTINFO pi,PRODUCTPIC pc
+		,
+		PRODUCTKIND pk , PRODUCTSELECT pse
+		,kind k,productEach
+		pe
+		where
+		t.product_num = pe.product_num and
+		t.PRODUCT_NUM =
+		pe.PRODUCT_NUM and
+		t.PRODUCT_NUM =
+		pi.PRODUCT_NUM
+		and
+		t.PRODUCT_NUM =
+		pe.PRODUCT_NUM
+		and
+		t.PRODUCT_NUM =
+		pc.PRODUCT_NUM
+		and
+		t.PRODUCT_NUM =
+		pk.PRODUCT_NUM
+		and
+		pse.PRODUCTSELECT_NUM =
+		k.PRODUCTSELECT_NUM
+		and
+		pk.KIND_NUM = k.KIND_NUM
+    and pe.PRODUCTEACH_EACH = 0
+		) z) er order by p_product_num desc,case when pe_productSize_size = 'SSS' then 1 when pe_productSize_size = 'SS' then 2 when pe_productSize_size = 'S' then 3
+     when pe_productSize_size = 'M' then 4 when pe_productSize_size = 'L' then 5 when pe_productSize_size = 'XL' then 6 when pe_productSize_size = 'XXL' then 7
+    end,pe_productEach_color asc
+	</select>
+	<!-- MastProductList each 0 E -->
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	<select id="SelMastBuyList" resultMap="MastBuyList"
 		parameterType="java.util.HashMap">
@@ -75,10 +659,29 @@
 		update buyState set
 		buystate_state = 4
 		where buystate_state = 3 and
-		sysdate - buystate_result_date > 7
+		sysdate -
+		buystate_result_date > 7
 	</update>
 
 	<!-- update 7day auto update eeeeeee -->
+
+
+	<!-- ProductEach Fix S -->
+	<update id="UpProductEach" parameterType="com.basic.product.ProductEachDTO">
+		update productEach set
+		productEach_each = #{productEach_each}
+		where product_num=#{product_num}
+		and productSize_size = #{productSize_size}
+		and productEach_color =
+		#{productEach_color}
+	</update>
+	<update id="UpProductInfoDate" parameterType="int">
+		update productInfo
+		set
+		productInfo_rec_date = sysdate
+		where product_num = #{product_num}
+	</update>
+	<!-- Product Each Fix E -->
 
 
 

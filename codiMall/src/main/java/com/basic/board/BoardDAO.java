@@ -269,14 +269,22 @@ public class BoardDAO {
 	//검색//
 	public List<BoardDTO> findList(String type, String find, int board_kind, PageMaker pageMaker) throws Exception{
 		Map<String, Object> mp = new HashMap<String, Object>();
-		mp.put("type", type);
-		mp.put("find", "%"+find+"%");
-		mp.put("paging", pageMaker);
+		if(find.equals("")){
+			mp.put("type", type);
+			mp.put("find", "");
+			mp.put("paging", pageMaker);
+			System.out.println(2222221);
+		}else{
+			mp.put("type", type);
+			mp.put("find", "%"+find+"%");
+			mp.put("paging", pageMaker);	
+			System.out.println(1);
+		}
 		
 		if(board_kind==1){			
 			ar = sqlSession.selectList(namespace1+"findList", mp);
 		}else if(board_kind==2){
-			ar = sqlSession.selectList(namespace2+"findList", mp);
+			ar = sqlSession.selectList(namespace2+"findList2", mp);
 		}else if(board_kind==3){
 			ar = sqlSession.selectList(namespace3+"findList", mp);
 		}

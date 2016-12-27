@@ -231,6 +231,18 @@ function testAPI() {
 		alert("gender : " + response.gender);
 	});
 }
+$(function () {
+	$("#ps_btn").click(function () {
+		var ps =$("#product_search").val();
+		if(ps == ""){
+			alert("검색어를 입력해주세요");
+		}else{
+			var psname=document.psname;
+			psname.submit();
+			
+		}
+	});
+});
 
 
 </script>
@@ -355,11 +367,12 @@ function testAPI() {
 						<li><a href="${pageContext.request.contextPath}/member/memberLogout">LOGOUT</a></li>
 					</c:if>
 						<li style="clear: left;margin-top: -10px;float: right;">
-							<form class="navbar-form navbar-right" style="padding-right: 30px;">
+						<!--상품검색  -->
+							<form name="psname" action="${pageContext.request.contextPath}/product/productSearchList" method="get" class="navbar-form navbar-right" style="padding-right: 30px;">
 								<div class="input-group">
-									<input type="text" class="form-control"	placeholder="Search Product"> 
+									<input type="text" class="form-control"	placeholder="Search Product" id="product_search" name="find"> 
 									<span class="input-group-btn"> 
-										<a class="btn btn-default" type="button">
+										<a class="btn btn-default" type="button" id="ps_btn">
 											<span class="glyphicon glyphicon-search"></span>
 										</a>
 									</span>
@@ -371,10 +384,16 @@ function testAPI() {
 				<ul class="nav navbar-nav navbar-left" style="margin-top: 60px; margin-left: 50px;">
 					<!--  test li s -->
 					<li><a href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
-					<li><a href="${pageContext.request.contextPath}/buy/buyList">BUYLIST</a></li>
+
+					<%-- <li><a href="${pageContext.request.contextPath}/buy/buyList">BUYLIST</a></li> --%>
+
 					<li><a href="${pageContext.request.contextPath}/product/productAdd">PRODUCTADD</a></li>
+
 					<li><a href="${pageContext.request.contextPath}/product/productList">ITEM</a></li>
-					<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOG</a></li>
+					<%-- <li><a href="${pageContext.request.contextPath}/basket/log">TESTLOG</a></li> --%>
+
+					<%-- <li><a href="${pageContext.request.contextPath}/product/productList">ITEM</a></li> --%>
+
 					<c:if test="${sessionScope.member.member_level == 0 }">
 					<li><a href="${pageContext.request.contextPath}/mast/mastIndex">MASTIN</a></li>
 					</c:if>

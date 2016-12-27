@@ -126,7 +126,7 @@
 					<tr>
 						<td colspan="4">
 							<div class="form-group">
-								<textarea class="form-control" name="board_contents" rows="5"  id="smarteditor" rows="10" cols="100" style="width:100%; height:100%;"  placeholder="내용을 입력하세요"></textarea>
+								<textarea class="form-control" name="board_contents" id="smarteditor" rows="10" cols="100" style="width:100%; height:100%;"  placeholder="내용을 입력하세요"></textarea>
 							</div>
 							<input type="hidden" name="board_kind" value="${board_kind}">
 							<a id="goList" class="btn btn-md btn-primary" role="button">LIST</a>

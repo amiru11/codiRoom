@@ -16,7 +16,8 @@
 <script type="text/javascript">
 	$(function() {
 		qnaList();
-		
+		reviewList();
+
 		$("#sel_size_a").change(function(){
 			if($("#sel_size_a").val()!=""){
 				$("#buttonSet").css("display","none");
@@ -274,17 +275,17 @@
 	//reviewList
 	function reviewList(){
 		$.ajax({
-		    url : "../review/reviewList",
+		    url : "${pageContext.request.contextPath}/review/reviewList",
 		    type : "get",
 		    data : {
 		    	curPage : 1,
 		    	perPage : 10,
-		    	product_num :  ${view.product_num}
+		    	review_product :  ${view.product_num}
 
 		    },
 		    success: function(data) {
 		    	console.log(data);
-		    	$("#e").html(data.trim());
+		    	$("#review").html(data.trim());
 		    },
 		    error:function(request,status,error){
 		        console.log("code:"+request.status+"\n"+"error:"+error);
@@ -494,6 +495,7 @@
 					</div>
 						<div id="e">
 							<h3>상품리뷰</h3>
+							<div id="review"></div>
 						</div>
 				</div>
 			</div>

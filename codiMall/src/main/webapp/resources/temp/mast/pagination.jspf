@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>     
+										<div class="row">
+											<nav aria-label="Page navigation" class="center-block" style="width : 180px;">
+												<ul class="pagination">
+													<li><a href="#" aria-label="Previous"> <span
+															aria-hidden="true">&laquo;</span>
+													</a></li>
+													<li><c:if test="${paging.curBlock > 1}">
+															<a class="N_pageing"
+																href="boardList?curPage=${paging.startNum-1}&perPage=10&board_kind=${board_kind}&type=${type}&find=${find}">&laquo;</a>
+														</c:if></li>
+													<li><c:forEach begin="${paging.startNum}" step="1"
+															end="${paging.lastNum}" var="i">
+															<a class="N_pageing"
+																href="boardList?curPage=${i}&perPage=10&board_kind=${board_kind}&type=${type}&find=${find}">${i}</a>
+								
+														</c:forEach></li>
+													<li><c:if test="${paging.curBlock < paging.totalBlock}">
+															<a class="N_pageing"
+																href="boardList?curPage=${paging.lastNum+1}&perPage=10&board_kind=${board_kind}&type=${type}&find=${find}">&raquo;</a>
+														</c:if></li>
+													<li><a href="#" aria-label="Next"> <span
+															aria-hidden="true">&raquo;</span>
+													</a></li>
+												</ul>
+											</nav>
+										</div>

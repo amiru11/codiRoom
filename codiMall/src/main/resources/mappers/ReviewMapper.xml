@@ -2,17 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ReviewMapper">
 
+
 <!--review write  -->
-<insert id="reviewWrite" parameterType="com.basic.review.ReviewDTO">
+<insert id="reviewWrite" parameterType="com.basic.review.ReviewDTO" >
 	insert into review values(review_seq.nextval,#{review_writer},#{review_star}, 
-	#{review_contents},#{review_product},sysdate,#{review_img})
+	#{review_contents},#{review_product},sysdate,#{review_img,jdbcType=VARCHAR})
 </insert>
 <!--reviewList  -->
-<select id="reviewList" resultType="com.basic.review.ReviewDTO" parameterType="java.util.HashMap">
+<select id="reviewList" resultType="com.basic.review.ReviewDTO" parameterType="java.util.HashMap" statementType="PREPARED">
 	select * from
 		(select Rownum R, F.* from
 		(select * from review order by review_num desc) F)
-		where review_product=#{review_product} and R between #{startRowNum} and #{lastLowNum}
+		where review_product=#{review.review_product} and R between #{page.startRowNum} and #{page.lastLowNum}
 </select>
 <!--review view  -->
 <select id="review" parameterType="int" resultType="com.basic.review.ReviewDTO">

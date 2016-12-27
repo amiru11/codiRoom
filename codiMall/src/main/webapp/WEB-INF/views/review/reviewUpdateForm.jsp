@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 	<div class="container">
-	<form action="reviewUpdate" method="post" name="cmtform" id="reform" enctype="multipart/form-data">
+	<form action="/codi/review/reviewUpdate" method="post" name="cmtform" id="reform" enctype="multipart/form-data">
   <!-- Modal -->
   <div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -21,7 +21,8 @@
 	</span><br>
 	<h3 id="startext">평가하기</h3>
 	<input type="hidden" name="review_star">
-	<input type="hidden" name="review_num" value="${review.review_num}">
+	<input type="text" name="review_num" value="${review.review_num}">
+	<input type="text" name="review_product" value="${review.review_product}">
 	<textarea rows="" cols="" name="review_contents" style="width: 400px;height: 200px;">
 	${review.review_contents}
 	</textarea><br>

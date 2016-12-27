@@ -17,6 +17,7 @@ import com.basic.product.ProductEachAddDTOs;
 import com.basic.product.ProductParamDTO;
 
 import com.basic.product.ProductService;
+import com.basic.util.PageMaker;
 
 
 @Controller
@@ -167,6 +168,14 @@ public class ProductController {
 	public void testPicAdd(MultipartHttpServletRequest mpr, HttpSession session){
 		productService.testPicAdd(mpr, session);
 	}*/
+	
+	/*상품검색 */
+	@RequestMapping(value="productSearchList")
+	public void productSearchList(Model model,@RequestParam(defaultValue="1") int curPage,@RequestParam(defaultValue="10")int perPage,String find,PageMaker pageMaker){
+		System.out.println("상품검색컨트롤러");
+		System.out.println("상품검색어 :"+find);
+		productService.productSearchList(curPage, perPage, find, model);
+	}
 	
 
 }

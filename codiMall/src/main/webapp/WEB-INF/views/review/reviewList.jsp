@@ -1,8 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <style type="text/css">
 	.star_img{
-		width: 44px;
-		height: 44px;
+		width: 20px;
+		height: 20px;
+	}
+	.review_star{
+		width: 50px;
+		height: 30px;
 	}
 	.file_img{
 		width: 100px;
@@ -12,12 +22,15 @@
 		width: 200px;
 		height: 200px;
 	}
+	.reviewList{
+		width: 100%;
+		border-bottom: 1px solid gray;
+	}
 </style>
 <!--modal-->
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   <!--modal end  -->
+
   <script type="text/javascript">
 	
 			$(function() {
@@ -25,25 +38,36 @@
 				$("#rw_btn").click(function () {			
 					alert("리뷰클쓰기")
 					/*reviewWriteForm ajax로 페이지를 불러옴  */
-					$("#reviewWrite").load("reviewWriteForm",function(responseText){
+
+					$("#reviewWrite").load("/codi/review/reviewWriteForm",function(responseText){
 						 $("#myModal").modal();	
+
+					alert(${review_product})
+					$("#reviewWrite").load("/codi/review/reviewWriteForm?review_product=${review_product}",function(responseText){
+						 $("#myModal").modal();
+
 						 	
 							/*글쓰기 버튼 type을 submit*/
 						 $("#rvw_btn").click(function () {
-								$("#rvw_btn").attr("type","submit");
+						 if($('input[name=review_star]').val() == ''){
+							 alert("별점을 입력해주세요")
+						 }else{
+								$("#rvw_btn").attr("type","submit"); 
+						 }					 
 							});				
 				});			
 			});
 				/*view Page*/
 				$(".review").click(function () {
-					var aa = $(this).find('input').val();
+					var aa = $(this).find('input[name=review_num]').val();
 					alert(aa);
-				$("#rvView").load("review?review_num="+aa,function(responseText){
+				$("#rvView").load("/codi/review/review?review_num="+aa,function(responseText){
 					 $("#myModal").modal();
 				   $("#ud_btn").click(function () {
 						  alert(aa);
+						  alert(${review_product});
 						  $("#rvView").hide();
-						 $("#rvUpdate").load("reviewUpdateForm?review_num="+aa,function(responseText){
+						 $("#rvUpdate").load("/codi/review/reviewUpdateForm?review_num="+aa,function(responseText){
 							 $("#myModal1").modal();	
 							 $("#rvw_btn").click(function () {
 									$("#rvw_btn").attr("type","submit");
@@ -52,10 +76,11 @@
 				 });
 				   	$("#del_btn").click(function () {
 				   		alert(aa);
-						location.href="reviewDelete?review_num="+aa;
+						location.href="/codi/review/reviewDelete?review_num="+aa+"&review_product="+${review_product};
 					});
 				});
 		 	});
+				});
 			});
 			var locked = 0;
 		  	function show(star) {/*별이미지 마우스 쇼이벤트  */
@@ -118,42 +143,42 @@
 	<div>
 		<ul>
 		<c:forEach items="${reviewList}" var="list">
-			<li>
+			<li class="reviewList">
 			<!--별점-->
+			<p style="font-size: 20px;">
+				작성자:${list.review_writer}
+			</p>
+			<p style="font-size: 20px;">
+				작성날짜:${list.review_reg_date}
+			</p>
 				<div>
 					<c:if test="${list.review_star == 1}">
-					<img src="${pageContext.request.contextPath}/resources/images/review/star1.png"><h3>별로에요</h3>
+					<img class="review_star" src="${pageContext.request.contextPath}/resources/images/review/star1.png"><h3>별로에요</h3>
 					</c:if>
-					<c:if test="${list.review_star == 2}">
-					<img src="${pageContext.request.contextPath}/resources/images/review/star2.png"><h3>그저 그래요</h3>
+					<c:if  test="${list.review_star == 2}">
+					<img class="review_star" src="${pageContext.request.contextPath}/resources/images/review/star2.png"><h3>그저 그래요</h3>
 					</c:if>
 					<c:if test="${list.review_star == 3}">
-					<img src="${pageContext.request.contextPath}/resources/images/review/star3.png"><h3>입을만해요</h3>
+					<img class="review_star" src="${pageContext.request.contextPath}/resources/images/review/star3.png"><h3>입을만해요</h3>
 					</c:if>
 					<c:if test="${list.review_star == 4}">
-					<img src="${pageContext.request.contextPath}/resources/images/review/star4.png"><h3>이뻐요</h3>
+					<img class="review_star" src="${pageContext.request.contextPath}/resources/images/review/star4.png"><h3>이뻐요</h3>
 					</c:if>
 					<c:if test="${list.review_star == 5}">
-					<img src="${pageContext.request.contextPath}/resources/images/review/star5.png"><h3>완전이뻐요</h3>
+					<img class="review_star" src="${pageContext.request.contextPath}/resources/images/review/star5.png"><h3>완전이뻐요</h3>
 					</c:if>
 				</div>
+			<a href="#" class="review">
+				<input type="hidden" name="review_num" value="${list.review_num}">
 				<div>
-					<p>
+					<p class="review_contents" style="font-size: 20px;">
 						${list.review_contents}
 					</p>
-					<p>
-						작성자:${list.review_writer}
-					</p>
-					<p>
-						작성날짜:${list.review_reg_date}
-					</p>
 				</div>
-				<a href="#" class="review">
-				<input type="hidden" value="${list.review_num}">
+				<c:if test="${list.review_img != null}">
 				<img class="file_img" src="${pageContext.request.contextPath}/resources/upload/${list.review_img}">
+				</c:if>
 				</a>
-				<div>	
-				</div>
 			</li>
 		</c:forEach>
 		</ul>
