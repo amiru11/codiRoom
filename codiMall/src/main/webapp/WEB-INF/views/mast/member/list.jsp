@@ -6,20 +6,28 @@
 										<a id="subList" class="subBtn btn btn-default btn-lg">
 											<span class="fa fa-list"></span> List
 										</a>
-										<form name="fname" action="findList" method="post" role="search" class="navbar-form navbar-right">
-												<select name="type" class="form-control">
-													<option value="title">TITLE</option>
-													<option value="writer">WRITER</option>
-													<option value="contents">CONTENTS</option>
-												</select>
-											
-											    <div class="input-group">
-											     <input type="text" class="form-control" placeholder="Search for..." id="search" name="find">
-											     <input type="hidden" name="board_kind" value="1">
-											      <span class="input-group-btn">
-											        <a class="btn btn-default" type="button" id="search_btn"><span class="glyphicon glyphicon-search"></span></a>
-											      </span>
-											    </div>
+										<form name="fname" role="search"
+											class="navbar-form navbar-right" style="margin-top: 0;">
+											<select id="memType" name="type" class="form-control"
+												style="height: 54px; border: 2px solid #30b5e1; border-radius: 6px; color: #30b5e1; font-weight: 600 !important;">
+												<option value="id">ID</option>
+												<option value="name">NAME</option>
+												<option value="member_level">LEVEL</option>
+											</select>
+								
+											<div class="input-group"
+												style="height: 52px; border: 2px solid #30b5e1; border-radius: 6px; color: #30b5e1; font-weight: 600 !important;">
+												<input type="text" id="memFind" class="form-control" placeholder="Search for..."
+													id="search" name="find" style="height: 52px;"> <input
+													type="hidden" name="board_kind" value="1"> 
+													<span	class="input-group-btn"
+													style="height: 52px; border-left: 2px solid #30b5e1;"> 
+													<a class="btn btn-default" type="button" id="search_btn" onclick="searchMember();"
+													style="height: 52px; vertical-align: top; padding-top: 18px; color: #30b5e1;">
+														<span class="glyphicon glyphicon-search"></span>
+													</a>
+												</span>
+											</div>
 										</form>
 									</div>
 									<!-- boardList:S -->
@@ -52,7 +60,9 @@
 																    <li style="text-align: center;">
 																      	<a class="mod-btn" style="cursor: pointer;" data-toggle="modal" data-target="#commModal" data-backdrop="true">수정</a>
 																    </li>
-																      <li style="text-align: center;"><a class="del-btn"  style="cursor: pointer;"  onclick="delBtn(this);">삭제</a><input type="checkbox" class="checkSet" style="display: none;" value="${list1.id}"></li>
+																      <li style="text-align: center;">
+																      	<a class="del-btn"  style="cursor: pointer;"  onclick="delBtn(this);">삭제</a><input type="checkbox" class="checkSet" style="display: none;" value="${list1.id}">
+																      </li>
 																	<li style="text-align: center;">
 																      	<a class="mod-btn" style="cursor: pointer;" data-toggle="modal" data-target="#commModal" data-backdrop="true">구매내역</a>
 																     </li>

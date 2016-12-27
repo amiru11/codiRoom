@@ -78,49 +78,43 @@ body{
 <script type="text/javascript">
 
 	$(function(){
-		if(${message ne null}){
-			alert('${message}');
+		var message = "${message}";
+		
+		if(message != ''){
+			alert(message);
 		}
-		
-		
 		listAjax();//ajax로 멤버 리스트뿌리기
- 		$(".sel_type").click(function(){
- 			//alert($(this).prop("id"));
- 			subAjax(this);
- 		});
 	});	
 	
 	//체크박스에 체크해주기
-/* 	function delBtn(data){
+ 	function delBtn(data){
 		
-		var board_num = parseInt($(data).next().val());
+		var mID = $(data).next().val();
+		//alert(mID);
 		var con = confirm('삭제하시겠습니까?');
 		if(con == true){
 			$(data).next().prop("checked",true);
 			$.ajax({
 				//삭제시켜버리기
-				url : "boardDelete",
+				url : "mastMemberDelete",
 				type : "get",
 				data : {
-					board_num : board_num,
-					board_kind : board_kind
+					id : mID
 				},
 				success : function(data){
 					var data = data.trim();
-					console.log(data);
+					//console.log(data);
 					$("#section").empty();
 					$("#section").html(data);
 					$("#1").parent("li").addClass("active");
-
 				}
 			});
 		}else{
 			$(data).next().prop("checked",false);
 		}
-		
-		
-	} */
+	} 
 	
+//멤버리스트뿌려주기//	
 	function listAjax(){
 		
 		$.ajax({
@@ -140,26 +134,31 @@ body{
 			}
 		});
 	}
-	/* 	function subAjax(data){
-			
-			board_kind = $(data).prop("id");
-			$.ajax({
-				url : "resultBoard",
-				type : "get",
-				data : {
-					curPage : 1,
-					perPage : 10,
-					board_kind : $(data).prop("id")
-				},
-				success : function(data){
-					var data = data.trim();
-					console.log(data);
-					$("#section").empty();
-					$("#section").html(data);
-					$("#1").parent("li").addClass("active");
-				}
-			});                                                                                                                                                                                               	
-	} */
+//멤버 검색하기//
+	function searchMember(){
+		//alert($("#memType").val());
+		//alert($("#memFind").val());
+ 		$.ajax({
+			url : "mastMemberList",
+			type : "get",
+			data : {
+				curPage : 1,
+				perPage : 10,
+				type : $("#memType").val(),
+				find : $("#memFind").val()
+			},
+			success : function(data){
+				var data = data.trim();
+				console.log(data);
+				$("#section").empty();
+				$("#section").html(data);
+				$("#1").parent("li").addClass("active");
+
+			}
+					
+		}); 
+	}
+
 
 </script>
 </head>
