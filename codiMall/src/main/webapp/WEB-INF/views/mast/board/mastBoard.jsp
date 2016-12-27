@@ -77,7 +77,7 @@ body{
 </style>
 <script type="text/javascript">
 	var board_kind = '';
-    var editor_object = [];
+    var comm_refNum = 0;
 	$(function(){
 		if(${message ne null}){
 			alert('${message}');
@@ -94,23 +94,23 @@ body{
 			listAjax();
 		});
 	     	     
-		//답글버튼 클릭이벤트
-		$(".com-btn").on("click",function(){
-			
-		});
+		
 	});
 	
+	//답글버튼 클릭이벤트
 	function comBtn(data){
+		comm_refNum = $(data).next("input").val();
 		alert($(data).next("input").val());
 		$.ajax({
 			url : "${pageContext.request.contextPath}/mast/mastCommList",
 			type : "GET",
 			data : {
-				board_num : $(data).next("input").val()
+				board_num : comm_refNum
 			},
 			success : function(data){
 				console.log(data.trim());
-				
+				$("#comm-body").empty();
+				$("#comm-body").html(data);
 			}
 		});
 	}

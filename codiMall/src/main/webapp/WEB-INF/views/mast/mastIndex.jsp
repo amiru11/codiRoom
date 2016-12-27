@@ -10,9 +10,13 @@
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css">
 <script src="${pageContext.request.contextPath}/resources/js/mast.js"></script>
 
 <style type="text/css">
+body{
+	font-family: 'hanna';
+}
 table, table tr, tr td, th {
 	border: 1px solid black;
 }

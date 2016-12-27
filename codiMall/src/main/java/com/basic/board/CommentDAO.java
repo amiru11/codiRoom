@@ -52,5 +52,12 @@ public class CommentDAO {
 		return sqlsession.selectList(namespace+"commentList2", mp);
 	}
 	
-	
+	public List<CommentDTO> mastCommentList(int board_num){
+		System.out.println("DAO");
+		System.out.println("commList");
+		System.out.println("board_num : " + board_num);
+		Map<String, Object> mp = new HashMap<String, Object>();
+		mp.put("board_num", board_num);
+		return sqlsession.selectList(namespace+"MastCommentList", mp);
+	}
 }

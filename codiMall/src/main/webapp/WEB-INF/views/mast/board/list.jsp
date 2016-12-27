@@ -62,11 +62,11 @@ nhn.husky.EZCreator.createInIFrame({
 																<button type="button"  class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">설정<span class="caret"></span></button>
 																<ul class="dropdown-menu" role="menu" style="min-width: 55px;">
 																      <li style="text-align: center;"><a class="mod-btn" style="cursor: pointer;">수정</a></li>
-																      <li style="text-align: center;"><a class="del-btn"  style="cursor: pointer;" onclick="delBtn(this);">삭제</a><input type="checkbox" class="checkSet" style="display: none;" value="${list1.board_num}"></li>
+																      <li style="text-align: center;"><a class="del-btn"  style="cursor: pointer;"  onclick="delBtn(this);">삭제</a><input type="checkbox" class="checkSet" style="display: none;" value="${list1.board_num}"></li>
 																      <c:if test="${board_kind eq 3}">
 																      <li style="text-align: center;">
-																      	<a class="com-btn" style="cursor: pointer;" onclick="comBtn(this);">답글</a>
-																      	<input type="text" value="${list1.board_num}"><!-- data-toggle="modal" data-target="#commModal" data-backdrop="true" -->
+																      	<a class="com-btn" style="cursor: pointer;" data-toggle="modal" data-target="#commModal" data-backdrop="true" onclick="comBtn(this);">답글</a>
+																      	<input type="text" value="${list1.board_num}"><!-- -->
 																      </li>
 																      </c:if>
 																</ul>														
@@ -133,7 +133,7 @@ nhn.husky.EZCreator.createInIFrame({
 													<button type="button" class="close" data-dismiss="modal">&times;</button>
 													<h4 class="modal-title">CoMMent</h4>
 												</div>
-												<div class="modal-body">
+												<div id="comm-body" class="modal-body">
 													<!-- comment LIST:S -->
 													
 													<!-- comment LIST:E -->

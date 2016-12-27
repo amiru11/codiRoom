@@ -166,11 +166,14 @@ public class MastService {
 	//수정//
 	
 	//QNA답글 리스트//
-	public void commList2(int board_num, Model model) throws Exception{//답글버튼 클릭시 refNum을 받아서 리스트를 모달에다가 뿌려주기 
+	public void mastCommList(int board_num, Model model) throws Exception{//답글버튼 클릭시 refNum을 받아서 리스트를 모달에다가 뿌려주기 
 		System.out.println("service");
 		System.out.println("commList");	
 		System.out.println("board_num : " + board_num);
-		List<CommentDTO> cr = commentDAO.proCommentList(board_num);
+		List<CommentDTO> cr = commentDAO.mastCommentList(board_num);
+		for(int i = 0; i< cr.size();i++){			
+			System.out.println(	cr.get(i).getComm_num());
+		}
 		model.addAttribute("commentList", cr);
 	}
 }

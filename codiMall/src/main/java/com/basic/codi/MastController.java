@@ -246,9 +246,9 @@ public class MastController {
 			String defaultPath = session.getServletContext().getRealPath("/");
 			//파일 상세경로
 			String path = defaultPath + "resources" + File.separator + "upload"; //separator는 구분자!!
-			
+
 			File file = new File(path);
-			
+
 			//디렉토리 존재하지 않을 경우, 디렉토리 생성
 			if(!file.exists()){
 				file.mkdirs();
@@ -277,7 +277,7 @@ public class MastController {
 		System.out.println("commList");	
 		System.out.println("board_num : " + board_num);
 		try {
-				mastService.commList2(board_num, model);
+				mastService.mastCommList(board_num, model);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
