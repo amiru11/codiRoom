@@ -94,17 +94,25 @@ public class BuyController {
 		if (session.getAttribute("member") != null && product_num!=0 && productSize_size !=null && productEach_color != null && productEach_each !=0 && total_price !=0) {
 			Map<String, Object> map22 = buyService.buyDirect((int)total_price,product_num,productSize_size,productEach_color,productEach_each,(MemberDTO) session.getAttribute("member"));
 			ar = (List<BuyListDTO>) map22.get("ar");
+			System.out.println("cont"+ar);
+			System.out.println(map22.get("message"));
 			if(ar==null){
 				path="redirect:/result/result";
-				ra.addFlashAttribute("message", map22.get("message"));
+				location="/";
+				message=(String) map22.get("message");
+				ra.addFlashAttribute("message", message);
+				ra.addFlashAttribute("location", location);
+				
 			}else{
 				System.out.println("buyController-------------");
 				System.out.println("buyarsize--" + ar.size());
 				System.out.println(ar.get(0).getBuy_num());
 				System.out.println(ar.get(0).getBuyState_color());
+				model.addAttribute("message", map22.get("message"));
 				model.addAttribute("list",map22.get("ar"));
+				path = "/buy/buyList";
 			}
-			path = "/buy/buyList";
+			
 			ra.addFlashAttribute("message", message);
 			ra.addFlashAttribute("location", location);
 		} else {
@@ -125,11 +133,14 @@ public class BuyController {
 		if (session.getAttribute("member") != null) {
 			map = buyService.basketBuy(basket_num, (MemberDTO) session.getAttribute("member"));
 			ar=(ArrayList<BuyListDTO>) map.get("ar");
+			System.out.println(map.get("message"));
 			if(ar!=null){
 			path = "/buy/buyList";
+			
 			model.addAttribute("message", map.get("message"));
 			model.addAttribute("list",ar);
 			}else{
+				message=(String) map.get("message");
 				path = "redirect:/result/result";
 				location = "/";
 				ra.addFlashAttribute("message", message);

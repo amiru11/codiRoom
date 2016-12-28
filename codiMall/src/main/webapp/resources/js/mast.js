@@ -134,14 +134,14 @@ function getBuyList(buyState_state) {
 							alert(buy_num);
 							alert(buyState_state);
 							alert(buyState_expressNum);
-							mastUpState(buy_num, buyState_state, buyState_expressNum,product_num,productSize_size,productEach_color,productEach_each);
+							mastUpState(buy_num, buyState_state, buyState_expressNum,0,"","",0);
 						} else {
 							alert("송장번호를 입력해주세요");
 						}
 					});
 					$(thisTr).find(".btn_expressConfirm").click(function() {
 						var buy_num = $(thisTr).find(".hid_buy_num").val();
-						mastUpState(buy_num, buyState_state, 0,product_num,productSize_size,productEach_color,productEach_each);
+						mastUpState(buy_num, buyState_state, 0,0,"","",0);
 					});
 				} else if (buyState_state == 3) {
 					$(thisTr).find(".btn_refund").click(function() {
