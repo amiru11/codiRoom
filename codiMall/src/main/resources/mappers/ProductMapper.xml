@@ -136,8 +136,14 @@
 		and pk.KIND_NUM =
 		k.KIND_NUM and
 		pk.PRODUCT_NUM = t.PRODUCT_NUM
-		and k.productSelect_num =
+		<if test="productParamDTO.productSelect_num != 0">
+		and 
+		k.productSelect_num =
 		#{productParamDTO.productSelect_num}
+		</if>
+		<if test="sale != null ">
+		and pi.productInfo_saleRate not in (0)
+		</if>
 		<if test="productParamDTO.color != null ">
 			and UPPER(pe.PRODUCTEACH_COLOR) in
 			<foreach item="item" index="index" collection="productParamDTO.color"
@@ -179,59 +185,9 @@
 	</select>
 	<!-- Product List E -->
 
-	<!-- SaleList S -->
-	<select id="SelProductSaleList" resultType="com.basic.product.ProductListDTO"
-		parameterType="java.util.HashMap">
-		select * from (select rownum r, z.* from (select
-		DISTINCT
-		t.*,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE from (select
-		count(b.BUY_NUM) c,p.PRODUCT_NUM,p.PRODUCT_NAME from product p LEFT
-		OUTER JOIN buy b
-		on b.PRODUCT_NUM = p.PRODUCT_NUM group by
-		p.PRODUCT_NUM, p.PRODUCT_NAME)
-		t , PRODUCTINFO pi,PRODUCTEACH pe,
-		kind
-		k,PRODUCTKIND pk where pe.PRODUCT_NUM = t.PRODUCT_NUM and
-		pi.PRODUCT_NUM = t.PRODUCT_NUM
-		and pk.KIND_NUM = k.KIND_NUM and
-		pk.PRODUCT_NUM = t.PRODUCT_NUM
-		and pi.productInfo_saleRate not in(0)
-		order by t.product_num desc
-
-		) z) where r between
-		#{pageMaker.startRowNum} and
-		#{pageMaker.lastLowNum}
-
-	</select>
-	<!-- SaleList E -->
-
-	<!-- SaleList Count -->
-	<select id="SelProductSaleCount" resultType="int">
-		select count(*) from
-		(select rownum r, z.* from (select DISTINCT
-		t.*,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE from (select
-		count(b.BUY_NUM) c,p.PRODUCT_NUM,p.PRODUCT_NAME from product p LEFT
-		OUTER JOIN buy b
-		on b.PRODUCT_NUM = p.PRODUCT_NUM group by
-		p.PRODUCT_NUM, p.PRODUCT_NAME)
-		t , PRODUCTINFO pi,PRODUCTEACH pe,
-		kind
-		k,PRODUCTKIND pk where pe.PRODUCT_NUM = t.PRODUCT_NUM and
-		pi.PRODUCT_NUM = t.PRODUCT_NUM
-		and pk.KIND_NUM = k.KIND_NUM and
-		pk.PRODUCT_NUM = t.PRODUCT_NUM
-		and pi.productInfo_saleRate not in(0)
-		order by t.product_num desc
-		) z)
-
-	</select>
-
-	<!-- SaleList Count -->
-
-
 
 	<!-- Product List Count S -->
-	<select id="SelProductCount" parameterType="com.basic.product.ProductParamDTO"
+	<select id="SelProductCount" parameterType="java.util.HashMap"
 		resultType="int">
 		select count(t.product_num) from (select DISTINCT
 		p.PRODUCT_NUM,p.PRODUCT_NAME,pk.KIND_NUM,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_SEARCHWORD
@@ -245,25 +201,31 @@
 		ps.PRODUCT_NUM =
 		p.PRODUCT_NUM and ps.PRODUCTSIZE_SIZE =
 		pe.PRODUCTSIZE_SIZE and pk.KIND_NUM = k.KIND_NUM
-		and
-		k.PRODUCTSELECT_NUM = #{productSelect_num}
-		<if test="color != null ">
+		<if test="productParamDTO.productSelect_num != 0">
+		and 
+		k.productSelect_num =
+		#{productParamDTO.productSelect_num}
+		</if>
+		<if test="sale != null ">
+		and pi.productInfo_saleRate not in (0)
+		</if>
+		<if test="productParamDTO.color != null ">
 			and UPPER(pe.PRODUCTEACH_COLOR) in
-			<foreach item="item" index="index" collection="color" open="("
+			<foreach item="item" index="index" collection="productParamDTO.color" open="("
 				separator="," close=")">
 				UPPER(#{item})
 			</foreach>
 		</if>
-		<if test="kind_num != null ">
+		<if test="productParamDTO.kind_num != null ">
 			and UPPER(pk.kind_num) in
-			<foreach item="item" index="index" collection="kind_num"
+			<foreach item="item" index="index" collection="productParamDTO.kind_num"
 				open="(" separator="," close=")">
 				UPPER(#{item})
 			</foreach>
 		</if>
-		<if test="size != null ">
+		<if test="productParamDTO.size != null ">
 			and UPPER(ps.PRODUCTsize_size) in
-			<foreach item="item" index="index" collection="size" open="("
+			<foreach item="item" index="index" collection="productParamDTO.size" open="("
 				separator="," close=")">
 				UPPER(#{item})
 			</foreach>

@@ -61,15 +61,20 @@ public class ProductDAO {
 		return sqlSession.selectList(namespace + "SelProductSelectList");
 	}
 
-	public int productCount(ProductParamDTO productParamDTO) {
-		return sqlSession.selectOne(namespace + "SelProductCount", productParamDTO);
+	public int productCount(ProductParamDTO productParamDTO,String sale) {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("productParamDTO", productParamDTO);
+		hm.put("sale", sale);
+		return sqlSession.selectOne(namespace + "SelProductCount", hm);
 	}
 
-	public List<ProductListDTO> productList(PageMaker pageMaker, ProductParamDTO productParamDTO) {
+	public List<ProductListDTO> productList(PageMaker pageMaker, ProductParamDTO productParamDTO,String sale) {
 		// TODO Auto-generated method stub
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		hm.put("pageMaker", pageMaker);
 		hm.put("productParamDTO", productParamDTO);
+		hm.put("sale", sale);
+		
 		List<ProductListDTO> ar = sqlSession.selectList(namespace + "SelProductList", hm);
 		for (int i = 0; i < ar.size(); i++) {
 			System.out.println(ar.get(i).getProductDTO().getProduct_num());

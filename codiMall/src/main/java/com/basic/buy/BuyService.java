@@ -1,15 +1,18 @@
 package com.basic.buy;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.basic.basket.BasketDTO;
 import com.basic.basket.BasketListDTO;
 import com.basic.member.MemberDTO;
+import com.basic.product.ProductListDTO;
 
 @Service 
 public class BuyService {
@@ -25,12 +28,16 @@ public class BuyService {
 		return buyDao.basketBuyList(basket_num);
 	}
 	
-	public String nonBasketBuy(BuyNonBasketDTO buyNonBasketDTO,MemberDTO memberDTO){
-		return buyDao.nonBasketBuy(buyNonBasketDTO, memberDTO);
+	public ProductListDTO BuyDirectList(int product_num){
+		return buyDao.buyDirectList(product_num);
+	}
+	
+	public Map<String, Object> buyDirect(int total_price,int product_num, String productSize_size, String productEach_color,int productEach_each,MemberDTO memberDTO){
+		return buyDao.buyDirect(total_price,product_num,productSize_size,productEach_color,productEach_each, memberDTO);
 	}
 
 
-	public String basketBuy(int[] basket_num,MemberDTO memberDTO){
+	public Map<String, Object> basketBuy(int[] basket_num,MemberDTO memberDTO){
 		return buyDao.basketBuy(basket_num,memberDTO);
 	}
 	

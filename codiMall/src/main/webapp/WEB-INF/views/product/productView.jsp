@@ -1,18 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html >
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
-<link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/product/productView.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
-<script src="${pageContext.request.contextPath}/resources/js/zoomItem.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+<link
+	href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/product/productView.css"
+	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/common.css"
+	rel="stylesheet">
+<script
+	src="${pageContext.request.contextPath}/resources/js/zoomItem.js"></script>
 <script type="text/javascript">
 	$(function() {
 		qnaList();
@@ -98,9 +105,13 @@
 		});
 		
 		$("#btn_buy").click(function(){
-			if($("#sel_size_b").val()!=null){
-				if($("#inp_each").val()!=null){
-					$("#view_frm").attr("action","${pageContext.request.contextPath}/basket/basketNonBuy");
+			if($("#sel_size_b").val()!=null && $("#sel_size_a").val()!=null ){
+				if($("#inp_each").val()>0){
+					$("#inh_dirc_buy_productSize_size").val($("#sel_size_a").val());
+					$("#inh_dirc_buy_productEach_color").val($("#sel_size_b").val());
+					$("#inh_dirc_buy_productEach_each").val($("#inp_each").val());
+					$("#hiddenForm_direct_buy").submit();
+					
 				}else{
 					alert("1개이상 입력하세요");
 				}
@@ -337,49 +348,71 @@
 	<!-- HEADER:S -->
 	<%@ include file="/resources/temp/header.jsp"%>
 	<!-- HEADER:E -->
-	
-	<div class="container" style="padding-top:100px;">
+
+	<div class="container" style="padding-top: 100px;">
 		<div class="row">
 			<div class="col-sm-12">
 				<!-- 왼쪽 이미지부분 -->
 				<div class="col-sm-6 left-info">
 					<div id="image-block" class="clearfix">
 						<span class="image_loader" style="opacity: 0; display: none;"></span>
-						<div id="big_box" class="product_zoom spotlightActive" style="display:none">
-							<div class="product_img_zoom minus_cursor spotlight" id="big_img_area">
-								<img src="" id="big_img" alt="" style="position: relative; width: 1200px; background-color: white;" onclick="image_zoom.hideLayer('big_box');">
+						<div id="big_box" class="product_zoom spotlightActive"
+							style="display: none">
+							<div class="product_img_zoom minus_cursor spotlight"
+								id="big_img_area">
+								<img src="" id="big_img" alt=""
+									style="position: relative; width: 1200px; background-color: white;"
+									onclick="image_zoom.hideLayer('big_box');">
 							</div>
-							<span class="btn_close_pop" onclick="image_zoom.hideLayer('big_box');">close</span>
+							<span class="btn_close_pop"
+								onclick="image_zoom.hideLayer('big_box');">close</span>
 						</div>
 						<div id="detail_bigimg" class="product_img_basic plus_cursor">
-							<span class="product-img">
-								<img src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_60.png" width="500" title="" alt="" id="bigimg" onclick="image_zoom.showLayer('big_box', 'big_img', 'detail_thumb', currentImageIdx);" style="margin-top: -250px; position: absolute; top: 50%; left: 0px;">
+							<span class="product-img"> <img
+								src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_60.png"
+								width="500" title="" alt="" id="bigimg"
+								onclick="image_zoom.showLayer('big_box', 'big_img', 'detail_thumb', currentImageIdx);"
+								style="margin-top: -250px; position: absolute; top: 50%; left: 0px;">
 							</span>
 						</div>
 						<!-- 상품 썸네일 -->
 						<div id="detail_thumb">
 							<ul class="product_thumb">
-								<li onclick="changeImg('thum_0', 'bigimg', '0', 'N');" style="cursor: pointer;">
-									<img src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_60.png" alt="thum" width="100" id="thum_0" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
-								</li>
-								<li onclick="changeImg('thum_1', 'bigimg', '1', 'N');" style="cursor: pointer;">
-									<img src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_detail1_60.jpg" alt="thum" width="100" id="thum_1" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
-								</li>
-								<li onclick="changeImg('thum_2', 'bigimg', '2', 'N');" style="cursor: pointer;">
-									<img src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_detail2_60.jpg" alt="thum" width="100" id="thum_2" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
-								</li>
-								<li onclick="changeImg('thum_3', 'bigimg', '3', 'N');" style="cursor: pointer;">
-									<img src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_detail3_60.jpg" alt="thum" width="100" id="thum_3" big_yn="N" style="display: inline-block; vertical-align: middle"><span class="vertical_standard"></span>
-								</li>
+								<li onclick="changeImg('thum_0', 'bigimg', '0', 'N');"
+									style="cursor: pointer;"><img
+									src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_60.png"
+									alt="thum" width="100" id="thum_0" big_yn="N"
+									style="display: inline-block; vertical-align: middle"><span
+									class="vertical_standard"></span></li>
+								<li onclick="changeImg('thum_1', 'bigimg', '1', 'N');"
+									style="cursor: pointer;"><img
+									src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_detail1_60.jpg"
+									alt="thum" width="100" id="thum_1" big_yn="N"
+									style="display: inline-block; vertical-align: middle"><span
+									class="vertical_standard"></span></li>
+								<li onclick="changeImg('thum_2', 'bigimg', '2', 'N');"
+									style="cursor: pointer;"><img
+									src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_detail2_60.jpg"
+									alt="thum" width="100" id="thum_2" big_yn="N"
+									style="display: inline-block; vertical-align: middle"><span
+									class="vertical_standard"></span></li>
+								<li onclick="changeImg('thum_3', 'bigimg', '3', 'N');"
+									style="cursor: pointer;"><img
+									src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_detail3_60.jpg"
+									alt="thum" width="100" id="thum_3" big_yn="N"
+									style="display: inline-block; vertical-align: middle"><span
+									class="vertical_standard"></span></li>
 							</ul>
-						<!--//상품 썸네일-->
-						</div>						
+							<!--//상품 썸네일-->
+						</div>
 					</div>
 				</div>
-				<div class="col-sm-6 right-info" style="padding-left : 50px;">
+				<div class="col-sm-6 right-info" style="padding-left: 50px;">
 					<div class="item-title clearfix">
 						<div class="item-brand pull-left">
-							<img src="${pageContext.request.contextPath}/resources/images/product/brand/esnocturne.gif" alt="">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/product/brand/esnocturne.gif"
+								alt="">
 						</div>
 						<h1>${view.product_name}</h1>
 						<div class="item-manufacture">BRAND NAME</div>
@@ -389,10 +422,22 @@
 							<div class="item-price clearfix">
 								<div class="all-price-info">
 									<p class="now-price">
-										<fmt:formatNumber value="${view.productInfo_price*(100-view.productInfo_saleRate)/100}" currencySymbol="" type="currency"/>원
+										<fmt:formatNumber
+											value="${view.productInfo_price*(100-view.productInfo_saleRate)/100}"
+											currencySymbol="" type="currency" />
+										원
 									</p>
-									<p class="old-price"><fmt:formatNumber value="${view.productInfo_price}" currencySymbol="" type="currency"/>원</p>
-									<p class="reduction-percent">(-<fmt:formatNumber value="${(view.productInfo_saleRate)}" pattern="#.##" />%)</p>
+									<p class="old-price">
+										<fmt:formatNumber value="${view.productInfo_price}"
+											currencySymbol="" type="currency" />
+										원
+									</p>
+									<p class="reduction-percent">
+										(-
+										<fmt:formatNumber value="${(view.productInfo_saleRate)}"
+											pattern="#.##" />
+										%)
+									</p>
 								</div>
 								<div id="product_comments_block_extra" class="no-print">
 									<div class="comments_note clearfix">
@@ -406,11 +451,9 @@
 										</div>
 									</div>
 									<ul class="comments_advices">
-										<li>
-											<a href="#idTab5" class="reviews" title="Read reviews">
-												Read reviews (<span>1</span>)
-											</a>
-										</li>
+										<li><a href="#idTab5" class="reviews"
+											title="Read reviews"> Read reviews (<span>1</span>)
+										</a></li>
 									</ul>
 								</div>
 							</div>
@@ -420,12 +463,13 @@
 									<fieldset class="fieldset_list clearfix">
 										<label>SIZE&nbsp;</label>
 										<div class="attribute_list">
-											<div class="selector" style="margin-left:25px;">
+											<div class="selector" style="margin-left: 25px;">
 												<select id="sel_size_a" class="form-control"></select>
 											</div>
 										</div>
 									</fieldset>
-									<fieldset class="fieldset_list clearfix" id="colorField"  style="display: none;">
+									<fieldset class="fieldset_list clearfix" id="colorField"
+										style="display: none;">
 										<label>COLOR&nbsp;</label>
 										<div class="attribute_list">
 											<div class="selector">
@@ -434,19 +478,23 @@
 											</div>
 										</div>
 									</fieldset>
-									<fieldset class="fieldset_list clearfix" id="quantityField"  style="display: none;">
+									<fieldset class="fieldset_list clearfix" id="quantityField"
+										style="display: none;">
 										<label>QUANTITY&nbsp;</label>
 										<div class="attribute_list" id="quantity">
-											<input id="inp_each" accept="e" type="number" min="1" step="1" readonly="readonly">											
-											<a class="btn btn-default button-minus product_quantity_down" style="margin-left: 20px;">
-												<span><i class="glyphicon glyphicon-minus"></i></span>
-											</a>
-											<a class="btn btn-default button-plus product_quantity_up">
-												<span><i class="glyphicon glyphicon-plus" style="left:1px;"></i></span>
+											<input id="inp_each" accept="e" type="number" min="1"
+												step="1" readonly="readonly"> <a
+												class="btn btn-default button-minus product_quantity_down"
+												style="margin-left: 20px;"> <span><i
+													class="glyphicon glyphicon-minus"></i></span>
+											</a> <a class="btn btn-default button-plus product_quantity_up">
+												<span><i class="glyphicon glyphicon-plus"
+													style="left: 1px;"></i></span>
 											</a>
 										</div>
 									</fieldset>
-									<fieldset class="fieldset_list clearfix" id="buttonSet"  style="display: none;">
+									<fieldset class="fieldset_list clearfix" id="buttonSet"
+										style="display: none;">
 										<div class="attribute_list">
 											<a id="btn_buy" class="btn btn-default" type="button">BUY</a>
 											<a id="btn_basket" class="btn btn-default" type="button">BASKET</a>
@@ -459,9 +507,9 @@
 					<div id="div_hidden_each" style="display: none;"></div>
 					<script type="text/javascript">
 						selList();
-					</script>				
+					</script>
 				</div>
-				
+
 			</div>
 			<div class="col-sm-12" style="margin-top: 100px;">
 				<ul class="nav nav-tabs item-nav">
@@ -488,22 +536,34 @@
 						</div>
 					</div>
 					<%@ include file="/resources/temp/product/productView.jspf"%>
-					
+
 					<div id="c">
-						<h3 style="display: inline-block;">Q&A</h3><span>상품문의</span>
+						<h3 style="display: inline-block;">Q&A</h3>
+						<span>상품문의</span>
 						<div id="qna"></div>
 					</div>
-						<div id="e">
-							<h3>상품리뷰</h3>
-							<div id="review"></div>
-						</div>
+					<div id="e">
+						<h3>상품리뷰</h3>
+						<div id="review"></div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+	<form id="hiddenForm_direct_buy" action="${pageContext.request.contextPath}/buy/buyDirectList" method="post">
+		<input id="inh_dirc_buy_product_num" value="${view.product_num}"
+			type="hidden" name="product_num"> <input
+			id="inh_dirc_buy_productSize_size" type="hidden"
+			name="productSize_size"> <input
+			id="inh_dirc_buy_productEach_color" type="hidden"
+			name="productEach_color"> <input
+			id="inh_dirc_buy_productEach_each" type="hidden"
+			name="productEach_each">
+	</form>
+
+
 	<!-- Footer:S -->
-	<%@ include file="/resources/temp/footer.jsp"%>	
+	<%@ include file="/resources/temp/footer.jsp"%>
 	<!-- Footer:E -->
 
 

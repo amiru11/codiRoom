@@ -51,9 +51,11 @@ th {
 	function mastProductListSt() {
 		$(".div_cl_img_asd").on('click', function() {
 			var product_num = $(this).find(".inh_product_num").val();
-			alert(product_num);
 			ajaxfirst(product_num);
 		});
+	}
+	function numberWithCommas(x) {
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 
 	function ajaxfirst(product_num) {
@@ -65,8 +67,6 @@ th {
 				product_num : product_num,
 			},
 			success : function(data) {
-				alert(data);
-				alert(data.ar.product_num);
 				$("#div_modin_main").html("");
 				var x = "";
 				x = x + '<table id="tab_modin"><tr>';
@@ -80,12 +80,12 @@ th {
 				x = x + '</tr><tr><td>product_num</td><td>' + data.ar.product_num + '</td></tr>';
 				x = x + '</table><div></td></tr>';
 				x = x + '<tr><td class="modin_td"><div class="modin_div"><table id="tabin_tab_11">';
-				x = x + '<tr><td>PRICE</td><td>' + data.ar.productInfo_price + '</td></tr>';
+				x = x + '<tr><td>PRICE</td><td>' + numberWithCommas(data.ar.productInfo_price) + '원</td></tr>';
 				x = x + '<tr><td>REG_DATE</td><td>' + data.ar.productInfo_reg_date + '</td></tr>';
 				x = x + '<tr><td>REC_DATE</td><td>' + data.ar.productInfo_rec_date + '</td></tr>';
 				x = x + '<tr><td>SALERATE</td><td>' + data.ar.productInfo_saleRate + '</td></tr>';
-				x = x + '<tr><td>TOTALPRICE</td><td>' + data.ar.productInfo_price*1*((100*1)-(data.ar.productInfo_saleRate)*1)/100 + '</td></tr>';
-				
+				x = x + '<tr><td>TOTALPRICE</td><td>' + numberWithCommas(data.ar.productInfo_price * 1 * ((100 * 1) - (data.ar.productInfo_saleRate) * 1) / 100) + '원</td></tr>';
+
 				x = x + '<tr><td>SEARCHWORD</td><td>' + data.ar.productInfo_searchWord + '</td></tr>';
 				x = x + '<tr><td>BRAND</td><td>' + data.ar.productInfo_brand + '</td></tr>';
 				x = x + '</table><div class="div_fix_pro_info">수정할가격<input class="inp_cl_price" type="number" name="productInfo_price" min="0"><br>';
@@ -120,10 +120,8 @@ th {
 
 	function mastProductInfoFix() {
 		$(".div_fix_pro_info").on('mouseenter', function() {
-			alert(456456);
 			var tis_div = $(this);
 			$(this).find(".btn_submit_bt").on('click', function() {
-				alert(123123);
 				var product_num = $(tis_div).find(".inph_cl_pro_num").val();
 				var productInfo_price = $(tis_div).find(".inp_cl_price").val();
 				var productInfo_saleRate = $(tis_div).find(".inp_cl_saleRate").val();
@@ -170,13 +168,6 @@ th {
 				var productSize_size = $(tis_tr).find(".inph_cl_pro_size").val();
 				var productEach_color = $(tis_tr).find(".inph_cl_pro_color").val();
 				var productEach_each = $(tis_tr).find(".inp_cl_each").val();
-				alert(123123);
-				alert(product_num);
-				alert(productSize_size);
-				alert(productEach_color);
-				alert(productEach_each);
-
-
 
 				if (productEach_each != "") {
 					$.ajax({
@@ -214,12 +205,12 @@ th {
 	$(".cl1").on('change', function() {
 		$(".div1").html("");
 		for (var i = 0; i < $(".cl1").length; i++) {
-			if($(".cl1").eq(i).is(":checked")){
-				$(".div1").append('<input type="text" name="cl1" value="'+$(".cl1").eq(i).val()+'">')
+			if ($(".cl1").eq(i).is(":checked")) {
+				$(".div1").append('<input type="text" name="cl1" value="' + $(".cl1").eq(i).val() + '">')
 			}
 		}
 	});
-	function divhiddenForm(){
+	function divhiddenForm() {
 		$("#div_hid_sel").html('');
 		$("#div_hid_mtpsel").html('');
 		$("#div_hid_prosel").html('');
@@ -227,81 +218,81 @@ th {
 		$("#div_hid_pro").html('');
 		$("#div_hid_size").html('');
 		$("#div_hid_color").html('');
-		$("#div_hid_sel").append('<input type="hidden" name="sel" value="'+$("input:radio[name='sel']:checked").val()+'">');
-		$("#div_hid_mtpsel").append('<input type="hidden" name="mtpSel" value="'+$("input:radio[name='mtpSel']:checked").val()+'">');
-		for(var i = 0 ; i < $("input:checkbox[name='productSelect_num']:checked").length ; i++){
-			$("#div_hid_prosel").append('<input type="hidden" name="productSelect_num" value="'+$("input:checkbox[name='productSelect_num']:checked").eq(i).val()+'">');
+		$("#div_hid_sel").append('<input type="hidden" name="sel" value="' + $("input:radio[name='sel']:checked").val() + '">');
+		$("#div_hid_mtpsel").append('<input type="hidden" name="mtpSel" value="' + $("input:radio[name='mtpSel']:checked").val() + '">');
+		for (var i = 0; i < $("input:checkbox[name='productSelect_num']:checked").length; i++) {
+			$("#div_hid_prosel").append('<input type="hidden" name="productSelect_num" value="' + $("input:checkbox[name='productSelect_num']:checked").eq(i).val() + '">');
 		}
-		for(var i = 0 ; i < $("input:checkbox[name='kind_num']:checked").length ; i++){
-			$("#div_hid_kind").append('<input type="hidden" name="kind_num" value="'+$("input:checkbox[name='kind_num']:checked").eq(i).val()+'">');
+		for (var i = 0; i < $("input:checkbox[name='kind_num']:checked").length; i++) {
+			$("#div_hid_kind").append('<input type="hidden" name="kind_num" value="' + $("input:checkbox[name='kind_num']:checked").eq(i).val() + '">');
 		}
-		for(var i = 0 ; i < $("input:checkbox[name='product_num']:checked").length ; i++){
-			$("#div_hid_pro").append('<input type="hidden" name="product_num" value="'+$("input:checkbox[name='product_num']:checked").eq(i).val()+'">');
+		for (var i = 0; i < $("input:checkbox[name='product_num']:checked").length; i++) {
+			$("#div_hid_pro").append('<input type="hidden" name="product_num" value="' + $("input:checkbox[name='product_num']:checked").eq(i).val() + '">');
 		}
-		for(var i = 0 ; i < $("input:checkbox[name='productSize_size']:checked").length ; i++){
-			$("#div_hid_size").append('<input type="hidden" name="productSize_size" value="'+$("input:checkbox[name='productSize_size']:checked").eq(i).val()+'">');
+		for (var i = 0; i < $("input:checkbox[name='productSize_size']:checked").length; i++) {
+			$("#div_hid_size").append('<input type="hidden" name="productSize_size" value="' + $("input:checkbox[name='productSize_size']:checked").eq(i).val() + '">');
 		}
-		for(var i = 0 ; i < $("input:checkbox[name='productEach_color']:checked").length ; i++){
-			$("#div_hid_color").append('<input type="hidden" name="productEach_color" value="'+$("input:checkbox[name='productEach_color']:checked").eq(i).val()+'">');
+		for (var i = 0; i < $("input:checkbox[name='productEach_color']:checked").length; i++) {
+			$("#div_hid_color").append('<input type="hidden" name="productEach_color" value="' + $("input:checkbox[name='productEach_color']:checked").eq(i).val() + '">');
 		}
 		$("#form_hidden_asd").submit();
 	}
-	function pageing(){
-		$(".n_pageing").on('click',function(){
+	function pageing() {
+		$(".n_pageing").on('click', function() {
 			$("input:hidden[name='curPage']").val($(this).text());
 			divhiddenForm();
 		})
-		$(".a_prev").on('click',function(){
+		$(".a_prev").on('click', function() {
 			$("input:hidden[name='curPage']").val($(this).find(".inh_prev").val());
 			divhiddenForm();
 		})
-		$(".a_next").on('click',function(){
+		$(".a_next").on('click', function() {
 			$("input:hidden[name='curPage']").val($(this).find(".inh_next").val());
 			divhiddenForm();
 		})
 	}
-	function selBox(){
-		$(".p_param").on('change',function(){
+	function selBox() {
+		$(".p_param").on('change', function() {
 			divhiddenForm();
 		});
 	}
-	function allCheckBoxes(){
-		$("#inp_id_ck_prosel").on('change',function(){
-			if($(this).is(':checked')){
+	function allCheckBoxes() {
+		$("#inp_id_ck_prosel").on('change', function() {
+			if ($(this).is(':checked')) {
 				$("input:checkbox[name='productSelect_num']").prop("checked", true);
-			}else{
+			} else {
 				$("input:checkbox[name='productSelect_num']").prop("checked", false);
 			}
 			divhiddenForm();
 		});
-		$("#inp_id_ck_kind").on('change',function(){
-			if($(this).is(':checked')){
+		$("#inp_id_ck_kind").on('change', function() {
+			if ($(this).is(':checked')) {
 				$("input:checkbox[name='kind_num']").prop("checked", true);
-			}else{
+			} else {
 				$("input:checkbox[name='kind_num']").prop("checked", false);
 			}
 			divhiddenForm();
 		});
-		$("#inp_id_ck_pro").on('change',function(){
-			if($(this).is(':checked')){
+		$("#inp_id_ck_pro").on('change', function() {
+			if ($(this).is(':checked')) {
 				$("input:checkbox[name='product_num']").prop("checked", true);
-			}else{
+			} else {
 				$("input:checkbox[name='product_num']").prop("checked", false);
 			}
 			divhiddenForm();
 		});
-		$("#inp_id_ck_size").on('change',function(){
-			if($(this).is(':checked')){
+		$("#inp_id_ck_size").on('change', function() {
+			if ($(this).is(':checked')) {
 				$("input:checkbox[name='productSize_size']").prop("checked", true);
-			}else{
+			} else {
 				$("input:checkbox[name='productSize_size']").prop("checked", false);
 			}
 			divhiddenForm();
 		});
-		$("#inp_id_ck_color").on('change',function(){
-			if($(this).is(':checked')){
+		$("#inp_id_ck_color").on('change', function() {
+			if ($(this).is(':checked')) {
 				$("input:checkbox[name='productEach_color']").prop("checked", true);
-			}else{
+			} else {
 				$("input:checkbox[name='productEach_color']").prop("checked", false);
 			}
 			divhiddenForm();
@@ -327,21 +318,44 @@ th {
 }
 
 .modin_div {
-	width: 250px;
-	height: 350px;
+	width: 240px;
+	height: 340px;
 	overflow: scroll;
 }
-input[type="checkbox"],input[type="radio"]{
-width:15px;
-height: 15px;
-}
-.labelccc{
-text-align: center;
-font-weight: bold;
 
+.modin_div>img {
+	width: 230px;
+	height: 230px;
 }
 
+input[type="checkbox"], input[type="radio"] {
+	width: 15px;
+	height: 15px;
+}
 
+.labelccc {
+	text-align: center;
+	font-weight: bold;
+}
+
+#div_product_list {
+	width: 1100px;
+	height: 800px;
+	border: 2px red double;
+}
+
+.div_list_in_list {
+	padding: 2px;
+	width: 360px;
+	height: 220px;
+	border: 1px solid black;
+	text-align: center;
+	float: left;
+}
+.tab_mast_productList{
+float: right;
+width:160px;
+}
 </style>
 </head>
 <body style="height: 1200px;">
@@ -350,7 +364,7 @@ font-weight: bold;
 			<div class="col-sm-2" style="height: 100%;">
 				<%@ include file="/resources/temp/mast/sideBar.jspf"%>
 			</div>
-			
+
 			<div class="com-sm-8" style="margin: 20px; height: 100%;">
 				<div class="container">
 					<div id="view">
@@ -358,28 +372,20 @@ font-weight: bold;
 							<form id="form_hidden_asd"
 								action="${pageContext.request.contextPath}/mast/mastProductList"
 								method="post">
-								<div id="div_hid_sel">
-								</div>
-								<div id="div_hid_mtpsel">
-								</div>
-								<div id="div_hid_prosel">
-								</div>
-								<div id="div_hid_kind">
-								</div>
-								<div id="div_hid_pro">
-								</div>
-								<div id="div_hid_size">
-								</div>
-								<div id="div_hid_color">
-								</div>
+								<div id="div_hid_sel"></div>
+								<div id="div_hid_mtpsel"></div>
+								<div id="div_hid_prosel"></div>
+								<div id="div_hid_kind"></div>
+								<div id="div_hid_pro"></div>
+								<div id="div_hid_size"></div>
+								<div id="div_hid_color"></div>
 								<div id="div_hid_curPage">
-								<input type="hidden" name="curPage" value="${pageing.curPage}">
+									<input type="hidden" name="curPage" value="${pageing.curPage}">
 								</div>
-								<div id="div_hid_perPage">
-								</div>
+								<div id="div_hid_perPage"></div>
 							</form>
 						</div>
-						<div class="center-block"  style="display: inline-block;">
+						<div class="center-block" style="display: inline-block;">
 							<nav aria-label="Page navigation">
 								<ul class="pagination">
 									<c:if test="${!empty list}">
@@ -408,72 +414,82 @@ font-weight: bold;
 						</div>
 						<!--      -->
 						<!--     임시 페이지 이동   -->
-						<a href="${pageContext.request.contextPath}/mast/mastProductList">MAST product List</a><br>
-						<a href="${pageContext.request.contextPath}/mast/mastProductListEach0">MAST productEach0</a><br>
-						<a href="${pageContext.request.contextPath}/mast/mastBuyList">MAST BuyList</a><br>
-						<a href="${pageContext.request.contextPath}/mast/mastBuyListPay">MAST BuyListPay</a><br>
-						
-						
-						
-						
+						<a href="${pageContext.request.contextPath}/mast/mastProductList">MAST
+							product List</a><br> <a
+							href="${pageContext.request.contextPath}/mast/mastProductListEach0">MAST
+							productEach0</a><br> <a
+							href="${pageContext.request.contextPath}/mast/mastBuyList">MAST
+							BuyList</a><br> <a
+							href="${pageContext.request.contextPath}/mast/mastBuyListPay">MAST
+							BuyListPay</a><br>
+
+
+
+
 						<div id="selector">
 							<div id="div_sel_sel"
 								style="float: left; width: 10%; height: 100px; overflow: scroll; text-align: right;">
-								<label class="labelccc">순서1</label><br>
-								최신순<input class="p_param" type="radio" name="sel" value="1" <c:if test="${map.sel == 1}">
+								<label class="labelccc">순서1</label><br> 최신순<input
+									class="p_param" type="radio" name="sel" value="1"
+									<c:if test="${map.sel == 1}">
 								checked="checked"
-								</c:if>
-								><br>
-								오래된순<input class="p_param" type="radio" name="sel" value="2" <c:if test="${map.sel == 2}">
+								</c:if>><br>
+								오래된순<input class="p_param" type="radio" name="sel" value="2"
+									<c:if test="${map.sel == 2}">
 								checked="checked"
-								</c:if>
-								><br>
-								세일높은순<input class="p_param" type="radio" name="sel" value="3" <c:if test="${map.sel == 3}">
+								</c:if>><br>
+								세일높은순<input class="p_param" type="radio" name="sel" value="3"
+									<c:if test="${map.sel == 3}">
 								checked="checked"
-								</c:if>
-								><br>
-								세일낮은순<input class="p_param" type="radio" name="sel" value="4" <c:if test="${map.sel == 4}">
+								</c:if>><br>
+								세일낮은순<input class="p_param" type="radio" name="sel" value="4"
+									<c:if test="${map.sel == 4}">
 								checked="checked"
-								</c:if>
-								><br>
-								가격높은순<input class="p_param" type="radio" name="sel" value="5" <c:if test="${map.sel == 5}">
+								</c:if>><br>
+								가격높은순<input class="p_param" type="radio" name="sel" value="5"
+									<c:if test="${map.sel == 5}">
 								checked="checked"
-								</c:if>
-								><br>
-								가격낮은순<input class="p_param" type="radio" name="sel" value="6" <c:if test="${map.sel == 6}">
+								</c:if>><br>
+								가격낮은순<input class="p_param" type="radio" name="sel" value="6"
+									<c:if test="${map.sel == 6}">
 								checked="checked"
-								</c:if>
-								>
+								</c:if>><br>
+								판매량순<input class="p_param" type="radio" name="sel" value="7"
+									<c:if test="${map.sel == 7}">
+								checked="checked"
+								</c:if>>
 							</div>
 							<div id="div_mtpSel_sel"
 								style="float: left; width: 10%; height: 100px; overflow: scroll; text-align: right;">
-								<label class="labelccc">순서2</label><br>
-								기본<input class="p_param" type="radio" name="mtpSel" value="1" <c:if test="${map.mtpSel == 1}">
+								<label class="labelccc">순서2</label><br> 기본<input
+									class="p_param" type="radio" name="mtpSel" value="1"
+									<c:if test="${map.mtpSel == 1}">
 								checked="checked"
-								</c:if>
-								><br>
-								세일있음<input class="p_param" type="radio" name="mtpSel" value="2" <c:if test="${map.mtpSel == 2}">
+								</c:if>><br>
+								세일있음<input class="p_param" type="radio" name="mtpSel" value="2"
+									<c:if test="${map.mtpSel == 2}">
 								checked="checked"
-								</c:if>
-								><br>
-								세일없음<input class="p_param" type="radio" name="mtpSel" value="3" <c:if test="${map.mtpSel == 3}">
+								</c:if>><br>
+								세일없음<input class="p_param" type="radio" name="mtpSel" value="3"
+									<c:if test="${map.mtpSel == 3}">
 								checked="checked"
-								</c:if>
-								><br>
-								재고있음<input class="p_param" type="radio" name="mtpSel" value="4" <c:if test="${map.mtpSel == 4}">
+								</c:if>><br>
+								재고있음<input class="p_param" type="radio" name="mtpSel" value="4"
+									<c:if test="${map.mtpSel == 4}">
 								checked="checked"
-								</c:if>
-								><br>
-								재고없음<input class="p_param" type="radio" name="mtpSel" value="5" <c:if test="${map.mtpSel == 5}">
+								</c:if>><br>
+								재고없음<input class="p_param" type="radio" name="mtpSel" value="5"
+									<c:if test="${map.mtpSel == 5}">
 								checked="checked"
-								</c:if>
-								><br>
+								</c:if>><br>
 							</div>
 							<div id="div_proSel_sel"
 								style="float: left; width: 10%; height: 100px; overflow: scroll; text-align: right;">
-								<label class="labelccc">대분류</label><input id="inp_id_ck_prosel" type="checkbox"><br>
+								<label class="labelccc">대분류</label><input id="inp_id_ck_prosel"
+									type="checkbox"><br>
 								<c:forEach var="proselc" items="${productSelectList}">
-						${proselc.productSelect_name}<input class="in_ck_proSelNum p_param" type="checkbox"
+						${proselc.productSelect_name}<input
+										class="in_ck_proSelNum p_param" type="checkbox"
 										name="productSelect_num" value="${proselc.productSelect_num}"
 										<c:forEach var="listasd" items="${map.productSelect_num}"> 
 							<c:if test="${proselc.productSelect_num == listasd}">
@@ -484,10 +500,11 @@ font-weight: bold;
 							</div>
 							<div id="div_kind_sel"
 								style="float: left; width: 15%; height: 100px; overflow: scroll; text-align: right;">
-								<label class="labelccc">소분류</label><input id="inp_id_ck_kind" type="checkbox"><br>
+								<label class="labelccc">소분류</label><input id="inp_id_ck_kind"
+									type="checkbox"><br>
 								<c:forEach var="proselc" items="${kindList}">
-						${proselc.kind_name}<input class="in_ck_kindNum p_param" type="checkbox" name="kind_num"
-										value="${proselc.kind_num}"
+						${proselc.kind_name}<input class="in_ck_kindNum p_param"
+										type="checkbox" name="kind_num" value="${proselc.kind_num}"
 										<c:forEach var="listasd" items="${map.kind_num}"> 
 							<c:if test="${proselc.kind_num == listasd}">
 							checked="checked"</c:if>
@@ -497,9 +514,11 @@ font-weight: bold;
 							</div>
 							<div id="div_pro_sel"
 								style="float: left; width: 15%; height: 100px; overflow: scroll; text-align: right;">
-								<label class="labelccc">상품번호</label><input id="inp_id_ck_pro" type="checkbox"><br>
+								<label class="labelccc">상품번호</label><input id="inp_id_ck_pro"
+									type="checkbox"><br>
 								<c:forEach var="proselc" items="${productList}">
-						${proselc.product_name}<input class="in_ck_proNum p_param"  type="checkbox" name="product_num"
+						${proselc.product_name}<input class="in_ck_proNum p_param"
+										type="checkbox" name="product_num"
 										value="${proselc.product_num}"
 										<c:forEach var="listasd" items="${map.product_num}"> 
 							<c:if test="${proselc.product_num == listasd}">
@@ -510,10 +529,12 @@ font-weight: bold;
 							</div>
 							<div id="div_size_sel"
 								style="float: left; width: 10%; height: 100px; overflow: scroll; text-align: right;">
-								<label class="labelccc">사이즈</label><input id="inp_id_ck_size" type="checkbox"><br>
+								<label class="labelccc">사이즈</label><input id="inp_id_ck_size"
+									type="checkbox"><br>
 								<c:forEach var="proselc" items="${productSizeList}">
-						${proselc.productSize_size}<input type="checkbox"  class="in_ck_proSize p_param"
-										name="productSize_size" value="${proselc.productSize_size}"
+						${proselc.productSize_size}<input type="checkbox"
+										class="in_ck_proSize p_param" name="productSize_size"
+										value="${proselc.productSize_size}"
 										<c:forEach var="listasd" items="${map.productSize_size}"> 
 							<c:if test="${proselc.productSize_size == listasd}">
 							checked="checked"</c:if>
@@ -523,10 +544,12 @@ font-weight: bold;
 							</div>
 							<div id="div_color_sel"
 								style="float: left; width: 15%; height: 100px; overflow: scroll; text-align: right;">
-								<label class="labelccc">색상</label><input id="inp_id_ck_color" type="checkbox"><br>
+								<label class="labelccc">색상</label><input id="inp_id_ck_color"
+									type="checkbox"><br>
 								<c:forEach var="proselc" items="${productColorList}">
-						${proselc.productEach_color}<input class="in_ck_proColor p_param" type="checkbox"
-										name="productEach_color" value="${proselc.productEach_color}"
+						${proselc.productEach_color}<input class="in_ck_proColor p_param"
+										type="checkbox" name="productEach_color"
+										value="${proselc.productEach_color}"
 										<c:forEach var="listasd" items="${map.productEach_color}"> 
 							<c:if test="${proselc.productEach_color == listasd}">
 							checked="checked"</c:if>
@@ -537,7 +560,7 @@ font-weight: bold;
 						</div>
 						<div id="div_product_list">
 							<c:forEach var="list1" items="${list}">
-								<div style="width: 330px; border: 1px solid black; float: left;">
+								<div class="div_list_in_list">
 									<div class="div_cl_img_asd"
 										style="display: inline-block; cursor: pointer; float: left;">
 										<input class="inh_product_num" type="hidden"
@@ -547,11 +570,10 @@ font-weight: bold;
 										data-toggle="modal" data-target="#basketModal"
 							data-backdrop="true"
 										</c:if>
-											style="float: left;" width="200px" height="200px"
+											width="175px" height="175px"
 											src="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}">
 									</div>
-									<table id="tab_mast_productList"
-										style="display: inline-block; float: left;">
+									<table class="tab_mast_productList">
 										<tr>
 											<td>판매수</td>
 											<td>${list1.selCount}</td>
@@ -582,25 +604,27 @@ font-weight: bold;
 										</tr>
 										<tr>
 											<td>price</td>
-											<td>${list1.productInfoDTO.productInfo_price}</td>
+											<td><fmt:formatNumber
+													value="${list1.productInfoDTO.productInfo_price}"
+													pattern="#,###" />원</td>
 										</tr>
 										<tr>
 											<td>sale</td>
 											<td>${list1.productInfoDTO.productInfo_saleRate}</td>
 										</tr>
 										<tr>
-										<td>totalPrice</td>
-										<td><c:set
-															var="number"
-															value="${list1.productInfoDTO.productInfo_price*(100-list1.productInfoDTO.productInfo_saleRate)/100}" />
-														<fmt:parseNumber var="total" value="${number}"
-															type="number" integerOnly="true" /> ${total}</td>
+											<td>totalPrice</td>
+											<td><c:set var="number"
+													value="${list1.productInfoDTO.productInfo_price*(100-list1.productInfoDTO.productInfo_saleRate)/100}" />
+												<fmt:parseNumber var="total" value="${number}" type="number"
+													integerOnly="true" /> <fmt:formatNumber value="${total}"
+													pattern="#,###" />원</td>
 										</tr>
 									</table>
 								</div>
 							</c:forEach>
 						</div>
-	
+
 
 					</div>
 					<!--  view E  -->

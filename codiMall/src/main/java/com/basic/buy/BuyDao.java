@@ -19,6 +19,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import com.basic.basket.BasketDTO;
 import com.basic.basket.BasketListDTO;
 import com.basic.member.MemberDTO;
+import com.basic.product.ProductListDTO;
 
 @Repository
 public class BuyDao {
@@ -37,6 +38,10 @@ public class BuyDao {
 		return sqlSession.selectList(namespace + "SelBuyList", (MemberDTO) session.getAttribute("member"));
 	}
 
+	public ProductListDTO buyDirectList(int product_num) {
+		return sqlSession.selectOne(namespace + "SelProductInfo", product_num);
+	}
+
 	public List<BasketListDTO> basketBuyList(int[] basket_num) {
 		List<Integer> ar = new ArrayList<Integer>();
 		List<BasketListDTO> ar2 = new ArrayList<BasketListDTO>();
@@ -49,21 +54,36 @@ public class BuyDao {
 		return ar2;
 	}
 
-	public String nonBasketBuy(BuyNonBasketDTO buyNonBasketDTO, MemberDTO memberDTO) {
+	public Map<String, Object> buyDirect(int total_price, int product_num, String productSize_size,
+			String productEach_color, int productEach_each, MemberDTO memberDTO) {
 		System.out.println("---- non basket buy ---- start ----");
+		List<Integer> ar = new ArrayList<>();
+		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map22 = new HashMap<>();
+		map.put("total_price", total_price);
+		map.put("product_num", product_num);
+		map.put("productSize_size", productSize_size);
+		map.put("productEach_color", productEach_color);
+		map.put("productEach_each", productEach_each);
+		map.put("memberDTO", memberDTO);
 		String message = "";
 		int result = 0;
-		int productEach = sqlSession.selectOne(namespace + "SelProductEachGet", buyNonBasketDTO);
-		if (productEach > buyNonBasketDTO.getProductEach_each()) {
+		int buy_num = 0;
+		int productEach = sqlSession.selectOne(namespace + "SelProductEachGet", map);
+
+		System.out.println("product_num---" + product_num);
+		System.out.println("productSize_size---" + productSize_size);
+		System.out.println("productEach_color---" + productEach_color);
+		System.out.println("productEach_each---" + productEach_each);
+		System.out.println("productEach----" + productEach);
+		if (productEach > productEach_each) {
 			try {
 				def = new DefaultTransactionDefinition();
 				def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 
 				status = transactionManager.getTransaction(def);
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("buyNonBasketDTO", buyNonBasketDTO);
-				map.put("memberDTO", memberDTO);
-				result = sqlSession.update(namespace + "UpProductNonBasketBuy", buyNonBasketDTO);
+
+				result = sqlSession.update(namespace + "UpProductNonBasketBuy", map);
 				if (result > 0) {
 					result = sqlSession.insert(namespace + "InsNonBasketBuy", map);
 					result = sqlSession.insert(namespace + "InsNonBasketBuyState", map);
@@ -71,30 +91,56 @@ public class BuyDao {
 					result = 0;
 				}
 				if (result > 0) {
+					buy_num = sqlSession.selectOne(namespace + "SelCurrBuyNum");
+					System.out.println("success--buy_num---" + buy_num);
 					transactionManager.commit(status);
 					System.out.println("success");
+					ar.add(buy_num);
 					message = "구매성공";
+					System.out.println("구매성공");
 				} else {
 					transactionManager.rollback(status);
 					message = "구매실패";
+					ar = null;
 				}
 			} catch (Exception e) {
 				// TODO: handle exception
 				transactionManager.rollback(status);
 				System.out.println("fail");
 				message = "오류발생";
+				ar = null;
 			}
 		} else {
 			message = "재고없음 구매실패";
+			ar = null;
 		}
+		if (ar != null) {
+			map.put("ar", ar);
+			List<BuyListDTO> buyAr = sqlSession.selectList(namespace + "SelBuyListNow", map);
+			if (buyAr.size() == 0) {
+				buyAr = null;
+			} else {
+				System.out.println("buyarsize--" + buyAr.size());
+				System.out.println(buyAr.get(0).getBuy_num());
+				System.out.println(buyAr.get(0).getBuyState_color());
+				System.out.println(buyAr.get(0).getBuyState_size());
+				System.out.println(buyAr.get(0).getProduct_num());
 
-		return message;
+			}
+			map22.put("ar", buyAr);
+		}
+		map22.put("message", message);
+
+		return map22;
 	}
 
-	public String basketBuy(int[] basket_num, MemberDTO memberDTO) {
+	public Map<String, Object> basketBuy(int[] basket_num, MemberDTO memberDTO) {
+		int buy_num = 0;
 		boolean eachCheck = true;
+		List<Integer> nar = new ArrayList<>();
 		List<Integer> ar = new ArrayList<Integer>();
 		List<BasketListDTO> ar2 = new ArrayList<BasketListDTO>();
+		Map<String, Object> map22 = new HashMap<>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		for (int i = 0; i < basket_num.length; i++) {
 			ar.add(basket_num[i]);
@@ -102,21 +148,19 @@ public class BuyDao {
 		map.put("list", ar);
 		ar2 = sqlSession.selectList(namespace + "SelBasketBuyList", map);
 		int size = ar2.size();
-		System.out.println("arsize--first--"+ar2.size());
+		System.out.println("arsize--first--" + ar2.size());
 
-		
-			for (int i = 0; i < ar2.size(); i++) {
-				int productEach = sqlSession.selectOne(namespace + "SelProductEachGet_Bas", ar2.get(i));
-				System.out.println("proeach--"+productEach);
-				if (ar2.get(i).getBasketInfo_each() > productEach) {
-					int num = ar2.get(i).getBasket_num();
-					ar2.remove(i);
-					sqlSession.update(namespace + "UpBasketEachZero", num);
-					eachCheck=false;
-				}
+		for (int i = 0; i < ar2.size(); i++) {
+			int productEach = sqlSession.selectOne(namespace + "SelProductEachGet_Bas", ar2.get(i));
+			System.out.println("proeach--" + productEach);
+			if (ar2.get(i).getBasketInfo_each() > productEach) {
+				int num = ar2.get(i).getBasket_num();
+				ar2.remove(i);
+				sqlSession.update(namespace + "UpBasketEachZero", num);
+				eachCheck = false;
 			}
-	
-		
+		}
+
 		for (int i = 0; i < ar2.size(); i++) {
 			int productEach = sqlSession.selectOne(namespace + "SelProductEachGet_Bas", ar2.get(i));
 			System.out.println("proeach---" + productEach);
@@ -132,9 +176,8 @@ public class BuyDao {
 		int result = 0;
 		int upResult = 0;
 		String message = "";
-		System.out.println("arsize--last--"+ar2.size());
+		System.out.println("arsize--last--" + ar2.size());
 		if (eachCheck) {
-			
 
 			try {
 				System.out.println("try in");
@@ -161,6 +204,10 @@ public class BuyDao {
 						System.out.println("break");
 						break;
 					}
+					buy_num = sqlSession.selectOne(namespace + "SelCurrBuyNum");
+					System.out.println("success--buy_num---" + buy_num);
+					nar.add(buy_num);
+					System.out.println("nar등록성공");
 				}
 				if (result == ar2.size() * 2 && upResult > 0) {
 					System.out.println("result==basket_num.length");
@@ -182,11 +229,13 @@ public class BuyDao {
 					} else {
 						message = "오류발생";
 						transactionManager.rollback(status);
+						nar=null;
 					}
 				} else {
 					transactionManager.rollback(status);
 					System.out.println("fail");
 					message = "오류발생";
+					nar=null;
 				}
 
 			} catch (Exception e) {
@@ -194,12 +243,33 @@ public class BuyDao {
 				transactionManager.rollback(status);
 				System.out.println("Exception");
 				message = "예외발생";
+				nar=null;
 			}
-		}else{
-			message="재고부족 구매실패";
+		} else {
+			message = "재고부족 구매실패";
+			nar=null;
 		}
+		
+		if (nar != null) {
+			map.put("ar", nar);
+			List<BuyListDTO> buyAr = sqlSession.selectList(namespace + "SelBuyListNow", map);
+			if (buyAr.size() == 0) {
+				buyAr = null;
+			} else {
+				System.out.println("buyarsize--" + buyAr.size());
+				for (int i = 0; i < buyAr.size(); i++) {
+					System.out.println("buynum----"+i+"-----"+buyAr.get(i).getBuy_num());
+					System.out.println("buycolor----"+i+"-----"+buyAr.get(i).getBuyState_color());
+					System.out.println("buySize----"+i+"-----"+buyAr.get(i).getBuyState_size());
+					System.out.println("buypronum----"+i+"-----"+buyAr.get(i).getProduct_num());
+				}
 
-		return message;
+			}
+			map22.put("ar", buyAr);
+		}
+		map22.put("message", message);
+
+		return map22;
 	}
 
 	// CanCel buy

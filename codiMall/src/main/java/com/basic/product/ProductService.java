@@ -26,30 +26,18 @@ public class ProductService {
 		return productDAO.productSelectList();
 	}
 	
-	//productSaleList
-	public List<ProductListDTO> productSaleList(int curPage,int perPage,Model model,int productSelect_num){
-		HashMap<String, Object> hm = new HashMap<String, Object>();
-		int totalCount = productDAO.productSaleCount();
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCurPage(curPage);
-		pageMaker.setPerPage(perPage);
-		pageMaker.makeRow();
-		pageMaker.makePage(totalCount);
-		model.addAttribute("pageing", pageMaker);
-		model.addAttribute("selKind_num", productDAO.allKindNum(productSelect_num));
-		model.addAttribute("selColor", productDAO.allProductColor(productSelect_num));
-		model.addAttribute("selSize", productDAO.allProductSize(productSelect_num));
-		return productDAO.productSaleList(pageMaker);
-	}
 
-	public List<ProductListDTO> productList(int curPage, int perPage, ProductParamDTO productParamDTO, Model model,RedirectAttributes ra) {
-		int totalCount = productDAO.productCount(productParamDTO);
+	public List<ProductListDTO> productList(int curPage, int perPage, ProductParamDTO productParamDTO, Model model,RedirectAttributes ra,String sale) {
+		int totalCount = productDAO.productCount(productParamDTO,sale);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCurPage(curPage);
 		pageMaker.setPerPage(perPage);
 		pageMaker.makeRow();
 		pageMaker.makePage(totalCount);
 		model.addAttribute("pageing", pageMaker);
+		if(sale!=null){
+			productParamDTO.setProductSelect_num(0);
+		}
 		model.addAttribute("selKind_num", productDAO.allKindNum(productParamDTO.getProductSelect_num()));
 		model.addAttribute("selColor", productDAO.allProductColor(productParamDTO.getProductSelect_num()));
 		model.addAttribute("selSize", productDAO.allProductSize(productParamDTO.getProductSelect_num()));
@@ -60,7 +48,7 @@ public class ProductService {
 		ra.addFlashAttribute("selSize", productDAO.allProductSize(productParamDTO.getProductSelect_num()));
 		
 
-		return productDAO.productList(pageMaker, productParamDTO);
+		return productDAO.productList(pageMaker, productParamDTO,sale);
 
 		/*
 		 * System.out.println("curPage : " + curPage);

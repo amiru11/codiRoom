@@ -60,9 +60,14 @@ var requestSubmitted = false;
 			$(".subh_prosel_num"+(i*1+1)).click(function(){
 				$("#inphid_productSelect_num").val($(this).find(".inhA_proselNum").val());
 				alert($("#inphid_productSelect_num").val());
+				
 				$("#hidd_form_prosel").submit();
 			})	
 		}
+		$(".a_sale_product").click(function(){
+			$(".inh_sale_st").attr('name','sale')
+			$("#form_all").submit();
+		});
 		
 		$(".N_pageing").click(function(){
 			$(".inh_curPage").val($(this).text());
@@ -104,7 +109,10 @@ var requestSubmitted = false;
 		$(".div_cart").click(function() {
 
 			var product_num = $(this).find(".inh_product_num").val();
+			var productPic_pic = $(this).find(".inh_productPic_pic_val").val();
 			selSize(product_num);
+			$(".div_img_in").html("");
+			$(".div_img_in").append('<img src="'+productPic_pic+'" >');
 			$("#inh_pro_val").val(product_num);
 		});
 
@@ -175,7 +183,7 @@ var requestSubmitted = false;
 				var y = "";
 				$.each(data.eachList, function(index, value) {
 					x = x + "<option value=" + value.productEach_color + ">" + value.productEach_color + '_' + value.productEach_each + "</option>";
-					y = y + value.productEach_color + '_' + value.productEach_each + '<input class="' + value.productEach_color + '" type="text" value="' + value.productEach_each + '">';
+					y = y + '<input class="' + value.productEach_color + '" type="hidden" value="' + value.productEach_each + '">';
 				});
 				$("#div_hidden_each").html(y);
 				$("#sel_color").html(x);
@@ -257,8 +265,7 @@ var requestSubmitted = false;
 								class="inhA_proselNum" type="hidden"
 								value="${list1.productSelect_num}">${list1.productSelect_name}</a></li>
 					</c:forEach>
-					<li><a
-						href="${pageContext.request.contextPath}/product/productSaleList">할인상품</a></li>
+					<li><a class="a_sale_product"style="cursor: pointer;">할인상품</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/product/productBestList">BSET</a></li>
 				</ul>
@@ -369,7 +376,8 @@ var requestSubmitted = false;
 															var="number"
 															value="${list1.productInfoDTO.productInfo_price*(100-list1.productInfoDTO.productInfo_saleRate)/100}" />
 														<fmt:parseNumber var="total" value="${number}"
-															type="number" integerOnly="true" /> ${total}
+															type="number" integerOnly="true" />
+															<fmt:formatNumber value="${total}" pattern="#,###" /> 
 														원(${list1.productInfoDTO.productInfo_saleRate}%)
 													</strong>
 												</c:if>
@@ -385,7 +393,8 @@ var requestSubmitted = false;
 							data-backdrop="true"
 										</c:if>>
 											<input type="hidden" value="${list1.productDTO.product_num}"
-												class="inh_product_num" name="product_num"> <span
+												class="inh_product_num" name="product_num">
+												<input type="hidden" class="inh_productPic_pic_val" value="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}"> <span
 												style="font-size: 20px; color: #ffffff;">ADD TO CART</span>
 										</div>
 									</div>
@@ -445,8 +454,8 @@ var requestSubmitted = false;
 					<h4 class="modal-title">CART</h4>
 				</div>
 				<input type="hidden" value="" id="inh_pro_val">
-				<div class="modal-body"
-					style="padding: 3px; height: 300px; background-color: red;">사진</div>
+				<div class="modal-body div_img_in"
+					style="padding: 10px; height: 300px; background-color: red;"></div>
 				<div class="modal-body2">
 					<select id="sel_size"></select>
 				</div>
@@ -468,6 +477,7 @@ var requestSubmitted = false;
 	<form id="form_all" name="formAll"
 		action="${pageContext.request.contextPath}/product/productList"
 		method="post" style="display: none;">
+		<input class="inh_sale_st" type="hidden" value="sale" name="${sale}">
 		<input class="inh_curPage" type="hidden" value="" name="curPage">
 		<input class="inh_sel" type="hidden" name="sel"> <input
 			class="inh_productSelect_num" type="hidden"

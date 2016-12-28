@@ -25,7 +25,10 @@
 <script type="text/javascript">
 
 	$(function() {
-
+		var message = "${message}";
+		if(message != ""){
+			alert(message);
+		}
 		$(".buy_tr_ds").mouseenter(function() {
 			var thistr = $(this);
 
@@ -69,7 +72,7 @@
 							<tr class="buy_tr_ds">
 								<td><input class="inh_buy_num" type="hidden"
 									value="${list1.buy_num}" name="buy_num" disabled="disabled">${list1.buy_num}</td>
-								<%-- <td>${list1.product_num}</td> --%>
+								<td>${list1.product_num}</td>
 								<td>
 									<div class="bas_td_hid_proeach" style="display: inline-block; float: left; width:150px;" >
 										<a href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">

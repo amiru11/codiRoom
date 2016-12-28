@@ -1,5 +1,6 @@
 package com.basic.mast;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,16 @@ public class SSSDAO {
 		}
 
 		return sqlSession.selectList(namespace + "SelMastBuyPayList", map);
+	}
+	
+	public int mastRefundEachAdd(int product_num,String productSize_size,String productEach_color,int productEach_each){
+		Map<String, Object> map = new HashMap<>();
+		map.put("product_num", product_num);
+		map.put("productSize_size",productSize_size);
+		map.put("productEach_color",productEach_color);
+		map.put("productEach_each",productEach_each);
+
+		return sqlSession.update(namespace+"UpRefundConfEachAdd",map);
 	}
 
 }

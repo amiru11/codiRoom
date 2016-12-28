@@ -45,10 +45,18 @@ table, table tr, tr td, th {
 		yesterday();
 		</c:if>
 		btns();
-
-
-
+		<c:set var="a" value="0" /> <c:forEach
+			var="list1" items="${list}">
+			<c:set var="a" value="${a+list1.buyStateDTO.buyState_price}" />
+		</c:forEach>
+		var x = '${a}';
+		x=numberWithCommas(x);
+		$(".total_money").text(x+" 원");
 	});
+	//function ---------------------------------------------------------------------------------
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 	function count(yearc, monthc, datec) {
 		var ToDay = new Date();
 		var nail = new Date(ToDay.getFullYear() - yearc, ToDay.getMonth() - monthc, ToDay.getDate() - datec);
@@ -193,17 +201,16 @@ table, table tr, tr td, th {
 										<td>${list1.buyStateDTO.buyState_size}</td>
 										<td>${list1.buyStateDTO.buyState_color}</td>
 										<td>${list1.buyStateDTO.buyState_each}</td>
-										<td>${list1.buyStateDTO.buyState_price}</td>
+										<td style="text-align: right;">
+										 <fmt:formatNumber value="${list1.buyStateDTO.buyState_price}" pattern="#,###" /> 원
+										</td>
 										<td>${list1.buyStateDTO.buyState_expressNum}</td>
 										<td>${list1.buyStateDTO.buyState_result_date}</td>
 									</tr>
 								</c:forEach>
 								<tr>
 									<td colspan="5">합계</td>
-									<td colspan="5"><c:set var="a" value="0" /> <c:forEach
-											var="list1" items="${list}">
-											<c:set var="a" value="${a+list1.buyStateDTO.buyState_price}" />
-										</c:forEach>${a}원</td>
+									<td colspan="5" class="total_money"></td>
 								</tr>
 
 							</table>

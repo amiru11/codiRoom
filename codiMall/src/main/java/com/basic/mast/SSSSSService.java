@@ -83,7 +83,13 @@ public class SSSSSService {
 	
 	//mast buy Pay List E
 	
+	//mast refund conf Each add        S
 	
+	public int mastRefundEachAdd(int product_num,String productSize_size,String productEach_color,int productEach_each){
+		return sssdao.mastRefundEachAdd(product_num, productSize_size, productEach_color, productEach_each);
+	}
+	
+	//mast refund conf Each add        E
 	
 	
 

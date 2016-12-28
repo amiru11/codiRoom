@@ -226,23 +226,51 @@
 	<select id="SelMastBuyPayList" resultMap="MastBuyList"
 		parameterType="java.util.HashMap">
 		select b.ID,p.*,bs.* from buy b, BUYSTATE bs,PRODUCT p
-		WHERE bs.BUY_NUM = b.BUY_NUM
-    and p.PRODUCT_NUM = b.PRODUCT_NUM
+		WHERE bs.BUY_NUM
+		= b.BUY_NUM
+		and p.PRODUCT_NUM = b.PRODUCT_NUM
 		and bs.BUYSTATE_STATE = 4
-		and bs.BUYSTATE_RESULT_DATE BETWEEN 
+		and
+		bs.BUYSTATE_RESULT_DATE BETWEEN
 		<if test="first_date != null">
-		#{first_date}
+			#{first_date}
 		</if>
 		<if test="first_date == null">
-		sysdate-100
+			sysdate-100
 		</if>
-		 and <if test="last_date != null">
-		#{last_date}+1
+		and
+		<if test="last_date != null">
+			#{last_date}+1
 		</if>
 		<if test="last_date == null">
-		sysdate+1
+			sysdate+1
 		</if>
 		order by bs.BUYSTATE_RESULT_DATE desc
 	</select>
+
+
+
+	<!-- refund conf Each add S -->
+	<select id="SelRefuncConfEachGet" resultType="int"
+		parameterType="java.util.HashMap">
+		select pe.productEach_each from productEach pe where
+		pe.product_num =
+		#{product_num}
+		and pe.productSize_size =
+		#{productSize_size} and pe.productEach_color =
+		#{productEach_color}
+
+	</select>
+	<update id="UpRefundConfEachAdd" parameterType="java.util.HashMap">
+		update productEach pee set 
+	pee.productEach_each = (select pe.productEach_each from productEach pe where pe.product_num = #{product_num} 
+	and pe.productSize_size = #{productSize_size} and pe.productEach_color = #{productEach_color}
+	) + #{productEach_each}
+	where pee.product_num = #{product_num} 
+	and pee.productSize_size = #{productSize_size} and pee.productEach_color = #{productEach_color}
+
+
+	</update>
+	<!-- refund conf Each add E -->
 
 </mapper>

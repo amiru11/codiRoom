@@ -326,6 +326,9 @@
 			<when test="sel == 6">
 				order by realPrice asc
 			</when>
+			<when test="sel == 7">
+				order by selCount desc,t.product_num desc
+			</when>
 			<otherwise>
 				order by t.product_num desc
 			</otherwise>
@@ -642,6 +645,9 @@
 		<choose>
 			<when test="buyState_state == 2 and buyState_expressNum !=0">
 				buystate_state = #{buyState_state},
+			</when>
+			<when test="buyState_state == 3 and buyState_expressNum !=0">
+				buystate_state = 5,
 			</when>
 			<otherwise>
 				buystate_state = #{buyState_state}+1,

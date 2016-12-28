@@ -171,6 +171,16 @@ public class JsonController {
 		return ssssssService.mastProductInfoFix(map);
 	}
 	
+	@RequestMapping(value="/mastRefundEachAdd")
+	public int mastRefundEachAdd(int product_num,String productSize_size,String productEach_color,int productEach_each){
+		System.out.println("product_num-----"+product_num);
+		System.out.println("productSize_size-----"+productSize_size);
+		System.out.println("productEach_color-----"+productEach_color);
+		System.out.println("productEach_each-----"+productEach_each);
+		
+		return ssssssService.mastRefundEachAdd(product_num, productSize_size, productEach_color, productEach_each);				
+	}
+	
 	
 	//codi-----------------------------------------------------------------------------
 	@RequestMapping(value="/codiProductList")
