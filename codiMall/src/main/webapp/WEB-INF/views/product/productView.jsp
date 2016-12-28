@@ -22,6 +22,7 @@
 	src="${pageContext.request.contextPath}/resources/js/zoomItem.js"></script>
 <script type="text/javascript">
 	$(function() {
+		productViewAllEachCheck();
 		qnaList();
 		reviewList();
 
@@ -51,27 +52,18 @@
 				$("#inh_productSize_size").val($("#sel_size_a").val());
 				$("#inh_productEach_color").val($("#sel_size_b").val());
 				$("#inp_each").val(1);
-				$("#inh_productEach_each").val($("#inp_each").val());	
+				$("#inh_productEach_each").val($("#inp_each").val());
+				
 			}else{
 				$("#quantityField").css("display","none");
 				$("#buttonSet").css("display","none");
 			}
+			var product_num =${view.product_num};
+	    	var productSize_size =$("#sel_size_a").val();
+	    	var productEach_color =$("#sel_size_b").val();
+			selEach(product_num,productSize_size,productEach_color);
 		});
 
-		$("#inp_each").change(function(){
-			numcheck();
-			eachCheck();
-		});
-		$("#inp_each").keydown(function(){
-			numcheck();
-			eachCheck();
-		});
-		$("#inp_each").keyup(function(){
-			numcheck();
-			eachCheck();
-		});
-		
-		
 		$("#btn_basket").click(function(){
 			if($("#sel_size_b").val()!=null && $("#sel_size_a").val()!=null ){
 				if($("#inp_each").val()>0){
@@ -131,18 +123,49 @@
 			}
 		});
 
-		$(".product_quantity_up").click(function(){//수량증가
-			var c =  parseInt($("#inp_each").val());
-			var d = c+1;
-			if(d<21){	
-				$("#inp_each").val(d);
-			}else{
-				alert("더 이상 수량을 늘일 수 없습니다.");
-			}
-			//alert(c);
-		});
+		
+		$("#btn_add_eachaa").mouseenter(function(){
+			$(this).click(function(){//수량증가
+				$("#inp_each").val($("#inp_each").val()*1+1);
+				var as = $("#inh_id_hidden_each").val()*1;
+		    	if($("#inp_each").val()*1>as*1){
+		    		alert("재고초과");
+		    		$("#inp_each").val(as*1);
+		    	}else{
+		    		if($("#inp_each").val()*1>20){	
+						$("#inp_each").val(20*1);
+						alert("21개이상은 전화로 문의");
+					}
+		    	}
+			});
+			$(".product_quantity_up").off("dblclick");		
+		})
+
 		
 	});
+	function productViewAllEachCheck(){
+		$.ajax({
+		    url : "../json/productAllEach0Check",
+		    type : "post",
+		    data : {
+		    	product_num:${view.product_num}
+		    },
+		    success: function(data) {
+		    	if(data==1){
+		    		var xx = '<img src="${pageContext.request.contextPath}/resources/images/mazin.png"';
+		    		xx=xx+'width="500" title="" alt="" id="bigimg"';
+		    		xx=xx+'onclick="image_zoom.showLayer('+"'big_box', 'big_img', 'detail_thumb', currentImageIdx);"+'"';
+		    		xx=xx+'style="margin-top: -250px; position: absolute; top: 50%; left: 0px; z-index: 56">';
+		    		$(".product-img").append(xx);
+		    		
+		    		
+		    	}
+		    },
+		    error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"error:"+error);
+		    }
+		});
+	}
 	
 	function selList(){
 		$.ajax({
@@ -188,8 +211,26 @@
 		    }
 		});
 	}
+	function selEach(product_num,productSize_size,productEach_color){
+		$.ajax({
+		    url : "../json/productViewEachGet",
+		    type : "post",
+		    data : {
+		    	product_num:product_num,
+		    	productSize_size:productSize_size,
+		    	productEach_color:productEach_color
+		    },
+		    success:function(data) {
+		    	alert(data);
+		    	$("#inh_id_hidden_each").val(data);
+		    },
+		    error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"error:"+error);
+		    }
+		});
+	}
 	
-	function eachCheck(){
+	/* function eachCheck(){
 		var as =  $("#inh_productEach_color").val(); 
 		var b = $("."+as+"").val()*1;
 		var c = $("#inp_each").val()*1;
@@ -199,7 +240,7 @@
 		}else{
 		$("#inh_productEach_each").val($("#inp_each").val());
 		}
-	}
+	} */
 	function numcheck()  {  
 		  if ((event.keyCode==69))  {
 		      event.returnValue=false;
@@ -260,7 +301,7 @@
 	
 
 	function commWrite(data){
-		var b = $(data).attr("name");
+		var b = $(data).attr("name"); 
 		//alert(b);
 		//alert($("#comment"+b).val());
  		$.ajax({
@@ -369,10 +410,10 @@
 						</div>
 						<div id="detail_bigimg" class="product_img_basic plus_cursor">
 							<span class="product-img"> <img
-								src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_60.png"
+								src="${pageContext.request.contextPath}/resources/testPic/${view.productPic_pic}"
 								width="500" title="" alt="" id="bigimg"
 								onclick="image_zoom.showLayer('big_box', 'big_img', 'detail_thumb', currentImageIdx);"
-								style="margin-top: -250px; position: absolute; top: 50%; left: 0px;">
+								style="margin-top: -250px; position: absolute; top: 50%; left: 0px; z-index: 55">
 							</span>
 						</div>
 						<!-- 상품 썸네일 -->
@@ -380,28 +421,11 @@
 							<ul class="product_thumb">
 								<li onclick="changeImg('thum_0', 'bigimg', '0', 'N');"
 									style="cursor: pointer;"><img
-									src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_60.png"
+									src="${pageContext.request.contextPath}/resources/testPic/${view.productPic_pic}"
 									alt="thum" width="100" id="thum_0" big_yn="N"
 									style="display: inline-block; vertical-align: middle"><span
 									class="vertical_standard"></span></li>
-								<li onclick="changeImg('thum_1', 'bigimg', '1', 'N');"
-									style="cursor: pointer;"><img
-									src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_detail1_60.jpg"
-									alt="thum" width="100" id="thum_1" big_yn="N"
-									style="display: inline-block; vertical-align: middle"><span
-									class="vertical_standard"></span></li>
-								<li onclick="changeImg('thum_2', 'bigimg', '2', 'N');"
-									style="cursor: pointer;"><img
-									src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_detail2_60.jpg"
-									alt="thum" width="100" id="thum_2" big_yn="N"
-									style="display: inline-block; vertical-align: middle"><span
-									class="vertical_standard"></span></li>
-								<li onclick="changeImg('thum_3', 'bigimg', '3', 'N');"
-									style="cursor: pointer;"><img
-									src="${pageContext.request.contextPath}/resources/images/product/outer/sideBB_detail3_60.jpg"
-									alt="thum" width="100" id="thum_3" big_yn="N"
-									style="display: inline-block; vertical-align: middle"><span
-									class="vertical_standard"></span></li>
+					
 							</ul>
 							<!--//상품 썸네일-->
 						</div>
@@ -487,10 +511,10 @@
 												class="btn btn-default button-minus product_quantity_down"
 												style="margin-left: 20px;"> <span><i
 													class="glyphicon glyphicon-minus"></i></span>
-											</a> <a class="btn btn-default button-plus product_quantity_up">
-												<span><i class="glyphicon glyphicon-plus"
-													style="left: 1px;"></i></span>
-											</a>
+											</a> <span><i id="btn_add_eachaa"
+												class="btn btn-default button-plus product_quantity_up glyphicon glyphicon-plus"
+												style="left: 1px;"></i></span>
+
 										</div>
 									</fieldset>
 									<fieldset class="fieldset_list clearfix" id="buttonSet"
@@ -550,7 +574,9 @@
 			</div>
 		</div>
 	</div>
-	<form id="hiddenForm_direct_buy" action="${pageContext.request.contextPath}/buy/buyDirectList" method="post">
+	<form id="hiddenForm_direct_buy"
+		action="${pageContext.request.contextPath}/buy/buyDirectList"
+		method="post">
 		<input id="inh_dirc_buy_product_num" value="${view.product_num}"
 			type="hidden" name="product_num"> <input
 			id="inh_dirc_buy_productSize_size" type="hidden"
@@ -560,6 +586,9 @@
 			id="inh_dirc_buy_productEach_each" type="hidden"
 			name="productEach_each">
 	</form>
+	<div id="div_hidden_each" style="display: none;">
+		<input type="hidden" id="inh_id_hidden_each">
+	</div>
 
 
 	<!-- Footer:S -->

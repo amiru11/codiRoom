@@ -51,6 +51,20 @@ public class JsonController {
 	
 	@Autowired 
 	private SSSSSService ssssssService;
+	
+	//productView All Each 0 maazin check
+	@RequestMapping(value="/productAllEach0Check")
+	public int productAllEach0Check(int product_num){
+		return productService.productAllEach0Check(product_num);
+	}
+	
+	
+	//productview each vs 
+	@RequestMapping(value="/productViewEachGet")
+	public int productViewEachGet(int product_num,String productSize_size,String productEach_color){
+		System.out.println("each----"+productService.productViewEachGet(product_num, productSize_size, productEach_color));
+		return productService.productViewEachGet(product_num, productSize_size, productEach_color);
+	}
 
 	@RequestMapping(value = "/productSize", produces = "application/json; charset=utf-8")
 	public List<String> productSizeList(@RequestParam int product_num) {

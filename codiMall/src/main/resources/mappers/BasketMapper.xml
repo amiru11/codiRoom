@@ -24,6 +24,7 @@
 		<result column="product_num" property="product_num" />
 		<result column="product_name" property="product_name" />
 		<result column="productInfo_price" property="productInfo_price" />
+		<result column="productPic_pic" property="productPic_pic" />
 		<result column="productInfo_saleRate" property="productInfo_saleRate" />
 		<collection property="productEachDTO" resultMap="ProductEach" />
 	</resultMap>
@@ -41,10 +42,12 @@
 		select DISTINCT
 		b.BASKET_NUM,bi.BASKETINFO_COLOR,bi.BASKETINFO_EACH,bi.BASKETINFO_SIZE
 		,p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE
-		,pe.PRODUCTSIZE_SIZE,pe.PRODUCTEACH_COLOR,pe.PRODUCTEACH_EACH from
-		BASKET b,BASKETINFO bi,PRODUCT p , PRODUCTINFO pi,
+		,pe.PRODUCTSIZE_SIZE,pe.PRODUCTEACH_COLOR,pe.PRODUCTEACH_EACH,pc.productPic_pic
+		from
+		BASKET b,BASKETINFO bi,PRODUCT p , PRODUCTINFO pi,productPic pc,
 		PRODUCTSIZE
 		ps,PRODUCTEACH pe where
+		pc.product_num = p.product_num and
 		bi.BASKET_NUM = b.BASKET_NUM and p.PRODUCT_NUM
 		= b.PRODUCT_NUM
 		and pe.PRODUCT_NUM = p.PRODUCT_NUM

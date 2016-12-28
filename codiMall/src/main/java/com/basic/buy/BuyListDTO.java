@@ -11,8 +11,17 @@ public class BuyListDTO {
 	private int buyState_each;
 	private int buyState_price;
 	private int buyState_expressNum;
+	private String productPic_pic;
 	
 	
+	
+	
+	public String getProductPic_pic() {
+		return productPic_pic;
+	}
+	public void setProductPic_pic(String productPic_pic) {
+		this.productPic_pic = productPic_pic;
+	}
 	public int getBuyState_expressNum() {
 		return buyState_expressNum;
 	}

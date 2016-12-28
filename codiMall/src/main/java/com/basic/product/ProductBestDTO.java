@@ -8,6 +8,22 @@ public class ProductBestDTO {
 	private String product_name;
 	private int productInfo_price;
 	private double productInfo_saleRate;
+	private String productInfo_brand;
+	private String productPic_pic;
+	
+	
+	public String getProductInfo_brand() {
+		return productInfo_brand;
+	}
+	public void setProductInfo_brand(String productInfo_brand) {
+		this.productInfo_brand = productInfo_brand;
+	}
+	public String getProductPic_pic() {
+		return productPic_pic;
+	}
+	public void setProductPic_pic(String productPic_pic) {
+		this.productPic_pic = productPic_pic;
+	}
 	public int getR() {
 		return r;
 	}

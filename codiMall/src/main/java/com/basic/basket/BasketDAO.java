@@ -33,7 +33,16 @@ public class BasketDAO {
 	TransactionStatus status = null;
 
 	public List<BasketListDTO> basketList(MemberDTO memberDTO) {
+		Map<String, Object> map = new HashMap<>();
 		List<BasketListDTO> ar = sqlSession.selectList(namespace + "NewSelBasketList", memberDTO);
+		for (int i = 0; i < ar.size(); i++) {
+			System.out.println("arsize---"+ar.size());
+			for (int j = 0; j < ar.get(i).getProductEachDTO().size(); j++) {
+				System.out.println("ar2size---"+ar.get(i).getProductEachDTO().size());
+				System.out.println("color--"+ar.get(i).getProductEachDTO().get(j).getProductEach_color());
+			}
+			
+		}
 		return ar;
 	}
 
@@ -82,7 +91,11 @@ public class BasketDAO {
 					BasketInfoDTO basketInfoDTO = new BasketInfoDTO();
 					System.out.println("eachFix_first");
 					basketInfoDTO.setBasket_num(basket_num);
-					basketInfoDTO.setBasketInfo_each(base + productEachDTO.getProductEach_each());
+					if(base + productEachDTO.getProductEach_each()>20){
+						basketInfoDTO.setBasketInfo_each(20);
+					}else{
+						basketInfoDTO.setBasketInfo_each(base + productEachDTO.getProductEach_each());
+					}	
 					result = sqlSession.update(namespace + "UpBasketEach", basketInfoDTO);
 					System.out.println("upresult2" + result);
 				}

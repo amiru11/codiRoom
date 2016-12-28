@@ -21,6 +21,17 @@ public class ProductService {
 	@Autowired
 	private ProductDAO productDAO;
 	
+	
+	// productView All Each 0 maazin check
+	public int productAllEach0Check(int product_num) {
+		return productDAO.productAllEach0Check(product_num);
+	}
+	
+	//json productView each get
+	public int productViewEachGet(int product_num,String productSize_size,String productEach_color){
+		return productDAO.productViewEachGet(product_num, productSize_size, productEach_color);
+	}
+	
 	// productSelect List
 	public List<ProductSelectDTO> productSelectList() {
 		return productDAO.productSelectList();

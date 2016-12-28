@@ -8,7 +8,16 @@ public class ProductViewDTO {
 	private int productInfo_price;
 	private double productInfo_saleRate;
 	private String productInfo_searchWord;
+	private String productPic_pic;
+	
+	
 
+	public String getProductPic_pic() {
+		return productPic_pic;
+	}
+	public void setProductPic_pic(String productPic_pic) {
+		this.productPic_pic = productPic_pic;
+	}
 	private String productInfo_brand;
 	private int kind_num;
 	

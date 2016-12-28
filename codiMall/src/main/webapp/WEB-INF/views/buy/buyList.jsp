@@ -60,7 +60,7 @@
 					<table class="table cart-table">
 						<tr>
 							<th class="buy_th_01">주문번호</th>
-							<!-- <th class="buy_th_02">상품번호</th> -->
+							<th class="buy_th_02"></th>
 							<th class="buy_th_03">상품명</th>
 							<th class="buy_th_04">사이즈</th>
 							<th class="buy_th_05">색상</th>
@@ -72,11 +72,11 @@
 							<tr class="buy_tr_ds">
 								<td><input class="inh_buy_num" type="hidden"
 									value="${list1.buy_num}" name="buy_num" disabled="disabled">${list1.buy_num}</td>
-								<td>${list1.product_num}</td>
+								<td></td>
 								<td>
 									<div class="bas_td_hid_proeach" style="display: inline-block; float: left; width:150px;" >
 										<a href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">
-											<img alt="" src="${pageContext.request.contextPath}/resources/images/noimage.jpg" width="60" height="60">
+											<img alt="" src="${pageContext.request.contextPath}/resources/testPic/${list1.productPic_pic}" width="55" height="55">
 										</a>
 										</div>
 										<div style="display: inline-block; margin-top: 20px;float: left;">

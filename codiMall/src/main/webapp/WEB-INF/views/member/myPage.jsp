@@ -44,7 +44,6 @@ $(function() {
 				$("#subView").empty();
 				$("#subView").html(data);
 				$(".sub_tit_h4").html('주문/배송');
-				//console.log(data);
 			}
 		});
 	});

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.basic.board.BoardDTO;
 import com.basic.board.BoardService;
+import com.basic.product.ProductService;
 
 @Controller
 public class IndexController {
@@ -24,13 +25,16 @@ public class IndexController {
 	@Autowired
 	private BoardService boardService;
 	
+	@Autowired
+	private ProductService productService;
+	
 	
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public String index(Model model, HttpSession session){
 		Calendar c = Calendar.getInstance();
 		String lastDate = c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DAY_OF_MONTH);
 		String startDate = (c.get(Calendar.YEAR)-100) + "-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DAY_OF_MONTH);
-		
+		model.addAttribute("list",productService.productBestList());
 		model.addAttribute("lastDate", lastDate);
 		model.addAttribute("startDate", startDate);
 		return "index";

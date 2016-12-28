@@ -72,6 +72,7 @@
 			javaType="java.lang.String" />
 		<result column="productInfo_brand" property="productInfo_brand"
 			javaType="java.lang.String" />
+			<result column="productPic_pic" property="productPic_pic"/>
 		<result column="kind_num" property="kind_num" javaType="int" />
 	</resultMap>
 	<!-- PRODUCTVIEW DTO E -->
@@ -112,13 +113,40 @@
 
 	<!-- productSelect List E -->
 
+	<!-- productView All Each 0 maazin check S -->
+	<select id="SelProductViewAllEach" parameterType="int"
+		resultType="int">
+		select count(*) from productEach where product_num=#{product_num}
+	</select>
+	<select id="SelProductViewAllEach0" parameterType="int"
+		resultType="int">
+		select count(*) from productEach where product_num=#{product_num} and
+		PRODUCTEACH_EACH=0
+	</select>
+	<!-- productView All Each 0 maazin check e -->
+
+
+
+	<!-- json productViewEachGet s -->
+	<select id="SelProductViewEachGet" parameterType="java.util.HashMap"
+		resultType="int">
+		select productEach_each from productEach
+		where product_num=#{product_num}
+		and productSize_size = #{productSize_size}
+		and productEach_color = #{productEach_color}
+
+
+	</select>
+
+	<!-- json productViewEachGet e -->
 
 
 	<!-- Product List S -->
 	<select id="SelProductList" resultMap="ProductList"
 		parameterType="java.util.HashMap">
 		select * from (select rownum r, z.* from (select DISTINCT
-		(PRODUCTINFO_PRICE*(100-productInfo_saleRate)/100) realPrice,t.*,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,pc.PRODUCTPIC_PIC
+		(PRODUCTINFO_PRICE*(100-productInfo_saleRate)/100)
+		realPrice,t.*,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,pc.PRODUCTPIC_PIC
 		from (select
 		count(b.BUY_NUM) c,p.PRODUCT_NUM,p.PRODUCT_NAME from
 		product p LEFT
@@ -130,19 +158,22 @@
 		pe,PRODUCTPIC pc,
 		kind
 		k,PRODUCTKIND pk where
-		pc.PRODUCT_NUM = t.PRODUCT_NUM and
+		pc.PRODUCT_NUM =
+		t.PRODUCT_NUM and
 		pe.PRODUCT_NUM = t.PRODUCT_NUM and
-		pi.PRODUCT_NUM = t.PRODUCT_NUM
+		pi.PRODUCT_NUM =
+		t.PRODUCT_NUM
 		and pk.KIND_NUM =
 		k.KIND_NUM and
-		pk.PRODUCT_NUM = t.PRODUCT_NUM
+		pk.PRODUCT_NUM =
+		t.PRODUCT_NUM
 		<if test="productParamDTO.productSelect_num != 0">
-		and 
-		k.productSelect_num =
-		#{productParamDTO.productSelect_num}
+			and
+			k.productSelect_num =
+			#{productParamDTO.productSelect_num}
 		</if>
 		<if test="sale != null ">
-		and pi.productInfo_saleRate not in (0)
+			and pi.productInfo_saleRate not in (0)
 		</if>
 		<if test="productParamDTO.color != null ">
 			and UPPER(pe.PRODUCTEACH_COLOR) in
@@ -202,17 +233,17 @@
 		p.PRODUCT_NUM and ps.PRODUCTSIZE_SIZE =
 		pe.PRODUCTSIZE_SIZE and pk.KIND_NUM = k.KIND_NUM
 		<if test="productParamDTO.productSelect_num != 0">
-		and 
-		k.productSelect_num =
-		#{productParamDTO.productSelect_num}
+			and
+			k.productSelect_num =
+			#{productParamDTO.productSelect_num}
 		</if>
 		<if test="sale != null ">
-		and pi.productInfo_saleRate not in (0)
+			and pi.productInfo_saleRate not in (0)
 		</if>
 		<if test="productParamDTO.color != null ">
 			and UPPER(pe.PRODUCTEACH_COLOR) in
-			<foreach item="item" index="index" collection="productParamDTO.color" open="("
-				separator="," close=")">
+			<foreach item="item" index="index" collection="productParamDTO.color"
+				open="(" separator="," close=")">
 				UPPER(#{item})
 			</foreach>
 		</if>
@@ -225,8 +256,8 @@
 		</if>
 		<if test="productParamDTO.size != null ">
 			and UPPER(ps.PRODUCTsize_size) in
-			<foreach item="item" index="index" collection="productParamDTO.size" open="("
-				separator="," close=")">
+			<foreach item="item" index="index" collection="productParamDTO.size"
+				open="(" separator="," close=")">
 				UPPER(#{item})
 			</foreach>
 		</if>
@@ -238,9 +269,10 @@
 	<!-- Product View S -->
 	<select id="SelProductView" parameterType="int" resultMap="ProudctView">
 		SELECT DISTINCT
-		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_SEARCHWORD
-		,pk.KIND_NUM FROM PRODUCT p , PRODUCTINFO pi ,PRODUCTKIND pk
+		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_SEARCHWORD,pc.productPic_pic
+		,pk.KIND_NUM FROM PRODUCT p , PRODUCTINFO pi ,PRODUCTKIND pk,productPic pc
 		where
+		pc.product_num = p.product_num and
 		pi.PRODUCT_NUM = p.PRODUCT_NUM and pk.PRODUCT_NUM = p.PRODUCT_NUM and
 		pk.PRODUCT_NUM = pi.PRODUCT_NUM
 		and p.PRODUCT_NUM=#{product_num}
@@ -251,9 +283,11 @@
 
 	<select id="SelProductSizeList" parameterType="int" resultType="java.lang.String">
 		select distinct ps.productSize_size from
-		product p,productSize ps where
-		p.product_num = ps.product_num
+		product p,productSize ps,productEach pe where
+		p.product_num = ps.product_num and
+		p.product_num = pe.product_num
 		and p.product_num = #{product_num}
+		and pe.productEach_each not in (0)
 	</select>
 
 	<select id="SelProductEachList" parameterType="com.basic.product.ProductEachListDTO"
@@ -332,13 +366,13 @@
 	<select id="SelProductBest" resultType="com.basic.product.ProductBestDTO">
 		select * from (select
 		ROWNUM r,t.* from (select count(b.product_num)
-		sel_count,p.PRODUCT_NUM,p.PRODUCT_NAME,pi.productInfo_price,pi.PRODUCTINFO_SALERATE
-		from PRODUCT p,productinfo pi, BUY b
-		where p.PRODUCT_NUM =
+		sel_count,p.PRODUCT_NUM,p.PRODUCT_NAME,pi.productInfo_price,pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_BRAND,pc.productPic_pic
+		from PRODUCT p,productinfo pi, BUY b,PRODUCTPIC pc
+		where pc.PRODUCT_NUM = p.PRODUCT_NUM and p.PRODUCT_NUM =
 		b.PRODUCT_NUM
 		and pi.PRODUCT_NUM = p.PRODUCT_NUM
 		group by b.PRODUCT_NUM,
-		pi.productInfo_price, pi.PRODUCTINFO_SALERATE,
+		pi.productInfo_price, pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_BRAND,pc.productPic_pic,
 		p.PRODUCT_NUM,
 		p.PRODUCT_NAME
 		ORDER BY sel_count desc,p.PRODUCT_NUM desc) t)where r
@@ -403,10 +437,13 @@
 			and k.PRODUCTSELECT_NUM = #{productSelect_num}
 		</if>
 		order by case when
-		ps.productSize_size = 'SSS' then 1 when ps.productSize_size = 'SS'
+		ps.productSize_size = 'SSS' then 1 when
+		ps.productSize_size = 'SS'
 		then 2 when ps.productSize_size = 'S' then 3
-		when ps.productSize_size = 'M' then 4 when ps.productSize_size = 'L' then
-		5 when ps.productSize_size = 'XL' then 6 when ps.productSize_size =
+		when ps.productSize_size = 'M' then 4 when ps.productSize_size = 'L'
+		then
+		5 when ps.productSize_size = 'XL' then 6 when ps.productSize_size
+		=
 		'XXL' then 7
 		end
 	</select>
@@ -439,9 +476,11 @@
 			and k.PRODUCTSELECT_NUM = #{productSelect_num}
 		</if>
 	</select>
-<!--상품검색  -->
-<select id="searchList" parameterType="java.util.HashMap" resultType="com.basic.product.ProductListDTO" statementType="PREPARED">
-		select * from (select rownum r, z.* from (select
+	<!--상품검색 -->
+	<select id="searchList" parameterType="java.util.HashMap"
+		resultType="com.basic.product.ProductListDTO" statementType="PREPARED">
+		select *
+		from (select rownum r, z.* from (select
 		DISTINCT
 		t.*,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE from (select
 		count(b.BUY_NUM) c,p.PRODUCT_NUM,p.PRODUCT_NAME from product p LEFT
@@ -457,15 +496,16 @@
 		and pi.productInfo_saleRate not in(0)
 		order by t.product_num desc
 
-		) z) where PRODUCT_NAME like #{find} and r between
+		) z) where PRODUCT_NAME like #{find} and r
+		between
 		#{pageMaker.startRowNum} and
 		#{pageMaker.lastLowNum}
-</select>
-<!--상품검색count  -->
-<select id="searchCount" parameterType="String" resultType="int">
+	</select>
+	<!--상품검색count -->
+	<select id="searchCount" parameterType="String" resultType="int">
 		select count(*) from PRODUCT
-			where product_name like #{find}
-</select>
+		where product_name like #{find}
+	</select>
 	<!-- Ajax E -->
 
 

@@ -102,7 +102,7 @@
 
 	<!-- direct buy list S -->
 	<select id="SelProductInfo" parameterType="int" resultMap="ProductList">
-		select
+		select distinct
 		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,pc.PRODUCTPIC_PIC
 		from product p , PRODUCTINFO pi, PRODUCTPIC pc
 		where pc.PRODUCT_NUM =
@@ -118,13 +118,14 @@
 	<select id="SelBuyList" parameterType="com.basic.member.MemberDTO"
 		resultType="com.basic.buy.BuyListDTO">
 		select DISTINCT
-		p.PRODUCT_NUM,p.PRODUCT_NAME,b.BUY_NUM,bs.BUYSTATE_SIZE,bs.BUYSTATE_COLOR,bs.BUYSTATE_EACH,bs.BUYSTATE_PRICE
-		,bs.buystate_state,bs.buystate_expressNum from PRODUCT p, MEMBER m,
+		p.PRODUCT_NUM,p.PRODUCT_NAME,b.BUY_NUM,bs.BUYSTATE_SIZE,bs.BUYSTATE_COLOR,bs.BUYSTATE_EACH,bs.BUYSTATE_PRICE,pc.productPic_pic
+		,bs.buystate_state,bs.buystate_expressNum from PRODUCT p, MEMBER m,productPic pc,
 		BUY b , BUYSTATE bs
 		where bs.BUY_NUM =
 		b.BUY_NUM and m.ID = b.ID and
 		p.PRODUCT_NUM =
 		b.PRODUCT_NUM
+		and p.product_num = pc.product_num
 		and m.id =
 		#{id}
 		order by b.buy_num desc
@@ -200,11 +201,12 @@
 	<select id="SelBuyListNow" parameterType="java.util.HashMap"
 		resultType="com.basic.buy.BuyListDTO">
 		select DISTINCT
-		p.PRODUCT_NUM,p.PRODUCT_NAME,b.BUY_NUM,bs.BUYSTATE_SIZE,bs.BUYSTATE_COLOR,bs.BUYSTATE_EACH,bs.BUYSTATE_PRICE
-		,bs.buystate_state,bs.buystate_expressNum from PRODUCT p, MEMBER m,
+		p.PRODUCT_NUM,p.PRODUCT_NAME,b.BUY_NUM,bs.BUYSTATE_SIZE,bs.BUYSTATE_COLOR,bs.BUYSTATE_EACH,bs.BUYSTATE_PRICE,pc.productPic_pic
+		,bs.buystate_state,bs.buystate_expressNum from PRODUCT p, MEMBER m,productPic pc,
 		BUY b , BUYSTATE bs
 		where bs.BUY_NUM =
 		b.BUY_NUM and m.ID = b.ID and
+		pc.product_num = p.product_num and
 		p.PRODUCT_NUM =
 		b.PRODUCT_NUM
 		and bs.buy_num in

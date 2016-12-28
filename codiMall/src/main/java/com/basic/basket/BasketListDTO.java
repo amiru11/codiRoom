@@ -14,10 +14,22 @@ public class BasketListDTO {
 	private String basketInfo_size;
 	private String basketInfo_color;
 	private int  basketInfo_each;
+	private String productPic_pic;
+	
 	private List<ProductEachDTO> productEachDTO;
 	
 	
+
+
 	
+	public String getProductPic_pic() {
+		return productPic_pic;
+	}
+
+	public void setProductPic_pic(String productPic_pic) {
+		this.productPic_pic = productPic_pic;
+	}
+
 	public List<ProductEachDTO> getProductEachDTO() {
 		return productEachDTO;
 	}
