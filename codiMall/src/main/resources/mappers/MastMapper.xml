@@ -299,10 +299,10 @@
 				and pi.productInfo_saleRate in (0)
 			</when>
 			<when test="mtpSel == 4">
-				and pi.productEach_each not in (0)
+				and pe.productEach_each not in (0)
 			</when>
 			<when test="mtpSel == 5">
-				and pi.productEach_each in (0)
+				and pe.productEach_each in (0)
 			</when>
 			<otherwise>
 			</otherwise>
@@ -414,10 +414,10 @@
 				and pi.productInfo_saleRate in (0)
 			</when>
 			<when test="mtpSel == 4">
-				and pi.productEach_each not in (0)
+				and pe.productEach_each not in (0)
 			</when>
 			<when test="mtpSel == 5">
-				and pi.productEach_each in (0)
+				and pe.productEach_each in (0)
 			</when>
 			<otherwise>
 			</otherwise>
