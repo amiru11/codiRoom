@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>게시판 관리</title>
+<title>회원 관리</title>
 <style type="text/css">
 body{
 	font-family: 'hanna';
@@ -78,15 +78,18 @@ body{
 <script type="text/javascript">
 
 	$(function(){
-		var message = "${message}";
-		
-		if(message != ''){
-			alert(message);
-		}
 		listAjax();//ajax로 멤버 리스트뿌리기
 	});	
 	
+	//select 변경시 input에 담아주기//
+	function select(data,index){
+		var lv = $(data).val();
+		$("#lv"+index).val(lv);
+	}
+	
+	
 	//체크박스에 체크해주기
+	//삭제//
  	function delBtn(data){
 		
 		var mID = $(data).next().val();
@@ -114,6 +117,34 @@ body{
 		}
 	} 
 	
+	//수정//
+	function upBtn(data){
+		var mID = $(data).next().val();
+		var mLv = $(data).prev().val();
+		//alert(mLv);
+		var con = confirm('수정하시겠습니까?');
+		if(con == true){
+			$(data).next().prop("checked",true);
+			$.ajax({
+				//수정시켜버리기
+				url : "mastMemberUpdate",
+				type : "get",
+				data : {
+					id : mID,
+					member_level : mLv
+				},
+				success : function(data){
+					var data = data.trim();
+					console.log(data);
+					$("#section").empty();
+					$("#section").html(data);
+					$("#1").parent("li").addClass("active");
+				}
+			});
+		}else{
+			$(data).next().prop("checked",false);
+		}
+	}
 //멤버리스트뿌려주기//	
 	function listAjax(){
 		
@@ -140,7 +171,7 @@ body{
 		//alert($("#memFind").val());
  		$.ajax({
 			url : "mastMemberList",
-			type : "get",
+			type : "post",
 			data : {
 				curPage : 1,
 				perPage : 10,

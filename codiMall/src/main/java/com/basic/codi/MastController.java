@@ -83,6 +83,26 @@ public class MastController {
 		path = "mast/board/list";
 		return path;
 	}
+	
+	//글검색//
+	@RequestMapping(value="/searchList")
+	public String searchList(@RequestParam(defaultValue="") String type, @RequestParam(defaultValue="") String find, @RequestParam(defaultValue="1") int curPage, 
+			@RequestParam(defaultValue="10") int perPage, @RequestParam int board_kind, Model model){
+		try {
+			mastService.searchList(type, find, curPage, perPage, board_kind, model);
+			System.out.println("BOARD SEARCH");
+			System.out.println("BOARD KIND : " +board_kind);
+			System.out.println("TYPE : "+type);
+			System.out.println("FIND : "+find);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		
+		String path = "";
+		path = "mast/board/list";
+		return path;
+	}
+	
 	//글보기//
 	@RequestMapping(value="/boardView")
 	public String boardView(BoardDTO boardDTO, int board_kind, Model model){
@@ -205,6 +225,22 @@ public class MastController {
 		
 		return path;
 	}
+	
+	//회원수정//
+	@RequestMapping(value="/mastMemberUpdate")
+	public String memberUpdate(@RequestParam String id, @RequestParam int member_level, RedirectAttributes ra){
+		String message = "";
+		try {
+			message = mastService.memberUpdate(id, member_level);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String path = "mast/mastMemberList";
+		ra.addFlashAttribute("message", message);
+		System.out.println(message);
+		return "redirect:/"+path;		
+	}
+	
 	//회원삭제
 	@RequestMapping(value="/mastMemberDelete")
 	public String memberDelete(@RequestParam String id, RedirectAttributes ra){

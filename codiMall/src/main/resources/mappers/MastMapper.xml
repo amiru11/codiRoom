@@ -703,8 +703,31 @@
 	
 	<!-- Product Info Fix E -->
 	
-
-
+	<!-- BOARD : S -->
+	<!-- BOARD SEARCH:S -->
+ 	<select id="searchList" parameterType="java.util.HashMap" resultType="com.basic.board.BoardDTO" statementType="PREPARED">
+		<if test="type != null">
+			select * from 
+			(select rownum R, F.* from
+			(select * from board where board_kind=#{board_kind}
+			<if test="type=='writer'">
+				and board_writer like #{find} 
+			</if>
+			<if test="type=='title'">
+				and board_title like #{find}
+			</if>
+			<if test="type=='contents'">
+				and board_contents like #{find}
+			</if>
+			<if test="type=='board_category'">
+				and board_category like #{find}
+			</if>
+			order by board_ref desc, board_step asc) F)
+			where R between #{paging.startRowNum} and  #{paging.lastLowNum}
+		</if>
+	</select> 
+	<!-- BOARD SEARCH:E -->
+	<!-- BOARD : E -->
 	<!-- MEMBER: S -->
 
 		<!-- MEMBERSEARCH : S -->
@@ -768,7 +791,18 @@
 		</delete>
 		<!-- MEMBERDELETE : E -->
 		
-		
+		<!-- MEMBERBOARD : S -->
+		<select id="memberBoard" parameterType="java.util.HashMap" resultType="com.basic.board.BoardDTO">
+			
+				select * from 
+				(select rownum R, F.* from
+				(select * from board
+					where writer = #{id} and board_kind = #{board_kind}
+				) F)
+				where R between #{paging.startRowNum} and  #{paging.lastLowNum}
+				
+		</select>
+		<!-- MEMBERBOARD : E -->
 	<!-- MEMBER: E -->
 
 
