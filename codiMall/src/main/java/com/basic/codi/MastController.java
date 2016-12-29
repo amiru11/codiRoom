@@ -69,14 +69,12 @@ public class MastController {
 			System.out.println("pagelist접속 ");
 			System.out.println("board_kind :"+ board_kind);
 			System.out.println("productGroup :"+ productGroup);
-			model.addAttribute("board_kind", board_kind);
-<<<<<<< HEAD
-		return "mast/board/mastBoard";
-=======
 			model.addAttribute("curPage", curPage);
-			model.addAttribute("productGroup", productGroup);
-		return "mast/mastBoard";
->>>>>>> refs/heads/sub
+			model.addAttribute("board_kind", board_kind);
+
+		return "mast/board/mastBoard";
+		//return "mast/mastBoard";
+
 	}
 	//subMenu로 이동시//
 	@RequestMapping(value="/resultBoard")
@@ -99,7 +97,7 @@ public class MastController {
 		path = "mast/board/list";
 		return path;
 	}
-<<<<<<< HEAD
+
 	//글보기//
 	@RequestMapping(value="/boardView")
 	public String boardView(BoardDTO boardDTO, int board_kind, Model model){
@@ -164,7 +162,29 @@ public class MastController {
 			String defaultPath = session.getServletContext().getRealPath("/");
 			//파일 상세경로
 			String path = defaultPath + "resources" + File.separator + "upload"; //separator는 구분자!!
-=======
+			
+			File file = new File(path);
+			
+			//디렉토리 존재하지 않을 경우, 디렉토리 생성
+			if(!file.exists()){
+				file.mkdirs();
+			}
+			//서버에 업로드 할 파일명
+			String realName = UUID.randomUUID().toString() + "." + ext;//기존이름을 버리고 랜덤이름을 붙여서 새로운 이름을 만들어줌
+			
+			//서버에 파일쓰기//
+			
+				photoDTO.getFiledata().transferTo(new File(path+realName));
+				file_result += "&bNewLine=true&sFileName=" + original_name + "&sFileURL=/codi/resources/upload" + realName;
+			
+			}else{
+				file_result += "&errstr=error";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:" + callback + "?callback_func=" + callback_func + file_result;
+	}
 	@RequestMapping(value="/reviewList")
 	public String reviewList(ReviewDTO reviewDTO,Model model ,@RequestParam(defaultValue="1") int curPage,@RequestParam(defaultValue="10")int perPage,String board_kind){
 		System.out.println("review컨트롤러접속");
@@ -188,32 +208,8 @@ public class MastController {
 		ra.addFlashAttribute("message", message);
 		return "redirect:/mast/boardList?productGroup="+productGroup+"&board_kind="+board_kind;
 	}
-	
 
->>>>>>> refs/heads/sub
 
-			File file = new File(path);
-
-			//디렉토리 존재하지 않을 경우, 디렉토리 생성
-			if(!file.exists()){
-				file.mkdirs();
-			}
-			//서버에 업로드 할 파일명
-			String realName = UUID.randomUUID().toString() + "." + ext;//기존이름을 버리고 랜덤이름을 붙여서 새로운 이름을 만들어줌
-			
-			//서버에 파일쓰기//
-			
-				photoDTO.getFiledata().transferTo(new File(path+realName));
-				file_result += "&bNewLine=true&sFileName=" + original_name + "&sFileURL=/codi/resources/upload" + realName;
-			
-			}else{
-				file_result += "&errstr=error";
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "redirect:" + callback + "?callback_func=" + callback_func + file_result;
-	}
 	
 	//QNA답글 리스트//
 	@RequestMapping(value="/mastCommList")
