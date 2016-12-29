@@ -7,24 +7,13 @@
 <html>
 <head>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/productSideBar.js"></script>
-<link
-	href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/product/productList.css"
-	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/common.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/pagination.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/product/productSideBar.css"
-	rel="stylesheet">
+<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/productSideBar.js"></script>
+<link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/product/productList.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/pagination.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/product/productSideBar.css" rel="stylesheet">
 <script type="text/javascript">
 var requestSubmitted = false;
 
