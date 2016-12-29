@@ -65,7 +65,10 @@ public class ReviewService {
 		}
 		//리뷰 하나 보기
 		public ReviewDTO review(Model model,ReviewDTO reviewDTO){
+			System.out.println("리뷰하나보기");
 			reviewDTO=reviewDAO.review(reviewDTO);
+			System.out.println(reviewDTO.getReview_contents());
+			System.out.println(reviewDTO.getReview_writer());
 			model.addAttribute("review", reviewDTO);
 			return reviewDTO;	
 		}

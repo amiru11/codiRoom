@@ -8,6 +8,11 @@ import org.springframework.ui.Model;
 
 import com.basic.board.BoardDAO;
 import com.basic.board.BoardDTO;
+import com.basic.product.ProductDAO;
+import com.basic.product.ProductDTO;
+import com.basic.product.ProductListDTO;
+import com.basic.review.ReviewDAO;
+import com.basic.review.ReviewDTO;
 import com.basic.util.PageMaker;
 
 
@@ -19,6 +24,9 @@ public class MastService {
 	
 	@Autowired
 	private BoardDAO boardDAO;
+	
+	@Autowired
+	private ProductDAO productDAO;
 	
 	
 	public List<MastBuyListDTO> mastBuyList(int state_num){
@@ -32,20 +40,37 @@ public class MastService {
 	
 	//검색//
 	
-	public void findList(String type, String find, int curPage, int perPage, int board_kind, Model model) throws Exception{
+	public void findList( int productGroup,String type, String find, int curPage, int perPage, int board_kind, Model model) throws Exception{
 		System.out.println("FINDLIST");
+		ReviewDTO reviewDTO= new ReviewDTO();
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCurPage(curPage);
 		pageMaker.setPerPage(perPage);
 		pageMaker.makeRow();
-		pageMaker.makePage(boardDAO.boardCount(board_kind));
 		List<BoardDTO> ar;
 		List<BoardDTO> br;
-		ar = boardDAO.findList(type, find, board_kind, pageMaker);
-		model.addAttribute("type", type);
-		model.addAttribute("find", find);
-		model.addAttribute("paging", pageMaker);
-		model.addAttribute("list", ar);
+		List<ProductDTO> ar1;
+		if(board_kind ==4){
+			System.out.println("관리자 상품리스트");
+			System.out.println("curPage :"+curPage);
+			pageMaker.makePage(productDAO.mastProductBoardCount(productGroup));
+			ar1=productDAO.mastProductBoard(pageMaker, productGroup);
+			for(int i=0; i<ar1.size();i++){
+				System.out.println("상품페이지리스트 :"+ar1.get(i).getProduct_num());
+			}
+			System.out.println("관리자 상품리스트개수"+productDAO.mastProductBoardCount(productGroup));
+			model.addAttribute("list", ar1);
+			model.addAttribute("paging", pageMaker);
+			model.addAttribute("productGroup", productGroup);
+		}else{	
+			System.out.println("curPage :"+curPage);
+			ar = boardDAO.findList(type, find, board_kind, pageMaker);
+			pageMaker.makePage(boardDAO.boardCount(board_kind));
+			model.addAttribute("type", type);
+			model.addAttribute("find", find);
+			model.addAttribute("list", ar);
+			model.addAttribute("paging", pageMaker);
+		}
 		model.addAttribute("board_kind", board_kind);
 		
 
@@ -61,6 +86,8 @@ public class MastService {
 			model.addAttribute("bestList", br);
 		}else if(board_kind==3){
 			model.addAttribute("boardName", "QNA");
+		}else if(board_kind==4){
+			model.addAttribute("boardName", "REVIEW");
 		}
 	}	
 }

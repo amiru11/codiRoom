@@ -24,10 +24,10 @@
 	<input type="hidden" name="review_writer" value="${sessionScope.member.id}"><br>
 	<input type="hidden" name="review_product" value="${review_product}">
 	<textarea rows="" cols="" name="review_contents" style="width: 400px;height: 200px;">
-키: km 
-몸무계: kg 
-색상&싸이즈: 
-사용후기:
+키: km <br>
+몸무계: kg <br>
+색상&싸이즈: <br>
+사용후기: <br>
 	</textarea><br>
         </div>
 	이미지 등록 :<input type="file" name="reviewfile">	

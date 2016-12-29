@@ -15,9 +15,16 @@
 		(select * from review order by review_num desc) F)
 		where review_product=#{review.review_product} and R between #{page.startRowNum} and #{page.lastLowNum}
 </select>
+<!--관리자reviewList  -->
+<select id="mastReviewList" resultType="com.basic.review.ReviewDTO" parameterType="java.util.HashMap" statementType="PREPARED">
+	select * from
+		(select Rownum R, F.* from
+		(select * from review order by review_num desc) F)
+		where R between #{page.startRowNum} and #{page.lastLowNum}
+</select>
 <!--review view  -->
 <select id="review" parameterType="int" resultType="com.basic.review.ReviewDTO">
-	select * from review where review_num=#{review_num}
+	select * from review where review_num=#{review_num} and review_product=#{review_product}
 </select>
 <!--review update  -->
 <update id="reviewUpdate" parameterType="com.basic.review.ReviewDTO">
@@ -27,7 +34,7 @@
 </update>
 <!--review delete  -->
 <delete id="reviewDel" parameterType="int">
-	delete review where review_num=#{review_num}
+	delete review where review_num=#{review_num} and review_product=#{review_product}
 </delete>
 <!--review count  -->
 <select id="reviewCount" parameterType="com.basic.review.ReviewDTO" resultType="int">			

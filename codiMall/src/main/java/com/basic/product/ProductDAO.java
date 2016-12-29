@@ -1,6 +1,6 @@
 package com.basic.product;
 
-import java.io.File;
+import java.io.File; 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -419,6 +419,21 @@ public class ProductDAO {
 		Map<String, Object> mr = new HashMap<>();
 		mr.put("find", "%"+find+"%");
 		return sqlSession.selectOne(namespace+"searchCount",mr);
+	}
+	//관리자 상품1:1문의뷰리스트
+	public List<ProductDTO> mastProductBoard(PageMaker pageMaker,int productGroup){
+		Map<String, Object> mr = new HashMap<>();
+		System.out.println("상품번호 그룹"+productGroup);
+		mr.put("group", productGroup);
+		mr.put("pageMaker", pageMaker);
+		return sqlSession.selectList(namespace+"mastProductBoard", mr);
+	}
+	public int mastProductBoardCount(int productGroup){
+		Map<String, Object> mr = new HashMap<>();
+		System.out.println("상품카운터");
+		System.out.println("상품번호 그룹"+productGroup);
+		mr.put("group", productGroup);
+		return sqlSession.selectOne(namespace+"mastProductBoardCount", mr);
 	}
 
 }
