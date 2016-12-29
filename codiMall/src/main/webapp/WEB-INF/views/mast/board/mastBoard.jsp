@@ -191,7 +191,7 @@ body{
 		/* if(pg != null){
 			var pg=${productGroup};
 		} */
-		alert(pg);
+		//alert(pg);
 		$.ajax({
 			url : "resultBoard",
 			type : "post",
@@ -207,10 +207,6 @@ body{
 				$("#section").empty();
 				$("#section").html(data);
 				$("#1,#2,#3,#4").parent("li").removeClass("active");
-				/* $("#1").parent("li").removeClass("active");
-				$("#2").parent("li").removeClass("active");
-				$("#3").parent("li").removeClass("active");
-				$("#4").parent("li").removeClass("active"); */
 				$("#"+board_kind).parent("li").addClass("active");
 				$(".rv_btn").click(function reviewList() {
 					var pnum = $(this).parent().find('input[name=pnum]').val();
@@ -239,8 +235,23 @@ body{
 							$("#rvl").load("review?review_num="+review_num+"&review_product="+pnum,function(responseTest){
 								$("#myModal").modal();
 								$("#review_del_btn").click(function () {
-									location.href="reviewDelete?review_num="+review_num+"&review_product="+pnum+"&productGroup="+pg
-											+"&board_kind=${board_kind}";
+									$.ajax({
+										url : "reviewDelete",
+										type : "get",
+										data : {
+											review_num : review_num,
+											review_product : pnum,
+											productGroup : pg,
+											board_kind : ${board_kind}
+										},
+										success : function(data){
+											$("#myModal").modal("hide");
+											$("#section").empty();
+											$("#section").html(data);		
+										}
+									});
+									/* location.href="reviewDelete?review_num="+review_num+"&review_product="+pnum+"&productGroup="+pg
+											+"&board_kind=${board_kind}"; */
 								});
 							});
 						});
@@ -358,7 +369,7 @@ body{
 				</div>
 
 		</div>		
-
+		<div id="rvl"></div>
 	</div>
 </body>
 </html>

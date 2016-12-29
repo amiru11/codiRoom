@@ -224,7 +224,7 @@ public class MastController {
 	public String reviewDelete(ReviewDTO reviewDTO,RedirectAttributes ra,int productGroup,int board_kind){
 		String message= reviewService.reviewDel(reviewDTO);
 		ra.addFlashAttribute("message", message);
-		return "redirect:/mast/boardList?productGroup="+productGroup+"&board_kind="+board_kind;
+		return "redirect:/mast/reviewList?productGroup="+productGroup+"&board_kind="+board_kind;
 	}
 
 
