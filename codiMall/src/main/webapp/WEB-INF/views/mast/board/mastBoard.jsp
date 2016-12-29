@@ -79,12 +79,8 @@ body{
 	var board_kind = '';
     var comm_refNum = 0;
 	$(function(){
-		if(${message ne null}){
-			alert('${message}');
-		}
-		
-		
 		listAjax();//ajax로 보드종류에 따른 리스트뿌리기
+	
  		$(".sel_type").click(function(){
  			//alert($(this).prop("id"));
  			subAjax(this);
@@ -262,6 +258,32 @@ body{
 				}			
 			});
 		} 
+		//게시글 검색하기//
+		function searchBoard(){
+	 		$.ajax({
+				url : "searchList",
+				type : "get",
+				data : {
+					curPage : 1,
+					perPage : 10,
+					type : $("#boardType").val(),
+					find : $("#boardFind").val(),
+					board_kind : $("#kind_num").val()
+				},
+				success : function(data){
+					var data = data.trim();
+					console.log(data);
+					$("#section").empty();
+					$("#section").html(data);
+					$("#1").parent("li").removeClass("active");
+					$("#2").parent("li").removeClass("active");
+					$("#3").parent("li").removeClass("active");
+					$("#4").parent("li").removeClass("active");
+					$("#"+board_kind).parent("li").addClass("active");
+				}
+						
+			}); 
+		}	
 </script>
 </head>
 <body style="height:1200px;">

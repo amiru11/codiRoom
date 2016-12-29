@@ -41,6 +41,7 @@ public class MastDAO {
 
 
 	private List<MemberDTO> ar;
+	private List<BoardDTO> br;
 	// mast productList   S -------------------------------
 
 	public List<ProductAllDTO> mastProductList(Map<String, Object> map,PageMaker pageMaker) {
@@ -190,7 +191,25 @@ public class MastDAO {
 		
 	}
 
-	
+	/////////////////////////////////////////////////////////게시판관리/////////////////////////////////////////////////////
+	//검색//
+	public List<BoardDTO> searchList(String type, String find, int board_kind, PageMaker pageMaker) throws Exception{
+		Map<String, Object> mp = new HashMap<String, Object>();
+
+		mp.put("type", type);
+		mp.put("find", "%"+find+"%");
+		mp.put("paging", pageMaker);
+		mp.put("board_kind", board_kind);
+		
+		if(board_kind==1){			
+			br = sqlSession.selectList(namespace+"searchList", mp);
+		}else if(board_kind==2){
+			br = sqlSession.selectList(namespace+"searchList", mp);
+		}else if(board_kind==3){
+			br = sqlSession.selectList(namespace+"searchList", mp);
+		}
+		return br;
+	}
 	
 	/////////////////////////////////////////////////////////회원관리///////////////////////////////////////////////////////
 	
@@ -219,8 +238,14 @@ public class MastDAO {
 	public int memberDelete(String id) throws Exception{
 		Map<String, Object> mp = new HashMap<String, Object>();
 		mp.put("id", id);
-		return sqlSession.delete(namespace+"memberDelete", id);
+		return sqlSession.delete(namespace+"memberDelete", mp);
 	}
 	
-	
+	//회원수정//
+	public int memberUpdate(String id, int member_level) throws Exception{
+		Map<String, Object> mp = new HashMap<String, Object>();
+		mp.put("id", id);
+		mp.put("member_level",member_level);
+		return sqlSession.delete(namespace+"memberUpdate", mp);
+	}
 }

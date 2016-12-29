@@ -3,7 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>        
 <!DOCTYPE html>
 <script>
-
+$(function(){
+	if(${message ne null}){
+		alert('${message}');
+	}
+});
 //전역변수선언
 var editor_object = [];
  
@@ -22,12 +26,34 @@ nhn.husky.EZCreator.createInIFrame({
 });
 
 </script>		
-								<div class="panel" style="background: #fff;    margin-bottom: 30px;">
+								<div class="panel" style="background: #fff; margin-bottom: 30px;">
 									<div class="panel-heading">
 										<a id="subList" class="subBtn btn btn-default btn-lg">
 											<span class="fa fa-list"></span> List
 										</a>
-
+										<form name="fname" role="search"
+											class="navbar-form navbar-right" style="margin-top: 0;">
+											<select id="boardType" name="type" class="form-control"
+												style="height: 54px; border: 2px solid #30b5e1; border-radius: 6px; color: #30b5e1; font-weight: 600 !important;">
+												<option value="title">TITLE</option>
+												<option value="writer">WRITER</option>
+												<option value="category">CATEGORY</option>
+												<option value="contents">CONTENTS</option>
+											</select>
+								
+											<div class="input-group"
+												style="height: 52px; border: 2px solid #30b5e1; border-radius: 6px; color: #30b5e1; font-weight: 600 !important;">
+												<input type="text" id="boardFind" class="form-control" placeholder="Search for..." name="find" style="height: 52px;"> 
+													<input type="hidden" id="kind_num" name="board_kind" value="${board_kind}"> 
+													<span class="input-group-btn"
+													style="height: 52px; border-left: 2px solid #30b5e1;"> 
+													<a class="btn btn-default" type="button" id="search_btn" onclick="searchBoard();"
+													style="height: 52px; vertical-align: top; padding-top: 18px; color: #30b5e1;">
+														<span class="glyphicon glyphicon-search"></span>
+													</a>
+												</span>
+											</div>
+										</form>
 									</div>
 									<!-- boardList:S -->
 									<div class="panel-body">
@@ -47,11 +73,8 @@ nhn.husky.EZCreator.createInIFrame({
 												<c:forEach items="${list}" var="list1" varStatus="i">
 													<tr>
 														<td>${i.count}<%-- ${list.board_num} --%></td>
-														<td><c:forEach begin="1" end="${list1.board_depth}">
-													&nbsp;&nbsp;&nbsp;&nbsp;
-											</c:forEach> <a
-															id="${list1.board_num}" class="${list1.board_kind}" onclick="goView(this);" style="cursor : pointer;">${list1.board_title}</a>
-															
+														<td>
+															<a id="${list1.board_num}" class="${list1.board_kind}" onclick="goView(this);" style="cursor : pointer;">${list1.board_title}</a>
 														</td>
 														<td>${list1.board_category}</td>
 														<td>${list1.board_writer}</td>

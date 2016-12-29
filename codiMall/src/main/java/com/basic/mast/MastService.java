@@ -1,5 +1,6 @@
 package com.basic.mast;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -135,25 +136,39 @@ public class MastService {
 			model.addAttribute("boardName", "NOTICE");
 		} else if (board_kind == 2) {
 			model.addAttribute("boardName", "FAQ");
-			//BEST 5//
-			/*br = boardDAO.bestList();
-			for(int i = 0; i<br.size();i++){
-				System.out.println("bestTITLE : "+br.get(i).getBoard_title());
-
-			}
-
-			model.addAttribute("bestList", br);
-		} else if (board_kind == 3) {
-
-			model.addAttribute("bestList", br);*/
 		}else if(board_kind==3){
-
 			model.addAttribute("boardName", "QNA");
 		}else if(board_kind==4){
 			model.addAttribute("boardName", "REVIEW");
 		}
 	}
 
+	//검색만//searchList
+	public void searchList(String type, String find, int curPage, int perPage, int board_kind, Model model)
+			throws Exception {
+		System.out.println("SEARCHLIST");
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCurPage(curPage);
+		pageMaker.setPerPage(perPage);
+		pageMaker.makeRow();
+		pageMaker.makePage(boardDAO.boardCount(board_kind));
+		List<BoardDTO> ar;
+		
+		ar = mastDAO.searchList(type, find, board_kind, pageMaker);
+		model.addAttribute("type", type);
+		model.addAttribute("find", find);
+		model.addAttribute("paging", pageMaker);
+		model.addAttribute("list", ar);
+		model.addAttribute("board_kind", board_kind);
+
+		if (board_kind == 1) {
+			model.addAttribute("boardName", "NOTICE");
+		} else if (board_kind == 2) {
+			model.addAttribute("boardName", "FAQ");
+		}else if(board_kind==3){
+			model.addAttribute("boardName", "QNA");
+		}
+	}	
 	// 뷰//
 	public BoardDTO boardView(BoardDTO boardDTO, int board_kind, Model model) throws Exception {
 
@@ -241,7 +256,6 @@ public class MastService {
 		model.addAttribute("find", find);
 		model.addAttribute("paging", pageMaker);
 		model.addAttribute("list", ar);
-		
 	}
 	
 	//회원삭제//
@@ -257,8 +271,18 @@ public class MastService {
 		return message;		
 	}
 	
-	
-	
+	//회원수정//
+	public String memberUpdate(String id,int member_level) throws Exception{
+		int result = 0;
+		result = mastDAO.memberUpdate(id, member_level);
+		String message = "";
+		if(result > 0){
+			message = "수정완료!";
+		}else{
+			message = "수정실패!";
+		}
+		return message;		
+	}	
 	
 	
 	
