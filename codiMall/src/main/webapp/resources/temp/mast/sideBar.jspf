@@ -27,10 +27,10 @@
 					class="carett"></span></a>
 				<ul id="sub-1">
 					<li><a href="boardList">dashboard</a></li>
-					<li><a href="boardList">Notice</a></li>
+					<li><a href="boardList?board_kind=1">Notice</a></li>
 					<li><a href="boardList?board_kind=2">FAQ</a></li>
 					<li><a href="boardList?board_kind=3">QnA</a></li>
-					<li><a>Product Board</a></li>
+					<li><a href="boardList?board_kind=4">Product Board</a></li>
 				</ul></li>
 			<li><a id="goMember" class="side-btn"
 				href="${pageContext.request.contextPath}/mast/mastMember"><span
