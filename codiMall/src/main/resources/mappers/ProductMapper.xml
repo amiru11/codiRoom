@@ -502,11 +502,37 @@
 		#{pageMaker.startRowNum} and
 		#{pageMaker.lastLowNum}
 	</select>
-	<!--상품검색count -->
-	<select id="searchCount" parameterType="String" resultType="int">
-		select count(*) from PRODUCT
-		where product_name like #{find}
-	</select>
+
+<!--관리자 상품마다1:1,리뷰게시판 리스트  -->
+<select id="mastProductBoard" parameterType="java.util.HashMap" resultType="com.basic.product.ProductDTO" statementType="PREPARED">
+	<if test="group != 0">
+	  select * from
+    (select rownum r, f.* from
+    (select  DISTINCT pr.product_num , pr.product_name from product pr, kind ki, productkind pk
+	where ki.PRODUCTSELECT_NUM=#{group} and ki.KIND_NUM=pk.KIND_NUM
+	and pk.PRODUCT_NUM=pr.PRODUCT_NUM order by pr.PRODUCT_NUM desc)f)
+  where r between #{pageMaker.startRowNum} and #{pageMaker.lastLowNum}
+	</if>
+	<if test="group == 0">
+	   select * from
+  (select rownum r, f.* from 
+    (select * from product order by PRODUCT_NUM desc)f)
+    where r between #{pageMaker.startRowNum} and
+		#{pageMaker.lastLowNum}
+	</if>
+</select>
+<!--mastproductBoardcount -->
+<select id="mastProductBoardCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+<if test="group != 0">
+	select  DISTINCT count(*) from product pr, kind ki, productkind pk
+	where ki.PRODUCTSELECT_NUM=#{group} and ki.KIND_NUM=pk.KIND_NUM
+	and pk.PRODUCT_NUM=pr.PRODUCT_NUM
+	</if>
+	<if test="group == 0">
+	select count(*) from product
+	</if>
+</select>
+>>>>>>> refs/heads/sub
 	<!-- Ajax E -->
 
 

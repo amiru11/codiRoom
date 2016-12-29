@@ -24,6 +24,8 @@ import com.basic.board.BoardDTO;
 import com.basic.board.PhotoDTO;
 import com.basic.mast.MastService;
 import com.basic.member.MemberDTO;
+import com.basic.review.ReviewDTO;
+import com.basic.review.ReviewService;
 
 @Controller
 @RequestMapping(value="/mast")
@@ -31,6 +33,8 @@ public class MastController {
 
 	@Autowired
 	private MastService mastService;
+	@Autowired
+	private ReviewService reviewService;
 	
 	
 	
@@ -61,20 +65,32 @@ public class MastController {
 	//사이드메뉴에서 게시판 메뉴 클릭시//
 	@RequestMapping(value="/boardList")
 	public String boardList(@RequestParam(defaultValue="1") int curPage, 
-			@RequestParam(defaultValue="10") int perPage, @RequestParam(defaultValue="1") int board_kind,Model model){
+			@RequestParam(defaultValue="10") int perPage,@RequestParam int board_kind,Model model,@RequestParam(defaultValue="0")int productGroup){
+			System.out.println("pagelist접속 ");
+			System.out.println("board_kind :"+ board_kind);
+			System.out.println("productGroup :"+ productGroup);
 			model.addAttribute("board_kind", board_kind);
+<<<<<<< HEAD
 		return "mast/board/mastBoard";
+=======
+			model.addAttribute("curPage", curPage);
+			model.addAttribute("productGroup", productGroup);
+		return "mast/mastBoard";
+>>>>>>> refs/heads/sub
 	}
 	//subMenu로 이동시//
 	@RequestMapping(value="/resultBoard")
-	public String resultBoard(@RequestParam(defaultValue="") String type, @RequestParam(defaultValue="") String find, @RequestParam(defaultValue="1") int curPage, 
-			@RequestParam(defaultValue="10") int perPage, @RequestParam int board_kind, Model model){
+	public String resultBoard(@RequestParam(defaultValue="") String type, @RequestParam(defaultValue="") String find, @RequestParam(defaultValue="1") int curPage,
+			@RequestParam(defaultValue="10") int perPage, @RequestParam int board_kind, Model model,@RequestParam(defaultValue="0")int productGroup){
+		System.out.println("관리자게시판 컨트롤 접속");
 		try {
-			mastService.findList(type, find, curPage, perPage, board_kind, model);
+			mastService.findList(productGroup,type, find, curPage, perPage, board_kind, model);
 			System.out.println("BOARD SEARCH");
 			System.out.println("BOARD KIND : " +board_kind);
 			System.out.println("TYPE : "+type);
 			System.out.println("FIND : "+find);
+			System.out.println(curPage);
+			System.out.println(perPage);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
@@ -83,6 +99,7 @@ public class MastController {
 		path = "mast/board/list";
 		return path;
 	}
+<<<<<<< HEAD
 	//글보기//
 	@RequestMapping(value="/boardView")
 	public String boardView(BoardDTO boardDTO, int board_kind, Model model){
@@ -147,6 +164,33 @@ public class MastController {
 			String defaultPath = session.getServletContext().getRealPath("/");
 			//파일 상세경로
 			String path = defaultPath + "resources" + File.separator + "upload"; //separator는 구분자!!
+=======
+	@RequestMapping(value="/reviewList")
+	public String reviewList(ReviewDTO reviewDTO,Model model ,@RequestParam(defaultValue="1") int curPage,@RequestParam(defaultValue="10")int perPage,String board_kind){
+		System.out.println("review컨트롤러접속");
+		System.out.println("review_product"+reviewDTO.getReview_product());
+		model.addAttribute("review_product",reviewDTO.getReview_product());
+		model.addAttribute("board_kind", board_kind);
+		reviewService.reviewList(reviewDTO, curPage, perPage, model);
+		return "mast/mastReview";
+	}
+	@RequestMapping(value="/review")
+	public String review(ReviewDTO reviewDTO,Model model){
+		System.out.println("관리자리뷰 접속");
+		System.out.println("review_num :"+reviewDTO.getReview_num());
+		System.out.println("review_product :"+reviewDTO.getReview_product());
+		reviewService.review(model, reviewDTO);
+		return"mast/mastReview_View";
+	}
+	@RequestMapping(value="reviewDelete")
+	public String reviewDelete(ReviewDTO reviewDTO,RedirectAttributes ra,int productGroup,int board_kind){
+		String message= reviewService.reviewDel(reviewDTO);
+		ra.addFlashAttribute("message", message);
+		return "redirect:/mast/boardList?productGroup="+productGroup+"&board_kind="+board_kind;
+	}
+	
+
+>>>>>>> refs/heads/sub
 
 			File file = new File(path);
 

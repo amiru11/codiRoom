@@ -25,7 +25,6 @@
 		productViewAllEachCheck();
 		qnaList();
 		reviewList();
-
 		$("#sel_size_a").change(function(){
 			if($("#sel_size_a").val()!=""){
 				$("#buttonSet").css("display","none");
@@ -260,6 +259,10 @@
 		    success: function(data) {
 		    	console.log(data);
 		    	$("#qna").html(data.trim());
+		    	$(".del").click(function () {
+					var aa=$(this).parent().find('input[name=delnum]').val();
+					
+				});
 		    },
 		    error:function(request,status,error){
 		        console.log("code:"+request.status+"\n"+"error:"+error);
@@ -344,6 +347,7 @@
 		    }			
 		});
 	}
+	
 	
 	
 	//작은 이미지를 큰 이미지로//
@@ -566,10 +570,19 @@
 						<span>상품문의</span>
 						<div id="qna"></div>
 					</div>
+<<<<<<< HEAD
 					<div id="e">
 						<h3>상품리뷰</h3>
 						<div id="review"></div>
 					</div>
+=======
+						<div id="e">
+							<h3>상품리뷰</h3>
+							<br>
+							<br>
+							<div id="review"></div>
+						</div>
+>>>>>>> refs/heads/sub
 				</div>
 			</div>
 		</div>
