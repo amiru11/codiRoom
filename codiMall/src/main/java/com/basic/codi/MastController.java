@@ -73,7 +73,6 @@ public class MastController {
 			model.addAttribute("board_kind", board_kind);
 
 		return "mast/board/mastBoard";
-		//return "mast/mastBoard";
 
 	}
 	//subMenu로 이동시//

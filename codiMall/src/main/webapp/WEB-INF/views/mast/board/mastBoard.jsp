@@ -187,27 +187,68 @@ body{
 	
 	function listAjax(){
 		board_kind = ${board_kind};
+		var pg=$("#productGroup").val();
+		/* if(pg != null){
+			var pg=${productGroup};
+		} */
+		alert(pg);
 		$.ajax({
 			url : "resultBoard",
-			type : "get",
+			type : "post",
 			data : {
-				curPage : 1,
+				curPage : ${curPage},
 				perPage : 10,
-				board_kind : ${board_kind}
+				board_kind : ${board_kind},
+				productGroup: pg
 			},
 			success : function(data){
 				var data = data.trim();
 				//console.log(data);
 				$("#section").empty();
 				$("#section").html(data);
-				$("#1").parent("li").removeClass("active");
+				$("#1,#2,#3,#4").parent("li").removeClass("active");
+				/* $("#1").parent("li").removeClass("active");
 				$("#2").parent("li").removeClass("active");
 				$("#3").parent("li").removeClass("active");
-				$("#4").parent("li").removeClass("active");
+				$("#4").parent("li").removeClass("active"); */
 				$("#"+board_kind).parent("li").addClass("active");
-
-			}
-		});
+				$(".rv_btn").click(function reviewList() {
+					var pnum = $(this).parent().find('input[name=pnum]').val();
+					alert(pnum)
+				$.ajax({
+					url : "reviewList",
+					type : "get",
+					data:{
+						review_product: pnum,
+						board_kind: ${board_kind}
+					},
+					success : function (data) {
+						var data = data.trim();
+						console.log(data);
+						$("#section").empty();
+						$("#section").html(data);
+						$("#1,#2,#3,#4").parent("li").removeClass("active");
+						/* $("#1").parent("li").removeClass("active");
+						$("#2").parent("li").removeClass("active");
+						$("#3").parent("li").removeClass("active");
+						$("#4").parent("li").removeClass("active"); */
+						$("#"+board_kind).parent("li").addClass("active");
+						$(".star").click(function () {
+							var review_num=$(this).parent().find('input[name=review_num]').val();
+							alert(review_num);
+							$("#rvl").load("review?review_num="+review_num+"&review_product="+pnum,function(responseTest){
+								$("#myModal").modal();
+								$("#review_del_btn").click(function () {
+									location.href="reviewDelete?review_num="+review_num+"&review_product="+pnum+"&productGroup="+pg
+											+"&board_kind=${board_kind}";
+								});
+							});
+						});
+					}
+				});
+			});
+		}
+	});
 	}
 		function subAjax(data){
 			//alert(board_kind);
@@ -225,10 +266,10 @@ body{
 					console.log(data);
 					$("#section").empty();
 					$("#section").html(data);
-					$("#1").parent("li").removeClass("active");
-					$("#2").parent("li").removeClass("active");
+					$("#1,#2,#3,#4").parent("li").removeClass("active");
+					/* $("#2").parent("li").removeClass("active");
 					$("#3").parent("li").removeClass("active");
-					$("#4").parent("li").removeClass("active");
+					$("#4").parent("li").removeClass("active"); */
 					$("#"+board_kind).parent("li").addClass("active");
 				}
 			});                                                                                                                                                                                               	

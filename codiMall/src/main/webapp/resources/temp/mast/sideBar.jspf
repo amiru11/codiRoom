@@ -35,38 +35,7 @@
 			<li><a id="goMember" class="side-btn"
 				href="${pageContext.request.contextPath}/mast/mastMember"><span
 					class="fa fa-users"></span><span class="sidebar-title">Member</span></a>
-				<!-- 								<ul id="sub-2">
-
-    pageEncoding="UTF-8"%>
-			<div id="sidebar_left" class="" style="height: 100%;">
-				<div class="sidebar-left-content nano-content" tabindex="0">
-					<ul class="nav sidebar-menu">
-						<li class="sidebar-label pt35" style="padding-top: 75px; background-color: #43c7d7;"><span id="toggle_sidemenu_l" class="fa fa-bars"></span><span>ADMIN</span></li>
-						<li><a id="goHome" class="side-btn" href="/codi"><span
-								class="fa fa-home"></span><span class="sidebar-title">Home</span></a>
-						</li>	
-						<li><a id="goCalendar" class="side-btn"><span
-								class="fa fa-calendar"></span><span class="sidebar-title">Calendar</span></a>
-						</li>
-						<li><a id="goBoard" class="side-btn" onclick="gotoggle(1);"><span
-								class="fa fa-file-text-o"></span><span class="sidebar-title">Board</span><span class="carett"></span></a>
-								<ul id="sub-1">
-									<li><a href="boardList">dashboard</a></li>
-									<li><a href="boardList?board_kind=1">Notice</a></li>
-									<li><a href="boardList?board_kind=2">FAQ</a></li>
-									<li><a href="boardList?board_kind=3">QnA</a></li>
-									<li><a href="boardList?board_kind=4">Product Board</a></li>
-								</ul>
-						</li>
-						<li><a id="goMember" class="side-btn" onclick="gotoggle(2);"><span
-								class="fa fa-users"></span><span class="sidebar-title">Member</span></a>
-								<ul id="sub-2">
-
-									<li><a>dashboard</a></li>
-									<li><a>Member List</a></li>
-									<li><a>write</a></li>
-									<li><a>comment</a></li>
-								</ul> --></li>
+			</li>
 			<li class=""><a id="goProduct" class="side-btn"
 				onclick="gotoggle(3);"><span class="fa fa-shopping-basket "></span><span
 					class="sidebar-title">Product</span></a>

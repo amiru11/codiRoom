@@ -8,24 +8,27 @@ $(function(){
 		alert('${message}');
 	}
 });
+</script>
+
+<c:if test="${board_kind ne 4 }">
+<script>
 //전역변수선언
 var editor_object = [];
- 
-nhn.husky.EZCreator.createInIFrame({
-    oAppRef: editor_object,
-    elPlaceHolder: "smarteditor",
-    sSkinURI: "/codi/resources/SE2/SmartEditor2Skin.html", 
-    htParams : {
-        // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-        bUseToolbar : true,             
-        // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-        bUseVerticalResizer : true,     
-        // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-        bUseModeChanger : true, 
-    }
-});
 
-</script>		
+nhn.husky.EZCreator.createInIFrame({
+  oAppRef: editor_object,
+  elPlaceHolder: "smarteditor",
+  sSkinURI: "/codi/resources/SE2/SmartEditor2Skin.html", 
+  htParams : {
+      // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+      bUseToolbar : true,             
+      // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+      bUseVerticalResizer : true,     
+      // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+      bUseModeChanger : true, 
+  }
+});
+</script>	
 								<div class="panel" style="background: #fff; margin-bottom: 30px;">
 									<div class="panel-heading">
 										<a id="subList" class="subBtn btn btn-default btn-lg">
@@ -176,4 +179,72 @@ nhn.husky.EZCreator.createInIFrame({
 										</div>
 									</div>
 									<!-- Comment Modal : E -->
+</c:if>
+<c:if test="${board_kind eq 4 }">
+		<div>
+			<div>
+				<select id="productGroup" onchange="listAjax()">
+					<option value="0">전체</option>
+					<option value="1">아우터</option>
+					<option value="2">상의</option>
+					<option value="3">하의</option>
+					<option value="4">가방</option>
+					<option value="5">신발</option>
+				</select>
+			</div>
+			<table class="table">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>TITLE</th>
+					<th>board</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:forEach items="${list}" var="list">
+				<tr>
+					<td class="product_num">
+						${list.product_num}
+					</td>
+					<td>
+						${list.product_name}
+					</td>
+					<td>
+						<input type="hidden" value="${list.product_num}" name="pnum">
+						<button>1:1문의</button><button class="rv_btn">REVIEW</button>
+					</td>
+				</tr>
+				</c:forEach>
+			</tbody>
+			</table>
+		</div>
+									<!-- PAGINATIOIN:S -->
+									<div class="center-block">
+										<nav aria-label="Page navigation">
+											<ul class="pagination">
+												<li><a href="#" aria-label="Previous"> <span
+														aria-hidden="true">&laquo;</span>
+												</a></li>
+												<li><c:if test="${paging.curBlock > 1}">
+														<a class="N_pageing"
+															href="boardList?curPage=${paging.startNum-1}&perPage=10&board_kind=${board_kind}&productGroup=${productGroup}">&laquo;</a>
+													</c:if></li>
+												<li><c:forEach begin="${paging.startNum}" step="1"
+														end="${paging.lastNum}" var="i">
+														<a class="N_pageing"
+															href="boardList?curPage=${i}&perPage=10&board_kind=${board_kind}&productGroup=${productGroup}">${i}</a>
+							
+													</c:forEach></li>
+												<li><c:if test="${paging.curBlock < paging.totalBlock}">
+														<a class="N_pageing"
+															href="boardList?curPage=${paging.lastNum+1}&perPage=10&board_kind=${board_kind}&productGroup=${productGroup}">&raquo;</a>
+													</c:if></li>
+												<li><a href="#" aria-label="Next"> <span
+														aria-hidden="true">&raquo;</span>
+												</a></li>
+											</ul>
+										</nav>
+									</div>
+									<!-- PAGINATIOIN:E -->
+									</c:if>
 									
