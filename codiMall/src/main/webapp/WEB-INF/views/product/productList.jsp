@@ -131,12 +131,12 @@ var requestSubmitted = false;
 			style="display : none"
 			var product_num = $(this).find(".inh_product_num").val();
 			var productPic_pic = $(this).find(".inh_productPic_pic_val").val();
-			var xxx = '<table id="modal_tab_right"><tr><td><select id="sel_size"></select></td></tr><tr><td><select id="sel_color"></select>';
-			xxx=xxx+'</td></tr><tr><td><input type="number" min="1" max="20" step="1" id="inp_each"></select></td></tr></table>'
+			var xxx = '<table id="modal_tab_right"><tr><td><select id="sel_size"></select></td></tr><tr><td><select id="sel_color" style="display:none"></select>';
+			xxx=xxx+'</td></tr><tr><td><input type="number" value="0" min="1" max="20" step="1" id="inp_each" style="display:none"></select></td></tr></table>'
 			$("#modal_div_img_left").html("");
 			$("#modal_div_img_left").append('<img src="'+productPic_pic+'" >');
 			$("#modal_div_tab_right").html("");
-			$("#modal_div_tab_right").append('<select id="sel_size"></select>');
+			$("#modal_div_tab_right").append(xxx);
 			selSize(product_num);
 			$("#inh_pro_val").val(product_num);
 			$("#sel_color").css('display','none');
@@ -144,25 +144,63 @@ var requestSubmitted = false;
 			$("#inp_each").val(0);
 			$("#inp_each").css('display','none');
 			$("#btn_basketAdd").css('display','none');
+			
+			$("#sel_size").on('change',function() {
+				alert(123123);
+				if($(this).val()!=""){
+					selColor($("#inh_pro_val").val());
+					$("#sel_color").css('display','inline-block');
+				}
+				if($(this).val()==""){
+					$("#sel_color").css('display','none');
+				}
+				$("#inp_each").val(0);
+				$("#inp_each").css('display','none');
+			});
+			$("#sel_color").on('change',function() {
+				$("#inp_each").val(0);
+				$("#btn_basketAdd").css('display','none');
+			});
+			$("#inp_each").on('change',function() {
+				numcheck();
+				eachCheck();
+				if($(this).val()>0 && $(this).val()<21){
+					$("#btn_basketAdd").css('display','inline-block');
+				}else{
+					$("#btn_basketAdd").css('display','none');
+				}
+			});
+			$("#inp_each").on('keydown',function() {
+				numcheck();
+				eachCheck();
+				if($(this).val()>0 && $(this).val()<21){
+					$("#btn_basketAdd").css('display','inline-block');
+				}else{
+					$("#btn_basketAdd").css('display','none');
+				}
+			});
+			$("#inp_each").on('keyup',function() {
+				numcheck();
+				eachCheck();
+				if($(this).val()>0 && $(this).val()<21){
+					$("#btn_basketAdd").css('display','inline-block');
+				}else{
+					$("#btn_basketAdd").css('display','none');
+				}
+			});
+			$("#inp_each").on('blur',function() {
+				eachCheck();
+				if($(this).val()>0 && $(this).val()<21){
+					$("#btn_basketAdd").css('display','inline-block');
+				}else{
+					$("#btn_basketAdd").css('display','none');
+				}
+			});
 		});
 
-		$("#sel_size").change(function() {
-			if($(this).val()!=""){
-				selColor($("#inh_pro_val").val());
-				$("#sel_color").css('display','inline-block');
-			}
-			if($(this).val()==""){
-				$("#sel_color").css('display','none');
-			}
-			$("#inp_each").val(0);
-			$("#inp_each").css('display','none');
-		});
-		$("#sel_color").change(function() {
-			$("#inp_each").val(0);
-			$("#btn_basketAdd").css('display','none');
-		});
+		
 
-		$("#btn_basketAdd").click(function() {
+		$("#btn_basketAdd").on('click',function() {
 			if($("#inp_each").val()!=0 && $("#inp_each").val()<20){
 			basketAdd($("#inh_pro_val").val());
 			}else{
@@ -171,41 +209,6 @@ var requestSubmitted = false;
 
 		});
 
-		$("#inp_each").change(function() {
-			numcheck();
-			eachCheck();
-			if($(this).val()>0 && $(this).val()<21){
-				$("#btn_basketAdd").css('display','inline-block');
-			}else{
-				$("#btn_basketAdd").css('display','none');
-			}
-		});
-		$("#inp_each").keydown(function() {
-			numcheck();
-			eachCheck();
-			if($(this).val()>0 && $(this).val()<21){
-				$("#btn_basketAdd").css('display','inline-block');
-			}else{
-				$("#btn_basketAdd").css('display','none');
-			}
-		});
-		$("#inp_each").keyup(function() {
-			numcheck();
-			eachCheck();
-			if($(this).val()>0 && $(this).val()<21){
-				$("#btn_basketAdd").css('display','inline-block');
-			}else{
-				$("#btn_basketAdd").css('display','none');
-			}
-		});
-		$("#inp_each").blur(function() {
-			eachCheck();
-			if($(this).val()>0 && $(this).val()<21){
-				$("#btn_basketAdd").css('display','inline-block');
-			}else{
-				$("#btn_basketAdd").css('display','none');
-			}
-		});
 	});
 	//function end ------------------------------------------------------------------------------------------ 
 	
@@ -623,10 +626,8 @@ var requestSubmitted = false;
 
 				</div>
 				<div class="modal-body2">
-					<select id="sel_size"></select>
 				</div>
 				<div class="modal-body3">
-					<select id="sel_color"></select>
 				</div>
 				<div class="modal-body3">
 					<input type="number" id="inp_each" value="1" min="1" step="1"
