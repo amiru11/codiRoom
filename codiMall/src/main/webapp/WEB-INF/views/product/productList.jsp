@@ -128,40 +128,83 @@ var requestSubmitted = false;
 		
 	
 		$(".div_cart").click(function() {
-
+			style="display : none"
 			var product_num = $(this).find(".inh_product_num").val();
 			var productPic_pic = $(this).find(".inh_productPic_pic_val").val();
+			var xxx = '<table id="modal_tab_right"><tr><td><select id="sel_size"></select></td></tr><tr><td><select id="sel_color"></select>';
+			xxx=xxx+'</td></tr><tr><td><input type="number" min="1" max="20" step="1" id="inp_each"></select></td></tr></table>'
+			$("#modal_div_img_left").html("");
+			$("#modal_div_img_left").append('<img src="'+productPic_pic+'" >');
+			$("#modal_div_tab_right").html("");
+			$("#modal_div_tab_right").append('<select id="sel_size"></select>');
 			selSize(product_num);
-			$(".div_img_in").html("");
-			$(".div_img_in").append('<img src="'+productPic_pic+'" >');
 			$("#inh_pro_val").val(product_num);
+			$("#sel_color").css('display','none');
+			$("#sel_size").val("");
+			$("#inp_each").val(0);
+			$("#inp_each").css('display','none');
+			$("#btn_basketAdd").css('display','none');
 		});
 
 		$("#sel_size").change(function() {
 			if($(this).val()!=""){
-				selColor($("#inh_pro_val").val());	
+				selColor($("#inh_pro_val").val());
+				$("#sel_color").css('display','inline-block');
 			}
-			
+			if($(this).val()==""){
+				$("#sel_color").css('display','none');
+			}
+			$("#inp_each").val(0);
+			$("#inp_each").css('display','none');
+		});
+		$("#sel_color").change(function() {
+			$("#inp_each").val(0);
+			$("#btn_basketAdd").css('display','none');
 		});
 
 		$("#btn_basketAdd").click(function() {
+			if($("#inp_each").val()!=0 && $("#inp_each").val()<20){
 			basketAdd($("#inh_pro_val").val());
+			}else{
+			alert("1개이상 20개 이하로 입력해주세요")
+			}
+
 		});
 
 		$("#inp_each").change(function() {
 			numcheck();
 			eachCheck();
+			if($(this).val()>0 && $(this).val()<21){
+				$("#btn_basketAdd").css('display','inline-block');
+			}else{
+				$("#btn_basketAdd").css('display','none');
+			}
 		});
 		$("#inp_each").keydown(function() {
 			numcheck();
 			eachCheck();
+			if($(this).val()>0 && $(this).val()<21){
+				$("#btn_basketAdd").css('display','inline-block');
+			}else{
+				$("#btn_basketAdd").css('display','none');
+			}
 		});
 		$("#inp_each").keyup(function() {
 			numcheck();
 			eachCheck();
+			if($(this).val()>0 && $(this).val()<21){
+				$("#btn_basketAdd").css('display','inline-block');
+			}else{
+				$("#btn_basketAdd").css('display','none');
+			}
 		});
 		$("#inp_each").blur(function() {
 			eachCheck();
+			if($(this).val()>0 && $(this).val()<21){
+				$("#btn_basketAdd").css('display','inline-block');
+			}else{
+				$("#btn_basketAdd").css('display','none');
+			}
 		});
 	});
 	//function end ------------------------------------------------------------------------------------------ 
@@ -208,6 +251,7 @@ var requestSubmitted = false;
 				});
 				$("#div_hidden_each").html(y);
 				$("#sel_color").html(x);
+				$("#inp_each").css('display','inline-block');
 
 			},
 			error : function(request, status, error) {
@@ -251,7 +295,9 @@ var requestSubmitted = false;
 		if (c * 1 > b * 1) {
 			alert("재고초과");
 			$("#inp_each").val(b);
-		} else {
+		} else if(c*1 >20){
+			alert("21개 이상은 문의")
+			$("#inp_each").val(20);
 		}
 	}
 	function sideBar(){
@@ -317,6 +363,30 @@ var requestSubmitted = false;
 .cl_tab_checkboxp td:LAST-OF-TYPE input {
 	width: 40px;
 	height: 40px;
+}
+
+#modal_div_img_left {
+	width: 200px;
+	height: 200px;
+	border: 2px blue solid;
+	float: left;
+}
+
+#modal_div_img_left img {
+	width: 190px;
+	height: 190px;
+}
+
+#modal_div_tab_right {
+	width: 200px;
+	height: 200px;
+	border: 2px green solid;
+	float: right;
+}
+
+#modal_div_tab_right img {
+	width: 190px;
+	height: 190px;
 }
 </style>
 
@@ -547,8 +617,11 @@ var requestSubmitted = false;
 				<input type="hidden" value="" id="inh_pro_val">
 				<div class="modal-body div_img_in"
 					style="padding: 10px; height: 300px; background-color: red;">
-					<div class="modal_div_left"></div>
-					</div>
+					<div id="modal_div_img_left"></div>
+					<div id="modal_div_tab_right"></div>
+
+
+				</div>
 				<div class="modal-body2">
 					<select id="sel_size"></select>
 				</div>
@@ -556,8 +629,9 @@ var requestSubmitted = false;
 					<select id="sel_color"></select>
 				</div>
 				<div class="modal-body3">
-					<input type="number" id="inp_each" value="1" min="1" step="1"><br>
-					<input id="btn_basketAdd" type="button" value="장바구니 추가">
+					<input type="number" id="inp_each" value="1" min="1" step="1"
+						style="display: none;"><br> <input id="btn_basketAdd"
+						type="button" value="장바구니 추가" style="display: none;">
 				</div>
 
 				<div id="div_hidden_each"></div>

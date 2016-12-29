@@ -414,7 +414,7 @@
 						<input id="basketInfo_size" type="hidden" value=""
 							name="basketInfo_size"> <input id="basketInfo_color"
 							type="hidden" value="" name="basketInfo_color"> <input
-							id="basketInfo_each" type="hidden" class="bas_td_inp_each"
+							id="basketInfo_each" type="hidden" 
 							value="" name="basketInfo_each">
 					</form>
 				</div>
