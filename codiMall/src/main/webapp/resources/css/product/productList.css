@@ -1,15 +1,16 @@
 @CHARSET "UTF-8";
 .sub-header > li {
 	line-height: 70px;
-    margin-left: 50px;
+    margin-left: 40px;
+    border: 1px solid red;
 }
 .sub-header > li > a{
     display: block;
-    font-size: 14px;
+    font-size: 15px;
     color: #444444;
     display: block;
     text-align: center;
-    width: 80px;
+    width: 100px;
     line-height: 20px;
 }
 .sub-header > li > a:HOVER {

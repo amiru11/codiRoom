@@ -475,6 +475,7 @@
 		<if test="productSelect_num !=0">
 			and k.PRODUCTSELECT_NUM = #{productSelect_num}
 		</if>
+		order by pk.kind_num asc
 	</select>
 	<!--상품검색 -->
 	<select id="searchList" parameterType="java.util.HashMap"

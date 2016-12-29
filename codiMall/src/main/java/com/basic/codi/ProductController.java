@@ -58,6 +58,7 @@ public class ProductController {
 		if(sale != null){
 			productParamDTO.setProductSelect_num(0);
 		}
+		model.addAttribute("sel",sel);
 		model.addAttribute("sale",sale);
 		model.addAttribute("productSelectList",productService.productSelectList());
 		model.addAttribute("curPage", curPage);

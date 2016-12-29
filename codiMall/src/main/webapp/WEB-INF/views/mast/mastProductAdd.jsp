@@ -308,7 +308,7 @@ th {
 	padding: 0;
 	line-height: 50px;
 	height: 50px;
-	overflow-y: hidden;
+	overflow: hidden;
 	cursor: pointer;
 	font-size: 18px;
 }
@@ -320,7 +320,7 @@ th {
 .modin_div {
 	width: 240px;
 	height: 340px;
-	overflow-y: scroll;
+	overflow: scroll;
 }
 
 .modin_div>img {
@@ -428,7 +428,7 @@ width:160px;
 
 						<div id="selector">
 							<div id="div_sel_sel"
-								style="float: left; width: 10%; height: 100px; overflow-y: scroll; text-align: right;">
+								style="float: left; width: 10%; height: 100px; overflow: scroll; text-align: right;">
 								<label class="labelccc">순서1</label><br> 최신순<input
 									class="p_param" type="radio" name="sel" value="1"
 									<c:if test="${map.sel == 1}">
@@ -460,7 +460,7 @@ width:160px;
 								</c:if>>
 							</div>
 							<div id="div_mtpSel_sel"
-								style="float: left; width: 10%; height: 100px; overflow-y: scroll; text-align: right;">
+								style="float: left; width: 10%; height: 100px; overflow: scroll; text-align: right;">
 								<label class="labelccc">순서2</label><br> 기본<input
 									class="p_param" type="radio" name="mtpSel" value="1"
 									<c:if test="${map.mtpSel == 1}">
@@ -484,7 +484,7 @@ width:160px;
 								</c:if>><br>
 							</div>
 							<div id="div_proSel_sel"
-								style="float: left; width: 10%; height: 100px; overflow-y: scroll; text-align: right;">
+								style="float: left; width: 10%; height: 100px; overflow: scroll; text-align: right;">
 								<label class="labelccc">대분류</label><input id="inp_id_ck_prosel"
 									type="checkbox"><br>
 								<c:forEach var="proselc" items="${productSelectList}">
@@ -499,7 +499,7 @@ width:160px;
 								</c:forEach>
 							</div>
 							<div id="div_kind_sel"
-								style="float: left; width: 15%; height: 100px; overflow-y: scroll; text-align: right;">
+								style="float: left; width: 15%; height: 100px; overflow: scroll; text-align: right;">
 								<label class="labelccc">소분류</label><input id="inp_id_ck_kind"
 									type="checkbox"><br>
 								<c:forEach var="proselc" items="${kindList}">
@@ -513,7 +513,7 @@ width:160px;
 								</c:forEach>
 							</div>
 							<div id="div_pro_sel"
-								style="float: left; width: 15%; height: 100px; overflow-y: scroll; text-align: right;">
+								style="float: left; width: 15%; height: 100px; overflow: scroll; text-align: right;">
 								<label class="labelccc">상품번호</label><input id="inp_id_ck_pro"
 									type="checkbox"><br>
 								<c:forEach var="proselc" items="${productList}">
@@ -528,7 +528,7 @@ width:160px;
 								</c:forEach>
 							</div>
 							<div id="div_size_sel"
-								style="float: left; width: 10%; height: 100px; overflow-y: scroll; text-align: right;">
+								style="float: left; width: 10%; height: 100px; overflow: scroll; text-align: right;">
 								<label class="labelccc">사이즈</label><input id="inp_id_ck_size"
 									type="checkbox"><br>
 								<c:forEach var="proselc" items="${productSizeList}">
@@ -543,7 +543,7 @@ width:160px;
 								</c:forEach>
 							</div>
 							<div id="div_color_sel"
-								style="float: left; width: 15%; height: 100px; overflow-y: scroll; text-align: right;">
+								style="float: left; width: 15%; height: 100px; overflow: scroll; text-align: right;">
 								<label class="labelccc">색상</label><input id="inp_id_ck_color"
 									type="checkbox"><br>
 								<c:forEach var="proselc" items="${productColorList}">

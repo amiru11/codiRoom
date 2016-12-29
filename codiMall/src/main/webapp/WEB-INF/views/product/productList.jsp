@@ -27,6 +27,29 @@
 var requestSubmitted = false;
 
 	$(function() {
+		$(".a_sale_product").css('width', '120px');
+		var sessel = "${sel}"
+		var sale = "${sale}";
+		if(sale != ""){
+			$(".a_sale_product").css('color', '#006633');
+			$(".a_sale_product").css('font-size', '25px');
+		}else{
+		$.each( $(".a_prosel_num"), function( key, value ) {
+			  if($(value).find(".inhA_proselNum").val()==${productSelect_num}){
+				  $(value).css('color', '#006633');
+				  $(value).css('font-size', '20px');
+			  }
+			});
+			
+		}
+		$.each( $(".sel_type"), function( key, value ) {
+			  if($(value).find(".inhc_sel").val()==sessel){
+				  $(value).css('color', '#006633');
+				  $(value).css('font-size', '25px');
+				  
+			  }
+			});
+		
 		sideBar();
 		$(document).keydown(function(e) {
 		    key = (e) ? e.keyCode : event.keyCode;
@@ -58,9 +81,7 @@ var requestSubmitted = false;
 
 		for(var i = 0 ; i < ${fn:length(productSelectList) } ; i++){
 			$(".subh_prosel_num"+(i*1+1)).click(function(){
-				$("#inphid_productSelect_num").val($(this).find(".inhA_proselNum").val());
-				alert($("#inphid_productSelect_num").val());
-				
+				$("#inphid_productSelect_num").val($(this).find(".inhA_proselNum").val());		
 				$("#hidd_form_prosel").submit();
 			})	
 		}
@@ -250,22 +271,73 @@ var requestSubmitted = false;
 	}
 </script>
 
+<style type="text/css">
+.cl_div_subject_name {
+	width: 220px;
+	text-align: center;
+	background-color: black;
+}
+
+.cl_div_subject_name label {
+	font-size: 30px;
+	font-weight: bold;
+	color: white;
+}
+
+.cl_div_checkboxpp {
+	overflow-y: scroll;
+	width: 220px;
+	height: 300px;
+	border: 1px red solid;
+}
+
+.cl_tab_checkboxp {
+	border: 3px blue double;
+	width: 200px;
+}
+
+.cl_tab_checkboxp tr th {
+	text-align: center;
+	font-size: 30px;
+}
+
+.cl_tab_checkboxp tr td {
+	font-size: 20px;
+	text-align: right;
+}
+
+.cl_tab_checkboxp tr td {
+	border: 2px black solid;
+}
+
+.cl_tab_checkboxp td:LAST-OF-TYPE {
+	width: 10%;
+}
+
+.cl_tab_checkboxp td:LAST-OF-TYPE input {
+	width: 40px;
+	height: 40px;
+}
+</style>
+
 </head>
 <body>
 	<!-- HEADER:S -->
 	<%@ include file="/resources/temp/header.jsp"%>
 	<!-- HEADER:E -->
 
+
 	<div class="container" style="padding-top: 20px;">
 		<nav class="navbar" style="border-bottom: 1px solid #eeeeee;">
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav sub-header">
 					<c:forEach var="list1" items="${productSelectList}">
-						<li><a class="subh_prosel_num${list1.productSelect_num}"><input
+						<li><a
+							class="a_prosel_num subh_prosel_num${list1.productSelect_num}"><input
 								class="inhA_proselNum" type="hidden"
 								value="${list1.productSelect_num}">${list1.productSelect_name}</a></li>
 					</c:forEach>
-					<li><a class="a_sale_product"style="cursor: pointer;">할인상품</a></li>
+					<li><a class="a_sale_product" style="cursor: pointer;">할인상품</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/product/productBestList">BSET</a></li>
 				</ul>
@@ -278,50 +350,67 @@ var requestSubmitted = false;
 						action="${pageContext.request.contextPath}/product/productList"
 						method="get">
 						<div id="div_out_search_select">
-							KIND<br>
-							<div id="div_ck_kind"
-								style="width: 200px; height: 100px; overflow: scroll;">
-								<c:forEach var="kindList" items="${selKind_num}">
-								${kindList}<input class="inCk_kind_num" type="checkbox"
-										value="${kindList}"
-										<c:forEach var = "kind2" items="${kind_num}">
+							<div class="cl_div_subject_name">
+								<label>KIND</label>
+							</div>
+							<div id="div_ck_kind" class="cl_div_checkboxpp">
+								<table id="tab_kind_checkbox" class="cl_tab_checkboxp">
+									<c:forEach var="kindList" items="${selKind_num}">
+										<tr>
+											<td>${kindList}</td>
+											<td><input class="inCk_kind_num" type="checkbox"
+												value="${kindList}"
+												<c:forEach var = "kind2" items="${kind_num}">
 								<c:if test="${kindList ==kind2}">
 								checked="checked"
 								</c:if>
 								</c:forEach>
-										name="kind_num">
-								</c:forEach>
+												name="kind_num"></td>
+										</tr>
+									</c:forEach>
+								</table>
 							</div>
-							SIZE<BR>
-							<div id="div_ck_size"
-								style="width: 200px; height: 100px; overflow: scroll;">
-								<c:forEach var="sizeList" items="${selSize}">
-								${sizeList}<input class="inCk_size" type="checkbox"
-										value="${sizeList}"
-										<c:forEach var = "size2" items="${size}">
+							<div class="cl_div_subject_name">
+								<label>SIZE</label>
+							</div>
+							<div id="div_ck_size" class="cl_div_checkboxpp">
+								<table id="tab_kind_checkbox" class="cl_tab_checkboxp">
+									<c:forEach var="sizeList" items="${selSize}">
+										<tr>
+											<td>${sizeList}</td>
+											<td><input class="inCk_size" type="checkbox"
+												value="${sizeList}"
+												<c:forEach var = "size2" items="${size}">
 								<c:if test="${sizeList ==size2}">
 								checked="checked"
 								</c:if>
 								</c:forEach>
-										name="size">
-									<br>
-								</c:forEach>
+												name="size"></td>
+										</tr>
+									</c:forEach>
+								</table>
 							</div>
-							COLOR<br>
-							<div id="div_ck_color"
-								style="width: 200px; height: 100px; overflow: scroll;">
-								<c:forEach var="colorList" items="${selColor}">
-								${colorList}<input class="inCk_color" type="checkbox"
-										value="${colorList}"
-										<c:forEach var = "color2" items="${color}">
+							<div class="cl_div_subject_name">
+								<label>COLOR</label>
+							</div>
+							<div id="div_ck_color" class="cl_div_checkboxpp">
+								<table id="tab_kind_checkbox" class="cl_tab_checkboxp">
+									<c:forEach var="colorList" items="${selColor}">
+										<tr>
+											<td>${colorList}</td>
+											<td><input class="inCk_color" type="checkbox"
+												value="${colorList}"
+												<c:forEach var = "color2" items="${color}">
 								<c:if test="${colorList ==color2}">
 								checked="checked"
 								</c:if>
 								</c:forEach>
-										name="color">
-									<br>
-								</c:forEach>
+												name="color"></td>
+										</tr>
+									</c:forEach>
+								</table>
 							</div>
+
 						</div>
 
 					</form>
@@ -376,8 +465,8 @@ var requestSubmitted = false;
 															var="number"
 															value="${list1.productInfoDTO.productInfo_price*(100-list1.productInfoDTO.productInfo_saleRate)/100}" />
 														<fmt:parseNumber var="total" value="${number}"
-															type="number" integerOnly="true" />
-															<fmt:formatNumber value="${total}" pattern="#,###" /> 
+															type="number" integerOnly="true" /> <fmt:formatNumber
+															value="${total}" pattern="#,###" />
 														원(${list1.productInfoDTO.productInfo_saleRate}%)
 													</strong>
 												</c:if>
@@ -393,9 +482,11 @@ var requestSubmitted = false;
 							data-backdrop="true"
 										</c:if>>
 											<input type="hidden" value="${list1.productDTO.product_num}"
-												class="inh_product_num" name="product_num">
-												<input type="hidden" class="inh_productPic_pic_val" value="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}"> <span
-												style="font-size: 20px; color: #ffffff;">ADD TO CART</span>
+												class="inh_product_num" name="product_num"> <input
+												type="hidden" class="inh_productPic_pic_val"
+												value="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}">
+											<span style="font-size: 20px; color: #ffffff;">ADD TO
+												CART</span>
 										</div>
 									</div>
 								</li>
@@ -455,7 +546,9 @@ var requestSubmitted = false;
 				</div>
 				<input type="hidden" value="" id="inh_pro_val">
 				<div class="modal-body div_img_in"
-					style="padding: 10px; height: 300px; background-color: red;"></div>
+					style="padding: 10px; height: 300px; background-color: red;">
+					<div class="modal_div_left"></div>
+					</div>
 				<div class="modal-body2">
 					<select id="sel_size"></select>
 				</div>
