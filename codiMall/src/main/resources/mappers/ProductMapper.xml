@@ -532,7 +532,7 @@
 	select count(*) from product
 	</if>
 </select>
->>>>>>> refs/heads/sub
+
 	<!-- Ajax E -->
 
 
