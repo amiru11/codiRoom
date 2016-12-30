@@ -12,6 +12,7 @@ import com.basic.board.BoardDTO;
 import com.basic.board.CommentDAO;
 import com.basic.board.CommentDTO;
 import com.basic.product.ProductAllDTO;
+import com.basic.product.ProductEachDTO;
 import com.basic.util.PageMaker;
 
 @Service
@@ -28,6 +29,13 @@ public class SSSSSService {
 	
 	@Autowired
 	private SSSDAO sssdao;
+	
+	//mastProductListEach0Fix =--------------ssssssssssssssss----------------------------------------------------
+	public String mastProductListEach0EachFix(ProductEachDTO productEachDTO){
+		return sssdao.mastProductListEach0EachFix(productEachDTO);
+	}
+	//mastProductListEach0Fix =-------------eeeeeeeeeeeee--------------------------------------------------------
+	
 
 	
 	

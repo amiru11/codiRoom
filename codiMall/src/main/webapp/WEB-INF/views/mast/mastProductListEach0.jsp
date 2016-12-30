@@ -30,6 +30,10 @@ th {
 <script type="text/javascript">
 
 	$(function() {
+		var message="${message}";
+		if(message !=""){
+			alert(message);
+		}
 		$("#goCalendar").click(function() {
 			$.ajax({
 				url : "${pageContext.request.contextPath}/mast/calendar",
@@ -42,6 +46,7 @@ th {
 
 		});
 	});
+
 	jQuery.ajaxSettings.traditional = true;
 </script>
 <style type="text/css">
@@ -53,6 +58,16 @@ th {
 	overflow: hidden;
 	cursor: pointer;
 	font-size: 18px;
+}
+
+#div_tab_eachin {
+	width: 100%;
+	height: 100px;
+	overflow-y: scroll;
+}
+
+#tab_mast_productList_eachList {
+	width: 90%;
 }
 </style>
 </head>
@@ -67,6 +82,35 @@ th {
 					<div id="view">
 						<!--      -->
 						<H1>each0</H1>
+						<div class="center-block">
+							<nav aria-label="Page navigation">
+								<ul class="pagination">
+									<c:if test="${!empty list}">
+
+										<li><c:if test="${pageing.curBlock>1}">
+												<a class="a_prev" aria-label="Previous"
+													style="cursor: pointer"><input class="inh_prev"
+													type="hidden" value="${pageing.startNum-1}"> <span
+													aria-hidden="true">&laquo;</span> </a>
+											</c:if></li>
+										<li><c:forEach begin="${pageing.startNum}" step="1"
+												end="${pageing.lastNum}" var="i">
+
+												<a
+													href="${pageContext.request.contextPath}/mast/mastProductListEach0?curPage=${i}"
+													style="cursor: pointer" class="N_pageing">${i}</a>
+											</c:forEach></li>
+										<li><c:if test="${pageing.curBlock<pageing.totalBlock}">
+												<a class="a_next" aria-label="Next" style="cursor: pointer">
+													<input class="inh_next" type="hidden"
+													value="${pageing.lastNum+1}"><span
+													aria-hidden="true">&raquo;</span>
+												</a>
+											</c:if></li>
+									</c:if>
+								</ul>
+							</nav>
+						</div>
 						<div id="div_product_list">
 							<c:forEach var="list1" items="${list}">
 								<div style="width: 330px; border: 1px solid black; float: left;">
@@ -79,11 +123,11 @@ th {
 										data-toggle="modal" data-target="#basketModal"
 							data-backdrop="true"
 										</c:if>
-											style="float: left;" width="200px" height="200px"
+											style="float: left;" width="150px" height="150px"
 											src="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}">
 									</div>
 									<table id="tab_mast_productList"
-										style="display: inline-block; float: left;">
+										style="display: inline-block; float: right;">
 										<tr>
 											<td>판매수</td>
 											<td>${list1.selCount}</td>
@@ -121,58 +165,44 @@ th {
 											<td>${list1.productInfoDTO.productInfo_saleRate}</td>
 										</tr>
 									</table>
-									<table id="tab_mast_productList_eachList"
-										style="display: inline-block; float: left;">
-										<tr>
-											<th>SIZE</th>
-											<th>COLOR</th>
-											<th>EACH</th>
-											<th>FIX</th>
-										</tr>
-										<c:forEach var="list22" items="${list1.productEachDTOs}">
-										<tr class="tr_cl_fix">
-											<td>${list22.productSize_size}</td>
-											<td>${list22.productEach_color}</td>
-											<td>${list22.productEach_each}</td>
-											<td><input class="inp_pro_each" type="number" min="0" name="productEach_each" style="width: 40px;">
-											<input class="inph_pro_num" type="hidden" name="product_num" value="${list1.productDTO.product_num }">
-											<input class="inph_pro_size" type="hidden" name="productSize_size" value="${list22.productSize_size}">
-											<input class="inph_pro_color" type="hidden" name="productEach_color" value="${list22.productEach_color}">
-											<button class="btn_each_fix">FIX</button>
-											</td>
-										</tr>
-										</c:forEach>
-									</table>
+									<div id="div_tab_eachin">
+										<table id="tab_mast_productList_eachList"
+											style="display: inline-block; float: left;">
+											<tr>
+												<th>SIZE</th>
+												<th>COLOR</th>
+												<th>EACH</th>
+												<th>FIX</th>
+											</tr>
+
+											<c:forEach var="list22" items="${list1.productEachDTOs}">
+												<tr class="tr_cl_fix">
+													<td class="td_first_size">${list22.productSize_size}</td>
+													<td class="td_second_size">${list22.productEach_color}</td>
+													<td>${list22.productEach_each}</td>
+													<td class="td_third_size">
+														<form class="cl_each_fix_form" action="${pageContext.request.contextPath}/mast/mastProductListEach0EachFix" method="post">
+															<input class="inp_pro_each" type="number" min="0"
+																name="productEach_each" style="width: 40px;"> <input
+																class="inph_pro_num" type="hidden" name="product_num"
+																value="${list1.productDTO.product_num }"> <input
+																class="inph_pro_size" type="hidden"
+																name="productSize_size"
+																value="${list22.productSize_size}"> <input
+																class="inph_pro_color" type="hidden"
+																name="productEach_color"
+																value="${list22.productEach_color}">
+															<button class="btn_each_fix">FIX</button>
+														</form>
+													</td>
+												</tr>
+											</c:forEach>
+										</table>
+									</div>
 								</div>
 							</c:forEach>
 						</div>
-						<div class="center-block">
-							<nav aria-label="Page navigation">
-								<ul class="pagination">
-									<c:if test="${!empty list}">
 
-										<li><c:if test="${pageing.curBlock>1}">
-												<a class="a_prev" aria-label="Previous"
-													style="cursor: pointer"><input class="inh_prev"
-													type="hidden" value="${pageing.startNum-1}"> <span
-													aria-hidden="true">&laquo;</span> </a>
-											</c:if></li>
-										<li><c:forEach begin="${pageing.startNum}" step="1"
-												end="${pageing.lastNum}" var="i">
-
-												<a style="cursor: pointer" class="N_pageing">${i}</a>
-											</c:forEach></li>
-										<li><c:if test="${pageing.curBlock<pageing.totalBlock}">
-												<a class="a_next" aria-label="Next" style="cursor: pointer">
-													<input class="inh_next" type="hidden"
-													value="${pageing.lastNum+1}"><span
-													aria-hidden="true">&raquo;</span>
-												</a>
-											</c:if></li>
-									</c:if>
-								</ul>
-							</nav>
-						</div>
 
 
 

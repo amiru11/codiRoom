@@ -239,16 +239,20 @@
 		p.product_name ORDER BY selCount desc,p.product_num desc)
 		z)tt,PRODUCTINFO pi,PRODUCTEACH pe,PRODUCTPIC pc,PRODUCTSELECT
 		pse,KIND k,PRODUCTKIND pk
-		where tt.PRODUCT_NUM = pe.PRODUCT_NUM and pi.PRODUCT_NUM = tt.PRODUCT_NUM
+		where tt.PRODUCT_NUM = pe.PRODUCT_NUM and
+		pi.PRODUCT_NUM = tt.PRODUCT_NUM
 		and tt.product_num = pk.PRODUCT_NUM
-		and k.KIND_NUM = pk.KIND_NUM
-		and k.PRODUCTSELECT_NUM = pse.PRODUCTSELECT_NUM
+		and
+		k.KIND_NUM = pk.KIND_NUM
+		and k.PRODUCTSELECT_NUM =
+		pse.PRODUCTSELECT_NUM
 		and pc.PRODUCT_NUM = tt.product_num
-		and pe.PRODUCTEACH_EACH = 0 
+		and
+		pe.PRODUCTEACH_EACH = 0
 		and tt.r between #{pageMaker.startRowNum} and
 		#{pageMaker.lastLowNum}
 		ORDER BY r asc,tt.product_num desc
-		
+
 
 	</select>
 	<select id="SelMastProductEach0Count" resultType="int">
@@ -258,6 +262,17 @@
 		pe.PRODUCT_NUM = p.PRODUCT_NUM and pe.PRODUCTEACH_EACH = 0)
 	</select>
 
+
+	<!-- mast Product ListEach0 Fix SSSSSSSSS -->
+	<update id="UpMastProductListEach0Fix" parameterType="com.basic.product.ProductEachDTO">
+		update productEach set productEach_each = #{productEach_each}
+		where product_num = #{product_num}
+		and productSize_size = #{productSize_size}
+		and productEach_color = #{productEach_color}
+	</update>
+
+
+	<!-- mast Product ListEach0 Fix eeeeeeeeeeeeeeeee -->
 
 
 

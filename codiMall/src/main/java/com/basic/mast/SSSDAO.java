@@ -10,9 +10,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.ui.Model;
 import org.w3c.dom.ls.LSInput;
 
 import com.basic.product.ProductAllDTO;
+import com.basic.product.ProductEachDTO;
 import com.basic.util.PageMaker;
 
 @Repository
@@ -26,6 +28,22 @@ public class SSSDAO {
 
 	DefaultTransactionDefinition def = null;
 	TransactionStatus status = null;
+	
+	
+	//mastProductListEach0Fix =---------------sssssssssss------------------------------------------------
+	public String mastProductListEach0EachFix(ProductEachDTO productEachDTO){
+		int result = 0;
+		String message="";
+		result =sqlSession.update(namespace+"UpMastProductListEach0Fix",productEachDTO);
+		if(result>0){
+			message="갯수수정 성공";
+		}else{
+			message="갯수수정 실패";
+		}
+		return message;
+	}
+	//mastProductListEach0Fix =--------------eeeeeeeeeeeee----------------------------------------------------------
+	
 	
 	public int mastProductEach0Count(){
 		return sqlSession.selectOne(namespace+"SelMastProductEach0Count");
