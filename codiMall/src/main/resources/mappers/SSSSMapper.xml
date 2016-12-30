@@ -221,6 +221,45 @@
 		<association property="buyStateDTO" resultMap="BuyState" />
 	</resultMap>
 
+	<select id="SelMastProductEach0List22" resultMap="ProductAllInfo"
+		parameterType="java.util.HashMap">
+		select DISTINCT
+		tt.*,pi.PRODUCTINFO_BRAND,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_DATE,pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_SEARCHWORD,
+		pse.PRODUCTSELECT_NUM,pse.PRODUCTSELECT_NAME,k.KIND_NAME,k.KIND_NUM,pe.PRODUCTSIZE_SIZE,pe.PRODUCTEACH_COLOR,pe.PRODUCTEACH_EACH,pc.PRODUCTPIC_PIC
+		from(select ROWNUM r ,z.* from(select count(b.buy_num)
+		selCount,p.PRODUCT_NUM,p.product_name
+		from(select
+		pp.product_num,pp.product_name from PRODUCT pp,PRODUCTEACH pee where
+		pp.product_num = pee.product_num and pee.productEach_each=0) p
+		LEFT
+		OUTER JOIN buy b
+		ON b.product_num = p.PRODUCT_NUM
+		group
+		by p.PRODUCT_NUM,
+		p.product_name ORDER BY selCount desc,p.product_num desc)
+		z)tt,PRODUCTINFO pi,PRODUCTEACH pe,PRODUCTPIC pc,PRODUCTSELECT
+		pse,KIND k,PRODUCTKIND pk
+		where tt.PRODUCT_NUM = pe.PRODUCT_NUM and pi.PRODUCT_NUM = tt.PRODUCT_NUM
+		and tt.product_num = pk.PRODUCT_NUM
+		and k.KIND_NUM = pk.KIND_NUM
+		and k.PRODUCTSELECT_NUM = pse.PRODUCTSELECT_NUM
+		and pc.PRODUCT_NUM = tt.product_num
+		and pe.PRODUCTEACH_EACH = 0 
+		and tt.r between #{pageMaker.startRowNum} and
+		#{pageMaker.lastLowNum}
+		ORDER BY r asc,tt.product_num desc
+		
+
+	</select>
+	<select id="SelMastProductEach0Count" resultType="int">
+		select count(*)
+		from (select DISTINCT p.PRODUCT_NUM from product
+		p,PRODUCTEACH pe where
+		pe.PRODUCT_NUM = p.PRODUCT_NUM and pe.PRODUCTEACH_EACH = 0)
+	</select>
+
+
+
 
 
 	<select id="SelMastBuyPayList" resultMap="MastBuyList"
@@ -262,12 +301,20 @@
 
 	</select>
 	<update id="UpRefundConfEachAdd" parameterType="java.util.HashMap">
-		update productEach pee set 
-	pee.productEach_each = (select pe.productEach_each from productEach pe where pe.product_num = #{product_num} 
-	and pe.productSize_size = #{productSize_size} and pe.productEach_color = #{productEach_color}
-	) + #{productEach_each}
-	where pee.product_num = #{product_num} 
-	and pee.productSize_size = #{productSize_size} and pee.productEach_color = #{productEach_color}
+		update
+		productEach pee set
+		pee.productEach_each = (select pe.productEach_each
+		from productEach pe where
+		pe.product_num = #{product_num}
+		and
+		pe.productSize_size = #{productSize_size} and pe.productEach_color =
+		#{productEach_color}
+		) + #{productEach_each}
+		where pee.product_num =
+		#{product_num}
+		and pee.productSize_size = #{productSize_size} and
+		pee.productEach_color
+		= #{productEach_color}
 
 
 	</update>

@@ -73,14 +73,14 @@ th {
 									<div class="div_cl_img_asd"
 										style="display: inline-block; cursor: pointer; float: left;">
 										<input class="inh_product_num" type="hidden"
-											name="product_num" value="${list1.product_num}">
+											name="product_num" value="${list1.productDTO.product_num}">
 										<img
 											<c:if test="${!empty sessionScope.member}">
 										data-toggle="modal" data-target="#basketModal"
 							data-backdrop="true"
 										</c:if>
 											style="float: left;" width="200px" height="200px"
-											src="${pageContext.request.contextPath}/resources/testPic/${list1.productPic_pic}">
+											src="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}">
 									</div>
 									<table id="tab_mast_productList"
 										style="display: inline-block; float: left;">
@@ -90,35 +90,35 @@ th {
 										</tr>
 										<tr>
 											<td>pS.num</td>
-											<td>${list1.productSelect_num}</td>
+											<td>${list1.productSelectDTO.productSelect_num}</td>
 										</tr>
 										<tr>
 											<td>pS.name</td>
-											<td>${list1.productSelect_name}</td>
+											<td>${list1.productSelectDTO.productSelect_name}</td>
 										</tr>
 										<tr>
 											<td>k.num</td>
-											<td>${list1.kind_num}</td>
+											<td>${list1.kindDTO.kind_num}</td>
 										</tr>
 										<tr>
 											<td>k.name</td>
-											<td>${list1.kind_name}</td>
+											<td>${list1.kindDTO.kind_name}</td>
 										</tr>
 										<tr>
 											<td>p.num</td>
-											<td>${list1.product_num}</td>
+											<td>${list1.productDTO.product_num}</td>
 										</tr>
 										<tr>
 											<td>p.name</td>
-											<td>${list1.product_name}</td>
+											<td>${list1.productDTO.product_name}</td>
 										</tr>
 										<tr>
 											<td>price</td>
-											<td>${list1.productInfo_price}</td>
+											<td>${list1.productInfoDTO.productInfo_price}</td>
 										</tr>
 										<tr>
 											<td>sale</td>
-											<td>${list1.productInfo_saleRate}</td>
+											<td>${list1.productInfoDTO.productInfo_saleRate}</td>
 										</tr>
 									</table>
 									<table id="tab_mast_productList_eachList"
@@ -135,7 +135,7 @@ th {
 											<td>${list22.productEach_color}</td>
 											<td>${list22.productEach_each}</td>
 											<td><input class="inp_pro_each" type="number" min="0" name="productEach_each" style="width: 40px;">
-											<input class="inph_pro_num" type="hidden" name="product_num" value="${list1.product_num }">
+											<input class="inph_pro_num" type="hidden" name="product_num" value="${list1.productDTO.product_num }">
 											<input class="inph_pro_size" type="hidden" name="productSize_size" value="${list22.productSize_size}">
 											<input class="inph_pro_color" type="hidden" name="productEach_color" value="${list22.productEach_color}">
 											<button class="btn_each_fix">FIX</button>

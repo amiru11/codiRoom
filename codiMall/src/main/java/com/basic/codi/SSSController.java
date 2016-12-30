@@ -103,9 +103,13 @@ public class SSSController {
 		return path;
 	}
 	
+	@RequestMapping(value="/mastProductListEach0",method=RequestMethod.POST)
+	public void mastProductListEach0P(Model model,@RequestParam(defaultValue="1")int curPage){
+		sssssService.mastProductListEach022(model, curPage);
+	}
 	@RequestMapping(value="/mastProductListEach0",method=RequestMethod.GET)
-	public void mastProductListEach0G(Model model){
-		mastService.mastProductListEach0(model);
+	public void mastProductListEach0G(Model model,@RequestParam(defaultValue="1")int curPage){
+		sssssService.mastProductListEach022(model, curPage);
 	}
 	
 

@@ -422,6 +422,9 @@ width:160px;
 							BuyList</a><br> <a
 							href="${pageContext.request.contextPath}/mast/mastBuyListPay">MAST
 							BuyListPay</a><br>
+							<a
+							href="${pageContext.request.contextPath}/mast/mastProductListEach022">MAST
+							productEach0</a><br>
 
 
 

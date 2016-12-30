@@ -12,6 +12,9 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.w3c.dom.ls.LSInput;
 
+import com.basic.product.ProductAllDTO;
+import com.basic.util.PageMaker;
+
 @Repository
 public class SSSDAO {
 	@Autowired
@@ -23,6 +26,15 @@ public class SSSDAO {
 
 	DefaultTransactionDefinition def = null;
 	TransactionStatus status = null;
+	
+	public int mastProductEach0Count(){
+		return sqlSession.selectOne(namespace+"SelMastProductEach0Count");
+	}
+	public List<ProductAllDTO> mastProductEach0List(PageMaker pm){
+		Map<String, Object> map = new HashMap<>();
+		map.put("pageMaker", pm);
+		return sqlSession.selectList(namespace+"SelMastProductEach0List22",map);
+	}
 
 	public List<MastBuyListDTO> mastBuyPayList(Map<String, Object> map) {
 		List<MastBuyListDTO> ar = sqlSession.selectList(namespace + "SelMastBuyPayList", map);

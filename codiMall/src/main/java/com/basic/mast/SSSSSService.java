@@ -29,6 +29,9 @@ public class SSSSSService {
 	@Autowired
 	private SSSDAO sssdao;
 
+	
+	
+
 	public List<ProductAllDTO> mastProductList(Map<String, Object> map, Model model) {
 		PageMaker pageMaker = new PageMaker();
 		int totalCount = mastDAO.mastProductCount(map);
@@ -49,12 +52,28 @@ public class SSSSSService {
 	}
 	
 	public int mastProductInfoFix(Map<String, Object> map){
+		PageMaker pageMaker = new PageMaker();
+		int totalCount = mastDAO.mastProductCount(map);
+		pageMaker.setCurPage((int) map.get("curPage"));
+		pageMaker.setPerPage((int) map.get("perPage"));
+		pageMaker.makeRow();
+		pageMaker.makePage(totalCount);
 		return mastDAO.mastProductInfoFix(map);
 	}
 
 	// mast ProductList Each 0 sssssssssssssss ---------------------------------
 	public void mastProductListEach0(Model model) {
 		model.addAttribute("list",mastDAO.mastProductListEach0());	
+	}
+	public void mastProductListEach022(Model model,int curPage) {
+		PageMaker pageMaker = new PageMaker();
+		int totalCount = sssdao.mastProductEach0Count();
+		pageMaker.setCurPage(curPage);
+		pageMaker.setPerPage(9);
+		pageMaker.makeRow();
+		pageMaker.makePage(totalCount);
+		model.addAttribute("pageing", pageMaker);
+		model.addAttribute("list",sssdao.mastProductEach0List(pageMaker));	
 	}
 
 	// mast ProductList Each 0 eeeeeeeeee---------------------------------
