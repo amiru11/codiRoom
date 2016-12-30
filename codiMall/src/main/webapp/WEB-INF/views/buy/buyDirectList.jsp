@@ -88,7 +88,8 @@
 				if ($(".cl_pilsu_checkbox:checked").length != 2) {
 					checkcount++
 				}
-				alert(nullcount);
+				alert("null"+nullcount);
+				alert("check"+checkcount)
 				if (nullcount > 0 && checkcount > 0) {
 					alert("모두 입력해 주세요");
 					alert("약관을 체크해 주세요");
@@ -99,7 +100,9 @@
 				}else if(nullcount <= 0 && checkcount ==0){
 					var xxx = "";
 					$.each($(".cl_member_addrad"), function(key, value) {
-						if (key == $(".cl_member_addrad").length * 1 - 2) {
+						if (key == $(".cl_member_addrad").length * 1 - 1) {
+							alert("key---"+key);
+							alert("addr each_val()"+$(value).val());
 							xxx = xxx + $(value).val();
 						} else {
 							xxx = xxx + $(value).val() + '_-_';
@@ -130,7 +133,9 @@
 				}else if(nullcount <= 0 && checkcount ==0){
 					var xxx = "";
 					$.each($(".cl_member_addr2ad"), function(key, value) {
-						if (key == $(".cl_member_addr2ad").length * 1 - 2) {
+						if (key == $(".cl_member_addr2ad").length * 1 - 1) {
+							alert("key---"+key);
+							alert("addr each_val()"+$(value).val());
 							xxx = xxx + $(value).val();
 						} else {
 							xxx = xxx + $(value).val() + '_-_';
@@ -143,6 +148,7 @@
 			}
 		})
 	}
+					
 
 	//function eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 

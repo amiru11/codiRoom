@@ -125,87 +125,8 @@
 
 
 		$(".bas_tr_jq").mouseenter(function() {
-			var thisTr = $(this);
-			thisTr.find(".bas_td_sel_size").on("change", function() {
-				var optionSize = thisTr.find(".bas_td_sel_size option").length;
-				var selSize = thisTr.find(".bas_td_sel_size").val();
-				alert(optionSize);
-				alert(selSize);
-				thisTr.find(".bas_td_sel_color").css("display", "none");
-				thisTr.find(".bas_td_sel_color[name=" + selSize + "]").css("display", "inline-block");
-			});
-
-			thisTr.find(".btn_fix").on("click", function() {
-				if ($(thisTr).find(".bas_td_inp_each").val() == 0) {
-					alert("수량을 1개이상 입력해주세요")
-				} else {
-					var selSize = thisTr.find(".bas_td_sel_size").val();
-					var selColor = thisTr.find(".bas_td_sel_color[name=" + selSize + "]").val();
-					var each = thisTr.find(".bas_td_inp_each").val();
-					var basket_num = thisTr.find(".td_inh_bas_num").val();
-					var product_num = thisTr.find(".bas_td_hid_pronum").val();
-
-
-					$("#basket_num").val(basket_num);
-					$("#product_num").val(product_num);
-					$("#basketInfo_size").val(selSize);
-					$("#basketInfo_color").val(selColor);
-					$("#basketInfo_each").val(each);
-					if ($("#basketInfo_each").val() > 0) {
-						$("#basketFixFrm").submit();
-					}
-				}
-
-			});
-
-			thisTr.find(".bas_td_inp_each").focus(function() {
-				$(this).change(function() {
-					numcheck();
-					if ($(this).val() > 0) {
-						numcheck();
-						productEachGet(thisTr);
-					} else {
-						numcheck();
-						$(this).val(1);
-					}
-				});
-				$(this).keyup(function() {
-					numcheck();
-				});
-				$(this).keydown(function() {
-					numcheck();
-				});
-			});
-			$(".product_quantity_down").click(function() { //수량감소
-				if ($(thisTr).find(".bas_td_inp_each").val() == 0) {
-				} else {
-					$(thisTr).find(".bas_td_inp_each").val($(thisTr).find(".bas_td_inp_each").val() * 1 - 1);
-				}
-
-			});
-
-			$(thisTr).find(".product_quantity_up").click(function() { //수량증가
-				var color = $(thisTr).find(".bas_td_sel_color");
-				var size = $(thisTr).find(".bas_td_sel_size").text();
-				var count = 0;
-				$.each(color, function( key, value ) {
-					var z = $.trim($(value).text());
-					  if(z==""){
-						  count++;
-					  }
-					});
-
-				if (size == "" || count>0) {
-				} else {
-					$(thisTr).find(".bas_td_inp_each").val($(thisTr).find(".bas_td_inp_each").val() * 1 + 1);
-					productEachGet(thisTr);
-					if ($(thisTr).find(".bas_td_inp_each").val() > 20) {
-						alert("21개이상은 전화로 문의");
-						$(thisTr).find(".bas_td_inp_each").val(20);
-					}
-				}
-
-			});
+			var aaaa = $(this);
+			basketTake(aaaa);
 		});
 		$(".bas_tr_jq").mouseleave(function() {
 			$(".product_quantity_down").off('click');
@@ -220,6 +141,90 @@
 		}
 
 	});
+	
+	function basketTake(aaaa){
+		var thisTr = aaaa;
+		thisTr.find(".bas_td_sel_size").on("change", function() {
+			var optionSize = thisTr.find(".bas_td_sel_size option").length;
+			var selSize = thisTr.find(".bas_td_sel_size").val();
+			alert(optionSize);
+			alert(selSize);
+			thisTr.find(".bas_td_sel_color").css("display", "none");
+			thisTr.find(".bas_td_sel_color[name=" + selSize + "]").css("display", "inline-block");
+		});
+
+		thisTr.find(".btn_fix").on("click", function() {
+			if ($(thisTr).find(".bas_td_inp_each").val() == 0) {
+				alert("수량을 1개이상 입력해주세요")
+			} else {
+				var selSize = thisTr.find(".bas_td_sel_size").val();
+				var selColor = thisTr.find(".bas_td_sel_color[name=" + selSize + "]").val();
+				var each = thisTr.find(".bas_td_inp_each").val();
+				var basket_num = thisTr.find(".td_inh_bas_num").val();
+				var product_num = thisTr.find(".bas_td_hid_pronum").val();
+
+
+				$("#basket_num").val(basket_num);
+				$("#product_num").val(product_num);
+				$("#basketInfo_size").val(selSize);
+				$("#basketInfo_color").val(selColor);
+				$("#basketInfo_each").val(each);
+				if ($("#basketInfo_each").val() > 0) {
+					$("#basketFixFrm").submit();
+				}
+			}
+
+		});
+
+		thisTr.find(".bas_td_inp_each").focus(function() {
+			$(this).change(function() {
+				numcheck();
+				if ($(this).val() > 0) {
+					numcheck();
+					productEachGet(thisTr);
+				} else {
+					numcheck();
+					$(this).val(1);
+				}
+			});
+			$(this).keyup(function() {
+				numcheck();
+			});
+			$(this).keydown(function() {
+				numcheck();
+			});
+		});
+		$(".product_quantity_down").click(function() { //수량감소
+			if ($(thisTr).find(".bas_td_inp_each").val() == 0) {
+			} else {
+				$(thisTr).find(".bas_td_inp_each").val($(thisTr).find(".bas_td_inp_each").val() * 1 - 1);
+			}
+
+		});
+
+		$(thisTr).find(".product_quantity_up").click(function() { //수량증가
+			var color = $(thisTr).find(".bas_td_sel_color");
+			var size = $(thisTr).find(".bas_td_sel_size").text();
+			var count = 0;
+			$.each(color, function( key, value ) {
+				var z = $.trim($(value).text());
+				  if(z==""){
+					  count++;
+				  }
+				});
+
+			if (size == "" || count>0) {
+			} else {
+				$(thisTr).find(".bas_td_inp_each").val($(thisTr).find(".bas_td_inp_each").val() * 1 + 1);
+				productEachGet(thisTr);
+				if ($(thisTr).find(".bas_td_inp_each").val() > 20) {
+					alert("21개이상은 전화로 문의");
+					$(thisTr).find(".bas_td_inp_each").val(20);
+				}
+			}
+
+		});
+	}
 	function productEachGet(thisTr) {
 		var product_num = thisTr.find(".bas_td_hid_pronum").val();
 		var selSize = thisTr.find(".bas_td_sel_size").val();

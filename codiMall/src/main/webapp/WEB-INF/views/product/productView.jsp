@@ -137,7 +137,7 @@
 		    		alert("재고초과");
 		    		$("#inp_each").val(as*1);
 		    	}else{
-		    		if($("#inp_each").val()*1>20){	
+		    		if($("#inp_each").val()*1>21){	
 						$("#inp_each").val(20*1);
 						alert("21개이상은 전화로 문의");
 					}

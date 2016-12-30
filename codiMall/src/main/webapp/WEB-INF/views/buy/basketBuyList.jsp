@@ -78,6 +78,8 @@
 					var xxx = "";
 					$.each($(".cl_member_addrad"), function(key, value) {
 						if (key == $(".cl_member_addrad").length * 1 - 1) {
+							alert("key---"+key);
+							alert("addr each_val()"+$(value).val());
 							xxx = xxx + $(value).val();
 						} else {
 							xxx = xxx + $(value).val() + '_-_';
@@ -110,6 +112,8 @@
 					var xxx = "";
 					$.each($(".cl_member_addr2ad"), function(key, value) {
 						if (key == $(".cl_member_addr2ad").length * 1 - 1) {
+							alert("key---"+key);
+							alert("addr each_val()"+$(value).val());
 							xxx = xxx + $(value).val();
 						} else {
 							xxx = xxx + $(value).val() + '_-_';
