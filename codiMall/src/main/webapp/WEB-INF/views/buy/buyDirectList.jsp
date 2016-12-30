@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,12 +46,101 @@
 <script type="text/javascript">
 	$(function() {
 		buyConfirm();
+		addrCheck();
+		payInfoShow('credit');
 
 	});
 
+	function addrCheck() {
+		var count = $(".cl_radio_addr:checked").val();
+		if (count == 1) {
+			$(".cl_member_addr").css('display', 'inline-block');
+			$(".cl_member_addr2").css('display', 'none');
+		} else {
+			$(".cl_member_addr").css('display', 'none');
+			$(".cl_member_addr2").css('display', 'inline-block');
+		}
+		$(".cl_radio_addr").click(function() {
+			var count = $(".cl_radio_addr:checked").val();
+			if (count == 1) {
+				$(".cl_member_addr").css('display', 'inline-block');
+				$(".cl_member_addr2").css('display', 'none');
+			} else {
+				$(".cl_member_addr").css('display', 'none');
+				$(".cl_member_addr2").css('display', 'inline-block');
+			}
+		});
+	}
+
 	function buyConfirm() {
 		$("#btn_buy").click(function() {
-			$("#buy_form_aa").submit();
+			var count = $(".cl_radio_addr:checked").val();
+			var nullcount = -1;
+			var checkcount = 0;
+			if (count == 1) {
+				$.each($(".cl_member_addrad"), function(key, value) {
+					alert($(value).val());
+					if ($(value).val() == "") {
+						nullcount++;
+					}
+				});
+
+				if ($(".cl_pilsu_checkbox:checked").length != 2) {
+					checkcount++
+				}
+				alert(nullcount);
+				if (nullcount > 0 && checkcount > 0) {
+					alert("모두 입력해 주세요");
+					alert("약관을 체크해 주세요");
+				} else if ( 0 >= nullcount  && checkcount > 0) {
+					alert("약관을 체크해 주세요");
+				} else if(nullcount > 0 && checkcount ==0){
+					alert("모두 입력해 주세요");
+				}else if(nullcount <= 0 && checkcount ==0){
+					var xxx = "";
+					$.each($(".cl_member_addrad"), function(key, value) {
+						if (key == $(".cl_member_addrad").length * 1 - 2) {
+							xxx = xxx + $(value).val();
+						} else {
+							xxx = xxx + $(value).val() + '_-_';
+						}
+					});
+					$("#inh_buyStateAddr").val(xxx);
+					alert($("#inh_buyStateAddr").val());
+					$("#buy_form_aa").submit();
+				}
+			} else {
+				$.each($(".cl_member_addr2ad"), function(key, value) {
+					alert($(value).val());
+					if ($(value).val() == "") {
+						nullcount++;
+					}
+				});
+				if ($(".cl_pilsu_checkbox:checked").length != 2) {
+					checkcount++
+				}
+				alert(nullcount);
+				if (nullcount > 0 && checkcount > 0) {
+					alert("모두 입력해 주세요");
+					alert("약관을 체크해 주세요");
+				} else if ( 0 >= nullcount  && checkcount > 0) {
+					alert("약관을 체크해 주세요");
+				} else if(nullcount > 0 && checkcount ==0){
+					alert("모두 입력해 주세요");
+				}else if(nullcount <= 0 && checkcount ==0){
+					var xxx = "";
+					$.each($(".cl_member_addr2ad"), function(key, value) {
+						if (key == $(".cl_member_addr2ad").length * 1 - 2) {
+							xxx = xxx + $(value).val();
+						} else {
+							xxx = xxx + $(value).val() + '_-_';
+						}
+					});
+					$("#inh_buyStateAddr").val(xxx);
+					alert($("#inh_buyStateAddr").val());
+					$("#buy_form_aa").submit();
+				}
+			}
 		})
 	}
 
@@ -62,6 +153,15 @@
 				document.getElementById('post1').value = data.postcode;
 				document.getElementById('addr').value = data.address;
 				document.getElementById('addr2').focus();
+			}
+		}).open();
+	}
+	function openDaumPostcode2() {
+		new daum.Postcode({
+			oncomplete : function(data) {
+				document.getElementById('ppost1').value = data.postcode;
+				document.getElementById('aaddr').value = data.address;
+				document.getElementById('aaddr2').focus();
 			}
 		}).open();
 	}
@@ -190,54 +290,91 @@
 						<ul class="box_receiver_info list-inline">
 							<li class="info_tit">배송지 선택</li>
 							<li class="cell_discount_detail"><label class="box_choice">
-									<input type="radio" id="address_old" name="adress_chk"
-									onclick=""> 기본 배송지(구매자 정보)
-							</label> <label class="box_choice"> <input type="radio"
-									id="address_new" name="adress_chk" onclick=""> 새로운 배송지
+									<input type="radio" id="address_old" class="cl_radio_addr"
+									name="adress_chk" value="1" onclick="" checked="checked">
+									기본 배송지(구매자 정보)
+							</label> <label class="box_choice"> <input class="cl_radio_addr"
+									type="radio" value="2" id="address_new" name="adress_chk"
+									onclick=""> 새로운 배송지
 							</label></li>
 						</ul>
 						<hr class="divide_hr">
 						<ul class="box_receiver_info list-inline">
 							<li class="info_tit">수령인 / 배송지명</li>
 							<li class="cell_discount_detail2 order_address_form box_receiver">
-								<input type="text" name="receiver"
-								class="form-control info_name">
+								<input type="text" value="${sessionScope.member.name}"
+								name="receiver"
+								class="form-control info_name cl_member_addr cl_member_addrad">
+								<input type="text" value="" name="receiver"
+								class="form-control info_name cl_member_addr2 cl_member_addr2ad">
 							</li>
 						</ul>
 						<hr class="divide_hr">
 						<ul class="box_receiver_info list-inline">
 							<li class="info_tit">전화번호</li>
 							<li style="margin-top: 5px;"><select
-								class="form-control input-group-addon" id="tel0" name="tel0"
+								class="form-control input-group-addon cl_member_addr cl_member_addrad"
+								id="tel0" name="tel0"
+								style="height: 34px; background-color: white; display: inline-block; float: left; width: 50px;">
+									<option value="SKT"
+										<c:if test="${sessionScope.member.tel0 == SKT}">selected="selected"</c:if>>SKT</option>
+									<option value="KT"
+										<c:if test="${sessionScope.member.tel0 == KT}">selected="selected"</c:if>>KT</option>
+									<option value="LGU"
+										<c:if test="${sessionScope.member.tel0 == LGU}">selected="selected"</c:if>>LGU</option>
+							</select><select
+								class="form-control input-group-addon cl_member_addr2 cl_member_addr2ad"
+								id="tel0" name="tel0"
 								style="height: 34px; background-color: white; display: inline-block; float: left; width: 50px;">
 									<option value="SKT">SKT</option>
 									<option value="KT">KT</option>
 									<option value="LGU">LGU</option>
-							</select> <input type="tel" class="form-control decorative-input"
+							</select> <input type="tel"
+								class="form-control decorative-input cl_member_addr cl_member_addrad"
 								id="tel1" name="tel1" maxlength="11"
 								placeholder="'-' 없이 입력해주세요." onkeyup="telCheck()"
-								style="height: 34px; width: 200px; background-position: right -145px;">
-							</li>
+								style="height: 34px; width: 200px; background-position: right -145px;"
+								value="${sessionScope.member.tel1}"><input type="tel"
+								class="form-control decorative-input cl_member_addr2 cl_member_addr2ad"
+								id="tel1" name="tel1" maxlength="11"
+								placeholder="'-' 없이 입력해주세요." onkeyup="telCheck()"
+								style="height: 34px; width: 200px; background-position: right -145px;"
+								value=""></li>
 						</ul>
 						<hr class="divide_hr">
 						<ul class="box_receiver_info list-inline">
 							<li class="info_tit" style="vertical-align: top;">배송지 주소</li>
 							<li><input type="text" id="post1"
-								class="address form-control" readonly="readonly"
-								name="m_zipcode" size="10" style="width: 200px; float: left;">
-								<input type="button" onclick="openDaumPostcode()"
-								value="우편번호 찾기" class="btn btn-default" style="float: right;"><br>
-								<input type="text" id="addr" class="address form-control"
-								readonly="readonly" name="a1" style="width: 250px; float: left;"><input
-								type="text" id="addr2" class="address form-control" name="a2"
-								style="width: 300px;"><br></li>
+								class="address form-control cl_member_addr" readonly="readonly"
+								name="m_zipcode" size="10" style="width: 200px;"> <input
+								type="button" onclick="openDaumPostcode()" value="우편번호 찾기"
+								class="btn btn-default cl_member_addr" style=""> <br
+								class="cl_member_addr"> <input type="text" id="addr"
+								class="address form-control cl_member_addr cl_member_addrad"
+								value="${fn:substring(member.address,0,fn:indexOf(member.address,'_-_'))}"
+								readonly="readonly" name="a1" style="width: 250px;"> <c:set
+									var="addd2"
+									value="${fn:substring(member.address,fn:indexOf(member.address,'_-_')+3,fn:length(member.address)) }" /><br
+								class="cl_member_addr"> <input type="text" id="addr2"
+								class="address form-control cl_member_addr cl_member_addrad"
+								name="a2" value="${addd2}" style="width: 300px;"> <input
+								type="text" id="ppost1"
+								class="address form-control cl_member_addr2" readonly="readonly"
+								name="m_zipcode" size="10" style="width: 200px; display: none;">
+								<input type="button" onclick="openDaumPostcode2()"
+								value="우편번호 찾기" class="btn btn-default cl_member_addr2"
+								style="display: none;"><br class="cl_member_addr2">
+								<input type="text" id="aaddr"
+								class="address form-control cl_member_addr2 cl_member_addr2ad"
+								value="" readonly="readonly" name="aa1"
+								style="display: none; width: 250px;"><br
+								class="cl_member_addr2"> <input type="text" id="aaddr2"
+								class="address form-control cl_member_addr2 cl_member_addr2ad"
+								name="aa2" value="" style="display: none; width: 300px;">
+								<br></li>
 						</ul>
 						<hr class="divide_hr">
-						<ul class="box_receiver_info list-inline">
-							<li class="info_tit" style="vertical-align: top;">배송메모</li>
-							<li><textarea rows="" cols="90" class="form-control"></textarea>
-							</li>
-						</ul>
+
 					</div>
 				</div>
 				<div class="payment-info">
@@ -247,8 +384,9 @@
 						<ul class="box_receiver_info list-inline">
 							<li class="info_tit">결제 방법</li>
 							<li class="cell_discount_detail"><label class="box_choice">
-									<input type="radio" id="credit-card" name="paymentType"
-									onclick="payInfoShow('credit')"> 신용 카드
+									<input type="radio" id="credit-card" checked="checked"
+									name="paymentType" onclick="payInfoShow('credit')"> 신용
+									카드
 							</label> <label class="box_choice"> <input type="radio"
 									id="virtual-account" name="paymentType"
 									onclick="payInfoShow('account');"> 가상계좌
@@ -318,48 +456,15 @@
 						</ul>
 						<hr class="divide_hr">
 						<ul class="box_receiver_info list-inline">
-							<li class="info_tit" style="vertical-align: top;">품절 시 처리 방법</li>
-							<li style="width: 800px;"><input type="hidden"
-								id="clm_soldout_type" name="" value="1">
-								<div class="select_cancel" id="claim_refund">
-									<div class="box_claim_order">
-										<div>
-											<label for="refund_radio"> <input type="radio"
-												name="claim_btn" id="refund_radio"
-												style="margin-right: 5px;">REFUND(환불)
-											</label>
-										</div>
-										<p class="box_desc">
-											환불을 선택하시면 별도의 연락 없이<br>선택하신 결제 방법으로 환불해 드립니다.
-										</p>
-									</div>
-								</div>
-								<div class="select_cancel" id="claim_exchange">
-									<div class="box_claim_order">
-										<div>
-											<label for="exchange_radio"> <input type="radio"
-												name="claim_btn" id="exchange_radio"
-												style="margin-right: 5px;">EXCHANGE(교환)
-											</label>
-										</div>
-										<p class="box_desc">
-											교환을 선택하시면 주문자 정보를 통해<br>연락드린 후 교환을 도와드리겠습니다.
-										</p>
-									</div>
-								</div>
-								<p class="box-desc_out">업체 배송 특성상 품절일 가능성이 있습니다. 이에 품절시 고객님이
-									선택하신 방법으로 처리 해드립니다.</p></li>
-						</ul>
-						<hr class="divide_hr">
-						<ul class="box_receiver_info list-inline">
 							<li class="info_tit" style="vertical-align: top;">주문자 동의</li>
 							<li style="width: 800px;"><label> <input
 									type="checkbox" name="all_agree" onclick="CheckAgree();">
 									<span class="font_basic">전체 동의</span>
 							</label>
 								<p class="box_check_agree individual">
-									<label> <input type="checkbox" name="agree_third"
-										checked="checked"> <span>개인정보 제3자 제공 동의(필수)</span>
+									<label> <input class="cl_pilsu_checkbox"
+										type="checkbox" name="agree_third"> <span>개인정보
+											제3자 제공 동의(필수)</span>
 									</label>
 								</p>
 								<p class="box_summary_agree">
@@ -383,8 +488,9 @@
 									: 본 개인정보 공유에 동의하지 않으시는 경우, 동의를 거부할 수 있으며, 이 경우 거래가 제한됩니다.
 								</p>
 								<p class="box_check_agree condition">
-									<label> <input type="checkbox" name="agree_pay">
-										<span>위 상품 정보 및 거래 조건을 확인하였으며, 구매 진행에 동의 합니다.(필수)</span>
+									<label> <input class="cl_pilsu_checkbox"
+										type="checkbox" name="agree_pay"> <span>위 상품 정보
+											및 거래 조건을 확인하였으며, 구매 진행에 동의 합니다.(필수)</span>
 									</label>
 								</p></li>
 						</ul>
@@ -402,7 +508,8 @@
 							name="productEach_color" value="${productEach_color}"> <input
 							type="hidden" name="productEach_each" value="${productEach_each}"><input
 							type="button" value="구매하기" id="btn_buy"
-							class="btn btn-default center-block">
+							class="btn btn-default center-block"> <input
+							type="hidden" name="buyState_address" id="inh_buyStateAddr">
 					</form>
 				</div>
 			</div>

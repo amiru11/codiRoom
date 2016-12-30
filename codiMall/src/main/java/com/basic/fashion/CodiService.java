@@ -17,16 +17,10 @@ public class CodiService {
 	private CodiDAO codiDAO;
 	
 	//코디 리스트
-	public void codiList(int curPage,int perPage, Model model) throws Exception{
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setPerPage(perPage);
-		pageMaker.setCurPage(curPage);
-		pageMaker.makeRow();
-		pageMaker.makePage(codiDAO.codiCount());
+	public void codiList(PageMaker pageMaker, CodiDTO codiDTO, Model model) throws Exception{
 		List<CodiDTO> ar;
-		ar = codiDAO.codiList(pageMaker);
+		ar = codiDAO.codiList(pageMaker, codiDTO);
 		model.addAttribute("list", ar);
-		model.addAttribute("pageing", pageMaker);
 	}
 	
 	//코디 저장
@@ -35,18 +29,14 @@ public class CodiService {
 	}
 	
 	//상품 리스트
-	public List<CodiDTO> codiProductList(PageMaker pageMaker, int kind_num){
-		return codiDAO.codiProductList(pageMaker, kind_num);
+	public List<CodiDTO> codiProductList(int kind_num){
+		return codiDAO.codiProductList(kind_num);
 	}
 	public List<KindDTO> codiKindList(int productSelect_num){
 		return codiDAO.codiKindList(productSelect_num);
 	}
 	public List<ProductSelectDTO> codiSelectList(){
 		return codiDAO.codiSelectList();
-	}
-	//상품 리스트 카운트
-	public int codiProductListCount(int kind_num){
-		return codiDAO.codiProductListCount(kind_num);
 	}
 
 }

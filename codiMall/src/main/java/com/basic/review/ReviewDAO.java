@@ -31,14 +31,6 @@ public class ReviewDAO {
 		List<ReviewDTO> ar =sqlSession.selectList(namespace+"reviewList",rm);
 		return ar;	
 	}
-	//리뷰리스트
-		public List<ReviewDTO> mastReviewList(PageMaker pageMaker){
-			System.out.println("reviewDAO접속");
-			Map<String, Object> rm = new HashMap<>();
-			rm.put("page", pageMaker);
-			List<ReviewDTO> ar =sqlSession.selectList(namespace+"mastReviewList",rm);
-			return ar;	
-		}
 	public int reviewWrite(ReviewDTO reviewDTO) throws Exception{		
 		int result = 0;
 		result = sqlSession.insert(namespace+"reviewWrite", reviewDTO);		

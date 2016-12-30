@@ -37,9 +37,12 @@ public class CodiController {
 	
 	//코디 리스트
 	@RequestMapping(value = "codiList")
-	public void codiList(@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="9") int perPage, Model model){
+	public void codiList(@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="10") int perPage, CodiDTO codiDTO, Model model){
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setPerPage(perPage);
+		pageMaker.setCurPage(curPage);
 		try {
-			codiService.codiList(curPage, perPage, model);
+			codiService.codiList(pageMaker, codiDTO, model);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

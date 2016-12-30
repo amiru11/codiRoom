@@ -190,7 +190,7 @@
 		buystate
 		values
 		(buy_seq.currval,#{productSize_size},#{productEach_color},
-		#{productEach_each},#{total_price},1,0,sysdate,sysdate,0)
+		#{productEach_each},#{total_price},1,0,sysdate,sysdate,#{buyState_address})
 	</insert>
 
 	<select id="SelCurrBuyNum" resultType="int">
@@ -318,7 +318,7 @@
 		insert into buystate
 		values
 		(buy_seq.currval,#{basketListDTO.basketInfo_size},#{basketListDTO.basketInfo_color},
-		#{basketListDTO.basketInfo_each},#{basketListDTO.productInfo_price}/100*(100-#{basketListDTO.productInfo_saleRate})*#{basketListDTO.basketInfo_each},1,0,sysdate,sysdate,0)
+		#{basketListDTO.basketInfo_each},#{basketListDTO.productInfo_price}/100*(100-#{basketListDTO.productInfo_saleRate})*#{basketListDTO.basketInfo_each},1,0,sysdate,sysdate,#{buyState_address})
 	</insert>
 
 	<!-- BasketBuy E -->

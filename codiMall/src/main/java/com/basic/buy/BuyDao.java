@@ -54,12 +54,13 @@ public class BuyDao {
 		return ar2;
 	}
 
-	public Map<String, Object> buyDirect(int total_price, int product_num, String productSize_size,
+	public Map<String, Object> buyDirect(String buyState_address,int total_price, int product_num, String productSize_size,
 			String productEach_color, int productEach_each, MemberDTO memberDTO) {
 		System.out.println("---- non basket buy ---- start ----");
 		List<Integer> ar = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
 		Map<String, Object> map22 = new HashMap<>();
+		map.put("buyState_address", buyState_address);
 		map.put("total_price", total_price);
 		map.put("product_num", product_num);
 		map.put("productSize_size", productSize_size);
@@ -134,7 +135,7 @@ public class BuyDao {
 		return map22;
 	}
 
-	public Map<String, Object> basketBuy(int[] basket_num, MemberDTO memberDTO) {
+	public Map<String, Object> basketBuy(String buyState_address,int[] basket_num, MemberDTO memberDTO) {
 		int buy_num = 0;
 		boolean eachCheck = true;
 		List<Integer> nar = new ArrayList<>();
@@ -189,6 +190,7 @@ public class BuyDao {
 				for (int i = 0; i < ar2.size(); i++) {
 					System.out.println("for" + i);
 					Map<String, Object> map2 = new HashMap<String, Object>();
+					map2.put("buyState_address",buyState_address);
 					map2.put("memberDTO", memberDTO);
 					map2.put("basketListDTO", ar2.get(i));
 					result = result + sqlSession.insert(namespace + "InsBuy", map2);

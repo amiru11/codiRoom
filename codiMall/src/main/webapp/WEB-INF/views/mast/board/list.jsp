@@ -3,60 +3,31 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>        
 <!DOCTYPE html>
 <script>
-$(function(){
-	if(${message ne null}){
-		alert('${message}');
-	}
-});
-</script>
 
-<c:if test="${board_kind ne 4 }">
-<script>
 //전역변수선언
 var editor_object = [];
-
+ 
 nhn.husky.EZCreator.createInIFrame({
-  oAppRef: editor_object,
-  elPlaceHolder: "smarteditor",
-  sSkinURI: "/codi/resources/SE2/SmartEditor2Skin.html", 
-  htParams : {
-      // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-      bUseToolbar : true,             
-      // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-      bUseVerticalResizer : true,     
-      // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-      bUseModeChanger : true, 
-  }
+    oAppRef: editor_object,
+    elPlaceHolder: "smarteditor",
+    sSkinURI: "/codi/resources/SE2/SmartEditor2Skin.html", 
+    htParams : {
+        // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+        bUseToolbar : true,             
+        // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+        bUseVerticalResizer : true,     
+        // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+        bUseModeChanger : true, 
+    }
 });
-</script>	
-								<div class="panel" style="background: #fff; margin-bottom: 30px;">
+
+</script>		
+								<div class="panel" style="background: #fff;    margin-bottom: 30px;">
 									<div class="panel-heading">
 										<a id="subList" class="subBtn btn btn-default btn-lg">
 											<span class="fa fa-list"></span> List
 										</a>
-										<form name="fname" role="search"
-											class="navbar-form navbar-right" style="margin-top: 0;">
-											<select id="boardType" name="type" class="form-control"
-												style="height: 54px; border: 2px solid #30b5e1; border-radius: 6px; color: #30b5e1; font-weight: 600 !important;">
-												<option value="title">TITLE</option>
-												<option value="writer">WRITER</option>
-												<option value="category">CATEGORY</option>
-												<option value="contents">CONTENTS</option>
-											</select>
-								
-											<div class="input-group"
-												style="height: 52px; border: 2px solid #30b5e1; border-radius: 6px; color: #30b5e1; font-weight: 600 !important;">
-												<input type="text" id="boardFind" class="form-control" placeholder="Search for..." name="find" style="height: 52px;"> 
-													<input type="hidden" id="kind_num" name="board_kind" value="${board_kind}"> 
-													<span class="input-group-btn"
-													style="height: 52px; border-left: 2px solid #30b5e1;"> 
-													<a class="btn btn-default" type="button" id="search_btn" onclick="searchBoard();"
-													style="height: 52px; vertical-align: top; padding-top: 18px; color: #30b5e1;">
-														<span class="glyphicon glyphicon-search"></span>
-													</a>
-												</span>
-											</div>
-										</form>
+
 									</div>
 									<!-- boardList:S -->
 									<div class="panel-body">
@@ -76,8 +47,11 @@ nhn.husky.EZCreator.createInIFrame({
 												<c:forEach items="${list}" var="list1" varStatus="i">
 													<tr>
 														<td>${i.count}<%-- ${list.board_num} --%></td>
-														<td>
-															<a id="${list1.board_num}" class="${list1.board_kind}" onclick="goView(this);" style="cursor : pointer;">${list1.board_title}</a>
+														<td><c:forEach begin="1" end="${list1.board_depth}">
+													&nbsp;&nbsp;&nbsp;&nbsp;
+											</c:forEach> <a
+															id="${list1.board_num}" class="${list1.board_kind}" onclick="goView(this);" style="cursor : pointer;">${list1.board_title}</a>
+															
 														</td>
 														<td>${list1.board_category}</td>
 														<td>${list1.board_writer}</td>
@@ -179,72 +153,4 @@ nhn.husky.EZCreator.createInIFrame({
 										</div>
 									</div>
 									<!-- Comment Modal : E -->
-</c:if>
-<c:if test="${board_kind eq 4 }">
-		<div>
-			<div>
-				<select id="productGroup" onchange="listAjax()">
-					<option value="0">전체</option>
-					<option value="1">아우터</option>
-					<option value="2">상의</option>
-					<option value="3">하의</option>
-					<option value="4">가방</option>
-					<option value="5">신발</option>
-				</select>
-			</div>
-			<table class="table">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>TITLE</th>
-					<th>board</th>
-				</tr>
-			</thead>
-			<tbody>
-			<c:forEach items="${list}" var="list">
-				<tr>
-					<td class="product_num">
-						${list.product_num}
-					</td>
-					<td>
-						${list.product_name}
-					</td>
-					<td>
-						<input type="hidden" value="${list.product_num}" name="pnum">
-						<button>1:1문의</button><button class="rv_btn">REVIEW</button>
-					</td>
-				</tr>
-				</c:forEach>
-			</tbody>
-			</table>
-		</div>
-									<!-- PAGINATIOIN:S -->
-									<div class="center-block">
-										<nav aria-label="Page navigation">
-											<ul class="pagination">
-												<li><a href="#" aria-label="Previous"> <span
-														aria-hidden="true">&laquo;</span>
-												</a></li>
-												<li><c:if test="${paging.curBlock > 1}">
-														<a class="N_pageing"
-															href="boardList?curPage=${paging.startNum-1}&perPage=10&board_kind=${board_kind}&productGroup=${productGroup}">&laquo;</a>
-													</c:if></li>
-												<li><c:forEach begin="${paging.startNum}" step="1"
-														end="${paging.lastNum}" var="i">
-														<a class="N_pageing"
-															href="boardList?curPage=${i}&perPage=10&board_kind=${board_kind}&productGroup=${productGroup}">${i}</a>
-							
-													</c:forEach></li>
-												<li><c:if test="${paging.curBlock < paging.totalBlock}">
-														<a class="N_pageing"
-															href="boardList?curPage=${paging.lastNum+1}&perPage=10&board_kind=${board_kind}&productGroup=${productGroup}">&raquo;</a>
-													</c:if></li>
-												<li><a href="#" aria-label="Next"> <span
-														aria-hidden="true">&raquo;</span>
-												</a></li>
-											</ul>
-										</nav>
-									</div>
-									<!-- PAGINATIOIN:E -->
-									</c:if>
 									

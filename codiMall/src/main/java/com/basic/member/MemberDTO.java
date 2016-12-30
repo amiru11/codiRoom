@@ -9,8 +9,16 @@ public class MemberDTO {
 	private String tel0;
 	private String tel1;
 	private int member_level;
+	private String address;
 	
 	
+	
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
 	public int getMember_level() {
 		return member_level;
 	}

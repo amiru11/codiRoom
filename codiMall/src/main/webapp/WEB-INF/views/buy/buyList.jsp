@@ -115,29 +115,3 @@
 						</c:forEach>
 					</table>
 				</form>					
-
-
-<!-- 	<div class="container cart-body">
-		<div class="row">
-			<div class="col-sm-12">
-				<h1 id="cart_title" class="page-heading">Buy List</h1>		
-				<div>
-					<ul class="step list-inline" id="order_step">
-						<li id="buy_tit" class="title_img">TITLE</li>
-						<li id="first_now" class="step-li first">
-							<span>주문 완료</span>
-						</li>
-						<li class="arrow-li"></li>
-						<li id="second_now" class="step-li second">
-							<span> 주문서 작성</span>
-						</li>
-						<li class="arrow-li"></li>
-						<li class="step-li third">
-							<span> 장바구니</span>
-						</li>
-					</ul>
-				</div>				
-
-			</div>
-		</div>
-	</div>	 -->

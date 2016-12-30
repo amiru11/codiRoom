@@ -5,7 +5,7 @@
 	<!-- 회원가입 -->
 	<insert id="memberJoin" parameterType="com.basic.member.MemberDTO">
 		insert into member
-		values(member_seq.nextval,#{id},#{pw},#{name},#{birth},#{gender},#{tel0},#{tel1},#{member_level})
+		values(member_seq.nextval,#{id},#{pw},#{name},#{birth},#{gender},#{tel0},#{tel1},1,'')
 	</insert>
 	
 	<!-- 회원 로그인 -->
@@ -26,6 +26,9 @@
 			</if>
 			<if test="tel1 != null">
 				tel1 = #{tel1},
+			</if>
+			<if test="address != null">
+				address = #{address},
 			</if>
 		</trim>
 		where id=#{id}

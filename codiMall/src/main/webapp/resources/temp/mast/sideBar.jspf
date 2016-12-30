@@ -27,15 +27,20 @@
 					class="carett"></span></a>
 				<ul id="sub-1">
 					<li><a href="boardList">dashboard</a></li>
-					<li><a href="boardList?board_kind=1">Notice</a></li>
+					<li><a href="boardList">Notice</a></li>
 					<li><a href="boardList?board_kind=2">FAQ</a></li>
 					<li><a href="boardList?board_kind=3">QnA</a></li>
-					<li><a href="boardList?board_kind=4">Product Board</a></li>
+					<li><a>Product Board</a></li>
 				</ul></li>
 			<li><a id="goMember" class="side-btn"
 				href="${pageContext.request.contextPath}/mast/mastMember"><span
 					class="fa fa-users"></span><span class="sidebar-title">Member</span></a>
-			</li>
+				<!-- 								<ul id="sub-2">
+									<li><a>dashboard</a></li>
+									<li><a>Member List</a></li>
+									<li><a>write</a></li>
+									<li><a>comment</a></li>
+								</ul> --></li>
 			<li class=""><a id="goProduct" class="side-btn"
 				onclick="gotoggle(3);"><span class="fa fa-shopping-basket "></span><span
 					class="sidebar-title">Product</span></a>

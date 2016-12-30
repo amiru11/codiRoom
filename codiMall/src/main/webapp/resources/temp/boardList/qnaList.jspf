@@ -56,17 +56,17 @@
 							</a></li>
 							<li><c:if test="${paging.curBlock > 1}">
 									<a class="N_pageing"
-										href="findList?curPage=${paging.startNum-1}&perPage=10&board=${board}&type=${type}&find=${find}&board_kind=${board_kind}">&laquo;</a>
+										href="boardList?curPage=${paging.startNum-1}&perPage=10&board=${board}&type=${type}&find=${find}">&laquo;</a>
 								</c:if></li>
 							<li><c:forEach begin="${paging.startNum}" step="1"
 									end="${paging.lastNum}" var="i">
 									<a class="N_pageing"
-										href="findList?curPage=${i}&perPage=10&board=${board}&type=${type}&find=${find}&board_kind=${board_kind}">${i}</a>
+										href="boardList?curPage=${i}&perPage=10&board=${board}&type=${type}&find=${find}">${i}</a>
 		
 								</c:forEach></li>
 							<li><c:if test="${paging.curBlock < paging.totalBlock}">
 									<a class="N_pageing"
-										href="findList?curPage=${paging.lastNum+1}&perPage=10&board=${board}&type=${type}&find=${find}&board_kind=${board_kind}">&raquo;</a>
+										href="boardList?curPage=${paging.lastNum+1}&perPage=10&board=${board}&type=${type}&find=${find}">&raquo;</a>
 								</c:if></li>
 							<li><a href="#" aria-label="Next"> <span
 									aria-hidden="true">&raquo;</span>

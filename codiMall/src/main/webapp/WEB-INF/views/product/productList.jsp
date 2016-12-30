@@ -128,15 +128,17 @@ var requestSubmitted = false;
 		
 	
 		$(".div_cart").click(function() {
-			style="display : none"
 			var product_num = $(this).find(".inh_product_num").val();
 			var productPic_pic = $(this).find(".inh_productPic_pic_val").val();
+			var price = $(this).find(".p_cl_price").html();
 			var xxx = '<table id="modal_tab_right"><tr><td><select id="sel_size"></select></td></tr><tr><td><select id="sel_color" style="display:none"></select>';
-			xxx=xxx+'</td></tr><tr><td><input type="number" value="0" min="1" max="20" step="1" id="inp_each" style="display:none"></select></td></tr></table>'
+			xxx=xxx+'</td></tr><tr><td><input type="number" value="0" min="1" max="20" step="1" id="inp_each" style="display:none"></select></td></tr></table>';
 			$("#modal_div_img_left").html("");
 			$("#modal_div_img_left").append('<img src="'+productPic_pic+'" >');
 			$("#modal_div_tab_right").html("");
 			$("#modal_div_tab_right").append(xxx);
+			$("#modal_div_price").append(price);
+			
 			selSize(product_num);
 			$("#inh_pro_val").val(product_num);
 			$("#sel_color").css('display','none');
@@ -146,18 +148,28 @@ var requestSubmitted = false;
 			$("#btn_basketAdd").css('display','none');
 			
 			$("#sel_size").on('change',function() {
-				alert(123123);
 				if($(this).val()!=""){
 					selColor($("#inh_pro_val").val());
 					$("#sel_color").css('display','inline-block');
+					$("#inp_each").css('display','none');
 				}
 				if($(this).val()==""){
 					$("#sel_color").css('display','none');
+					$("#inp_each").css('display','none');
 				}
+				if($("#sel_color").val()==""){
+					$("#inp_each").css('display','none');
+				}
+				
 				$("#inp_each").val(0);
 				$("#inp_each").css('display','none');
 			});
 			$("#sel_color").on('change',function() {
+				if($(this).val()==""){
+					$("#inp_each").css('display','none');
+				}else{
+					$("#inp_each").css('display','inline-block');
+				}
 				$("#inp_each").val(0);
 				$("#btn_basketAdd").css('display','none');
 			});
@@ -254,7 +266,6 @@ var requestSubmitted = false;
 				});
 				$("#div_hidden_each").html(y);
 				$("#sel_color").html(x);
-				$("#inp_each").css('display','inline-block');
 
 			},
 			error : function(request, status, error) {
@@ -387,9 +398,27 @@ var requestSubmitted = false;
 	float: right;
 }
 
+#modal_tab_right {
+	border: black 3px double;
+}
+
+#modal_tab_right td>select, input {
+	width: 195px;
+	height: 50px;
+	font-size: 25px;
+	font-weight: bold;
+}
+
 #modal_div_tab_right img {
 	width: 190px;
 	height: 190px;
+}
+
+#btn_basketAdd {
+	width: 100%;
+	height: 60px;
+	font-size: 30px;
+	text-align: center;
 }
 </style>
 
@@ -554,6 +583,23 @@ var requestSubmitted = false;
 										data-toggle="modal" data-target="#basketModal"
 							data-backdrop="true"
 										</c:if>>
+											<p class="p_cl_price" style="display: none;">
+												<span> <fmt:formatNumber
+														value="${list1.productInfoDTO.productInfo_price}"
+														currencySymbol="" type="currency" />원
+												</span>
+												<c:if
+													test="${list1.productInfoDTO.productInfo_saleRate > 0  }">
+													<strong style="color: #b5172e;">→<c:set
+															var="number"
+															value="${list1.productInfoDTO.productInfo_price*(100-list1.productInfoDTO.productInfo_saleRate)/100}" />
+														<fmt:parseNumber var="total" value="${number}"
+															type="number" integerOnly="true" /> <fmt:formatNumber
+															value="${total}" pattern="#,###" />
+														원(${list1.productInfoDTO.productInfo_saleRate}%)
+													</strong>
+												</c:if>
+											</p>
 											<input type="hidden" value="${list1.productDTO.product_num}"
 												class="inh_product_num" name="product_num"> <input
 												type="hidden" class="inh_productPic_pic_val"
@@ -619,21 +665,13 @@ var requestSubmitted = false;
 				</div>
 				<input type="hidden" value="" id="inh_pro_val">
 				<div class="modal-body div_img_in"
-					style="padding: 10px; height: 300px; background-color: red;">
+					style="padding: 10px; height: 300px;">
 					<div id="modal_div_img_left"></div>
 					<div id="modal_div_tab_right"></div>
-
-
+					<div id="modal_div_price"></div>
+					<button id="btn_basketAdd" style="display: none;">장바구니 추가</button>
 				</div>
-				<div class="modal-body2">
-				</div>
-				<div class="modal-body3">
-				</div>
-				<div class="modal-body3">
-					<input type="number" id="inp_each" value="1" min="1" step="1"
-						style="display: none;"><br> <input id="btn_basketAdd"
-						type="button" value="장바구니 추가" style="display: none;">
-				</div>
+				<div class="modal-body3"></div>
 
 				<div id="div_hidden_each"></div>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

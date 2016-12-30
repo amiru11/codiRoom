@@ -24,8 +24,6 @@ import com.basic.board.BoardDTO;
 import com.basic.board.PhotoDTO;
 import com.basic.mast.MastService;
 import com.basic.member.MemberDTO;
-import com.basic.review.ReviewDTO;
-import com.basic.review.ReviewService;
 
 @Controller
 @RequestMapping(value="/mast")
@@ -33,8 +31,6 @@ public class MastController {
 
 	@Autowired
 	private MastService mastService;
-	@Autowired
-	private ReviewService reviewService;
 	
 	
 	
@@ -65,44 +61,16 @@ public class MastController {
 	//사이드메뉴에서 게시판 메뉴 클릭시//
 	@RequestMapping(value="/boardList")
 	public String boardList(@RequestParam(defaultValue="1") int curPage, 
-			@RequestParam(defaultValue="10") int perPage,@RequestParam int board_kind,Model model,@RequestParam(defaultValue="0")int productGroup){
-			System.out.println("pagelist접속 ");
-			System.out.println("board_kind :"+ board_kind);
-			System.out.println("productGroup :"+ productGroup);
-			model.addAttribute("curPage", curPage);
+			@RequestParam(defaultValue="10") int perPage, @RequestParam(defaultValue="1") int board_kind,Model model){
 			model.addAttribute("board_kind", board_kind);
-
 		return "mast/board/mastBoard";
-
 	}
 	//subMenu로 이동시//
 	@RequestMapping(value="/resultBoard")
-	public String resultBoard(@RequestParam(defaultValue="") String type, @RequestParam(defaultValue="") String find, @RequestParam(defaultValue="1") int curPage,
-			@RequestParam(defaultValue="10") int perPage, @RequestParam int board_kind, Model model,@RequestParam(defaultValue="0")int productGroup){
-		System.out.println("관리자게시판 컨트롤 접속");
-		try {
-			mastService.findList(productGroup,type, find, curPage, perPage, board_kind, model);
-			System.out.println("BOARD SEARCH");
-			System.out.println("BOARD KIND : " +board_kind);
-			System.out.println("TYPE : "+type);
-			System.out.println("FIND : "+find);
-			System.out.println(curPage);
-			System.out.println(perPage);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-		
-		String path = "";
-		path = "mast/board/list";
-		return path;
-	}
-	
-	//글검색//
-	@RequestMapping(value="/searchList")
-	public String searchList(@RequestParam(defaultValue="") String type, @RequestParam(defaultValue="") String find, @RequestParam(defaultValue="1") int curPage, 
+	public String resultBoard(@RequestParam(defaultValue="") String type, @RequestParam(defaultValue="") String find, @RequestParam(defaultValue="1") int curPage, 
 			@RequestParam(defaultValue="10") int perPage, @RequestParam int board_kind, Model model){
 		try {
-			mastService.searchList(type, find, curPage, perPage, board_kind, model);
+			mastService.findList(type, find, curPage, perPage, board_kind, model);
 			System.out.println("BOARD SEARCH");
 			System.out.println("BOARD KIND : " +board_kind);
 			System.out.println("TYPE : "+type);
@@ -115,7 +83,6 @@ public class MastController {
 		path = "mast/board/list";
 		return path;
 	}
-	
 	//글보기//
 	@RequestMapping(value="/boardView")
 	public String boardView(BoardDTO boardDTO, int board_kind, Model model){
@@ -180,9 +147,9 @@ public class MastController {
 			String defaultPath = session.getServletContext().getRealPath("/");
 			//파일 상세경로
 			String path = defaultPath + "resources" + File.separator + "upload"; //separator는 구분자!!
-			
+
 			File file = new File(path);
-			
+
 			//디렉토리 존재하지 않을 경우, 디렉토리 생성
 			if(!file.exists()){
 				file.mkdirs();
@@ -203,31 +170,6 @@ public class MastController {
 		}
 		return "redirect:" + callback + "?callback_func=" + callback_func + file_result;
 	}
-	@RequestMapping(value="/reviewList")
-	public String reviewList(ReviewDTO reviewDTO,Model model ,@RequestParam(defaultValue="1") int curPage,@RequestParam(defaultValue="10")int perPage,String board_kind){
-		System.out.println("review컨트롤러접속");
-		System.out.println("review_product"+reviewDTO.getReview_product());
-		model.addAttribute("review_product",reviewDTO.getReview_product());
-		model.addAttribute("board_kind", board_kind);
-		reviewService.reviewList(reviewDTO, curPage, perPage, model);
-		return "mast/mastReview";
-	}
-	@RequestMapping(value="/review")
-	public String review(ReviewDTO reviewDTO,Model model){
-		System.out.println("관리자리뷰 접속");
-		System.out.println("review_num :"+reviewDTO.getReview_num());
-		System.out.println("review_product :"+reviewDTO.getReview_product());
-		reviewService.review(model, reviewDTO);
-		return"mast/mastReview_View";
-	}
-	@RequestMapping(value="reviewDelete")
-	public String reviewDelete(ReviewDTO reviewDTO,RedirectAttributes ra,int productGroup,int board_kind){
-		String message= reviewService.reviewDel(reviewDTO);
-		ra.addFlashAttribute("message", message);
-		return "redirect:/mast/reviewList?productGroup="+productGroup+"&board_kind="+board_kind;
-	}
-
-
 	
 	//QNA답글 리스트//
 	@RequestMapping(value="/mastCommList")
@@ -263,22 +205,6 @@ public class MastController {
 		
 		return path;
 	}
-	
-	//회원수정//
-	@RequestMapping(value="/mastMemberUpdate")
-	public String memberUpdate(@RequestParam String id, @RequestParam int member_level, RedirectAttributes ra){
-		String message = "";
-		try {
-			message = mastService.memberUpdate(id, member_level);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		String path = "mast/mastMemberList";
-		ra.addFlashAttribute("message", message);
-		System.out.println(message);
-		return "redirect:/"+path;		
-	}
-	
 	//회원삭제
 	@RequestMapping(value="/mastMemberDelete")
 	public String memberDelete(@RequestParam String id, RedirectAttributes ra){

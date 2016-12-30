@@ -25,11 +25,25 @@ import com.basic.buy.BuyService;
 import com.basic.member.MemberDTO;
 
 @Controller
-@RequestMapping(value = "buy")
+@RequestMapping(value = "/buy")
 public class BuyController {
 
 	@Autowired
 	private BuyService buyService;
+	@RequestMapping(value = "/buyListN", method = RequestMethod.GET)
+	public String buyListN(HttpSession session, Model model, RedirectAttributes ra) {
+		String message = "";
+		String path = "";
+		if (session.getAttribute("member") != null) {
+			model.addAttribute("list", buyService.buyList(session));
+			path = "/buy/buyList";
+		} else {
+			message = "로그인하세요";
+			path = "redirect:/";
+			ra.addFlashAttribute("message", message);
+		}
+		return path;
+	}
 
 	@RequestMapping(value = "/buyList", method = RequestMethod.GET)
 	public String buyList(HttpSession session, Model model, RedirectAttributes ra) {
@@ -86,13 +100,13 @@ public class BuyController {
 
 	@RequestMapping(value = "/buyDirect", method = RequestMethod.POST)
 	public String nonBasketBuy(@RequestParam(defaultValue="0")double total_price,@RequestParam(defaultValue="0")int product_num, String productSize_size, String productEach_color,
-			@RequestParam(defaultValue="0")int productEach_each, HttpSession session, RedirectAttributes ra,Model model) {
+			@RequestParam(defaultValue="0")int productEach_each,String buyState_address, HttpSession session, RedirectAttributes ra,Model model) {
 		List<BuyListDTO> ar = new ArrayList<>();
 		String message = "";
 		String path = "redirect:/result/result";
 		String location = "";
-		if (session.getAttribute("member") != null && product_num!=0 && productSize_size !=null && productEach_color != null && productEach_each !=0 && total_price !=0) {
-			Map<String, Object> map22 = buyService.buyDirect((int)total_price,product_num,productSize_size,productEach_color,productEach_each,(MemberDTO) session.getAttribute("member"));
+		if (session.getAttribute("member") != null && product_num!=0 && productSize_size !=null && productEach_color != null && productEach_each !=0 && total_price !=0 && buyState_address != null) {
+			Map<String, Object> map22 = buyService.buyDirect(buyState_address,(int)total_price,product_num,productSize_size,productEach_color,productEach_each,(MemberDTO) session.getAttribute("member"));
 			ar = (List<BuyListDTO>) map22.get("ar");
 			System.out.println("cont"+ar);
 			System.out.println(map22.get("message"));
@@ -110,7 +124,7 @@ public class BuyController {
 				System.out.println(ar.get(0).getBuyState_color());
 				model.addAttribute("message", map22.get("message"));
 				model.addAttribute("list",map22.get("ar"));
-				path = "/buy/buyList";
+				path = "/buy/buyListN";
 			}
 			
 			ra.addFlashAttribute("message", message);
@@ -124,18 +138,18 @@ public class BuyController {
 
 	// 주문완료페이지로 가게 바꾸겠습니다~
 	@RequestMapping(value = "/basketBuy", method = RequestMethod.POST)
-	public String basketBuy(int[] basket_num, HttpSession session, RedirectAttributes ra,Model model) {
+	public String basketBuy(String buyState_address,int[] basket_num, HttpSession session, RedirectAttributes ra,Model model) {
 		Map<String, Object> map = new HashMap<>();
 		ArrayList<BuyListDTO> ar = new ArrayList<>();
 		String message = "";
 		String path = "";
 		String location = "";
 		if (session.getAttribute("member") != null) {
-			map = buyService.basketBuy(basket_num, (MemberDTO) session.getAttribute("member"));
+			map = buyService.basketBuy(buyState_address,basket_num, (MemberDTO) session.getAttribute("member"));
 			ar=(ArrayList<BuyListDTO>) map.get("ar");
 			System.out.println(map.get("message"));
 			if(ar!=null){
-			path = "/buy/buyList";
+			path = "/buy/buyListN";
 			
 			model.addAttribute("message", map.get("message"));
 			model.addAttribute("list",ar);

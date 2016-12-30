@@ -32,13 +32,13 @@ public class BuyService {
 		return buyDao.buyDirectList(product_num);
 	}
 	
-	public Map<String, Object> buyDirect(int total_price,int product_num, String productSize_size, String productEach_color,int productEach_each,MemberDTO memberDTO){
-		return buyDao.buyDirect(total_price,product_num,productSize_size,productEach_color,productEach_each, memberDTO);
+	public Map<String, Object> buyDirect(String buyState_address,int total_price,int product_num, String productSize_size, String productEach_color,int productEach_each,MemberDTO memberDTO){
+		return buyDao.buyDirect(buyState_address,total_price,product_num,productSize_size,productEach_color,productEach_each, memberDTO);
 	}
 
 
-	public Map<String, Object> basketBuy(int[] basket_num,MemberDTO memberDTO){
-		return buyDao.basketBuy(basket_num,memberDTO);
+	public Map<String, Object> basketBuy(String buyState_address,int[] basket_num,MemberDTO memberDTO){
+		return buyDao.basketBuy(buyState_address,basket_num,memberDTO);
 	}
 	
 	public String cancelBuy(int buy_num){

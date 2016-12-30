@@ -25,7 +25,6 @@ import com.basic.product.ProductDTO;
 import com.basic.product.ProductEachDTO;
 import com.basic.product.ProductEachListDTO;
 import com.basic.product.ProductService;
-import com.basic.util.PageMaker;
 
 @Controller
 @RequestMapping(value = "/json")
@@ -199,15 +198,9 @@ public class JsonController {
 	
 	//codi-----------------------------------------------------------------------------
 	@RequestMapping(value="/codiProductList")
-	public Map<String, Object> codiProductList(@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="6") int perPage, @RequestParam int kind_num){
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setPerPage(perPage);
-		pageMaker.setCurPage(curPage);
-		pageMaker.makeRow();
-		pageMaker.makePage(codiService.codiProductListCount(kind_num));
+	public Map<String, Object> codiProductList(int kind_num){
 		Map<String, Object> retVal = new HashMap<String, Object>();
-		retVal.put("ar", codiService.codiProductList(pageMaker, kind_num));
-		retVal.put("pageing", pageMaker);
+		retVal.put("ar", codiService.codiProductList(kind_num));
 		return retVal;
 	}
 

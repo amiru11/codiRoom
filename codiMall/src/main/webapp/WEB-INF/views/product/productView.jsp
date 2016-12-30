@@ -25,6 +25,7 @@
 		productViewAllEachCheck();
 		qnaList();
 		reviewList();
+
 		$("#sel_size_a").change(function(){
 			if($("#sel_size_a").val()!=""){
 				$("#buttonSet").css("display","none");
@@ -63,7 +64,10 @@
 			selEach(product_num,productSize_size,productEach_color);
 		});
 
+		<c:if test="${!empty sessionScope.member}">
+
 		$("#btn_basket").click(function(){
+
 			if($("#sel_size_b").val()!=null && $("#sel_size_a").val()!=null ){
 				if($("#inp_each").val()>0){
 					$.ajax({
@@ -94,7 +98,8 @@
 				alert("color 선택하세요");
 			}
 		});
-		
+		</c:if>
+		<c:if test="${!empty sessionScope.member}">
 		$("#btn_buy").click(function(){
 			if($("#sel_size_b").val()!=null && $("#sel_size_a").val()!=null ){
 				if($("#inp_each").val()>0){
@@ -110,6 +115,7 @@
 				alert("color 선택하세요");
 			}
 		});
+		</c:if>
 		
 			
 		$(".product_quantity_down").click(function(){//수량감소
@@ -259,10 +265,6 @@
 		    success: function(data) {
 		    	console.log(data);
 		    	$("#qna").html(data.trim());
-		    	$(".del").click(function () {
-					var aa=$(this).parent().find('input[name=delnum]').val();
-					
-				});
 		    },
 		    error:function(request,status,error){
 		        console.log("code:"+request.status+"\n"+"error:"+error);
@@ -349,7 +351,6 @@
 	}
 	
 	
-	
 	//작은 이미지를 큰 이미지로//
 	var currentImageIdx = 0;
 	if (currentImageIdx == "") {
@@ -429,7 +430,7 @@
 									alt="thum" width="100" id="thum_0" big_yn="N"
 									style="display: inline-block; vertical-align: middle"><span
 									class="vertical_standard"></span></li>
-					
+
 							</ul>
 							<!--//상품 썸네일-->
 						</div>
@@ -524,8 +525,16 @@
 									<fieldset class="fieldset_list clearfix" id="buttonSet"
 										style="display: none;">
 										<div class="attribute_list">
-											<a id="btn_buy" class="btn btn-default" type="button">BUY</a>
-											<a id="btn_basket" class="btn btn-default" type="button">BASKET</a>
+											<a id="btn_buy" class="btn btn-default" type="button"
+												<c:if test="${empty sessionScope.member}">
+										data-toggle="modal" data-target="#loginModal"
+							data-backdrop="true"
+										</c:if>>BUY</a>
+											<a id="btn_basket" class="btn btn-default" type="button"
+												<c:if test="${empty sessionScope.member}">
+										data-toggle="modal" data-target="#loginModal"
+							data-backdrop="true"
+										</c:if>>BASKET</a>
 										</div>
 									</fieldset>
 								</div>
@@ -570,19 +579,10 @@
 						<span>상품문의</span>
 						<div id="qna"></div>
 					</div>
-<<<<<<< HEAD
 					<div id="e">
 						<h3>상품리뷰</h3>
 						<div id="review"></div>
 					</div>
-=======
-						<div id="e">
-							<h3>상품리뷰</h3>
-							<br>
-							<br>
-							<div id="review"></div>
-						</div>
->>>>>>> refs/heads/sub
 				</div>
 			</div>
 		</div>
