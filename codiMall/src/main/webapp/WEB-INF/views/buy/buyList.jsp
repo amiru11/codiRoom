@@ -55,7 +55,7 @@
 </script>
 
 
-				<h2>주문/배송</h2>			
+				<h2>주문/배송</h2>		
 				<form id="tab_form" method="post">
 					<table class="table cart-table">
 						<tr>
@@ -110,7 +110,15 @@
 									구매완료
 										<a href="https://www.doortodoor.co.kr/parcel/doortodoor.do?fsp_action=PARC_ACT_002&fsp_cmd=retrieveInvNoACT&invc_no=${list1.buyState_expressNum}" target="_blank"><input class="btn_adress_num" type="button" value="송장번호">
 										</a>				
-									</c:if></td>
+									</c:if>
+									<c:if test="${5 == list1.buyState_state }">
+									환불중
+											
+									</c:if>
+									<c:if test="${6 == list1.buyState_state }">
+									환불완료			
+									</c:if>
+									</td>
 							</tr>
 						</c:forEach>
 					</table>

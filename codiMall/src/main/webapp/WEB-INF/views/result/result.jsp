@@ -5,10 +5,14 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
-	var message = "${message}"
+	var message = "${message}";
 	if (message != "") {
 		alert(message);
-		location.href="${pageContext.request.contextPath}${location}"
+		var x="${pageContext.request.contextPath}${location}";
+		<c:if test="${buyList == 1}">
+		x=x+"?buyList=1"
+		</c:if>
+		location.href=x;
 	} else {
 		alert("잘못된접근");
 		location.href="${pageContext.request.contextPath}/"

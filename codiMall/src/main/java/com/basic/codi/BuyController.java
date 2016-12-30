@@ -179,8 +179,9 @@ public class BuyController {
 
 		if (session.getAttribute("member") != null && buy_num != 0) {
 			message = buyService.cancelBuy(buy_num);
-			location = "/buy/buyList";
+			location = "/member/myPage";
 			ra.addFlashAttribute("message", message);
+			ra.addFlashAttribute("buyList", 1);
 			ra.addFlashAttribute("location", location);
 		} else {
 		}
@@ -194,8 +195,9 @@ public class BuyController {
 
 		if (session.getAttribute("member") != null && buy_num != 0) {
 			message = buyService.buyConfirm(buy_num);
-			location = "/buy/buyList";
+			location = "/member/myPage";
 			ra.addFlashAttribute("message", message);
+			ra.addFlashAttribute("buyList", 1);
 			ra.addFlashAttribute("location", location);
 		} else {
 		}
