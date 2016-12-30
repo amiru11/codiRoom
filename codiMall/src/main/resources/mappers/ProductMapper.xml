@@ -72,7 +72,7 @@
 			javaType="java.lang.String" />
 		<result column="productInfo_brand" property="productInfo_brand"
 			javaType="java.lang.String" />
-			<result column="productPic_pic" property="productPic_pic"/>
+		<result column="productPic_pic" property="productPic_pic" />
 		<result column="kind_num" property="kind_num" javaType="int" />
 	</resultMap>
 	<!-- PRODUCTVIEW DTO E -->
@@ -116,11 +116,13 @@
 	<!-- productView All Each 0 maazin check S -->
 	<select id="SelProductViewAllEach" parameterType="int"
 		resultType="int">
-		select count(*) from productEach where product_num=#{product_num}
+		select count(*) from productEach where
+		product_num=#{product_num}
 	</select>
 	<select id="SelProductViewAllEach0" parameterType="int"
 		resultType="int">
-		select count(*) from productEach where product_num=#{product_num} and
+		select count(*) from productEach where
+		product_num=#{product_num} and
 		PRODUCTEACH_EACH=0
 	</select>
 	<!-- productView All Each 0 maazin check e -->
@@ -131,7 +133,8 @@
 	<select id="SelProductViewEachGet" parameterType="java.util.HashMap"
 		resultType="int">
 		select productEach_each from productEach
-		where product_num=#{product_num}
+		where
+		product_num=#{product_num}
 		and productSize_size = #{productSize_size}
 		and productEach_color = #{productEach_color}
 
@@ -167,6 +170,15 @@
 		k.KIND_NUM and
 		pk.PRODUCT_NUM =
 		t.PRODUCT_NUM
+		<if test="productInfo_searchWord != null">
+			and (t.product_name LIKE '%' ||
+			upper(#{productInfo_searchWord})
+			OR
+			pi.productInfo_searchWord LIKE '%'
+			||
+			upper(#{productInfo_searchWord})
+			|| '%')
+		</if>
 		<if test="productParamDTO.productSelect_num != 0">
 			and
 			k.productSelect_num =
@@ -232,6 +244,15 @@
 		ps.PRODUCT_NUM =
 		p.PRODUCT_NUM and ps.PRODUCTSIZE_SIZE =
 		pe.PRODUCTSIZE_SIZE and pk.KIND_NUM = k.KIND_NUM
+		<if test="productInfo_searchWord != null">
+			and (p.product_name LIKE '%' ||
+			upper(#{productInfo_searchWord})
+			OR
+			pi.productInfo_searchWord LIKE '%'
+			||
+			upper(#{productInfo_searchWord})
+			|| '%')
+		</if>
 		<if test="productParamDTO.productSelect_num != 0">
 			and
 			k.productSelect_num =
@@ -270,11 +291,14 @@
 	<select id="SelProductView" parameterType="int" resultMap="ProudctView">
 		SELECT DISTINCT
 		p.PRODUCT_NUM,p.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_SEARCHWORD,pc.productPic_pic
-		,pk.KIND_NUM FROM PRODUCT p , PRODUCTINFO pi ,PRODUCTKIND pk,productPic pc
+		,pk.KIND_NUM FROM PRODUCT p , PRODUCTINFO pi ,PRODUCTKIND
+		pk,productPic pc
 		where
 		pc.product_num = p.product_num and
-		pi.PRODUCT_NUM = p.PRODUCT_NUM and pk.PRODUCT_NUM = p.PRODUCT_NUM and
-		pk.PRODUCT_NUM = pi.PRODUCT_NUM
+		pi.PRODUCT_NUM
+		= p.PRODUCT_NUM and pk.PRODUCT_NUM = p.PRODUCT_NUM and
+		pk.PRODUCT_NUM =
+		pi.PRODUCT_NUM
 		and p.PRODUCT_NUM=#{product_num}
 	</select>
 	<!-- Product View E -->
@@ -283,11 +307,13 @@
 
 	<select id="SelProductSizeList" parameterType="int" resultType="java.lang.String">
 		select distinct ps.productSize_size from
-		product p,productSize ps,productEach pe where
+		product p,productSize
+		ps,productEach pe where
 		p.product_num = ps.product_num and
 		p.product_num = pe.product_num
 		and p.product_num = #{product_num}
-		and pe.productEach_each not in (0)
+		and
+		pe.productEach_each not in (0)
 	</select>
 
 	<select id="SelProductEachList" parameterType="com.basic.product.ProductEachListDTO"
@@ -368,14 +394,18 @@
 		ROWNUM r,t.* from (select count(b.product_num)
 		sel_count,p.PRODUCT_NUM,p.PRODUCT_NAME,pi.productInfo_price,pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_BRAND,pc.productPic_pic
 		from PRODUCT p,productinfo pi, BUY b,PRODUCTPIC pc
-		where pc.PRODUCT_NUM = p.PRODUCT_NUM and p.PRODUCT_NUM =
+		where pc.PRODUCT_NUM
+		= p.PRODUCT_NUM and p.PRODUCT_NUM =
 		b.PRODUCT_NUM
-		and pi.PRODUCT_NUM = p.PRODUCT_NUM
+		and pi.PRODUCT_NUM =
+		p.PRODUCT_NUM
 		group by b.PRODUCT_NUM,
-		pi.productInfo_price, pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_BRAND,pc.productPic_pic,
+		pi.productInfo_price,
+		pi.PRODUCTINFO_SALERATE,pi.PRODUCTINFO_BRAND,pc.productPic_pic,
 		p.PRODUCT_NUM,
 		p.PRODUCT_NAME
-		ORDER BY sel_count desc,p.PRODUCT_NUM desc) t)where r
+		ORDER BY sel_count desc,p.PRODUCT_NUM
+		desc) t)where r
 		between 0 and 9
 	</select>
 

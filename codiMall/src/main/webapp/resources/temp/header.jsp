@@ -42,10 +42,10 @@
 	}
 
 	$(function() {
-		$(".li_logout").click(function(){
+		$(".li_logout").click(function() {
 			$("#logout_form").submit();
 		})
-		
+
 		$("#joinCom").click(function() {
 			var date = new Date();
 			var lastDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
@@ -229,17 +229,22 @@
 		});
 	}
 	$(function() {
-		$("#ps_btn").click(function() {
-			var ps = $("#product_search").val();
-			if (ps == "") {
-				alert("검색어를 입력해주세요");
-			} else {
-				var psname = document.psname;
-				psname.submit();
-
-			}
-		});
+		searchProduct();
 	});
+	function searchProduct() {
+		$("#ps_btn").click(function() {
+			$("#inph_search_wordaa").val($("#product_search").val());
+			$("#search_formaa").submit();
+		});
+	}
+	function enttt(event){
+		event = event || window.event;
+		var keyID = (event.which) ? event.which : event.keyCode;
+		if (keyID == 13) {
+			$("#inph_search_wordaa").val($("#product_search").val());
+			$("#search_formaa").submit();
+		}
+	}
 </script>
 <style>
 .navbar {
@@ -379,28 +384,28 @@
 							href="${pageContext.request.contextPath}/member/myPage">MY
 								PAGE</a></li>
 						<li><a class="li_logout">LOGOUT</a></li>
-						<form id="logout_form" action="${pageContext.request.contextPath}/member/memberLogout">
-						<input type="hidden" name="cur_uri"
-						value="${requestScope['javax.servlet.forward.request_uri']}">
+						<form id="logout_form"
+							action="${pageContext.request.contextPath}/member/memberLogout">
+							<input type="hidden" name="cur_uri"
+								value="${requestScope['javax.servlet.forward.request_uri']}">
 						</form>
 					</c:if>
 					<li style="clear: left; margin-top: -10px; float: right;">
 						<!--상품검색  -->
-						<form name="psname"
-							action="${pageContext.request.contextPath}/product/productSearchList"
-							method="get" class="navbar-form navbar-right"
-							style="padding-right: 30px;">
+						<div class="navbar-form navbar-right" style="padding-right: 30px;">
 							<div class="input-group">
 								<input type="text" class="form-control"
-									placeholder="Search Product" id="product_search" name="find">
-								<span class="input-group-btn"> <a class="btn btn-default"
+									value="${productInfo_searchWord}" placeholder="Search Product"
+									id="product_search" onkeydown='enttt(event)'
+									onkeyup='enttt(event)'> <span
+									class="input-group-btn"> <a class="btn btn-default"
 									type="button" id="ps_btn"> <span
 										class="glyphicon glyphicon-search"></span>
 								</a>
 								</span>
 							</div>
 							<!-- /input-group -->
-						</form>
+						</div>
 					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-left"
@@ -477,8 +482,8 @@
 							id="pwL" name="pw" maxlength="15" placeholder="비밀번호">
 					</div>
 					<input type="hidden" name="cur_uri"
-						value="${requestScope['javax.servlet.forward.request_uri']}"> <input
-						type="submit" class="btn btn-default form-control loginBtn"
+						value="${requestScope['javax.servlet.forward.request_uri']}">
+					<input type="submit" class="btn btn-default form-control loginBtn"
 						value="LOGIN">
 				</form>
 			</div>
@@ -491,6 +496,12 @@
 		</div>
 	</div>
 </div>
+<form id="search_formaa" style="display: none;"
+	action="${pageContext.request.contextPath}/product/productList"
+	method="post">
+	<input id="inph_search_wordaa" type="hidden"
+		name="productInfo_searchWord">
+</form>
 
 <!-- Modal -->
 <div class="modal fade" id="signModal" role="dialog">
@@ -555,3 +566,4 @@
 		</div>
 	</div>
 </div>
+

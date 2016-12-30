@@ -40,11 +40,11 @@ public class ProductDAO {
 
 	// productView All Each 0 maazin check
 	public int productAllEach0Check(int product_num) {
-		int first = sqlSession.selectOne(namespace+"SelProductViewAllEach",product_num);
-		int last = sqlSession.selectOne(namespace+"SelProductViewAllEach0",product_num);
-		int check=0;
-		if(first==last){
-			check=1;
+		int first = sqlSession.selectOne(namespace + "SelProductViewAllEach", product_num);
+		int last = sqlSession.selectOne(namespace + "SelProductViewAllEach0", product_num);
+		int check = 0;
+		if (first == last) {
+			check = 1;
 		}
 		return check;
 	}
@@ -81,19 +81,22 @@ public class ProductDAO {
 		return sqlSession.selectList(namespace + "SelProductSelectList");
 	}
 
-	public int productCount(ProductParamDTO productParamDTO, String sale) {
+	public int productCount(ProductParamDTO productParamDTO, String sale,String productInfo_searchWord) {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		hm.put("productParamDTO", productParamDTO);
 		hm.put("sale", sale);
+		hm.put("productInfo_searchWord", productInfo_searchWord);
 		return sqlSession.selectOne(namespace + "SelProductCount", hm);
 	}
 
-	public List<ProductListDTO> productList(PageMaker pageMaker, ProductParamDTO productParamDTO, String sale) {
+	public List<ProductListDTO> productList(PageMaker pageMaker, ProductParamDTO productParamDTO, String sale,
+			String productInfo_searchWord) {
 		// TODO Auto-generated method stub
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		hm.put("pageMaker", pageMaker);
 		hm.put("productParamDTO", productParamDTO);
 		hm.put("sale", sale);
+		hm.put("productInfo_searchWord", productInfo_searchWord);
 
 		List<ProductListDTO> ar = sqlSession.selectList(namespace + "SelProductList", hm);
 		for (int i = 0; i < ar.size(); i++) {

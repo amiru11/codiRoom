@@ -683,6 +683,7 @@ var requestSubmitted = false;
 	<form id="form_all" name="formAll"
 		action="${pageContext.request.contextPath}/product/productList"
 		method="post" style="display: none;">
+		<input class="inh_product_search_word" type="hidden" value="${productInfo_searchWord}" name="productInfo_searchWord">
 		<input class="inh_sale_st" type="hidden" value="sale" name="${sale}">
 		<input class="inh_curPage" type="hidden" value="" name="curPage">
 		<input class="inh_sel" type="hidden" name="sel"> <input

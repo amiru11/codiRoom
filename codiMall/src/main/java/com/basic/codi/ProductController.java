@@ -35,7 +35,7 @@ public class ProductController {
 		model.addAttribute("productSelectList",productService.productSelectList());
 		model.addAttribute("curPage", 1);
 		model.addAttribute("productSelect_num",1);
-		model.addAttribute("list", productService.productList(1, 9, productParamDTO, model,ra,null));
+		model.addAttribute("list", productService.productList(1, 9, productParamDTO, model,ra,null,null));
 	}
 	
 
@@ -43,8 +43,8 @@ public class ProductController {
 	@RequestMapping(value = "/productList",method=RequestMethod.POST)
 	public void productListP(@RequestParam(defaultValue = "1") int curPage,
 			@RequestParam(defaultValue = "9") int perPage, @RequestParam(defaultValue = "1") int sel,@RequestParam(required = false) String sale,
-			@RequestParam(required = false) int[] kind_num,@RequestParam(defaultValue ="1") int productSelect_num, @RequestParam(required = false) String[] color,
-			@RequestParam(required = false) String[] size, Model model,RedirectAttributes ra) {
+			@RequestParam(required = false) int[] kind_num,@RequestParam(defaultValue ="0") int productSelect_num, @RequestParam(required = false) String[] color,
+			@RequestParam(required = false) String[] size, Model model,RedirectAttributes ra,@RequestParam(required=false)String productInfo_searchWord)  {
 
 		ProductParamDTO productParamDTO = new ProductParamDTO();
 		// 파람DTO에 파라미터로 받은 컬러,사이즈,넘버,셀렉트를 넣어주기//
@@ -58,12 +58,13 @@ public class ProductController {
 		if(sale != null){
 			productParamDTO.setProductSelect_num(0);
 		}
+		model.addAttribute("productInfo_searchWord",productInfo_searchWord);
 		model.addAttribute("sel",sel);
 		model.addAttribute("sale",sale);
 		model.addAttribute("productSelectList",productService.productSelectList());
 		model.addAttribute("curPage", curPage);
 		model.addAttribute("productSelect_num",productSelect_num);
-		model.addAttribute("list", productService.productList(curPage, perPage, productParamDTO, model,ra,sale));
+		model.addAttribute("list", productService.productList(curPage, perPage, productParamDTO, model,ra,sale,productInfo_searchWord));
 		model.addAttribute("kind_num", kind_num);
 		model.addAttribute("size", size);
 		model.addAttribute("color", color);

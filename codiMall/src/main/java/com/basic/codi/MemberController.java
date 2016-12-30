@@ -68,10 +68,10 @@ public class MemberController {
 			e.printStackTrace();
 		}
 		if(result > 0){
-			path = "redirect:/";
+			path = "redirect:/result/result";
 			message = "회원 가입 성공";
 		}else {
-			path = "redirect:/";
+			path = "redirect:/result/result";
 			message = "회원 가입 실패";
 		}
 		rd.addFlashAttribute("message", message);

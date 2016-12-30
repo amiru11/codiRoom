@@ -20,46 +20,44 @@ public class ProductService {
 
 	@Autowired
 	private ProductDAO productDAO;
-	
-	
+
 	// productView All Each 0 maazin check
 	public int productAllEach0Check(int product_num) {
 		return productDAO.productAllEach0Check(product_num);
 	}
-	
-	//json productView each get
-	public int productViewEachGet(int product_num,String productSize_size,String productEach_color){
+
+	// json productView each get
+	public int productViewEachGet(int product_num, String productSize_size, String productEach_color) {
 		return productDAO.productViewEachGet(product_num, productSize_size, productEach_color);
 	}
-	
+
 	// productSelect List
 	public List<ProductSelectDTO> productSelectList() {
 		return productDAO.productSelectList();
 	}
-	
 
-	public List<ProductListDTO> productList(int curPage, int perPage, ProductParamDTO productParamDTO, Model model,RedirectAttributes ra,String sale) {
-		int totalCount = productDAO.productCount(productParamDTO,sale);
+	public List<ProductListDTO> productList(int curPage, int perPage, ProductParamDTO productParamDTO, Model model,
+			RedirectAttributes ra, String sale, String productInfo_searchWord) {
+		int totalCount = productDAO.productCount(productParamDTO, sale,productInfo_searchWord);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCurPage(curPage);
 		pageMaker.setPerPage(perPage);
 		pageMaker.makeRow();
 		pageMaker.makePage(totalCount);
 		model.addAttribute("pageing", pageMaker);
-		if(sale!=null){
+		if (sale != null) {
 			productParamDTO.setProductSelect_num(0);
 		}
 		model.addAttribute("selKind_num", productDAO.allKindNum(productParamDTO.getProductSelect_num()));
 		model.addAttribute("selColor", productDAO.allProductColor(productParamDTO.getProductSelect_num()));
 		model.addAttribute("selSize", productDAO.allProductSize(productParamDTO.getProductSelect_num()));
-		
+
 		ra.addFlashAttribute("pageing", pageMaker);
 		ra.addFlashAttribute("selKind_num", productDAO.allKindNum(productParamDTO.getProductSelect_num()));
 		ra.addFlashAttribute("selColor", productDAO.allProductColor(productParamDTO.getProductSelect_num()));
 		ra.addFlashAttribute("selSize", productDAO.allProductSize(productParamDTO.getProductSelect_num()));
-		
 
-		return productDAO.productList(pageMaker, productParamDTO,sale);
+		return productDAO.productList(pageMaker, productParamDTO, sale,productInfo_searchWord);
 
 		/*
 		 * System.out.println("curPage : " + curPage);
@@ -113,41 +111,36 @@ public class ProductService {
 	public List<Integer> allKindNum() {
 		return productDAO.allKindNum(0);
 	}
-	
-	
+
 	// auto add
 	/*
-	public int autoAdd(){
-		return productDAO.autoAdd();
-	}
-	
-	public void proAdd(){
-		productDAO.proAdd();
-	}
-	
-	//test pic add
-	
-	public void testPicAdd(MultipartHttpServletRequest mpr , HttpSession session){
-		productDAO.testPicADD(mpr, session);
-	}*/
-	
-	/*상품검색*/
-	@RequestMapping(value="productSearchList")
-	public void productSearchList(int curPage,int perPage,String find,Model model){
+	 * public int autoAdd(){ return productDAO.autoAdd(); }
+	 * 
+	 * public void proAdd(){ productDAO.proAdd(); }
+	 * 
+	 * //test pic add
+	 * 
+	 * public void testPicAdd(MultipartHttpServletRequest mpr , HttpSession
+	 * session){ productDAO.testPicADD(mpr, session); }
+	 */
+
+	/* 상품검색 */
+	@RequestMapping(value = "productSearchList")
+	public void productSearchList(int curPage, int perPage, String find, Model model) {
 		System.out.println("상품검색서비스접속");
-		System.out.println("상품검색어 :"+find);
+		System.out.println("상품검색어 :" + find);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCurPage(curPage);
 		pageMaker.setPerPage(perPage);
 		pageMaker.makeRow();
 		pageMaker.makePage(productDAO.searchCount(find));
-		List<ProductListDTO> ar=productDAO.productSearchList(find, pageMaker);
-		for(int i=0;i<ar.size(); i++){
-			System.out.println("상품이름 :"+ar.get(i).getProductDTO().getProduct_num());
+		List<ProductListDTO> ar = productDAO.productSearchList(find, pageMaker);
+		for (int i = 0; i < ar.size(); i++) {
+			System.out.println("상품이름 :" + ar.get(i).getProductDTO().getProduct_num());
 		}
 		model.addAttribute("pegeing", pageMaker);
-		model.addAttribute("list1",ar);
-		model.addAttribute("find",find);	
+		model.addAttribute("list1", ar);
+		model.addAttribute("find", find);
 	}
 
 }
