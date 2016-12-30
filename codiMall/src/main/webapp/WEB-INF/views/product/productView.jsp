@@ -129,22 +129,20 @@
 		});
 
 		
-		$("#btn_add_eachaa").mouseenter(function(){
-			$(this).click(function(){//수량증가
-				$("#inp_each").val($("#inp_each").val()*1+1);
-				var as = $("#inh_id_hidden_each").val()*1;
-		    	if($("#inp_each").val()*1>as*1){
-		    		alert("재고초과");
-		    		$("#inp_each").val(as*1);
-		    	}else{
-		    		if($("#inp_each").val()*1>21){	
-						$("#inp_each").val(20*1);
-						alert("21개이상은 전화로 문의");
-					}
-		    	}
-			});
-			$(".product_quantity_up").off("dblclick");		
-		})
+		$("#btn_add_eachaa").click(function(){//수량증가
+			$("#inp_each").val($("#inp_each").val()*1+1);
+			var as = $("#inh_id_hidden_each").val()*1;
+	    	if($("#inp_each").val()*1>as*1){
+	    		alert("재고초과");
+	    		$("#inp_each").val(as*1);
+	    	}else{
+	    		if($("#inp_each").val()*1>20){	
+					$("#inp_each").val(20*1);
+					alert("21개이상은 전화로 문의");
+				}
+	    	}
+		});	
+		
 
 		
 	});
