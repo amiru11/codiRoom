@@ -80,8 +80,14 @@ public class MemberController {
 	
 	//로그인
 	@RequestMapping(value = "memberLogin", method = RequestMethod.POST)
-	public String memberLogin(MemberDTO memberDTO, RedirectAttributes rd, HttpSession session){
-		String path = "";
+	public String memberLogin(MemberDTO memberDTO, RedirectAttributes rd, HttpSession session ,String cur_uri){
+		System.out.println(cur_uri);
+		///codi/WEB-INF/views/product/productList.jsp
+		String uri[] = cur_uri.split("/codi");
+		for (int i = 0; i < uri.length; i++) {
+			System.out.println(uri[i]+"--------"+i);
+		}
+
 		String message = "";
 		try {
 			memberDTO = memberService.memberLogin(memberDTO);
@@ -90,22 +96,26 @@ public class MemberController {
 			e.printStackTrace();
 		}
 		if(memberDTO != null){
-			path = "redirect:/";
 			message = "로그인 성공";
 			session.setAttribute("member", memberDTO);
 		}else {
-			path = "redirect:/";
 			message = "아이디와 비밀번호가 다릅니다.";
 		}
 		rd.addFlashAttribute("message", message);
-		return path;
+		return "redirect:"+uri[1];
 	}
 	
 	//로그아웃
 	@RequestMapping(value = "memberLogout")
-	public String memberLogout(HttpSession session){
+	public String memberLogout(HttpSession session,String cur_uri){
 		session.invalidate();
-		return "redirect:/";
+		System.out.println(cur_uri);
+		///codi/WEB-INF/views/product/productList.jsp
+		String uri[] = cur_uri.split("/codi");
+		for (int i = 0; i < uri.length; i++) {
+			System.out.println(uri[i]+"--------"+i);
+		}
+		return "redirect:"+uri[1];
 	}
 	
 	//마이페이지
