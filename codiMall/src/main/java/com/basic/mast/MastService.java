@@ -1,7 +1,10 @@
 package com.basic.mast;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,7 @@ import com.basic.board.CommentDAO;
 import com.basic.board.CommentDTO;
 import com.basic.member.MemberDTO;
 import com.basic.product.ProductAllDTO;
+import com.basic.product.ProductSizeDTO;
 import com.basic.util.PageMaker;
 
 @Service
@@ -26,6 +30,13 @@ public class MastService {
 
 	@Autowired
 	private CommentDAO commentDAO;
+	// mast product Add SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
+	public String mastProductAddP(MastProductAddParamDTO paramDTO,HttpSession session) {
+		return null;
+	}
+
+	// mast product Add EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
 	public List<ProductAllDTO> mastProductList(Map<String, Object> map, Model model) {
 		PageMaker pageMaker = new PageMaker();
@@ -46,9 +57,24 @@ public class MastService {
 		return mastDAO.mastProductList(map, pageMaker);
 	}
 
+	public List<ProductSizeDTO> mastProductViewSizeList(int product_num) {
+		return mastDAO.mastProductViewSizeList(product_num);
+	}
+
+	// mast productSize add ====================
+
+	public int mastProductSizeAdd(int product_num, String productSize_size) {
+		return mastDAO.mastProductSizeAdd(product_num, productSize_size);
+	}
+
+	public int mastProductEachAdd(int product_num, String productSize_size, String productEach_color,
+			int productEach_each) {
+		return mastDAO.mastProductEachAdd(product_num, productSize_size, productEach_color, productEach_each);
+	}
+
 	// mast ProductList Each 0 sssssssssssssss ---------------------------------
 	public void mastProductListEach0(Model model) {
-		model.addAttribute("list",mastDAO.mastProductListEach0());	
+		model.addAttribute("list", mastDAO.mastProductListEach0());
 	}
 
 	// mast ProductList Each 0 eeeeeeeeee---------------------------------
@@ -82,7 +108,7 @@ public class MastService {
 		pageMaker.makeRow();
 		pageMaker.makePage(boardDAO.boardCount(board_kind));
 		List<BoardDTO> ar;
-		//List<BoardDTO> br;
+		// List<BoardDTO> br;
 		ar = boardDAO.findList(type, find, board_kind, pageMaker);
 		model.addAttribute("type", type);
 		model.addAttribute("find", find);
@@ -94,18 +120,18 @@ public class MastService {
 			model.addAttribute("boardName", "NOTICE");
 		} else if (board_kind == 2) {
 			model.addAttribute("boardName", "FAQ");
-			//BEST 5//
-			/*br = boardDAO.bestList();
-			for(int i = 0; i<br.size();i++){
-				System.out.println("bestTITLE : "+br.get(i).getBoard_title());
-
-			}
-
-			model.addAttribute("bestList", br);
+			// BEST 5//
+			/*
+			 * br = boardDAO.bestList(); for(int i = 0; i<br.size();i++){
+			 * System.out.println("bestTITLE : "+br.get(i).getBoard_title());
+			 * 
+			 * }
+			 * 
+			 * model.addAttribute("bestList", br); } else if (board_kind == 3) {
+			 * 
+			 * model.addAttribute("bestList", br);
+			 */
 		} else if (board_kind == 3) {
-
-			model.addAttribute("bestList", br);*/
-		}else if(board_kind==3){
 
 			model.addAttribute("boardName", "QNA");
 		}
@@ -114,9 +140,8 @@ public class MastService {
 	// 뷰//
 	public BoardDTO boardView(BoardDTO boardDTO, int board_kind, Model model) throws Exception {
 
-		boardDTO = boardDAO.boardView(boardDTO,board_kind);
-		//boardDAO.boardViewUpdate(boardDTO);
-
+		boardDTO = boardDAO.boardView(boardDTO, board_kind);
+		// boardDAO.boardViewUpdate(boardDTO);
 
 		List<CommentDTO> cr = commentDAO.commentList(boardDTO);
 
@@ -131,60 +156,61 @@ public class MastService {
 		return boardDTO;
 	}
 
+	// 등록//
 
-	//등록//
-	
-	public String boardWrite(BoardDTO boardDTO,int board_kind) throws Exception {
+	public String boardWrite(BoardDTO boardDTO, int board_kind) throws Exception {
 		int result = 0;
 		System.out.println("WRITE");
 		result = boardDAO.boardWrite(boardDTO, board_kind);
-		System.out.println("BOARD NUM : "+board_kind);
+		System.out.println("BOARD NUM : " + board_kind);
 		String message = "";
-		if(result > 0){
+		if (result > 0) {
 			message = "등록완료!";
-		}else{
+		} else {
 			message = "등록실패!";
 		}
-		
-		System.out.println("결과 : "+message);
+
+		System.out.println("결과 : " + message);
 		return message;
-	}	
-	
-	
-	//삭제//
-	public String boardDel(int board_num,int board_kind) throws Exception {
-		int result = 0;		
-		result = boardDAO.boardDel(board_num,board_kind);
+	}
+
+	// 삭제//
+	public String boardDel(int board_num, int board_kind) throws Exception {
+		int result = 0;
+		result = boardDAO.boardDel(board_num, board_kind);
 		String message = "";
-		if(result > 0){
+		if (result > 0) {
 			message = "삭제완료!";
-		}else{
+		} else {
 			message = "삭제실패!";
 		}
-		return message;		
+		return message;
 	}
-	
-	//수정//
-	
-	//QNA답글 리스트//
-	public void mastCommList(int board_num, Model model) throws Exception{//답글버튼 클릭시 refNum을 받아서 리스트를 모달에다가 뿌려주기 
+
+	// 수정//
+
+	// QNA답글 리스트//
+	public void mastCommList(int board_num, Model model) throws Exception {// 답글버튼
+																			// 클릭시
+																			// refNum을
+																			// 받아서
+																			// 리스트를
+																			// 모달에다가
+																			// 뿌려주기
 		System.out.println("service");
-		System.out.println("commList");	
+		System.out.println("commList");
 		System.out.println("board_num : " + board_num);
 		List<CommentDTO> cr = commentDAO.mastCommentList(board_num);
-		for(int i = 0; i< cr.size();i++){			
-			System.out.println(	cr.get(i).getComm_num());
+		for (int i = 0; i < cr.size(); i++) {
+			System.out.println(cr.get(i).getComm_num());
 		}
 		model.addAttribute("commentList", cr);
 	}
-	
-	
-	//////////////////////////////////////////////////////회원관리////////////////////////////////////////////////////////
-	
-	
-	//검색과 리스트//
-	public void findMemberList(String type, String find, int curPage, int perPage,  Model model)
-			throws Exception {
+
+	////////////////////////////////////////////////////// 회원관리////////////////////////////////////////////////////////
+
+	// 검색과 리스트//
+	public void findMemberList(String type, String find, int curPage, int perPage, Model model) throws Exception {
 		System.out.println("FINDMEMBERLIST");
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCurPage(curPage);
@@ -192,36 +218,26 @@ public class MastService {
 		pageMaker.makeRow();
 		pageMaker.makePage(mastDAO.memberCount());
 		List<MemberDTO> ar;
-		
+
 		ar = mastDAO.findList(type, find, pageMaker);
 		model.addAttribute("type", type);
 		model.addAttribute("find", find);
 		model.addAttribute("paging", pageMaker);
 		model.addAttribute("list", ar);
-		
+
 	}
-	
-	//회원삭제//
-	public String memberDelete(String id) throws Exception{
+
+	// 회원삭제//
+	public String memberDelete(String id) throws Exception {
 		int result = 0;
 		result = mastDAO.memberDelete(id);
 		String message = "";
-		if(result > 0){
+		if (result > 0) {
 			message = "삭제완료!";
-		}else{
+		} else {
 			message = "삭제실패!";
 		}
-		return message;		
+		return message;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

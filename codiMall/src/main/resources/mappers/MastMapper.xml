@@ -222,10 +222,49 @@
 	</resultMap>
 
 
+
+
+
+
+
+
+
+
+
+
 	<!-- Mast Product S -->
+	
+	
+	
+	<!-- Mast Product ADD SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS  -->
+	<insert id="InMastProductAdd" parameterType="java.util.HashMap">
+	insert into product values(pro) 
+	</insert>
+	<insert id="InMastProductInfoAdd" parameterType="java.util.HashMap">
+	insert into productInfo values()
+	</insert>
+	<insert id="InMastProductKindAdd" parameterType="java.util.HashMap">
+	insert into productKind values()
+	</insert>
+	<insert id="InMastProductPicAdd" parameterType="java.util.HashMap">
+	insert into productPic values()
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	<!-- Mast Product ADD EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE  -->
+	
+	
+	
+	
 	<select id="SelMastProductList" parameterType="java.util.HashMap"
 		resultMap="ProductAll">
-		select * from(select ROWNUM r, z.* from(select DISTINCT (PRODUCTINFO_PRICE*(100-productInfo_saleRate)/100) realPrice,
+		select * from(select ROWNUM r, z.* from(select DISTINCT
+		(PRODUCTINFO_PRICE*(100-productInfo_saleRate)/100) realPrice,
 		selCount,pse.PRODUCTSELECT_NUM,pse.PRODUCTSELECT_NAME,k.KIND_NUM,k.KIND_NAME,t.PRODUCT_NUM,
 		t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_DATE,pi.PRODUCTINFO_SALERATE,
 		pi.PRODUCTINFO_SEARCHWORD,pi.PRODUCTINFO_BRAND,pc.PRODUCTPIC_PIC
@@ -429,6 +468,14 @@
 
 	</select>
 
+	<select id="SelMastProductViewSizeList" parameterType="int"
+		resultType="com.basic.product.ProductSizeDTO">
+		select ps.productSize_size from product p,productSize ps
+		where p.product_num = ps.product_num
+		and p.product_num = #{product_num}
+	</select>
+
+
 	<!-- Mast Product E -->
 
 	<!-- Mast product selector List S -->
@@ -545,8 +592,9 @@
 
 	<!-- MastProductList each 0 S -->
 	<select id="SelMastProductListEach0" resultMap="ProductAllInfo2">
-		select DISTINCT er.* from(select z.* from(select
-		DISTINCT 
+		select DISTINCT
+		er.* from(select z.* from(select
+		DISTINCT
 		selCount,pse.PRODUCTSELECT_NUM as
 		pse_productSelect_num,pse.PRODUCTSELECT_NAME as pse_productSelect_name
 		,k.KIND_NUM as k_kind_num,k.KIND_NAME as k_kind_name,t.PRODUCT_NUM as
@@ -594,13 +642,19 @@
 		k.PRODUCTSELECT_NUM
 		and
 		pk.KIND_NUM = k.KIND_NUM
-    and pe.PRODUCTEACH_EACH = 0
-		) z) er order by p_product_num desc,case when pe_productSize_size = 'SSS' then 1 when pe_productSize_size = 'SS' then 2 when pe_productSize_size = 'S' then 3
-     when pe_productSize_size = 'M' then 4 when pe_productSize_size = 'L' then 5 when pe_productSize_size = 'XL' then 6 when pe_productSize_size = 'XXL' then 7
-    end,pe_productEach_color asc
+		and pe.PRODUCTEACH_EACH = 0
+		) z) er order by p_product_num desc,case
+		when pe_productSize_size = 'SSS' then 1 when pe_productSize_size =
+		'SS' then 2 when pe_productSize_size = 'S' then 3
+		when
+		pe_productSize_size = 'M' then 4 when pe_productSize_size = 'L' then
+		5
+		when pe_productSize_size = 'XL' then 6 when pe_productSize_size =
+		'XXL' then 7
+		end,pe_productEach_color asc
 	</select>
 	<!-- MastProductList each 0 E -->
-	
+
 
 
 
@@ -687,15 +741,18 @@
 		productInfo_rec_date = sysdate
 		where product_num = #{product_num}
 	</update>
-	
+
 	<!-- Product Each Fix E -->
-	
+
 	<!-- Product Info Fix S -->
 	<update id="UpProductInfoFix" parameterType="java.util.HashMap">
-	update productInfo set productInfo_price = #{productInfo_price},
-	productInfo_saleRate = #{productInfo_saleRate},
-	productInfo_searchWord = #{productInfo_searchWord}
-	where product_num = #{product_num}
+		update productInfo
+		set productInfo_price = #{productInfo_price},
+		productInfo_saleRate =
+		#{productInfo_saleRate},
+		productInfo_searchWord =
+		#{productInfo_searchWord}
+		where product_num = #{product_num}
 	</update>
 	<update id="UpProductInfoDate2" parameterType="java.util.HashMap">
 		update productInfo
@@ -703,78 +760,117 @@
 		productInfo_rec_date = sysdate
 		where product_num = #{product_num}
 	</update>
-	
-	
-	
-	
-	<!-- Product Info Fix E -->
-	
 
+
+
+
+	<!-- Product Info Fix E -->
+
+
+	<!-- MAst PRoduct ADdddddddddddddddddddddddddddddddddddddddddd sssssssssssssssss -->
+	<insert id="InMastProductSizeAdd" parameterType="java.util.HashMap">
+		insert into
+		productSize values(#{product_num},upper(#{productSize_size}))
+	</insert>
+
+	<select id="SelMastProductEachAddCheck" parameterType="java.util.HashMap"
+		resultType="int">
+		select count(*) from productEach
+		where PRODUCT_NUM =
+		#{product_num} and
+		PRODUCTSIZE_SIZE = upper(#{productSize_size})
+		and
+		PRODUCTEACH_COLOR = upper(#{productEach_color})
+	</select>
+	<update id="UpMastProductEachAdd" parameterType="java.util.HashMap">
+		update productEach set
+		productEach_each = (select productEach_each from productEach where product_num =
+		#{product_num} and PRODUCTSIZE_SIZE =
+		upper(#{productSize_size})
+		and productEach_color=upper(#{productEach_color}))+#{productEach_each}
+		where PRODUCT_NUM = #{product_num} and
+		PRODUCTSIZE_SIZE =
+		upper(#{productSize_size})
+		and PRODUCTEACH_COLOR =
+		upper(#{productEach_color})
+	</update>
+	<insert id="InMastProductEachAdd" parameterType="java.util.HashMap">
+		insert into productEach values(#{product_num},upper(#{productSize_size}),
+		upper(#{productEach_color}),#{productEach_each})
+	</insert>
+
+
+
+	<!-- MAst PRoduct ADdddddddddddddddddddddddddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeeeeeee -->
 
 	<!-- MEMBER: S -->
 
-		<!-- MEMBERSEARCH : S -->
-	 	<select id="findList" parameterType="java.util.HashMap" resultType="com.basic.member.MemberDTO" statementType="PREPARED">
-			<if test="type != null">
-				select * from 
-				(select rownum R, F.* from
-				(select * from member
-				<where>
-					<if test="type=='id'">
-						and id like #{find} 
-					</if>
-					<if test="type=='name'">
-						and name like #{find}
-					</if>
-					<if test="type=='member_level'">
-						and member_level like #{find}
-					</if>
-				</where>
-				) F)
-				where R between #{paging.startRowNum} and  #{paging.lastLowNum}
-			</if>
-		</select> 
-		<!-- MEMBERSEARCH : E -->
-		
-		<!-- MEMBERCOUNT : S -->
-		<select id="memberCount" parameterType="java.util.HashMap" resultType="int">
-			<if test="type == null">
+	<!-- MEMBERSEARCH : S -->
+	<select id="findList" parameterType="java.util.HashMap"
+		resultType="com.basic.member.MemberDTO" statementType="PREPARED">
+		<if test="type != null">
+			select * from
+			(select rownum R, F.* from
+			(select * from member
+			<where>
+				<if test="type=='id'">
+					and id like #{find}
+				</if>
+				<if test="type=='name'">
+					and name like #{find}
+				</if>
+				<if test="type=='member_level'">
+					and member_level like #{find}
+				</if>
+			</where>
+			) F)
+			where R between #{paging.startRowNum} and #{paging.lastLowNum}
+		</if>
+	</select>
+	<!-- MEMBERSEARCH : E -->
+
+	<!-- MEMBERCOUNT : S -->
+	<select id="memberCount" parameterType="java.util.HashMap"
+		resultType="int">
+		<if test="type == null">
 				<![CDATA[
 						select count(*) from member 
 				]]>
-			</if>			
-			<if test="type != null">
-				<where>
-					<if test="type=='id'">
-						and id like #{find}
-					</if>
-					<if test="type=='name'">
-						and name like #{find}
-					</if>
-					<if test="type=='member_level'">
-						and member_level like #{find}
-					</if>
-				</where>
-			</if>				
-		</select>
-		<!-- MEMBERCOUNT : E -->
-		
-		<!-- MEMBERUPDATE : S -->
-		<update id="memberUpdate" parameterType="java.util.HashMap">
-			update member set member_level = #{member_level}
-			where id=#{id}
-		</update>
-		<!-- MEMBERUPDATE : E -->
-		
-		<!-- MEMBERDELETE : S -->
-		<delete id="memberDelete" parameterType="java.util.HashMap"  statementType="PREPARED">
+		</if>
+		<if test="type != null">
+			<where>
+				<if test="type=='id'">
+					and id like #{find}
+				</if>
+				<if test="type=='name'">
+					and name like #{find}
+				</if>
+				<if test="type=='member_level'">
+					and member_level like #{find}
+				</if>
+			</where>
+		</if>
+	</select>
+	<!-- MEMBERCOUNT : E -->
+
+	<!-- MEMBERUPDATE : S -->
+	<update id="memberUpdate" parameterType="java.util.HashMap">
+		update member set
+		member_level = #{member_level}
+		where id=#{id}
+	</update>
+	<!-- MEMBERUPDATE : E -->
+
+	<!-- MEMBERDELETE : S -->
+	<delete id="memberDelete" parameterType="java.util.HashMap"
+		statementType="PREPARED">
 			<![CDATA[
 					delete member where id=#{id}
-			]]>		
-		</delete>
-		<!-- MEMBERDELETE : E -->
-		
-		
+			]]>
+	</delete>
+	<!-- MEMBERDELETE : E -->
+
+
 	<!-- MEMBER: E -->
 
 

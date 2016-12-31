@@ -18,15 +18,24 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
 <script src="${pageContext.request.contextPath}/resources/js/mast.js"></script>
-
 <script type="text/javascript">
 
 	$(function() {
+		$("#goCalendar").click(function() {
+			$.ajax({
+				url : "${pageContext.request.contextPath}/mast/calendar",
+				success : function(data) {
+					$("#view").empty();
+					$("#view").html(data);
+					console.log(data);
+				}
+			});
+
+		});
 		mastProductListSt();
 		selBox();
 		allCheckBoxes();
 		pageing();
-		$("#1").parent("li").addClass("active");
 	});
 
 
@@ -60,7 +69,7 @@
 				x = x + '<tr><td>kind_name</td><td>' + data.ar.kind_name + '</td></tr>';
 				x = x + '</tr><tr><td>product_name</td><td>' + data.ar.product_name + '</td>';
 				x = x + '</tr><tr><td>product_num</td><td>' + data.ar.product_num + '</td></tr>';
-				x = x + '</table><div></td></tr>';
+				x = x + '</table><div><div id="div_tab_size_List"></div></td></tr>';
 				x = x + '<tr><td class="modin_td"><div class="modin_div"><table id="tabin_tab_11">';
 				x = x + '<tr><td>PRICE</td><td>' + numberWithCommas(data.ar.productInfo_price) + '원</td></tr>';
 				x = x + '<tr><td>REG_DATE</td><td>' + data.ar.productInfo_reg_date + '</td></tr>';
@@ -93,12 +102,13 @@
 				$("#div_modin_main").html(x);
 				mastProductEachFix();
 				mastProductInfoFix();
-				
+				mastProductViewSizeList(product_num);
 			},
 			error : function(request, status, error) {
 				alert("code:" + request.status + "\n" + "error:" + error);
 			}
 		});
+
 	}
 
 	function mastProductInfoFix() {
@@ -138,6 +148,124 @@
 		});
 		$(".div_fix_pro_info").on('mouseleave', function() {
 			$(this).find(".btn_submit_bt").off('click');
+		});
+	}
+
+	function mastProductViewSizeList(product_num) {
+		$.ajax({
+			url : "../json/mastProductViewSizeList",
+			type : "post",
+			data : {
+				product_num : product_num,
+			},
+			success : function(data) {
+				$("#div_tab_size_List").html("");
+				var x = '<table id="tab_size_Listss">';
+				$.each(data.ar, function(index, value) {
+					x = x + '<tr><td>' + value.productSize_size;
+					x = x + '<input class="inh_cl_prosize_sizess" type="hidden" value="' + value.productSize_size + '">' + '</td></tr>';
+				});
+				x = x + '</table>';
+				var y = '<label style="width:120px;text-align: center;">SIZE 추가</label><BR>';
+				y = y + 'Size<input id="in_prosize_ss" type="text" name="productSize_size" style="width:60px;">';
+				y = y + '<input type="hidden" name="product_num" value="' + product_num + '">';
+				y = y + '<input type="button" value="ADD" id="btn_form_submit_add"><br><br>';
+				
+				var z="";
+				z=z+'<table><tr><th colspan="3" style="text-align: center;">COLOR 추가</th></tr></tr>'
+				z=z+'<td><select id="sel_Size_sd" name="productSize_size">';
+				$.each(data.ar, function(index, value) {
+					z = z + '<option value="'+value.productSize_size+'">'+ value.productSize_size+'</option>';
+				});
+				z=z+'</select></td><td>COLOR<br><input id="in_proEach_color_ss" type="text" name="productEach_color"style="width:70px;"></td>'
+				z=z+'<td>EACH<br><input min=0 type="number" value="" id="in_pro_each_each" name="productEach_each" style="width:40px;"></td></tr><tr><td colspan=3>';
+				z=z+'<input type="button" value="ADD" id="btn_each_submit_add" style="width:160px;"></td></tr></table>'
+
+
+				$("#div_tab_size_List").html(x + y+z);
+				$("#btn_form_submit_add").on('click', function() {
+					var productSize_size = $("#in_prosize_ss").val();
+					if (productSize_size != "") {
+						if (productSize_size.length > 6) {
+							alert("6자리 이하로 입력해주세요");
+						} else {
+							mastProductSizeAdd(product_num, productSize_size);
+						}
+					} else {
+						alert("제대로 입력해주세요");
+					}
+				});
+				$("#btn_each_submit_add").on('click', function() {
+					var productSize_size = $("#sel_Size_sd").val();
+					var productEach_color = $("#in_proEach_color_ss").val();
+					var productEach_each = $("#in_pro_each_each").val();
+					if(productEach_color !=""){
+						if(productEach_each == ""){
+							alert("수량을 올바르게 입력해주세요")
+						}else{
+							mastProductEachAdd(product_num, productSize_size, productEach_color, productEach_each);
+						}
+					}else{
+						alert("COLOR를 입력해주세요")
+					}
+				});
+
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
+			}
+		});
+
+	}
+
+
+	function mastProductSizeAdd(product_num, productSize_size) {
+		$.ajax({
+			url : "../json/mastProductSizeAdd",
+			type : "post",
+			data : {
+				product_num : product_num,
+				productSize_size : productSize_size
+			},
+			success : function(data) {
+				if (data == 1) {
+					alert("Size 등록성공");
+				} else {
+					alert("Size 등록실패");
+				}
+				ajaxfirst(product_num);
+			},
+			error : function(request, status, error) {
+				alert("이미 있는 SIZE 입니다");
+			}
+		});
+	}
+
+	function mastProductEachAdd(product_num, productSize_size, productEach_color, productEach_each) {
+		alert(product_num);
+		alert(productSize_size)
+		alert(productEach_color)
+		alert(productEach_each)
+		$.ajax({
+			url : "../json/mastProductEachAddaa",
+			type : "post",
+			data : {
+				product_num : product_num,
+				productSize_size : productSize_size,
+				productEach_color : productEach_color,
+				productEach_each : productEach_each
+			},
+			success : function(data) {
+				if (data > 0) {
+					alert("Color 등록 성공");
+				} else {
+					alert("Color 등록 실패");
+				}
+				ajaxfirst(product_num);
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
+			}
 		});
 	}
 
@@ -357,10 +485,8 @@ width:160px;
 									style="padding-left: 0; border-bottom: 1px solid #eee;">
 									<ul id="category-type" class="nav navbar-nav" style="vertical-align: top;">
 										<li class="category-li"><a id="1" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductList">ProductList</a></li>
-										<li class="category-li"><a id="2" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductListEach0">ProductEach(Update)</a></li>
-										<li class="category-li"><a id="3" class="sel_type" href="${pageContext.request.contextPath}/mast/mastBuyList">BuyList</a></li>
-										<li class="category-li"><a id="4" class="sel_type" href="${pageContext.request.contextPath}/mast/mastBuyListPay">BuyListPay</a></li>
-										<li class="category-li"><a id="5" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductListEach022">MASTproductEach0</a></li>
+										<li class="category-li"><a id="2" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductListEach0">ProductEach(00)</a></li>
+										<li class="category-li"><a id="3" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductAdd">ProductAdd</a></li>
 									</ul>		
 								</div>
 							</nav>

@@ -25,6 +25,7 @@ import com.basic.product.ProductDTO;
 import com.basic.product.ProductEachDTO;
 import com.basic.product.ProductEachListDTO;
 import com.basic.product.ProductService;
+import com.basic.product.ProductSizeDTO;
 
 @Controller
 @RequestMapping(value = "/json")
@@ -139,6 +140,14 @@ public class JsonController {
 
 	// mast
 	// ---------------------------------------------------------------------------------------
+	@RequestMapping(value="/mastProductViewSizeList", produces = "application/json; charset=utf-8")
+	public Map<String, Object> mastProductViewSizeList(int product_num){
+		System.out.println("product_num-----"+product_num);
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		retVal.put("ar", mastService.mastProductViewSizeList(product_num));
+		return retVal;
+	}
+	
 
 	@RequestMapping(value = "/mastBuyList", produces = "application/json; charset=utf-8")
 	public Map<String, Object> mastBuyList(int buyState_state) {
@@ -193,6 +202,22 @@ public class JsonController {
 		System.out.println("productEach_each-----"+productEach_each);
 		
 		return ssssssService.mastRefundEachAdd(product_num, productSize_size, productEach_color, productEach_each);				
+	}
+	
+	@RequestMapping(value="/mastProductSizeAdd")
+	public int mastProductSizeAdd(int product_num,String productSize_size){
+		return mastService.mastProductSizeAdd(product_num, productSize_size);
+	}
+	
+	
+	@RequestMapping(value="/mastProductEachAddaa")
+	public int mastProductEachAdd(int product_num,String productSize_size,String productEach_color,int productEach_each){
+		System.out.println("product_num-----"+product_num);
+		System.out.println("productSize_size-----"+productSize_size);
+		System.out.println("productEach_color-----"+productEach_color);
+		System.out.println("productEach_each-----"+productEach_each);
+		int result = mastService.mastProductEachAdd(product_num, productSize_size, productEach_color, productEach_each);
+		return result;
 	}
 	
 	

@@ -1,10 +1,13 @@
 package com.basic.mast;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,8 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.basic.board.BoardDTO;
 import com.basic.buy.BuyStateDTO;
@@ -32,22 +37,76 @@ public class MastDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	private String namespace = "MastMapper.";
-	
+
 	@Autowired
 	private PlatformTransactionManager transactionManager;
 
 	DefaultTransactionDefinition def = null;
 	TransactionStatus status = null;
 
-
 	private List<MemberDTO> ar;
-	// mast productList   S -------------------------------
 
-	public List<ProductAllDTO> mastProductList(Map<String, Object> map,PageMaker pageMaker) {
+	// mast product Add SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
+	public int mastProductAddP(MastProductAddParamDTO paramDTO, HttpSession session) {
+		int result = 0;
+		String savePath = session.getServletContext().getRealPath("resources/testPic");
+
+		MultipartFile mt = paramDTO.getProductPic_pic();
+
+		UUID uid = UUID.randomUUID();
+		String saveName = uid.toString();
+		System.out.println(saveName);
+		saveName = saveName + "_" + mt.getOriginalFilename();
+		File f = new File(savePath, saveName);
+		Map<String, Object> map = new HashMap<>();
+		map.put("productPic_pic",saveName);
+		map.put("DTO", paramDTO);
+		try {
+			mt.transferTo(f);
+			def = new DefaultTransactionDefinition();
+			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+			status = transactionManager.getTransaction(def);
+			try {
+				result = sqlSession.insert(namespace+"InMastProductAdd",map);
+				if(result>0){
+					result = sqlSession.insert(namespace+"InMastProductInfoAdd",map);
+					if(result>0){
+						result = sqlSession.insert(namespace+"InMastProductKindAdd",map);
+						if(result>0){
+							result = sqlSession.insert(namespace+"InMastProductPicAdd",map);
+						}
+					}
+				}
+
+				transactionManager.commit(status);
+				System.out.println("success");
+
+			} catch (Exception e) {
+				// TODO: handle exception
+				transactionManager.rollback(status);
+				System.out.println("fail");
+				result = 0;
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return 0;
+	}
+
+	// mast product Add EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+
+	// mast productList S -------------------------------
+
+	public List<ProductAllDTO> mastProductList(Map<String, Object> map, PageMaker pageMaker) {
 		map.put("pageMaker", pageMaker);
-		List<ProductAllDTO> ar = sqlSession.selectList(namespace+"SelMastProductList", map);
+		List<ProductAllDTO> ar = sqlSession.selectList(namespace + "SelMastProductList", map);
 		for (int i = 0; i < ar.size(); i++) {
-			System.out.println(i+"--------------------"+i);
+			System.out.println(i + "--------------------" + i);
 			System.out.println(ar.get(i).getSelCount());
 			System.out.println(ar.get(i).getProductSelectDTO().getProductSelect_name());
 			System.out.println(ar.get(i).getProductSelectDTO().getProductSelect_num());
@@ -57,35 +116,69 @@ public class MastDAO {
 			System.out.println(ar.get(i).getProductDTO().getProduct_num());
 			System.out.println(ar.get(i).getProductInfoDTO().getProductInfo_price());
 			System.out.println(ar.get(i).getProductInfoDTO().getProductInfo_saleRate());
-			
+
 		}
 		System.out.println(ar.size());
-		return sqlSession.selectList(namespace+"SelMastProductList", map);
+		return sqlSession.selectList(namespace + "SelMastProductList", map);
 	}
 
 	public int mastProductCount(Map<String, Object> map) {
-		int a = sqlSession.selectOne(namespace+"SelMastProductCount", map);
-		System.out.println("aaalleach"+a);
-		return sqlSession.selectOne(namespace+"SelMastProductCount", map);
+		int a = sqlSession.selectOne(namespace + "SelMastProductCount", map);
+		System.out.println("aaalleach" + a);
+		return sqlSession.selectOne(namespace + "SelMastProductCount", map);
 	}
-	
-	public List<KindDTO> mastKindList(){
-		return sqlSession.selectList(namespace+"SelMastKindSelList");
+
+	public List<ProductSizeDTO> mastProductViewSizeList(int product_num) {
+		return sqlSession.selectList(namespace + "SelMastProductViewSizeList", product_num);
 	}
-	public List<ProductSelectDTO> mastProductSelectList(){
-		return sqlSession.selectList(namespace+"SelMastProductSelectSelList");
+
+	public int mastProductSizeAdd(int product_num, String productSize_size) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("product_num", product_num);
+		map.put("productSize_size", productSize_size);
+		return sqlSession.insert(namespace + "InMastProductSizeAdd", map);
 	}
-	public List<ProductDTO> mastProductList(){
-		return sqlSession.selectList(namespace+"SelMastProductSelList");
+
+	public int mastProductEachAdd(int product_num, String productSize_size, String productEach_color,
+			int productEach_each) {
+		int result = 0;
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("product_num", product_num);
+		map.put("productSize_size", productSize_size);
+		map.put("productEach_color", productEach_color);
+		map.put("productEach_each", productEach_each);
+		int check = sqlSession.selectOne(namespace + "SelMastProductEachAddCheck", map);
+		if (check > 0) {
+			result = sqlSession.update(namespace + "UpMastProductEachAdd", map);
+		} else {
+			result = sqlSession.insert(namespace + "InMastProductEachAdd", map);
+		}
+
+		return result;
 	}
-	public List<ProductSizeDTO> mastProductSizeList(){
-		return sqlSession.selectList(namespace+"SelMastProductSizeSelList");
+
+	public List<KindDTO> mastKindList() {
+		return sqlSession.selectList(namespace + "SelMastKindSelList");
 	}
-	public List<ProductEachDTO> mastProductColorList(){
-		return sqlSession.selectList(namespace+"SelMastProductColorSelList");
+
+	public List<ProductSelectDTO> mastProductSelectList() {
+		return sqlSession.selectList(namespace + "SelMastProductSelectSelList");
 	}
-	
-	public int mastProductInfoFix(Map<String, Object> map){
+
+	public List<ProductDTO> mastProductList() {
+		return sqlSession.selectList(namespace + "SelMastProductSelList");
+	}
+
+	public List<ProductSizeDTO> mastProductSizeList() {
+		return sqlSession.selectList(namespace + "SelMastProductSizeSelList");
+	}
+
+	public List<ProductEachDTO> mastProductColorList() {
+		return sqlSession.selectList(namespace + "SelMastProductColorSelList");
+	}
+
+	public int mastProductInfoFix(Map<String, Object> map) {
 		int result = 0;
 		def = new DefaultTransactionDefinition();
 		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
@@ -93,9 +186,9 @@ public class MastDAO {
 		status = transactionManager.getTransaction(def);
 
 		try {
-			result = sqlSession.update(namespace+"UpProductInfoFix",map);
-			if(result>0){
-				result = sqlSession.update(namespace+"UpProductInfoDate2",map);
+			result = sqlSession.update(namespace + "UpProductInfoFix", map);
+			if (result > 0) {
+				result = sqlSession.update(namespace + "UpProductInfoDate2", map);
 			}
 			if (result > 0) {
 				transactionManager.commit(status);
@@ -111,28 +204,23 @@ public class MastDAO {
 
 	}
 
-	
-	//  mast product List E------------------------------
-	
-	// mast product List Each 0  S -----------------------------------------
-	public List<MastProductViewDTO> mastProductListEach0(){
-		List<MastProductViewDTO> ar = sqlSession.selectList(namespace+"SelMastProductListEach0");
+	// mast product List E------------------------------
+
+	// mast product List Each 0 S -----------------------------------------
+	public List<MastProductViewDTO> mastProductListEach0() {
+		List<MastProductViewDTO> ar = sqlSession.selectList(namespace + "SelMastProductListEach0");
 		System.out.println(ar.size());
-		return sqlSession.selectList(namespace+"SelMastProductListEach0");
+		return sqlSession.selectList(namespace + "SelMastProductListEach0");
 	}
-	
-	// mast product List Each 0  E -----------------------------------------
-	
-	
-	
-	public MastProductViewDTO mastProductAllInfo(int product_num){
+
+	// mast product List Each 0 E -----------------------------------------
+
+	public MastProductViewDTO mastProductAllInfo(int product_num) {
 		System.out.println(product_num);
-		MastProductViewDTO mastProductViewDTO = sqlSession.selectOne(namespace+"SelMastProductInfoAll",product_num);
+		MastProductViewDTO mastProductViewDTO = sqlSession.selectOne(namespace + "SelMastProductInfoAll", product_num);
 
 		return mastProductViewDTO;
 	}
-	
-	
 
 	public List<MastBuyListDTO> mastBuyList(int state_num) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -156,10 +244,11 @@ public class MastDAO {
 
 		return sqlSession.update(namespace + "UpBuyState", buyStateDTO);
 	}
-	
-	//mast product Each fix
-	
-	public int mastProductEachFix(int product_num,String productSize_size,String productEach_color,int productEach_each){
+
+	// mast product Each fix
+
+	public int mastProductEachFix(int product_num, String productSize_size, String productEach_color,
+			int productEach_each) {
 		int result = 0;
 		ProductEachDTO productEachDTO = new ProductEachDTO();
 		productEachDTO.setProduct_num(product_num);
@@ -172,9 +261,9 @@ public class MastDAO {
 		status = transactionManager.getTransaction(def);
 
 		try {
-			result = sqlSession.update(namespace+"UpProductEach",productEachDTO);
-			if(result>0){
-				result = sqlSession.update(namespace+"UpProductInfoDate",product_num);
+			result = sqlSession.update(namespace + "UpProductEach", productEachDTO);
+			if (result > 0) {
+				result = sqlSession.update(namespace + "UpProductInfoDate", product_num);
 			}
 			if (result > 0) {
 				transactionManager.commit(status);
@@ -187,40 +276,39 @@ public class MastDAO {
 			result = 0;
 		}
 		return result;
-		
+
 	}
 
-	
-	
-	/////////////////////////////////////////////////////////회원관리///////////////////////////////////////////////////////
-	
-	//회원리스트//
-	public List<MemberDTO> findList(String type, String find,  PageMaker pageMaker) throws Exception{
+	///////////////////////////////////////////////////////// 회원관리///////////////////////////////////////////////////////
+
+	// 회원리스트//
+	public List<MemberDTO> findList(String type, String find, PageMaker pageMaker) throws Exception {
 		Map<String, Object> mp = new HashMap<String, Object>();
 		mp.put("type", type);
-		mp.put("find", "%"+find+"%");
+		mp.put("find", "%" + find + "%");
 		mp.put("paging", pageMaker);
-		ar = sqlSession.selectList(namespace+"findList", mp);
+		ar = sqlSession.selectList(namespace + "findList", mp);
 		return ar;
 	}
-	//페이징시 회원수세기//
-	public int memberCount() throws Exception{
-		int result = 0;
-		result = sqlSession.selectOne(namespace+"memberCount");
 
-		/*if(board_kind==4){
-			result = sqlSession.selectOne(namespace4+"boardCount");
-			System.out.println(namespace4 +"count");
-		}*/
+	// 페이징시 회원수세기//
+	public int memberCount() throws Exception {
+		int result = 0;
+		result = sqlSession.selectOne(namespace + "memberCount");
+
+		/*
+		 * if(board_kind==4){ result =
+		 * sqlSession.selectOne(namespace4+"boardCount");
+		 * System.out.println(namespace4 +"count"); }
+		 */
 		return result;
 	};
-	
-	//회원삭제//
-	public int memberDelete(String id) throws Exception{
+
+	// 회원삭제//
+	public int memberDelete(String id) throws Exception {
 		Map<String, Object> mp = new HashMap<String, Object>();
 		mp.put("id", id);
-		return sqlSession.delete(namespace+"memberDelete", id);
+		return sqlSession.delete(namespace + "memberDelete", id);
 	}
-	
-	
+
 }

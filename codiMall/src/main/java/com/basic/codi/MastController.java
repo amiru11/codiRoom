@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.basic.board.BoardDTO;
 import com.basic.board.PhotoDTO;
+import com.basic.mast.MastProductAddParamDTO;
 import com.basic.mast.MastService;
 import com.basic.member.MemberDTO;
 
@@ -29,6 +30,29 @@ public class MastController {
 
 	@Autowired
 	private MastService mastService;
+	
+	@RequestMapping(value="/mastProductAdd" ,method=RequestMethod.GET)
+	public String mastProductAddG(HttpSession session){
+		String path = "";
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		if (memberDTO != null && memberDTO.getMember_level() == 0) {
+			path = "/mast/mastProductAdd";
+		} else {
+			path = "redirect:/";
+		}
+		return path;
+	}
+	@RequestMapping(value="/mastProductAdd" ,method=RequestMethod.POST)
+	public String mastProductAddP(HttpSession session,MastProductAddParamDTO paramDTO,RedirectAttributes ra){
+		String path = "";
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		if (memberDTO != null && memberDTO.getMember_level() == 0) {
+			path = "/mast/mastProductAdd";
+		} else {
+			path = "redirect:/";
+		}
+		return path;
+	}
 
 	@RequestMapping(value = "/mastIndex")
 	public String mastIndex(HttpSession session) {
