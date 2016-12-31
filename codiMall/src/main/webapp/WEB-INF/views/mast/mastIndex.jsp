@@ -25,21 +25,10 @@ table, table tr, tr td, th {
 
 	$(function() {
 		calendar();
-		$("#goCalendar").click(function(){
-				calendar();
-		});		
+	
 	});
 	
-	function calendar(){
-		$.ajax({
-			url : "${pageContext.request.contextPath}/mast/calendar",
-			success : function(data){
-				$("#view").empty();
-				$("#view").html(data);
-				console.log(data);
-			}			
-		});
-	}
+
 </script>
 <style type="text/css">
 .nav >li >a.side-btn{
@@ -63,8 +52,8 @@ table, table tr, tr td, th {
 				<div class="col-sm-2" style="height: 100%;">
 					<%@ include file="/resources/temp/mast/sideBar.jspf"%>
 				</div>
-				<div class="com-sm-8" style="margin: 20px;height: 100%;">
-					<div class="container" >
+				<div class="col-sm-8" style="margin: 20px;height: 100%;">
+					<div class="container">
 						<div id="view">
 							
 						</div>

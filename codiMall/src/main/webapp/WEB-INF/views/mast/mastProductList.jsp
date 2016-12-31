@@ -358,9 +358,8 @@ width:160px;
 									<ul id="category-type" class="nav navbar-nav" style="vertical-align: top;">
 										<li class="category-li"><a id="1" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductList">ProductList</a></li>
 										<li class="category-li"><a id="2" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductListEach0">ProductEach(Update)</a></li>
-										<li class="category-li"><a id="3" class="sel_type" href="${pageContext.request.contextPath}/mast/mastBuyList">BuyList</a></li>
-										<li class="category-li"><a id="4" class="sel_type" href="${pageContext.request.contextPath}/mast/mastBuyListPay">BuyListPay</a></li>
-										<li class="category-li"><a id="5" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductListEach022">MASTproductEach0</a></li>
+										<li class="category-li"><a id="3" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductListEach022">ProductListEach0</a></li>
+										<li class="category-li"><a id="4" class="sel_type" href="${pageContext.request.contextPath}/product/productAdd">ProductAdd</a></li>
 									</ul>		
 								</div>
 							</nav>
@@ -495,8 +494,14 @@ width:160px;
 																					
 						</section>
 
+
 						<!--      -->
 						<!--     임시 페이지 이동   -->
+
+
+
+
+
 					</div>
 					<!--  view E  -->
 				</div>
