@@ -5,46 +5,28 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<link
-	href="${pageContext.request.contextPath}/resources/css/mast/mast.css"
-	rel="stylesheet">
 <script
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <link
 	href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/mast/mast.css"
+	rel="stylesheet">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
 <script src="${pageContext.request.contextPath}/resources/js/mast.js"></script>
 
-<style type="text/css">
-table, table tr, tr td, th {
-	border: 1px solid black;
-}
-
-th {
-	text-align: center;
-}
-</style>
 <script type="text/javascript">
 
 	$(function() {
-		$("#goCalendar").click(function() {
-			$.ajax({
-				url : "${pageContext.request.contextPath}/mast/calendar",
-				success : function(data) {
-					$("#view").empty();
-					$("#view").html(data);
-					console.log(data);
-				}
-			});
-
-		});
 		mastProductListSt();
 		selBox();
 		allCheckBoxes();
 		pageing();
+		$("#1").parent("li").addClass("active");
 	});
 
 
@@ -111,6 +93,7 @@ th {
 				$("#div_modin_main").html(x);
 				mastProductEachFix();
 				mastProductInfoFix();
+				
 			},
 			error : function(request, status, error) {
 				alert("code:" + request.status + "\n" + "error:" + error);
@@ -303,14 +286,12 @@ th {
 	jQuery.ajaxSettings.traditional = true;
 </script>
 <style type="text/css">
-.nav>li>a.side-btn {
-	color: #91a7c6;
-	padding: 0;
-	line-height: 50px;
-	height: 50px;
-	overflow-y: hidden;
-	cursor: pointer;
-	font-size: 18px;
+table, table tr, tr td, th {
+	border: 2px solid #dce2eb;
+}
+
+th {
+	text-align: center;
 }
 
 #tab_modin {
@@ -339,16 +320,18 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 #div_product_list {
-	width: 1100px;
-	height: 800px;
-	border: 2px red double;
+ 	width: 100%;
+/* 	height: 1000px;
+	border: 2px solid #dce2eb; */
 }
 
 .div_list_in_list {
+	margin-left: 30px;
+	margin-top : 30px;
 	padding: 2px;
 	width: 360px;
-	height: 220px;
-	border: 1px solid black;
+	height: 230px;
+	border: 2px solid #dce2eb;
 	text-align: center;
 	float: left;
 }
@@ -358,272 +341,165 @@ width:160px;
 }
 </style>
 </head>
-<body style="height: 1200px;">
+<body style="height: 1800px; font-family: 'hanna';">
 	<div class="container-fluid" style="padding: 0; height: 100%">
 		<div class="row" style="height: 100%;">
 			<div class="col-sm-2" style="height: 100%;">
 				<%@ include file="/resources/temp/mast/sideBar.jspf"%>
 			</div>
 
-			<div class="com-sm-8" style="margin: 20px; height: 100%;">
-				<div class="container">
+			<div class="col-sm-8" style="margin: 20px; height: 100%;">
+				<div class="container-fluid">
 					<div id="view">
-						<div style="display: inline-block;">
-							<form id="form_hidden_asd"
-								action="${pageContext.request.contextPath}/mast/mastProductList"
-								method="post">
-								<div id="div_hid_sel"></div>
-								<div id="div_hid_mtpsel"></div>
-								<div id="div_hid_prosel"></div>
-								<div id="div_hid_kind"></div>
-								<div id="div_hid_pro"></div>
-								<div id="div_hid_size"></div>
-								<div id="div_hid_color"></div>
-								<div id="div_hid_curPage">
-									<input type="hidden" name="curPage" value="${pageing.curPage}">
+						<header id="topbar" class="text-center bg-white alt ph10 br-b-ddd">
+							<nav class="navbar">
+								<div class="navbar-collapse collapse"
+									style="padding-left: 0; border-bottom: 1px solid #eee;">
+									<ul id="category-type" class="nav navbar-nav" style="vertical-align: top;">
+										<li class="category-li"><a id="1" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductList">ProductList</a></li>
+										<li class="category-li"><a id="2" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductListEach0">ProductEach(Update)</a></li>
+										<li class="category-li"><a id="3" class="sel_type" href="${pageContext.request.contextPath}/mast/mastBuyList">BuyList</a></li>
+										<li class="category-li"><a id="4" class="sel_type" href="${pageContext.request.contextPath}/mast/mastBuyListPay">BuyListPay</a></li>
+										<li class="category-li"><a id="sub5" class="sel_type">Dashboard</a></li>
+									</ul>		
 								</div>
-								<div id="div_hid_perPage"></div>
-							</form>
-						</div>
-						<div class="center-block" style="display: inline-block;">
-							<nav aria-label="Page navigation">
-								<ul class="pagination">
-									<c:if test="${!empty list}">
-
-										<li><c:if test="${pageing.curBlock>1}">
-												<a class="a_prev pageMove" aria-label="Previous"
-													style="cursor: pointer"><input class="inh_prev"
-													type="hidden" value="${pageing.startNum-1}"> <span
-													aria-hidden="true">&laquo;</span> </a>
-											</c:if></li>
-										<li><c:forEach begin="${pageing.startNum}" step="1"
-												end="${pageing.lastNum}" var="i">
-
-												<a style="cursor: pointer" class="n_pageing">${i}</a>
-											</c:forEach></li>
-										<li><c:if test="${pageing.curBlock<pageing.totalBlock}">
-												<a class="a_next" aria-label="Next" style="cursor: pointer">
-													<input class="inh_next" type="hidden"
-													value="${pageing.lastNum+1}"><span
-													aria-hidden="true">&raquo;</span>
-												</a>
-											</c:if></li>
-									</c:if>
-								</ul>
 							</nav>
-						</div>
+						</header>
+						<section id="section" class="jumbotron">	
+							<div style="display: inline-block;">
+								<form id="form_hidden_asd"
+									action="${pageContext.request.contextPath}/mast/mastProductList"
+									method="post">
+									<div id="div_hid_sel"></div>
+									<div id="div_hid_mtpsel"></div>
+									<div id="div_hid_prosel"></div>
+									<div id="div_hid_kind"></div>
+									<div id="div_hid_pro"></div>
+									<div id="div_hid_size"></div>
+									<div id="div_hid_color"></div>
+									<div id="div_hid_curPage">
+										<input type="hidden" name="curPage" value="${pageing.curPage}">
+									</div>
+									<div id="div_hid_perPage"></div>
+								</form>
+							</div>
+							<!-- HIDDEN VALUE FORM : E -->
+
+							<div class="panel" style="background: #fff; margin-bottom: 30px;">
+								<div class="panel-heading">
+									<a id="subList" class="subBtn btn btn-default btn-lg">
+										<span class="fa fa-list"></span> List
+									</a>
+								<%@ include file="/resources/temp/mast/productSelBox.jspf"%>
+								</div>
+								<div class="panel-body" style="background-color: white;">
+									<div id="div_product_list">
+										<c:forEach var="list1" items="${list}">
+											<div class="div_list_in_list">
+												<div class="div_cl_img_asd"
+													style="display: inline-block; cursor: pointer; float: left;">
+													<input class="inh_product_num" type="hidden"
+														name="product_num" value="${list1.productDTO.product_num}">
+													<img
+														<c:if test="${!empty sessionScope.member}">
+													data-toggle="modal" data-target="#basketModal"
+										data-backdrop="true"
+													</c:if>
+														width="175" height="175"
+														src="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}">
+												</div>
+												<table class="tab_mast_productList">
+													<tr>
+														<td>판매수</td>
+														<td>${list1.selCount}</td>
+													</tr>
+													<tr>
+														<td>pS.num</td>
+														<td>${list1.productSelectDTO.productSelect_num}</td>
+													</tr>
+													<tr>
+														<td>pS.name</td>
+														<td>${list1.productSelectDTO.productSelect_name}</td>
+													</tr>
+													<tr>
+														<td>k.num</td>
+														<td>${list1.kindDTO.kind_num}</td>
+													</tr>
+													<tr>
+														<td>k.name</td>
+														<td>${list1.kindDTO.kind_name}</td>
+													</tr>
+													<tr>
+														<td>p.num</td>
+														<td>${list1.productDTO.product_num}</td>
+													</tr>
+													<tr>
+														<td>p.name</td>
+														<td>${list1.productDTO.product_name}</td>
+													</tr>
+													<tr>
+														<td>price</td>
+														<td><fmt:formatNumber
+																value="${list1.productInfoDTO.productInfo_price}"
+																pattern="#,###" />원</td>
+													</tr>
+													<tr>
+														<td>sale</td>
+														<td>${list1.productInfoDTO.productInfo_saleRate}</td>
+													</tr>
+													<tr>
+														<td>totalPrice</td>
+														<td><c:set var="number"
+																value="${list1.productInfoDTO.productInfo_price*(100-list1.productInfoDTO.productInfo_saleRate)/100}" />
+															<fmt:parseNumber var="total" value="${number}" type="number"
+																integerOnly="true" /> <fmt:formatNumber value="${total}"
+																pattern="#,###" />원</td>
+													</tr>
+												</table>
+											</div>
+										</c:forEach>
+									</div>								
+								</div>
+								<div class="panel-footer"  style="background-color: white;">
+									<!-- PAGINATION : S -->
+									<div class="center-block" style="width : 200px;">
+										<nav aria-label="Page navigation">
+											<ul class="pagination">
+												<c:if test="${!empty list}">		
+													<li><c:if test="${pageing.curBlock>1}">
+															<a class="a_prev pageMove" aria-label="Previous"
+																style="cursor: pointer"><input class="inh_prev"
+																type="hidden" value="${pageing.startNum-1}"> <span
+																aria-hidden="true">&laquo;</span> </a>
+														</c:if></li>
+													<li><c:forEach begin="${pageing.startNum}" step="1"
+															end="${pageing.lastNum}" var="i">
+			
+															<a style="cursor: pointer" class="n_pageing">${i}</a>
+														</c:forEach></li>
+													<li><c:if test="${pageing.curBlock<pageing.totalBlock}">
+															<a class="a_next" aria-label="Next" style="cursor: pointer">
+																<input class="inh_next" type="hidden"
+																value="${pageing.lastNum+1}"><span
+																aria-hidden="true">&raquo;</span>
+															</a>
+														</c:if></li>
+												</c:if>
+											</ul>
+										</nav>
+									</div>
+									<!-- PAGENATION : E -->
+								</div>
+							</div>	
+							
+																					
+						</section>
+
+
 						<!--      -->
 						<!--     임시 페이지 이동   -->
-						<a href="${pageContext.request.contextPath}/mast/mastProductList">MAST
-							product List</a><br> <a
-							href="${pageContext.request.contextPath}/mast/mastProductListEach0">MAST
-							productEach0</a><br> <a
-							href="${pageContext.request.contextPath}/mast/mastBuyList">MAST
-							BuyList</a><br> <a
-							href="${pageContext.request.contextPath}/mast/mastBuyListPay">MAST
-							BuyListPay</a><br>
 
 
-
-
-						<div id="selector">
-							<div id="div_sel_sel"
-								style="float: left; width: 10%; height: 100px; overflow-y: scroll; text-align: right;">
-								<label class="labelccc">순서1</label><br> 최신순<input
-									class="p_param" type="radio" name="sel" value="1"
-									<c:if test="${map.sel == 1}">
-								checked="checked"
-								</c:if>><br>
-								오래된순<input class="p_param" type="radio" name="sel" value="2"
-									<c:if test="${map.sel == 2}">
-								checked="checked"
-								</c:if>><br>
-								세일높은순<input class="p_param" type="radio" name="sel" value="3"
-									<c:if test="${map.sel == 3}">
-								checked="checked"
-								</c:if>><br>
-								세일낮은순<input class="p_param" type="radio" name="sel" value="4"
-									<c:if test="${map.sel == 4}">
-								checked="checked"
-								</c:if>><br>
-								가격높은순<input class="p_param" type="radio" name="sel" value="5"
-									<c:if test="${map.sel == 5}">
-								checked="checked"
-								</c:if>><br>
-								가격낮은순<input class="p_param" type="radio" name="sel" value="6"
-									<c:if test="${map.sel == 6}">
-								checked="checked"
-								</c:if>><br>
-								판매량순<input class="p_param" type="radio" name="sel" value="7"
-									<c:if test="${map.sel == 7}">
-								checked="checked"
-								</c:if>>
-							</div>
-							<div id="div_mtpSel_sel"
-								style="float: left; width: 10%; height: 100px; overflow-y: scroll; text-align: right;">
-								<label class="labelccc">순서2</label><br> 기본<input
-									class="p_param" type="radio" name="mtpSel" value="1"
-									<c:if test="${map.mtpSel == 1}">
-								checked="checked"
-								</c:if>><br>
-								세일있음<input class="p_param" type="radio" name="mtpSel" value="2"
-									<c:if test="${map.mtpSel == 2}">
-								checked="checked"
-								</c:if>><br>
-								세일없음<input class="p_param" type="radio" name="mtpSel" value="3"
-									<c:if test="${map.mtpSel == 3}">
-								checked="checked"
-								</c:if>><br>
-								재고있음<input class="p_param" type="radio" name="mtpSel" value="4"
-									<c:if test="${map.mtpSel == 4}">
-								checked="checked"
-								</c:if>><br>
-								재고없음<input class="p_param" type="radio" name="mtpSel" value="5"
-									<c:if test="${map.mtpSel == 5}">
-								checked="checked"
-								</c:if>><br>
-							</div>
-							<div id="div_proSel_sel"
-								style="float: left; width: 10%; height: 100px; overflow-y: scroll; text-align: right;">
-								<label class="labelccc">대분류</label><input id="inp_id_ck_prosel"
-									type="checkbox"><br>
-								<c:forEach var="proselc" items="${productSelectList}">
-						${proselc.productSelect_name}<input
-										class="in_ck_proSelNum p_param" type="checkbox"
-										name="productSelect_num" value="${proselc.productSelect_num}"
-										<c:forEach var="listasd" items="${map.productSelect_num}"> 
-							<c:if test="${proselc.productSelect_num == listasd}">
-							checked="checked"</c:if>
-					</c:forEach>>
-									<br>
-								</c:forEach>
-							</div>
-							<div id="div_kind_sel"
-								style="float: left; width: 15%; height: 100px; overflow-y: scroll; text-align: right;">
-								<label class="labelccc">소분류</label><input id="inp_id_ck_kind"
-									type="checkbox"><br>
-								<c:forEach var="proselc" items="${kindList}">
-						${proselc.kind_name}<input class="in_ck_kindNum p_param"
-										type="checkbox" name="kind_num" value="${proselc.kind_num}"
-										<c:forEach var="listasd" items="${map.kind_num}"> 
-							<c:if test="${proselc.kind_num == listasd}">
-							checked="checked"</c:if>
-					</c:forEach>>
-									<br>
-								</c:forEach>
-							</div>
-							<div id="div_pro_sel"
-								style="float: left; width: 15%; height: 100px; overflow-y: scroll; text-align: right;">
-								<label class="labelccc">상품번호</label><input id="inp_id_ck_pro"
-									type="checkbox"><br>
-								<c:forEach var="proselc" items="${productList}">
-						${proselc.product_name}<input class="in_ck_proNum p_param"
-										type="checkbox" name="product_num"
-										value="${proselc.product_num}"
-										<c:forEach var="listasd" items="${map.product_num}"> 
-							<c:if test="${proselc.product_num == listasd}">
-							checked="checked"</c:if>
-					</c:forEach>>
-									<br>
-								</c:forEach>
-							</div>
-							<div id="div_size_sel"
-								style="float: left; width: 10%; height: 100px; overflow-y: scroll; text-align: right;">
-								<label class="labelccc">사이즈</label><input id="inp_id_ck_size"
-									type="checkbox"><br>
-								<c:forEach var="proselc" items="${productSizeList}">
-						${proselc.productSize_size}<input type="checkbox"
-										class="in_ck_proSize p_param" name="productSize_size"
-										value="${proselc.productSize_size}"
-										<c:forEach var="listasd" items="${map.productSize_size}"> 
-							<c:if test="${proselc.productSize_size == listasd}">
-							checked="checked"</c:if>
-					</c:forEach>>
-									<br>
-								</c:forEach>
-							</div>
-							<div id="div_color_sel"
-								style="float: left; width: 15%; height: 100px; overflow-y: scroll; text-align: right;">
-								<label class="labelccc">색상</label><input id="inp_id_ck_color"
-									type="checkbox"><br>
-								<c:forEach var="proselc" items="${productColorList}">
-						${proselc.productEach_color}<input class="in_ck_proColor p_param"
-										type="checkbox" name="productEach_color"
-										value="${proselc.productEach_color}"
-										<c:forEach var="listasd" items="${map.productEach_color}"> 
-							<c:if test="${proselc.productEach_color == listasd}">
-							checked="checked"</c:if>
-					</c:forEach>>
-									<br>
-								</c:forEach>
-							</div>
-						</div>
-						<div id="div_product_list">
-							<c:forEach var="list1" items="${list}">
-								<div class="div_list_in_list">
-									<div class="div_cl_img_asd"
-										style="display: inline-block; cursor: pointer; float: left;">
-										<input class="inh_product_num" type="hidden"
-											name="product_num" value="${list1.productDTO.product_num}">
-										<img
-											<c:if test="${!empty sessionScope.member}">
-										data-toggle="modal" data-target="#basketModal"
-							data-backdrop="true"
-										</c:if>
-											width="175px" height="175px"
-											src="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}">
-									</div>
-									<table class="tab_mast_productList">
-										<tr>
-											<td>판매수</td>
-											<td>${list1.selCount}</td>
-										</tr>
-										<tr>
-											<td>pS.num</td>
-											<td>${list1.productSelectDTO.productSelect_num}</td>
-										</tr>
-										<tr>
-											<td>pS.name</td>
-											<td>${list1.productSelectDTO.productSelect_name}</td>
-										</tr>
-										<tr>
-											<td>k.num</td>
-											<td>${list1.kindDTO.kind_num}</td>
-										</tr>
-										<tr>
-											<td>k.name</td>
-											<td>${list1.kindDTO.kind_name}</td>
-										</tr>
-										<tr>
-											<td>p.num</td>
-											<td>${list1.productDTO.product_num}</td>
-										</tr>
-										<tr>
-											<td>p.name</td>
-											<td>${list1.productDTO.product_name}</td>
-										</tr>
-										<tr>
-											<td>price</td>
-											<td><fmt:formatNumber
-													value="${list1.productInfoDTO.productInfo_price}"
-													pattern="#,###" />원</td>
-										</tr>
-										<tr>
-											<td>sale</td>
-											<td>${list1.productInfoDTO.productInfo_saleRate}</td>
-										</tr>
-										<tr>
-											<td>totalPrice</td>
-											<td><c:set var="number"
-													value="${list1.productInfoDTO.productInfo_price*(100-list1.productInfoDTO.productInfo_saleRate)/100}" />
-												<fmt:parseNumber var="total" value="${number}" type="number"
-													integerOnly="true" /> <fmt:formatNumber value="${total}"
-													pattern="#,###" />원</td>
-										</tr>
-									</table>
-								</div>
-							</c:forEach>
-						</div>
 
 
 					</div>
