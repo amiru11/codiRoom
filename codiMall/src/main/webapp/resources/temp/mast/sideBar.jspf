@@ -10,23 +10,6 @@
 	background: transparent;
 }
 </style>
-<script>
-$(function() {
-	$("#goCalendar").click(function(){
-			calendar();
-	});		
-});
-function calendar(){
-	$.ajax({
-		url : "${pageContext.request.contextPath}/mast/calendar",
-		success : function(data){
-			$("#view").empty();
-			$("#view").html(data);
-			console.log(data);
-		}			
-	});
-}
-</script>
 <div id="sidebar_left" class="" style="height: 100%;">
 	<div class="sidebar-left-content nano-content" tabindex="0">
 		<ul class="nav sidebar-menu">
@@ -52,7 +35,12 @@ function calendar(){
 			<li><a id="goMember" class="side-btn"
 				href="${pageContext.request.contextPath}/mast/mastMember"><span
 					class="fa fa-users"></span><span class="sidebar-title">Member</span></a>
-			</li>
+				<!-- 								<ul id="sub-2">
+									<li><a>dashboard</a></li>
+									<li><a>Member List</a></li>
+									<li><a>write</a></li>
+									<li><a>comment</a></li>
+								</ul> --></li>
 			<li class=""><a id="goProduct" class="side-btn"
 				onclick="gotoggle(3);"><span class="fa fa-shopping-basket "></span><span
 					class="sidebar-title">Product</span></a>
@@ -61,10 +49,7 @@ function calendar(){
 						href="${pageContext.request.contextPath}/mast/mastProductList">MastProductList</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/mast/mastProductListEach0">MastProductListEach0</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/mast/mastProductAdd">ProductAdd</a></li>	
-				</ul>
-			</li>
+				</ul></li>
 			<li class=""><a id="goBuy" class="side-btn"
 				onclick="gotoggle(4);"><span class="fa fa-shopping-basket "></span><span
 					class="sidebar-title">BUY</span></a>

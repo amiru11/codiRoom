@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.basic.board.BoardDTO;
@@ -30,9 +31,37 @@ public class MastController {
 
 	@Autowired
 	private MastService mastService;
-	
-	@RequestMapping(value="/mastProductAdd" ,method=RequestMethod.GET)
-	public String mastProductAddG(HttpSession session){
+
+	@RequestMapping(value = "/mastProductPicFix")
+	public String mastProductPicFix(HttpSession session,MultipartHttpServletRequest mr,RedirectAttributes ra) {
+		String path = "";
+		String location = "";
+		String message="";
+		int result = 0;
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		if (memberDTO != null && memberDTO.getMember_level() == 0) {
+			result = mastService.mastProductPicFix(session, mr);
+			if(result >0){
+				path="redirect:/result/result";
+				location="/mast/mastProductList";
+				message="사진 변경 성공";
+				ra.addFlashAttribute("message", message);
+				ra.addFlashAttribute("location", location);
+			}else{
+				path="redirect:/result/result";
+				location="/mast/mastProductList";
+				message="사진 변경 실패";
+				ra.addFlashAttribute("message", message);
+				ra.addFlashAttribute("location", location);
+			}
+		} else {
+			path = "redirect:/";
+		}
+		return path;
+	}
+
+	@RequestMapping(value = "/mastProductAdd", method = RequestMethod.GET)
+	public String mastProductAddG(HttpSession session) {
 		String path = "";
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
 		if (memberDTO != null && memberDTO.getMember_level() == 0) {
@@ -42,12 +71,29 @@ public class MastController {
 		}
 		return path;
 	}
-	@RequestMapping(value="/mastProductAdd" ,method=RequestMethod.POST)
-	public String mastProductAddP(HttpSession session,MastProductAddParamDTO paramDTO,RedirectAttributes ra){
+
+	@RequestMapping(value = "/mastProductAdd", method = RequestMethod.POST)
+	public String mastProductAddP(HttpSession session, MastProductAddParamDTO paramDTO, RedirectAttributes ra) {
 		String path = "";
+		String location = "";
+		String message="";
+		int result = 0;
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
 		if (memberDTO != null && memberDTO.getMember_level() == 0) {
-			path = "/mast/mastProductAdd";
+			result = mastService.mastProductAdd(paramDTO, session);
+			if(result >0){
+				path="redirect:/result/result";
+				location="/mast/mastProductList";
+				message="상품 등록 성공";
+				ra.addFlashAttribute("message", message);
+				ra.addFlashAttribute("location", location);
+			}else{
+				path="redirect:/result/result";
+				location="/mast/mastProductList";
+				message="상품 등록 실패";
+				ra.addFlashAttribute("message", message);
+				ra.addFlashAttribute("location", location);
+			}
 		} else {
 			path = "redirect:/";
 		}

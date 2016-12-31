@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.basic.board.BoardDAO;
 import com.basic.board.BoardDTO;
@@ -32,11 +33,19 @@ public class MastService {
 	private CommentDAO commentDAO;
 	// mast product Add SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 
-	public String mastProductAddP(MastProductAddParamDTO paramDTO,HttpSession session) {
-		return null;
+	public int mastProductAdd(MastProductAddParamDTO paramDTO,HttpSession session) {
+		return mastDAO.mastProductAdd(paramDTO, session);
 	}
 
 	// mast product Add EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+	
+	//mast product Pic fixSSSSSSSSSS
+	public int mastProductPicFix(HttpSession session,MultipartHttpServletRequest mr) {
+		return mastDAO.mastProductPicFix(session, mr);
+	}
+	//mast product Pic fix EEEEEEEEEEEEEEEEEEEEEEEEEE
+	
+	
 
 	public List<ProductAllDTO> mastProductList(Map<String, Object> map, Model model) {
 		PageMaker pageMaker = new PageMaker();

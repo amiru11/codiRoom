@@ -206,10 +206,10 @@ public class ProductDAO {
 		List<ProductBestDTO> ar = new ArrayList<>();
 		ar = sqlSession.selectList(namespace + "SelProductBest");
 		for (int i = 0; i < ar.size(); i++) {
-			System.out.println(i + "---------" + i);
+			/*System.out.println(i + "---------" + i);
 			System.out.println("selCount---" + ar.get(i).getSel_count());
 			System.out.println("pronum---" + ar.get(i).getProduct_num());
-			System.out.println("proPrice---" + ar.get(i).getProductInfo_price());
+			System.out.println("proPrice---" + ar.get(i).getProductInfo_price());*/
 		}
 		return sqlSession.selectList(namespace + "SelProductBest");
 	}

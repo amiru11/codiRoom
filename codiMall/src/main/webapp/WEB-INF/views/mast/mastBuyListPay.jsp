@@ -7,7 +7,9 @@
 <html>
 <head>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css">
+<link
+	href="${pageContext.request.contextPath}/resources/css/mast/mast.css"
+	rel="stylesheet">
 <script
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <link
@@ -16,37 +18,27 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
 <script src="${pageContext.request.contextPath}/resources/js/mast.js"></script>
-<link
-	href="${pageContext.request.contextPath}/resources/css/mast/mast.css"
-	rel="stylesheet">
+
 <style type="text/css">
-/* table, table tr, tr td, th {
+table, table tr, tr td, th {
 	border: 1px solid black;
-} */
-.select_date{
-	display : inline-block;
-    width: 40%;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 </style>
 <script type="text/javascript">
 
 	$(function() {
 
-		$("#2").parent("li").addClass("active");
+		$("#goCalendar").click(function() {
+			$.ajax({
+				url : "${pageContext.request.contextPath}/mast/calendar",
+				success : function(data) {
+					$("#view").empty();
+					$("#view").html(data);
+					console.log(data);
+				}
+			});
+
+		});
 		mastBuyPay();
 		<c:if test="${first_date ==null && last_date == null}">
 		today();
@@ -156,98 +148,78 @@
 }
 </style>
 </head>
-<body style="height: 1800px; font-family: 'hanna';">
+<body style="height: 1200px;">
 	<div class="container-fluid" style="padding: 0; height: 100%">
 		<div class="row" style="height: 100%;">
 			<div class="col-sm-2" style="height: 100%;">
 				<%@ include file="/resources/temp/mast/sideBar.jspf"%>
 			</div>
-			<div class="col-sm-8" style="margin: 20px; height: 100%;">
-				<div class="container-fluid">
+			<div class="com-sm-8" style="margin: 20px; height: 100%;">
+				<div class="container">
 					<div id="view">
-						<header id="topbar" class="text-center bg-white alt ph10 br-b-ddd">
-							<nav class="navbar">
-								<div class="navbar-collapse collapse"
-									style="padding-left: 0; border-bottom: 1px solid #eee;">
-									<ul id="category-type" class="nav navbar-nav" style="vertical-align: top;">
-										<li class="category-li"><a id="1" class="sel_type" href="${pageContext.request.contextPath}/mast/mastBuyList">BuyList</a></li>
-										<li class="category-li"><a id="2" class="sel_type" href="${pageContext.request.contextPath}/mast/mastBuyListPay">BuyListPay</a></li>
-									</ul>		
-								</div>
-							</nav>
-						</header>	
-						<section id="section" class="jumbotron">
-							<div class="panel" style="background: #fff; margin-bottom: 30px;">
-								<div class="panel-heading">
-									<a id="subList" class="subBtn btn btn-default btn-lg">
-										<span class="fa fa-list"></span>  매출리스트
-									</a><hr>
-									<div>
-										<input id="btn_today" class="btn btn-info" type="button" value="오늘"> <input
-											id="btn_3day" class="btn btn-info" type="button" value="3일"> <input
-											id="btn_week" class="btn btn-info" type="button" value="일주일"> <input
-											id="btn_month" class="btn btn-info" type="button" value="한달"> <input
-											id="btn_halfyear" class="btn btn-info" type="button" value="반년"> <input
-											id="btn_year" class="btn btn-info" type="button" value="1년"> <input
-											id="btn_3year" class="btn btn-info" type="button" value="3년"> 
-											<input id="btn_all" class="btn btn-info" type="button" value="ALL">
-									</div>
-									<div style="margin-top : 20px;">
-										<form id="id_mast_buy_pay_frm" method="post"
-											action="${pageContext.request.contextPath}/mast/mastBuyListPay">
-				
-											<input id="in_first_date" class="select_date" type="date" name="first_date" 
-												value=<c:if test="${first_date != null}">
-											"${first_date}"
-											</c:if>>
-											<input id="in_last_date" class="select_date" type="date" name="last_date"  
-												value=<c:if test="${last_date != null}">
-											"${last_date}"
-											</c:if>>
-											<input id="btn_date_submit" class="btn btn-default" type="button" value="SEARCH">
-										</form>
-									</div>
-								</div>
-								<div class="panel-body" style="background-color: white;">
-									<div id="div_listM">
-										<table id="table_buy_pay_list" class="table">
-											<tr>
-												<th>ID</th>
-												<th>P.NUM</th>
-												<th>P.NAME</th>
-												<th>B.NUM</th>
-												<th>SIZE</th>
-												<th>COLOR</th>
-												<th>EACH</th>
-												<th>PRICE</th>
-												<th>EXPRESSNUM</th>
-												<th>RESULTDATE</th>
-											</tr>
-											<c:forEach var="list1" items="${list}">
-												<tr>
-													<td>${list1.buyDTO.member_id}</td>
-													<td>${list1.productDTO.product_num}</td>
-													<td>${list1.productDTO.product_name}</td>
-													<td>${list1.buyStateDTO.buy_num}</td>
-													<td>${list1.buyStateDTO.buyState_size}</td>
-													<td>${list1.buyStateDTO.buyState_color}</td>
-													<td>${list1.buyStateDTO.buyState_each}</td>
-													<td style="text-align: right;">
-													 <fmt:formatNumber value="${list1.buyStateDTO.buyState_price}" pattern="#,###" /> 원
-													</td>
-													<td>${list1.buyStateDTO.buyState_expressNum}</td>
-													<td>${list1.buyStateDTO.buyState_result_date}</td>
-												</tr>
-											</c:forEach>
-											<tr>
-												<td colspan="5">합계</td>
-												<td colspan="5" class="total_money"></td>
-											</tr>
-										</table>
-									</div>								
-								</div>
-							</div>
-						</section>					
+						<input id="btn_today" type="button" value="오늘"> <input
+							id="btn_3day" type="button" value="3일"> <input
+							id="btn_week" type="button" value="일주일"> <input
+							id="btn_month" type="button" value="한달"> <input
+							id="btn_halfyear" type="button" value="반년"> <input
+							id="btn_year" type="button" value="1년"> <input
+							id="btn_3year" type="button" value="3년"> <input id="btn_all"
+							type="button" value="ALL">
+						<form id="id_mast_buy_pay_frm" method="post"
+							action="${pageContext.request.contextPath}/mast/mastBuyListPay">
+
+							<input id="in_first_date" type="date" name="first_date"
+								value=<c:if test="${first_date != null}">
+							"${first_date}"
+							</c:if>>
+							<input id="in_last_date" type="date" name="last_date"
+								value=<c:if test="${last_date != null}">
+							"${last_date}"
+							</c:if>>
+							<input id="btn_date_submit" type="button" value="SEARCH">
+						</form>
+						<div id="div_listM">
+							<table id="table_buy_pay_list">
+								<tr>
+									<th>ID</th>
+									<th>P.NUM</th>
+									<th>P.NAME</th>
+									<th>B.NUM</th>
+									<th>SIZE</th>
+									<th>COLOR</th>
+									<th>EACH</th>
+									<th>PRICE</th>
+									<th>EXPRESSNUM</th>
+									<th>RESULTDATE</th>
+								</tr>
+								<c:forEach var="list1" items="${list}">
+									<tr>
+										<td>${list1.buyDTO.member_id}</td>
+										<td>${list1.productDTO.product_num}</td>
+										<td>${list1.productDTO.product_name}</td>
+										<td>${list1.buyStateDTO.buy_num}</td>
+										<td>${list1.buyStateDTO.buyState_size}</td>
+										<td>${list1.buyStateDTO.buyState_color}</td>
+										<td>${list1.buyStateDTO.buyState_each}</td>
+										<td style="text-align: right;">
+										 <fmt:formatNumber value="${list1.buyStateDTO.buyState_price}" pattern="#,###" /> 원
+										</td>
+										<td>${list1.buyStateDTO.buyState_expressNum}</td>
+										<td>${list1.buyStateDTO.buyState_result_date}</td>
+									</tr>
+								</c:forEach>
+								<tr>
+									<td colspan="5">합계</td>
+									<td colspan="5" class="total_money"></td>
+								</tr>
+
+							</table>
+
+
+
+						</div>
+
+
 					</div>
 				</div>
 			</div>

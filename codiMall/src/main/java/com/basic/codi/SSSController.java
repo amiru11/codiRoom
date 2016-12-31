@@ -72,7 +72,7 @@ public class SSSController {
 		String path = "";
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
 		if (memberDTO != null && memberDTO.getMember_level() == 0) {
-			System.out.println("mast controller prollist post");
+			/*System.out.println("mast controller prollist post");
 			System.out.println("sel---" + sel);
 			System.out.println("mtpSel---" + mtpSel);
 			System.out.println("curPage---" + curPage);
@@ -81,7 +81,7 @@ public class SSSController {
 			System.out.println("productSelect_num---" + productSelect_num + "---");
 			System.out.println("productNim---" + product_num + "---");
 			System.out.println("productEach_color---" + productEach_color + "---");
-			System.out.println("productEach_Size---" + productSize_size + "---");
+			System.out.println("productEach_Size---" + productSize_size + "---");*/
 
 			Map<String, Object> map = new HashMap<>();
 			map.put("curPage", curPage);

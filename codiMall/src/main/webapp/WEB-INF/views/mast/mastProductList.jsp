@@ -5,7 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css">
+<link rel="stylesheet"
+	href="http://fonts.googleapis.com/earlyaccess/hanna.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
@@ -26,7 +27,134 @@
 		selBox();
 		allCheckBoxes();
 		pageing();
+		$(".cl_proadd_action").click(function(){
+			mastProductAddClick();
+		});
 	});
+
+	function mastProductAddClick() {
+		$("#div_modin_main").html("");
+		$.ajax({
+			url : "../json/allKindNum",
+			type : "post",
+			dataType : 'json',
+			data : {
+			},
+			success : function(data) {
+				var zz = "";
+				zz = zz + '<select id="sel_kind_proadd">';
+				$.each(data.kindNumList, function(index, value) {
+					zz = zz + '<option value="' + value.kind_num + '">' + value.kind_num + "--" + value.kind_name + '</option>'
+				});
+				zz = zz + '</select>';
+				var x = "";
+				x = x + '<table id="tab_proadd_sa"><tr><td colspan=2><label>PRODUCTADD</label></td></tr>';
+				x = x + '<tr><td>PRODUCTNAME</td><td><input id="inp_productAdd_name" type="text"></td></tr>';
+				x = x + '<tr><td>KIND_NUM</td><td>' + zz + '</td></tr>';
+				x = x + '<tr><td>PRICE</td><td><input id="inp_productAdd_price" type="number" min=0 step=1></td></tr>';
+				x = x + '<tr><td>SALERATE</td><td><input id="inp_productAdd_saleRate" type="number" min=0 step=0.1></td></tr>';
+				x = x + '<tr><td>SEARCHWORD</td><td><input id="inp_productAdd_searchWord" type="text"></td></tr>';
+				x = x + '<tr><td>BRAND</td><td><input id="inp_productAdd_brand" type="text"></td></tr>';
+				x = x + '<tr><td>';
+				x = x + '<form id="hid_form_proadd" action="${pageContext.request.contextPath}/mast/mastProductAdd"';
+				x = x + 'method="post" enctype="multipart/form-data">';
+				x = x + '<input type="hidden" id="inph_productAdd_product_name" name="product_name">';
+				x = x + '<input type="hidden" id="inph_productAdd_kind_num" name="kind_num">';
+				x = x + '<input type="hidden" id="inph_productAdd_price" name="productInfo_price">';
+				x = x + '<input type="hidden" id="inph_productAdd_saleRate" name="productInfo_saleRate">';
+				x = x + '<input type="hidden" id="inph_productAdd_searchWord" name="productInfo_searchWord">';
+				x = x + '<input type="hidden" id="inph_productAdd_brand" name="productInfo_brand">';
+				x = x + '<input type="file" id="inph_productAdd_pic" name="productPic_pic">';
+				x = x + '</form>';
+				x=x+'</td></tr>';
+				x = x + '<tr><td colspan=2><button id="btn_productAdd_ss">PRODUCTADD</button></td></tr>'
+				x = x + '</table>';
+				
+				$("#div_modin_main").html(x);
+				$("#inp_productAdd_saleRate").focus(function(){
+					$(this).change(function(){
+						if($(this).val()>90){
+							alert("90보다 크게 입력할수없습니다.")
+							$(this).val(90);
+						}
+					})
+					$(this).keydown(function(){
+						if($(this).val()>90){
+							alert("90보다 크게 입력할수없습니다.")
+							$(this).val(90);
+						}
+					})
+					$(this).keyup(function(){
+						if($(this).val()>90){
+							alert("90보다 크게 입력할수없습니다.")
+							$(this).val(90);
+						}
+					})
+					$(this).blur(function(){
+						if($(this).val()>90){
+							alert("90보다 크게 입력할수없습니다.")
+							$(this).val(90);
+						}
+					})
+				});
+				$("#btn_productAdd_ss").click(function() {
+					var count = 0;
+					var product_name = $("#inp_productAdd_name").val();
+					var kind_num = $("#sel_kind_proadd").val();
+					var productInfo_price = $("#inp_productAdd_price").val();
+					var productInfo_saleRate = $("#inp_productAdd_saleRate").val();
+					var productInfo_searchWord = $("#inp_productAdd_searchWord").val();
+					var productInfo_brand = $("#inp_productAdd_brand").val();
+					var productPic_pic = $("#inph_productAdd_pic").val();
+					if (product_name == "") {
+						count++;
+					}
+					if (kind_num == "") {
+						count++;
+					}
+					if (productInfo_price == "") {
+						count++;
+					}
+					if (productInfo_saleRate == "" || productInfo_saleRate < 0) {
+						count++;
+					}
+					if (productInfo_searchWord == "") {
+						count++;
+					}
+					if (productInfo_brand == "") {
+						count++;
+					}
+					if (productPic_pic == "") {
+						count++;
+					}
+					if(count > 0){
+						alert("빈값을 모두 입력해 주세요")
+					}else{
+						$("#inph_productAdd_product_name").val(product_name);
+						$("#inph_productAdd_kind_num").val(kind_num);
+						$("#inph_productAdd_price").val(productInfo_price);
+						$("#inph_productAdd_saleRate").val(productInfo_saleRate);
+						$("#inph_productAdd_searchWord").val(productInfo_searchWord);
+						$("#inph_productAdd_brand").val(productInfo_brand);
+						$("#hid_form_proadd").submit();
+					}
+
+				});
+
+
+
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
+			}
+		});
+
+
+
+
+
+
+	}
 
 
 	function mastProductListSt() {
@@ -37,6 +165,22 @@
 	}
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
+	function mastProductPicFix() {
+		$("#btn_pic_fix").click(function() {
+			if ($("#in_file_pic").val() != "") {
+				var ext = $('#in_file_pic').val().split('.').pop().toLowerCase();
+				if ($.inArray(ext, [ 'gif', 'png', 'jpg', 'jpeg' ]) == -1) {
+					alert('gif,png,jpg,jpeg 파일만 업로드 할수 있습니다.');
+				} else {
+					$("#form_id_picFix").submit();
+				}
+			} else {
+				alert("사진을 선택해 주세요");
+			}
+
+		});
 	}
 
 	function ajaxfirst(product_num) {
@@ -51,8 +195,12 @@
 				$("#div_modin_main").html("");
 				var x = "";
 				x = x + '<table id="tab_modin"><tr>';
-				x = x + '<td class="modin_td"><div class="modin_div"><img src="${pageContext.request.contextPath}/resources/testPic/' + data.ar.productPic_pic + '"></div></td>';
-				x = x + '<td class="modin_td"><div class="modin_div"><table id="tabin_tab_12"><tr>';
+				x = x + '<td class="modin_td"><div class="modin_div"><img src="${pageContext.request.contextPath}/resources/testPic/' + data.ar.productPic_pic + '"></div>';
+				x = x + '<div><label style="width:120px;text-align: center;">사진변경</label><BR>';
+				x = x + '<form id="form_id_picFix" action="${pageContext.request.contextPath}/mast/mastProductPicFix" method="post" enctype="multipart/form-data">';
+				x = x + '<input type="hidden" name="product_num" value="' + product_num + '">';
+				x = x + '<input id="in_file_pic" type="file" name="productPic_pic"><input id="btn_pic_fix" type="button" value="변경하기"></div></td>';
+				x = x + '</td><td class="modin_td"><div class="modin_div"><table id="tabin_tab_12"><tr>';
 				x = x + '<td>productSelect_num</td><td>' + data.ar.productSelect_num + '</td>';
 				x = x + '</tr><tr><td>productSelect_name</td><td>' + data.ar.productSelect_name + '</td>';
 				x = x + '</tr><tr><td>kind_num</td><td>' + data.ar.kind_num + '</td></tr>';
@@ -93,6 +241,7 @@
 				mastProductEachFix();
 				mastProductInfoFix();
 				mastProductViewSizeList(product_num);
+				mastProductPicFix();
 			},
 			error : function(request, status, error) {
 				alert("code:" + request.status + "\n" + "error:" + error);
@@ -160,19 +309,19 @@
 				y = y + 'Size<input id="in_prosize_ss" type="text" name="productSize_size" style="width:60px;">';
 				y = y + '<input type="hidden" name="product_num" value="' + product_num + '">';
 				y = y + '<input type="button" value="ADD" id="btn_form_submit_add"><br><br>';
-				
-				var z="";
-				z=z+'<table><tr><th colspan="3" style="text-align: center;">COLOR 추가</th></tr></tr>'
-				z=z+'<td><select id="sel_Size_sd" name="productSize_size">';
+
+				var z = "";
+				z = z + '<table><tr><th colspan="3" style="text-align: center;">COLOR 추가</th></tr></tr>'
+				z = z + '<td><select id="sel_Size_sd" name="productSize_size">';
 				$.each(data.ar, function(index, value) {
-					z = z + '<option value="'+value.productSize_size+'">'+ value.productSize_size+'</option>';
+					z = z + '<option value="' + value.productSize_size + '">' + value.productSize_size + '</option>';
 				});
-				z=z+'</select></td><td>COLOR<br><input id="in_proEach_color_ss" type="text" name="productEach_color"style="width:70px;"></td>'
-				z=z+'<td>EACH<br><input min=0 type="number" value="" id="in_pro_each_each" name="productEach_each" style="width:40px;"></td></tr><tr><td colspan=3>';
-				z=z+'<input type="button" value="ADD" id="btn_each_submit_add" style="width:160px;"></td></tr></table>'
+				z = z + '</select></td><td>COLOR<br><input id="in_proEach_color_ss" type="text" name="productEach_color"style="width:70px;"></td>'
+				z = z + '<td>EACH<br><input min=0 type="number" value="" id="in_pro_each_each" name="productEach_each" style="width:40px;"></td></tr><tr><td colspan=3>';
+				z = z + '<input type="button" value="ADD" id="btn_each_submit_add" style="width:160px;"></td></tr></table>'
 
 
-				$("#div_tab_size_List").html(x + y+z);
+				$("#div_tab_size_List").html(x + y + z);
 				$("#btn_form_submit_add").on('click', function() {
 					var productSize_size = $("#in_prosize_ss").val();
 					if (productSize_size != "") {
@@ -189,13 +338,13 @@
 					var productSize_size = $("#sel_Size_sd").val();
 					var productEach_color = $("#in_proEach_color_ss").val();
 					var productEach_each = $("#in_pro_each_each").val();
-					if(productEach_color !=""){
-						if(productEach_each == ""){
+					if (productEach_color != "") {
+						if (productEach_each == "") {
 							alert("수량을 올바르게 입력해주세요")
-						}else{
+						} else {
 							mastProductEachAdd(product_num, productSize_size, productEach_color, productEach_each);
 						}
-					}else{
+					} else {
 						alert("COLOR를 입력해주세요")
 					}
 				});
@@ -438,14 +587,14 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 #div_product_list {
- 	width: 100%;
-/* 	height: 1000px;
+	width: 100%;
+	/* 	height: 1000px;
 	border: 2px solid #dce2eb; */
 }
 
 .div_list_in_list {
 	margin-left: 30px;
-	margin-top : 30px;
+	margin-top: 30px;
 	padding: 2px;
 	width: 360px;
 	height: 230px;
@@ -453,9 +602,10 @@ input[type="checkbox"], input[type="radio"] {
 	text-align: center;
 	float: left;
 }
-.tab_mast_productList{
-float: right;
-width:160px;
+
+.tab_mast_productList {
+	float: right;
+	width: 160px;
 }
 </style>
 </head>
@@ -473,16 +623,21 @@ width:160px;
 							<nav class="navbar">
 								<div class="navbar-collapse collapse"
 									style="padding-left: 0; border-bottom: 1px solid #eee;">
-									<ul id="category-type" class="nav navbar-nav" style="vertical-align: top;">
-										<li class="category-li"><a id="1" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductList">ProductList</a></li>
-										<li class="category-li"><a id="2" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductListEach0">ProductEach(00)</a></li>
-										<li class="category-li"><a id="3" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductAdd">ProductAdd</a></li>
+									<ul id="category-type" class="nav navbar-nav"
+										style="vertical-align: top;">
+										<li class="category-li"><a id="1" class="sel_type"
+											href="${pageContext.request.contextPath}/mast/mastProductList">ProductList</a></li>
+										<li class="category-li"><a id="2" class="sel_type"
+											href="${pageContext.request.contextPath}/mast/mastProductListEach0">ProductEach(00)</a></li>
+										<li class="category-li"><a id="3" class="sel_type cl_proadd_action"
+											style="cursor: pointer;" data-toggle="modal"
+											data-target="#basketModal" data-backdrop="true">ProductAdd</a></li>
 
-									</ul>		
+									</ul>
 								</div>
 							</nav>
 						</header>
-						<section id="section" class="jumbotron">	
+						<section id="section" class="jumbotron">
 							<div style="display: inline-block;">
 								<form id="form_hidden_asd"
 									action="${pageContext.request.contextPath}/mast/mastProductList"
@@ -504,10 +659,10 @@ width:160px;
 
 							<div class="panel" style="background: #fff; margin-bottom: 30px;">
 								<div class="panel-heading">
-									<a id="subList" class="subBtn btn btn-default btn-lg">
-										<span class="fa fa-list"></span> List
+									<a id="subList" class="subBtn btn btn-default btn-lg"> <span
+										class="fa fa-list"></span> List
 									</a>
-								<%@ include file="/resources/temp/mast/productSelBox.jspf"%>
+									<%@ include file="/resources/temp/mast/productSelBox.jspf"%>
 								</div>
 								<div class="panel-body" style="background-color: white;">
 									<div id="div_product_list">
@@ -518,12 +673,11 @@ width:160px;
 													<input class="inh_product_num" type="hidden"
 														name="product_num" value="${list1.productDTO.product_num}">
 													<img width="175" height="175"
-													<c:if test="${!empty sessionScope.member}">
+														<c:if test="${!empty sessionScope.member}">
 														data-toggle="modal" data-target="#basketModal"
 														data-backdrop="true"
 													</c:if>
-														src="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}"
-														>
+														src="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}">
 												</div>
 												<table class="tab_mast_productList">
 													<tr>
@@ -568,21 +722,21 @@ width:160px;
 														<td>totalPrice</td>
 														<td><c:set var="number"
 																value="${list1.productInfoDTO.productInfo_price*(100-list1.productInfoDTO.productInfo_saleRate)/100}" />
-															<fmt:parseNumber var="total" value="${number}" type="number"
-																integerOnly="true" /> <fmt:formatNumber value="${total}"
-																pattern="#,###" />원</td>
+															<fmt:parseNumber var="total" value="${number}"
+																type="number" integerOnly="true" /> <fmt:formatNumber
+																value="${total}" pattern="#,###" />원</td>
 													</tr>
 												</table>
 											</div>
 										</c:forEach>
-									</div>								
+									</div>
 								</div>
-								<div class="panel-footer"  style="background-color: white;">
+								<div class="panel-footer" style="background-color: white;">
 									<!-- PAGINATION : S -->
-									<div class="center-block" style="width : 200px;">
+									<div class="center-block" style="width: 200px;">
 										<nav aria-label="Page navigation">
 											<ul class="pagination">
-												<c:if test="${!empty list}">		
+												<c:if test="${!empty list}">
 													<li><c:if test="${pageing.curBlock>1}">
 															<a class="a_prev pageMove" aria-label="Previous"
 																style="cursor: pointer"><input class="inh_prev"
@@ -591,13 +745,14 @@ width:160px;
 														</c:if></li>
 													<li><c:forEach begin="${pageing.startNum}" step="1"
 															end="${pageing.lastNum}" var="i">
-			
+
 															<a style="cursor: pointer" class="n_pageing">${i}</a>
 														</c:forEach></li>
-													<li><c:if test="${pageing.curBlock<pageing.totalBlock}">
-															<a class="a_next" aria-label="Next" style="cursor: pointer">
-																<input class="inh_next" type="hidden"
-																value="${pageing.lastNum+1}"><span
+													<li><c:if
+															test="${pageing.curBlock<pageing.totalBlock}">
+															<a class="a_next" aria-label="Next"
+																style="cursor: pointer"> <input class="inh_next"
+																type="hidden" value="${pageing.lastNum+1}"><span
 																aria-hidden="true">&raquo;</span>
 															</a>
 														</c:if></li>
@@ -607,9 +762,9 @@ width:160px;
 									</div>
 									<!-- PAGENATION : E -->
 								</div>
-							</div>	
-							
-																					
+							</div>
+
+
 						</section>
 
 
@@ -633,84 +788,7 @@ width:160px;
 		<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
-				<div id=div_modin_main>
-					<table id="tab_modin">
-						<tr>
-							<td></td>
-							<td><table id="tabin_tab_12">
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-
-								</table></td>
-						</tr>
-						<tr>
-							<td><table id="tabin_tab_11">
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-
-								</table></td>
-							<td><table id="tabin_tab_22">
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-
-								</table></td>
-						</tr>
-					</table>
-				</div>
+				<div id=div_modin_main></div>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>

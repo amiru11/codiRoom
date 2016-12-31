@@ -17,7 +17,9 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.basic.board.BoardDTO;
@@ -46,9 +48,36 @@ public class MastDAO {
 
 	private List<MemberDTO> ar;
 
+	// mast product Pic fixSSSSSSSSSS
+	public int mastProductPicFix(HttpSession session,MultipartHttpServletRequest mr) {
+		String savePath = session.getServletContext().getRealPath("resources/testPic");
+		int product_num = Integer.parseInt(mr.getParameter("product_num"));
+		MultipartFile mf = mr.getFile("productPic_pic");
+		UUID uid = UUID.randomUUID();
+		String saveName = uid.toString() + "_" + mf.getOriginalFilename();
+		byte[] filedata;
+		try {
+			filedata = mf.getBytes();
+			File f = new File(savePath, saveName);
+			FileCopyUtils.copy(filedata, f);
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("productPic_pic", saveName);
+		map.put("product_num", product_num);
+
+		return sqlSession.update(namespace + "UpMastProductPicFix", map);
+	}
+	// mast product Pic fix EEEEEEEEEEEEEEEEEEEEEEEEEE
+
 	// mast product Add SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 
-	public int mastProductAddP(MastProductAddParamDTO paramDTO, HttpSession session) {
+	public int mastProductAdd(MastProductAddParamDTO paramDTO, HttpSession session) {
 		int result = 0;
 		String savePath = session.getServletContext().getRealPath("resources/testPic");
 
@@ -60,7 +89,7 @@ public class MastDAO {
 		saveName = saveName + "_" + mt.getOriginalFilename();
 		File f = new File(savePath, saveName);
 		Map<String, Object> map = new HashMap<>();
-		map.put("productPic_pic",saveName);
+		map.put("productPic_pic", saveName);
 		map.put("DTO", paramDTO);
 		try {
 			mt.transferTo(f);
@@ -69,19 +98,29 @@ public class MastDAO {
 
 			status = transactionManager.getTransaction(def);
 			try {
-				result = sqlSession.insert(namespace+"InMastProductAdd",map);
-				if(result>0){
-					result = sqlSession.insert(namespace+"InMastProductInfoAdd",map);
-					if(result>0){
-						result = sqlSession.insert(namespace+"InMastProductKindAdd",map);
-						if(result>0){
-							result = sqlSession.insert(namespace+"InMastProductPicAdd",map);
+				result = sqlSession.insert(namespace + "InMastProductAdd", map);
+				if (result > 0) {
+					result = sqlSession.insert(namespace + "InMastProductInfoAdd", map);
+					if (result > 0) {
+						result = sqlSession.insert(namespace + "InMastProductKindAdd", map);
+						if (result > 0) {
+							result = sqlSession.insert(namespace + "InMastProductPicAdd", map);
+						}else{
+							result=0;
 						}
+					}else{
+						result=0;
 					}
+				}else{
+					result=0;
 				}
-
-				transactionManager.commit(status);
-				System.out.println("success");
+				if (result > 0) {
+					transactionManager.commit(status);
+					System.out.println("success");
+				} else {
+					result = 0;
+					System.out.println("try fails");
+				}
 
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -95,7 +134,7 @@ public class MastDAO {
 			e.printStackTrace();
 		}
 
-		return 0;
+		return result;
 	}
 
 	// mast product Add EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
@@ -106,7 +145,7 @@ public class MastDAO {
 		map.put("pageMaker", pageMaker);
 		List<ProductAllDTO> ar = sqlSession.selectList(namespace + "SelMastProductList", map);
 		for (int i = 0; i < ar.size(); i++) {
-			System.out.println(i + "--------------------" + i);
+			/*System.out.println(i + "--------------------" + i);
 			System.out.println(ar.get(i).getSelCount());
 			System.out.println(ar.get(i).getProductSelectDTO().getProductSelect_name());
 			System.out.println(ar.get(i).getProductSelectDTO().getProductSelect_num());
@@ -115,7 +154,7 @@ public class MastDAO {
 			System.out.println(ar.get(i).getProductDTO().getProduct_name());
 			System.out.println(ar.get(i).getProductDTO().getProduct_num());
 			System.out.println(ar.get(i).getProductInfoDTO().getProductInfo_price());
-			System.out.println(ar.get(i).getProductInfoDTO().getProductInfo_saleRate());
+			System.out.println(ar.get(i).getProductInfoDTO().getProductInfo_saleRate());*/
 
 		}
 		System.out.println(ar.size());

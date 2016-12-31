@@ -233,40 +233,52 @@
 
 
 	<!-- Mast Product S -->
-	
-	
-	
-	<!-- Mast Product ADD SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS  -->
+
+
+
+	<!-- Mast Product ADD SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS -->
 	<insert id="InMastProductAdd" parameterType="java.util.HashMap">
-	insert into product values(pro) 
+		insert into product
+		values(product_seq.nextval,upper(#{DTO.product_name}))
 	</insert>
 	<insert id="InMastProductInfoAdd" parameterType="java.util.HashMap">
-	insert into productInfo values()
+		insert into
+		productInfo
+		values(product_seq.currval,#{DTO.productInfo_price},sysdate,sysdate,#{DTO.productInfo_saleRate},upper(#{DTO.productInfo_searchWord}),upper(#{DTO.productInfo_brand}))
 	</insert>
 	<insert id="InMastProductKindAdd" parameterType="java.util.HashMap">
-	insert into productKind values()
+		insert into
+		productKind
+		values(product_seq.currval,#{DTO.kind_num})
 	</insert>
 	<insert id="InMastProductPicAdd" parameterType="java.util.HashMap">
-	insert into productPic values()
+		insert into
+		productPic values(product_seq.currval,#{productPic_pic})
 	</insert>
-	
-	
-	
-	
-	
-	
-	
-	<!-- Mast Product ADD EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE  -->
-	
-	
-	
-	
+	<update id="UpMastProductPicFix" parameterType="java.util.HashMap">
+		update
+		productPic set productPic_pic = #{productPic_pic}
+		where product_num = #{product_num}
+	</update>
+
+
+
+
+
+
+	<!-- Mast Product ADD EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE -->
+
+
+
+
 	<select id="SelMastProductList" parameterType="java.util.HashMap"
 		resultMap="ProductAll">
-		select * from(select ROWNUM r, z.* from(select DISTINCT
+		select zxc.* from(select ROWNUM r, tt.* from(select DISTINCT zx.* from(select z.* from(select DISTINCT
 		(PRODUCTINFO_PRICE*(100-productInfo_saleRate)/100) realPrice,
 		selCount,pse.PRODUCTSELECT_NUM,pse.PRODUCTSELECT_NAME,k.KIND_NUM,k.KIND_NAME,t.PRODUCT_NUM,
-		t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_DATE,pi.PRODUCTINFO_SALERATE,
+		
+
+t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_DATE,pi.PRODUCTINFO_SALERATE,
 		pi.PRODUCTINFO_SEARCHWORD,pi.PRODUCTINFO_BRAND,pc.PRODUCTPIC_PIC
 		from
 		(select count(b.buy_num) selCount,p.PRODUCT_NUM,p.product_name
@@ -278,15 +290,9 @@
 		t ,PRODUCTINFO pi,PRODUCTPIC pc
 		,
 		PRODUCTKIND pk , PRODUCTSELECT pse
-		,kind k,ProductSize ps,productEach
-		pe
+		,kind k
 		where t.PRODUCT_NUM =
 		pi.PRODUCT_NUM
-		and t.PRODUCT_NUM =
-		ps.PRODUCT_NUM
-		and t.PRODUCT_NUM = pe.PRODUCT_NUM
-		and
-		ps.PRODUCTSize_size = pe.PRODUCTSize_size
 		and t.PRODUCT_NUM =
 		pc.PRODUCT_NUM
 		and t.PRODUCT_NUM =
@@ -294,30 +300,32 @@
 		and
 		pse.PRODUCTSELECT_NUM = k.PRODUCTSELECT_NUM
 		and
-		pk.KIND_NUM = k.KIND_NUM
+		pk.KIND_NUM = k.KIND_NUM) z LEFT OUTER JOIN PRODUCTSIZE ps
+		   ON z.product_num = ps.PRODUCT_NUM) zx LEFT OUTER JOIN PRODUCTEach pe
+		   ON zx.product_num = pe.PRODUCT_NUM 
 		<if test="kind_num != null">
-			and k.kind_num in
+			and zx.kind_num in
 			<foreach item="item" index="index" collection="kind_num"
 				open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
 		<if test="product_num != null">
-			and t.product_num in
+			and zx.product_num in
 			<foreach item="item" index="index" collection="product_num"
 				open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
 		<if test="productSelect_num != null">
-			and k.productSelect_num in
+			and zx.productSelect_num in
 			<foreach item="item" index="index" collection="productSelect_num"
 				open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
 		<if test="productSize_size != null">
-			and ps.productSize_size in
+			and pe.productSize_size in
 			<foreach item="item" index="index" collection="productSize_size"
 				open="(" separator="," close=")">
 				#{item}
@@ -332,10 +340,10 @@
 		</if>
 		<choose>
 			<when test="mtpSel == 2">
-				and pi.productInfo_saleRate not in (0)
+				and zx.productInfo_saleRate not in (0)
 			</when>
 			<when test="mtpSel == 3">
-				and pi.productInfo_saleRate in (0)
+				and zx.productInfo_saleRate in (0)
 			</when>
 			<when test="mtpSel == 4">
 				and pe.productEach_each not in (0)
@@ -348,16 +356,16 @@
 		</choose>
 		<choose>
 			<when test="sel==1">
-				order by t.product_num desc
+				order by zx.product_num desc
 			</when>
 			<when test="sel==2">
-				order by t.product_num asc
+				order by zx.product_num asc
 			</when>
 			<when test="sel == 3">
-				order by pi.productInfo_saleRate desc
+				order by zx.productInfo_saleRate desc
 			</when>
 			<when test="sel == 4">
-				order by pi.productInfo_saleRate asc
+				order by zx.productInfo_saleRate asc
 			</when>
 			<when test="sel == 5">
 				order by realPrice desc
@@ -366,13 +374,13 @@
 				order by realPrice asc
 			</when>
 			<when test="sel == 7">
-				order by selCount desc,t.product_num desc
+				order by selCount desc,zx.product_num desc
 			</when>
 			<otherwise>
-				order by t.product_num desc
+				order by zx.product_num desc
 			</otherwise>
 		</choose>
-		) z)where r between #{pageMaker.startRowNum} and
+		)tt)zxc where r between #{pageMaker.startRowNum} and
 		#{pageMaker.lastLowNum}
 
 
@@ -783,11 +791,14 @@
 		PRODUCTEACH_COLOR = upper(#{productEach_color})
 	</select>
 	<update id="UpMastProductEachAdd" parameterType="java.util.HashMap">
-		update productEach set
-		productEach_each = (select productEach_each from productEach where product_num =
+		update
+		productEach set
+		productEach_each = (select productEach_each from
+		productEach where product_num =
 		#{product_num} and PRODUCTSIZE_SIZE =
 		upper(#{productSize_size})
-		and productEach_color=upper(#{productEach_color}))+#{productEach_each}
+		and
+		productEach_color=upper(#{productEach_color}))+#{productEach_each}
 		where PRODUCT_NUM = #{product_num} and
 		PRODUCTSIZE_SIZE =
 		upper(#{productSize_size})
@@ -795,7 +806,8 @@
 		upper(#{productEach_color})
 	</update>
 	<insert id="InMastProductEachAdd" parameterType="java.util.HashMap">
-		insert into productEach values(#{product_num},upper(#{productSize_size}),
+		insert into
+		productEach values(#{product_num},upper(#{productSize_size}),
 		upper(#{productEach_color}),#{productEach_each})
 	</insert>
 

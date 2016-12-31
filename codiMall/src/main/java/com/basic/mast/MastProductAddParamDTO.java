@@ -8,7 +8,7 @@ public class MastProductAddParamDTO {
 	private int kind_num;
 	private int productInfo_price;
 	private double productInfo_saleRate;
-	private String[] productInfo_searchWord;
+	private String productInfo_searchWord;
 	private String productInfo_brand;
 	private MultipartFile productPic_pic;
 	
@@ -36,10 +36,10 @@ public class MastProductAddParamDTO {
 	public void setProductInfo_saleRate(double productInfo_saleRate) {
 		this.productInfo_saleRate = productInfo_saleRate;
 	}
-	public String[] getProductInfo_searchWord() {
+	public String getProductInfo_searchWord() {
 		return productInfo_searchWord;
 	}
-	public void setProductInfo_searchWord(String[] productInfo_searchWord) {
+	public void setProductInfo_searchWord(String productInfo_searchWord) {
 		this.productInfo_searchWord = productInfo_searchWord;
 	}
 	public String getProductInfo_brand() {
