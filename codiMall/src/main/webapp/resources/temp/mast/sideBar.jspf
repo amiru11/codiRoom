@@ -61,7 +61,10 @@ function calendar(){
 						href="${pageContext.request.contextPath}/mast/mastProductList">MastProductList</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/mast/mastProductListEach0">MastProductListEach0</a></li>
-				</ul></li>
+					<li><a
+						href="${pageContext.request.contextPath}/mast/mastProductAdd">ProductAdd</a></li>	
+				</ul>
+			</li>
 			<li class=""><a id="goBuy" class="side-btn"
 				onclick="gotoggle(4);"><span class="fa fa-shopping-basket "></span><span
 					class="sidebar-title">BUY</span></a>

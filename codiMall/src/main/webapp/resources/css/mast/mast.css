@@ -163,3 +163,7 @@ body{
 .comm-remove:HOVER {
 	opacity: 0.5;
 }
+.cl_pro_pic{
+	width : 175px;
+	height: 175px;
+}

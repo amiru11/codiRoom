@@ -21,17 +21,7 @@
 <script type="text/javascript">
 
 	$(function() {
-		$("#goCalendar").click(function() {
-			$.ajax({
-				url : "${pageContext.request.contextPath}/mast/calendar",
-				success : function(data) {
-					$("#view").empty();
-					$("#view").html(data);
-					console.log(data);
-				}
-			});
-
-		});
+		$("#1").parent("li").addClass("active");
 		mastProductListSt();
 		selBox();
 		allCheckBoxes();
@@ -527,13 +517,13 @@ width:160px;
 													style="display: inline-block; cursor: pointer; float: left;">
 													<input class="inh_product_num" type="hidden"
 														name="product_num" value="${list1.productDTO.product_num}">
-													<img
-														<c:if test="${!empty sessionScope.member}">
-													data-toggle="modal" data-target="#basketModal"
-										data-backdrop="true"
+													<img width="175" height="175"
+													<c:if test="${!empty sessionScope.member}">
+														data-toggle="modal" data-target="#basketModal"
+														data-backdrop="true"
 													</c:if>
-														width="175" height="175"
-														src="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}">
+														src="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}"
+														>
 												</div>
 												<table class="tab_mast_productList">
 													<tr>
