@@ -15,7 +15,6 @@
 		$("#goCodination").click(function(){
 			$("#sub-codination").toggle();
 		});*/
-
 function gotoggle(data) {
 	$("#sub-1").css("display", "none");
 	$("#sub-2").css("display", "none");
@@ -63,7 +62,7 @@ function numcheck() {
 
 function getBuyList(buyState_state) {
 	$.ajax({
-		url : "../json/mastBuyList",
+		url : "/codi/json/mastBuyList",
 		type : "post",
 		dataType : 'json',
 		data : {
@@ -71,9 +70,9 @@ function getBuyList(buyState_state) {
 		},
 		success : function(data) {
 			var x = "";
-			x = x + "<tr><th>buy_num</th><th>id</th><th>product_num</th><th>product_name</th><th>size</th>";
-			x = x + "<th>color</th><th>each</th><th>price</th><th>expressNum</th><th>pay_date</th><th>result_date</th>";
-			x = x + "<th>state</th>";
+			x = x + "<tr><th>O.#</th><th>ID</th><th>P.#</th><th>상품이름</th><th>사이즈</th>";
+			x = x + "<th>색상</th><th>수량</th><th>가격</th><th>배송번호</th><th>결제날짜</th><th>배송날짜</th>";
+			x = x + "<th>배송상태</th>";
 			if (buyState_state == 1) {
 				x = x + "<th>state1to2</th>"
 			} else if (buyState_state == 2) {
@@ -92,7 +91,7 @@ function getBuyList(buyState_state) {
 				x = x + '<td class="buy_list_td_productSize_size">' + value.buyStateDTO.buyState_size + '</td>';
 				x = x + '<td class="buy_list_td_productEach_color">' + value.buyStateDTO.buyState_color + '</td>';
 				x = x + '<td class="buy_list_td_productEach_each">' + value.buyStateDTO.buyState_each + '</td>';
-				x = x + '<td>' + value.buyStateDTO.buyState_price + '</td>';
+				x = x + '<td>'+ value.buyStateDTO.buyState_price + '원</td>';
 				x = x + '<td>' + value.buyStateDTO.buyState_expressNum + '</td>';
 				x = x + '<td>' + value.buyStateDTO.buyState_pay_date + '</td>';
 				x = x + '<td>' + value.buyStateDTO.buyState_result_date + '</td>';
@@ -100,12 +99,12 @@ function getBuyList(buyState_state) {
 				if (buyState_state == 1) {
 					x = x + '<td>';
 					x = x + '<input class="hid_buy_num" name="buy_num" type="hidden" value="' + value.buyDTO.buy_num + '">';
-					x = x + 'expressNum:<input onkeydown="numcheck()" class="inp_expressNum" type="number" name="buyState_expressNum"><Br>';
+					x = x + 'expressNum:<input onkeydown="numcheck()" class="inp_expressNum" style="width : 50%;" type="number" name="buyState_expressNum">';
 					x = x + '<input class="btn_add" type="button" value="ADD"></td>';
 				} else if (buyState_state == 2) {
 					x = x + '<td>';
 					x = x + '<input class="hid_buy_num" name="buy_num" type="hidden" value="' + value.buyDTO.buy_num + '">';
-					x = x + 'expressNum:<input onkeydown="numcheck()" class="inp_expressNum" type="number" name="buyState_expressNum"><Br>';
+					x = x + 'expressNum:<input onkeydown="numcheck()" class="inp_expressNum"  style="width : 50%;" type="number" name="buyState_expressNum">';
 					x = x + '<input class="btn_add" type="button" value="ADD">';
 					x = x + '<input class="btn_expressConfirm" type="button" value="ExConf"></td>';
 				} else if (buyState_state == 3) {

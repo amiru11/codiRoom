@@ -30,15 +30,7 @@ th {
 <script type="text/javascript">
 
 	$(function() {
-		$("#goCalendar").click(function() {
-			$.ajax({
-				url : "${pageContext.request.contextPath}/mast/calendar",
-				success : function(data) {
-					$("#view").empty();
-					$("#view").html(data);
-					console.log(data);
-				}
-			});
+		
 
 		});
 	});
@@ -57,7 +49,7 @@ th {
 				<%@ include file="/resources/temp/mast/sideBar.jspf"%>
 			</div>
 
-			<div class="com-sm-8" style="margin: 20px; height: 100%;">
+			<div class="col-sm-8" style="margin: 20px; height: 100%;">
 				<div class="container">
 					<div id="view">
 						<div id="div_view_in_div">

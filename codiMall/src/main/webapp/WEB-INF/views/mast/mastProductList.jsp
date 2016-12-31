@@ -487,6 +487,7 @@ width:160px;
 										<li class="category-li"><a id="1" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductList">ProductList</a></li>
 										<li class="category-li"><a id="2" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductListEach0">ProductEach(00)</a></li>
 										<li class="category-li"><a id="3" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductAdd">ProductAdd</a></li>
+
 									</ul>		
 								</div>
 							</nav>
@@ -621,8 +622,14 @@ width:160px;
 																					
 						</section>
 
+
 						<!--      -->
 						<!--     임시 페이지 이동   -->
+
+
+
+
+
 					</div>
 					<!--  view E  -->
 				</div>
