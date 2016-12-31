@@ -275,7 +275,7 @@
 				<div>
 					<ul class="step list-inline" id="order_step">
 						<li class="title_img">TITLE</li>
-						<li class="step-li first"><span>주문서 작성</span></li>
+						<li id="" class="step-li first"><span>주문 완료</span></li>
 						<li class="arrow-li"></li>
 						<li class="step-li second"><span> 주문서 작성</span></li>
 						<li class="arrow-li"></li>

@@ -1,9 +1,10 @@
 @CHARSET "UTF-8";
 #div_sidebar {
-	background: #12cf3d;
+	/* background: #dce2eb; */
+	border : 2px solid #dce2eb;
 	position: absolute;
 	width: 100px;
 	height: 500px;
-	top: 100px; /* 위치 조정  */
+	top: 200px; /* 위치 조정  */
 	right: 0px;
 }

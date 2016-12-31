@@ -369,7 +369,7 @@
 					<li><a
 						href="${pageContext.request.contextPath}/board/findList?board_kind=1">고객센터</a></li>
 					<!-- 기본적으로 notice로 가게 -->
-					<li><a href=""><span
+					<li><a href="${pageContext.request.contextPath}/basket/basketList"><span
 							class="glyphicon glyphicon-shopping-cart"></span> CART</a></li>
 					<c:if test="${sessionScope.member eq null}">
 						<li><a href="" data-toggle="modal" data-target="#loginModal"
@@ -411,8 +411,8 @@
 				<ul class="nav navbar-nav navbar-left"
 					style="margin-top: 60px; margin-left: 50px;">
 					<!--  test li s -->
-					<li><a
-						href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
+					<%-- <li><a
+						href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li> --%>
 
 					<%-- <li><a href="${pageContext.request.contextPath}/buy/buyList">BUYLIST</a></li> --%>
 

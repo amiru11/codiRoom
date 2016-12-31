@@ -71,7 +71,7 @@
 			if($("#sel_size_b").val()!=null && $("#sel_size_a").val()!=null ){
 				if($("#inp_each").val()>0){
 					$.ajax({
-					    url : "../basket/basketAdd",
+					    url : "/codi/basket/basketAdd",
 					    type : "post",
 					    data : {
 					    	product_num:${view.product_num},
