@@ -77,7 +77,7 @@ public class SSSSSService {
 		PageMaker pageMaker = new PageMaker();
 		int totalCount = sssdao.mastProductEach0Count();
 		pageMaker.setCurPage(curPage);
-		pageMaker.setPerPage(9);
+		pageMaker.setPerPage(10);
 		pageMaker.makeRow();
 		pageMaker.makePage(totalCount);
 		model.addAttribute("pageing", pageMaker);

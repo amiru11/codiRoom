@@ -45,7 +45,7 @@ public class SSSController {
 		if (memberDTO != null && memberDTO.getMember_level() == 0) {
 			Map<String, Object> map = new HashMap<>();
 			map.put("curPage", 1);
-			map.put("perPage", 9);
+			map.put("perPage", 10);
 			map.put("sel", 1);
 			map.put("mtpSel", 1);
 			map.put("kind_num", null);
@@ -64,7 +64,7 @@ public class SSSController {
 	@RequestMapping(value = "/mastProductList", method = RequestMethod.POST)
 	public String mastProductListP(HttpServletRequest request, @RequestParam(defaultValue = "1") int sel,
 			@RequestParam(defaultValue = "1") int mtpSel, @RequestParam(defaultValue = "1") int curPage,
-			@RequestParam(defaultValue = "9") int perPage, @RequestParam(required = false) int[] kind_num,
+			@RequestParam(defaultValue = "10") int perPage, @RequestParam(required = false) int[] kind_num,
 			@RequestParam(required = false) int[] productSelect_num, @RequestParam(required = false) int[] product_num,
 			@RequestParam(required = false) String[] productEach_color,
 			@RequestParam(required = false) String[] productSize_size, Model model) {
