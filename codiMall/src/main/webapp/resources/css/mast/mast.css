@@ -2,6 +2,9 @@
 *{
     outline:none;
 }
+body{
+	font-family: 'hanna';
+}
 
 #main {
     position: relative;
@@ -69,15 +72,35 @@
     font-weight: 600;
     cursor : pointer;
 }
-/*  .sidebar-menu > li > ul > li:hover > a:after, .sidebar-menu > li > ul > li:focus > a:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 3px;
-    background: #43c7d7;
-}  */
+
+.category-li:HOVER{
+	background: none;
+}
+.category-li > a{
+	color: #AAA;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+	padding: 16px 14px 12px;
+	cursor:pointer;
+}
+
+#category-type > li > a:HOVER{
+	color: #444;
+    background-color: transparent;
+}
+.active > a{
+	color: #444;
+	border-bottom: 3px solid #43c7d7;
+}
+.nav>li>a.side-btn {
+	color: #91a7c6;
+	padding: 0;
+	line-height: 50px;
+	height: 50px;
+	overflow-y: hidden;
+	cursor: pointer;
+	font-size: 18px;
+}
 
 .onBtn{
 	color : "#30b5e1";

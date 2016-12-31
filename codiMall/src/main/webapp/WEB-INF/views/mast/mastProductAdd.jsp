@@ -365,9 +365,26 @@ width:160px;
 				<%@ include file="/resources/temp/mast/sideBar.jspf"%>
 			</div>
 
-			<div class="com-sm-8" style="margin: 20px; height: 100%;">
-				<div class="container">
+			<div class="col-sm-8" style="margin: 20px; height: 100%;">
+				<div class="container-fluid">
 					<div id="view">
+						<header id="topbar" class="text-center bg-white alt ph10 br-b-ddd">
+							<nav class="navbar">
+								<div class="navbar-collapse collapse"
+									style="padding-left: 0; border-bottom: 1px solid #eee;">
+									<ul id="category-type" class="nav navbar-nav" style="vertical-align: top;">
+										<li class="category-li"><a id="1" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductList">ProductList</a></li>
+										<li class="category-li"><a id="2" class="sel_type" href="${pageContext.request.contextPath}/mast/mastProductListEach0">ProductEach(Update)</a></li>
+										<li class="category-li"><a id="3" class="sel_type" href="${pageContext.request.contextPath}/mast/mastBuyList">BuyList</a></li>
+										<li class="category-li"><a id="4" class="sel_type" href="${pageContext.request.contextPath}/mast/mastBuyListPay">BuyListPay</a></li>
+										<li class="category-li"><a id="sub5" class="sel_type">Dashboard</a></li>
+									</ul>		
+								</div>
+							</nav>
+						</header>
+						<section id="section" class="jumbotron">
+						
+						</section>	
 						<div style="display: inline-block;">
 							<form id="form_hidden_asd"
 								action="${pageContext.request.contextPath}/mast/mastProductList"
