@@ -7,6 +7,8 @@
 <html>
 <head>
 <title>Home</title>
+<link rel="stylesheet"
+	href="http://fonts.googleapis.com/earlyaccess/hanna.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/jquery.bxslider.js"></script>
@@ -158,7 +160,7 @@
 }
 </style>
 </head>
-<body class="home">
+<body class="home" style="font-family: 'hanna';">
 
 	<!-- HEADER:S -->
 	<%@ include file="/resources/temp/header.jsp"%>
@@ -322,7 +324,7 @@
 	<!-- BEST ITEM :E -->
 
 	<!-- SALE , NEW , RECOMMEND ITEMs : S -->
-	<section class="container" style="padding-top: 50px;">
+<%-- 	<section class="container" style="padding-top: 50px;">
 		<div class="row">
 			<div class="col-lg-12" style="padding: 0;">
 				<div class="col-lg-4" style="padding-left: 0;">
@@ -381,7 +383,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> --%>
 	<!-- SALE , NEW , RECOMMEND ITEMs : E -->
 
 

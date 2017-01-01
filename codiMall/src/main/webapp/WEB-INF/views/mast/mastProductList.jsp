@@ -42,7 +42,7 @@
 			dataType : 'json',
 			success : function(data) {
 				var x = "";
-				x=x+'<table id="id_tab_kind_list" style="display:inline-block;"><tr><th>KIND_NUM</th><th>KIND_NAME</th></tr>'
+				x=x+'<table id="id_tab_kind_list" class="table" style="display:inline-block;"><tr><th>KIND_NUM</th><th>KIND_NAME</th></tr>'
 				$.each(data.kindNumList, function(index, value) {
 					x = x + '<tr><td>' + value.kind_num + '</td><td>'+value.kind_name + '</td></tr>'
 				});
@@ -691,7 +691,7 @@ input[type="checkbox"], input[type="radio"] {
 											<li class="category-li"><a id="4"
 											class="sel_type cl_kindadd_action" style="cursor: pointer;"
 											data-toggle="modal" data-target="#basketModal"
-											data-backdrop="true">KindAdd</a></li>
+											data-backdrop="true">품목추가</a></li>
 									</ul>
 								</div>
 							</nav>
