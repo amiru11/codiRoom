@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>나만의 코디</title>
+<link rel="stylesheet"
+	href="http://fonts.googleapis.com/earlyaccess/hanna.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -64,7 +66,7 @@
 		<input type="hidden" id="product_num">
 	<button>코디 생성</button><br>
 	
-	<canvas width="501px" height="501px"></canvas>
+	<canvas width="500px" height="500px"></canvas>
 <a></a>
 
 
@@ -165,15 +167,16 @@ function getCodiProductList(kind_num){
 				productList += "</div>";
 				console.log(index+" : "+ value.productDTO.product_num+" : "+value.productPicDTO.productPic_pic+" : "+value.productDTO.product_name);
 	    	});
-			var x = data.lastNum*1;
-			alert(x);
+			var x = parseInt(data.startNum);
+			var y = parseInt(data.lastNum);
+			alert(typeof(x));
  			var pageing = "";
- 			
+ 			alert(${a});//
  			pageing += '<nav aria-label="Page navigation"><ul class="pagination"><li>';
-			pageing += '<c:if test="'+(data.curBlock > 1)+'"><a class="a_prev" aria-label="Previous"	style="cursor: pointer"><input class="inh_prev"	type="hidden" value="'+(data.pageing.startNum*1-1)+'"><span aria-hidden="true">&laquo;</span>';
+			pageing += '<c:if test="'+(data.pageing.curBlock > 1)+'"><a class="a_prev" aria-label="Previous"	style="cursor: pointer"><input class="inh_prev"	type="hidden" value="'+(data.pageing.startNum*1-1)+'"><span aria-hidden="true">&laquo;</span>';
 			pageing += '</a></c:if></li><li><c:forEach begin="1" step="1" end="5" var="i"><a style="cursor: pointer" class="N_pageing">${i}</a></c:forEach></li>';
-			pageing += '<li><c:if test="'+(data.curBlock < data.totalBlock)+'"><a class="a_next" aria-label="Next" style="cursor: pointer"><input class="inh_next" type="hidden" value="'+(data.pageing.lastNum*1+1)+'}"><span aria-hidden="true">&raquo;</span></a></c:if></li></ul></nav>';
-			 console.log("되라" + data.startNum*1);
+			pageing += '<li><c:if test="'+(data.pageing.curBlock < data.pageing.totalBlock)+'"><a class="a_next" aria-label="Next" style="cursor: pointer"><input class="inh_next" type="hidden" value="'+(data.pageing.lastNum*1+1)+'}"><span aria-hidden="true">&raquo;</span></a></c:if></li></ul></nav>';
+			 //console.log("되라" + data.pageing.startNum*1);
  			//console.log("11111" + data.pageing.startRowNum);
 			//console.log("22222" + data.pageing.lastLowNum); 
 			$("#div_product").html(productList);

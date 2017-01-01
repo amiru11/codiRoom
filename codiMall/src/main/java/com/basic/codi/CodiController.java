@@ -46,6 +46,18 @@ public class CodiController {
 		return "/fashion/codiList";
 	}
 	
+	//코디 뷰
+	@RequestMapping(value = "codiView")
+	public String codiView(CodiDTO codiDTO,Model model){
+		try {
+			codiService.codiView(codiDTO, model);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "/fashion/codiView";
+	}
+	
 	//코디 생성 페이지
 	@RequestMapping(value = "codiWrite")
 	public void codiWrite(){}

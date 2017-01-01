@@ -1,12 +1,15 @@
 package com.basic.fashion;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.basic.board.BoardDTO;
+import com.basic.board.CommentDTO;
 import com.basic.product.KindDTO;
 import com.basic.product.ProductSelectDTO;
 import com.basic.util.PageMaker;
@@ -30,13 +33,33 @@ public class CodiService {
 		model.addAttribute("list", ar);
 	}
 	
+	//코디 뷰
+	public CodiDTO codiView(CodiDTO codiDTO,Model model) throws Exception {
+		codiDTO = codiDAO.codiView(codiDTO);
+		String pn = codiDTO.getProduct();
+		String [] product;
+		product = pn.split(",");
+		
+		List<CodiDTO> ar;
+		ar = codiDAO.codiProduct(product);
+		for(int i=0;i<product.length;i++){
+			System.out.println("i번 : " + product[i]);
+		}
+		
+		//codiDAO.codiViewUpdate(codiDTO);
+		model.addAttribute("view", codiDTO);
+		model.addAttribute("list", ar);
+		return codiDTO;
+	}
+	
 	//코디 저장
 	public int codiCreate(CodiDTO codiDTO, Model model) throws Exception{
 		return codiDAO.codiCreate(codiDTO);
 	}
 	
 	//상품 리스트
-	public List<CodiDTO> codiProductList(int curPage, int perPage, int kind_num){
+	public Map<String, Object> codiProductList(int curPage, int perPage, int kind_num){
+		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setPerPage(perPage);
 		pageMaker.setCurPage(curPage);
@@ -44,7 +67,12 @@ public class CodiService {
 		pageMaker.makePage(codiDAO.codiProductListCount(kind_num));
 		List<CodiDTO> ar;
 		ar = codiDAO.codiProductList(pageMaker,kind_num);
-		return ar;
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		retVal.put("ar", ar);
+		retVal.put("pageing",pageMaker);
+		retVal.put("startNum",pageMaker.getStartNum());
+		retVal.put("lastNum",pageMaker.getLastNum());
+		return retVal;
 	}
 	public List<KindDTO> codiKindList(int productSelect_num){
 		return codiDAO.codiKindList(productSelect_num);
@@ -56,4 +84,6 @@ public class CodiService {
 	 	public int codiProductListCount(int kind_num){
 	 		return codiDAO.codiProductListCount(kind_num);
 	 	}
+	 	
+	 	
 }

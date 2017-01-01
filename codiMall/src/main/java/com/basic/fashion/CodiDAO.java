@@ -48,6 +48,24 @@ public class CodiDAO {
 		
 	}
 	
+	//뷰//
+	public CodiDTO codiView(CodiDTO codiDTO) throws Exception{
+		
+		codiDTO = sqlSession.selectOne(namespace+"codiView", codiDTO);
+		return codiDTO;
+	}
+	//뷰 상품리스트//
+	public List<CodiDTO> codiProduct(String [] product) throws Exception{
+		Map<String, Object> map = new HashMap<>();
+		System.out.println(product.length);
+		for(int i=0;i<product.length;i++){
+			
+			System.out.println(product[i]);
+			map.put("product"+i, product[i]);
+		}
+		 List<CodiDTO> ar = sqlSession.selectList(namespace+"codiProduct", map);
+		 return ar;
+	}
 	//코디 등록 할 상품 리스트
 	public List<CodiDTO> codiProductList(PageMaker pageMaker, int kind_num){
 		Map<String, Object> map = new HashMap<>();

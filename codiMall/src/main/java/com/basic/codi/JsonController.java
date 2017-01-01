@@ -230,10 +230,9 @@ public class JsonController {
 	
 	//codi-----------------------------------------------------------------------------
 	@RequestMapping(value="/codiProductList")
-	public Map<String, Object> codiProductList(@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="6") int perPage, @RequestParam int kind_num){
-	Map<String, Object> retVal = new HashMap<String, Object>();
-	retVal.put("ar", codiService.codiProductList(curPage, perPage, kind_num));
-	return retVal;
+	public Map<String, Object> codiProductList(@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="5") int perPage, @RequestParam int kind_num,Model model){
+		model.addAttribute("a", 1);
+	return codiService.codiProductList(curPage, perPage, kind_num);
 	}
 
 	@RequestMapping(value = "/codiKindList")

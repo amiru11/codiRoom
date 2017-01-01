@@ -33,7 +33,7 @@
 										class="inhc_sel" type="hidden" value="1">최신순</a></li>
 								<li><a style="cursor: pointer" class="sel_type"><input
 										class="inhc_sel" type="hidden" value="2">인기순</a></li>
-								<li><a style="cursor: pointer" class="sel_type" onclick="window.open('${pageContext.request.contextPath}/fashion/codiWrite','codi','width=1200,height=700');return false;">코디 생성</a></li>
+								<li><a style="cursor: pointer" class="sel_type" onclick="window.open('${pageContext.request.contextPath}/fashion/codiWrite','codi','width=1200,height=800');return false;">코디 생성</a></li>
 							</ul>
 						</div>
 					</nav>
@@ -94,14 +94,6 @@
 					<!-- PAGINATIOIN:E -->						
 					</div>
 			</div>
-		
-	
-	<!-- 바디 부분 -->
-	<%-- <h2>코디</h2>
-	 --%>
-	
-	<!-- 코디 리스트 -->
-
 <%@ include file="/resources/temp/footer.jsp"%>	
 </body>
 </html>
