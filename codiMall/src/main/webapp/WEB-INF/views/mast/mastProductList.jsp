@@ -117,13 +117,9 @@
 				x = x + '<input type="hidden" id="inph_productAdd_brand" name="productInfo_brand">';
 				x = x + '<input type="file" id="inph_productAdd_pic" class="form-control" name="productPic_pic">';
 				x = x + '</form>';
-<<<<<<< HEAD
-				x = x + '</td></tr>';
 				x = x + '<tr><td colspan=2><button id="btn_productAdd_ss">PRODUCTADD</button></td></tr>'
-=======
 				x=x+'</td></tr>';
 				x = x + '<tr><td colspan=2><button id="btn_productAdd_ss" class="btn btn-info btn-lg">등록하기</button></td></tr>'
->>>>>>> refs/heads/sub
 				x = x + '</table>';
 
 				$("#div_modin_main").html(x);
