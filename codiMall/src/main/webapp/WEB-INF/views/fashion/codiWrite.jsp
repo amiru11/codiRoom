@@ -63,15 +63,16 @@
 
 //코디 리스트 값 배열
 var codi = [];
-function codiArray(ar) {
+function codiArray(pNum) {
 	var check = true;
- 	for(var i=0; i<codi.length; i++){
-		if(ar == codi[i]){
+	for(var i=0; i<codi.length; i++){
+		if(pNum == codi[i]){
 			check = false;
 		}
 	}
  	if(check){
- 		codi.push(ar);
+ 		codi.push(pNum);
+ 		$("#product_"+pNum).clone().appendTo($("#b"));
  	}
 }
 
@@ -155,13 +156,30 @@ function getCodiProductList(kind_num){
 			$("#div_product").html("");
 			var productList = "";
 			$.each(data.ar, function( index, value ) {
-				productList += "<div class='product' id='product_"+index+"' style='background : url(${pageContext.request.contextPath}/resources/testPic/"+value.productPicDTO.productPic_pic+"); position: absolute; width: 200px; height: 200px' onmousedown='move(this,"+index+");'>";
-				productList += "<input id='x-"+index+"' type='text' value='' readonly='readonly'><input id='y-"+index+"' type='text' value='' readonly='readonly'>";
-				productList += "<input type='hidden' id='product_num_"+index+"' name='product_num' value='"+value.productDTO.product_num+"'>"
+				//productList += "<div class='product' id='product_"+index+"' style='background : url(${pageContext.request.contextPath}/resources/testPic/"+value.productPicDTO.productPic_pic+"); position: absolute; width: 200px; height: 200px' onmousedown='move(this,"+index+");'>";
+				//productList += "<input id='x-"+index+"' type='text' value='' readonly='readonly'><input id='y-"+index+"' type='text' value='' readonly='readonly'>";
+				//productList += "<input type='hidden' id='product_num_"+index+"' name='product_num' value='"+value.productDTO.product_num+"'>"
 				//productList += "<span>"+value.productDTO.product_name+"</span>";
-				productList += "</div><br><br><br><br><br><br><br><br><br><br>";
+				//productList += "</div><br><br><br><br><br><br><br><br><br><br>";
+				productList += "<div class='product' id='product_"+value.productDTO.product_num+"' style='display : inline-block; background : url(${pageContext.request.contextPath}/resources/testPic/"+value.productPicDTO.productPic_pic+"); width: 200px; height: 200px' onmousedown='move(this,"+value.productDTO.product_num+");'>";
+				productList += "<input id='x-"+value.productDTO.product_num+"' type='text' value='' readonly='readonly'><input id='y-"+value.productDTO.product_num+"' type='text' value='' readonly='readonly'>";
+				productList += "</div>";
+				console.log(index+" : "+ value.productDTO.product_num+" : "+value.productPicDTO.productPic_pic+" : "+value.productDTO.product_name);
 	    	});
-			$("#div_product").html(productList);
+			var x = data.pageing.lastNum*1;
+			 alert(x);
+			 var pageing = ""; 			
+			 pageing += '<nav aria-label="Page navigation"><ul class="pagination"><li>';
+			 pageing += '<c:if test="'+(data.pageing.curBlock > 1)+'"><a class="a_prev" aria-label="Previous"	style="cursor: pointer"><input class="inh_prev"	type="hidden" value="'+(data.pageing.startNum*1-1)+'"><span aria-hidden="true">&laquo;</span>';
+			 pageing += '</a></c:if></li><li><c:forEach begin="1" step="1"	end="6" var="i"><a style="cursor: pointer" class="N_pageing">${i}</a></c:forEach></li>';
+			 pageing += '<li><c:if test="'+(data.pageing.curBlock < data.pageing.totalBlock)+'"><a class="a_next" aria-label="Next" style="cursor: pointer"><input class="inh_next" type="hidden" value="'+(data.pageing.lastNum*1+1)+'}"><span aria-hidden="true">&raquo;</span></a></c:if></li></ul></nav>';
+			 
+			 console.log("되라" + data.pageing.startNum*1);
+			 //console.log("11111" + data.pageing.startRowNum);
+			 //console.log("22222" + data.pageing.lastLowNum); 
+			 $("#div_product").html(productList);
+			 $("#pageing").html(pageing); 
+			  			
 			
 		},
 		error : function(request, status, error) {
@@ -171,19 +189,22 @@ function getCodiProductList(kind_num){
 }
 
 //이미지 무빙
-function move(a,index) {
-    var product_num = $("#product_num_"+ index).val();
-	var x = event.pageX;
-	var y = event.pageY;
-	var product = $(a).attr("id");
-	var xVal = $(a).css('left').replace(/[^0-9]/g, "");
-	var yVal = $(a).css('top').replace(/[^0-9]/g, "");
-        
-        
+function move(a, product_num) {
+    $(a).css({
+    	"position" : 'absolute'
+    });
+  	var x = event.pageX;
+  	var y = event.pageY;
+  	var product = $(a).attr("id");
+  	var xVal = $(a).css('left').replace(/[^0-9]/g, "");
+  	var yVal = $(a).css('top').replace(/[^0-9]/g, "");
+                
 	$(a).mousemove(function(event) {
-        $("#x-"+index).val($("#"+product).css('left').replace(/[^0-9]/g, ""));
-        $("#y-"+index).val($("#"+product).css('top').replace(/[^0-9]/g, ""));
-        $(a).css({
+       // $("#x-"+index).val($("#"+product).css('left').replace(/[^0-9]/g, ""));
+       // $("#y-"+index).val($("#"+product).css('top').replace(/[^0-9]/g, ""));
+        $("#x-"+product_num).val($("#"+product).css('left').replace(/[^0-9]/g, ""));
+        $("#y-"+product_num).val($("#"+product).css('top').replace(/[^0-9]/g, ""));
+       $(a).css({
            "left" : xVal * 1 + ((event.pageX) * 1 - x * 1) * 1,
            "top" : yVal * 1 + ((event.pageY) * 1 - y * 1) * 1
         });
@@ -194,15 +215,18 @@ function move(a,index) {
 
 			       	if(xVal < 500 && yVal < 500){
 			    		 //번호를 배열에 넣음
+			    		 //상품 번호를 배열에 넣음
 			        	 codiArray(product_num);
 			    	 }else {
 			    		 for(var i=0; i<codi.length; i++){
 			    			 if(product_num == codi[i]){
 			    					codi.splice(i,1);
+			    					$(a).remove();
 			    				}
 			    		 }
-			    		 console.log(codi);
+			    		 //console.log(codi);
 			    	 }
+			       	console.log("codi : "+codi);
 			});
      });
 }
@@ -253,10 +277,10 @@ document.querySelector("button").addEventListener("click", function() {
 });
 
 ////   T       E         S        T          T        E        S       T
-function ccclliikk(a){
+/* function ccclliikk(a){
 	var x =""
-	$("#divasdasd_test").append("<div style='background : url(${pageContext.request.contextPath}/resources/testPic/"+a"); position: absolute; width: 200px; height: 200px' onmousedown='move(this,"+index+");'>";")
-}
+	
+} */
     
 </script>
 

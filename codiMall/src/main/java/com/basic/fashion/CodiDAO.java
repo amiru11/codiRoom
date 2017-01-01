@@ -29,8 +29,13 @@ public class CodiDAO {
 	TransactionStatus status = null;
 	
 	//코디 리스트
-	public List<CodiDTO> codiList(PageMaker pageMaker, CodiDTO codiDTO) throws Exception{
+	public List<CodiDTO> codiList(PageMaker pageMaker) throws Exception{
 		return sqlSession.selectList(namespace + "codiList", pageMaker);
+	}
+	
+	//코디 카운트
+	public int codiCount() throws Exception{
+		return sqlSession.selectOne(namespace+"codiCount");
 	}
 	
 	//등록

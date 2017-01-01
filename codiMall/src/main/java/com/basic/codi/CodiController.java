@@ -37,16 +37,13 @@ public class CodiController {
 	
 	//코디 리스트
 	@RequestMapping(value = "codiList")
-	public void codiList(@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="10") int perPage, CodiDTO codiDTO, Model model){
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setPerPage(perPage);
-		pageMaker.setCurPage(curPage);
+	public String codiList(@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="10") int perPage, CodiDTO codiDTO, Model model){
 		try {
-			codiService.codiList(pageMaker, codiDTO, model);
+			codiService.codiList(curPage, perPage, model);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return "/fashion/codiList";
 	}
 	
 	//코디 생성 페이지

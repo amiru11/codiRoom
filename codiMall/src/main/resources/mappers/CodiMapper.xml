@@ -48,6 +48,11 @@
 	<select id="codiList" resultType="com.basic.fashion.CodiDTO" parameterType="com.basic.util.PageMaker">
 		select * from codi
 	</select>
+
+	<!-- Codi Count -->
+	<select id="codiCount" resultType="int">
+		select count(*) from codi
+	</select>
 	
 	<!-- Codi 등록 -->
 	<insert id="codiCreate" parameterType="com.basic.fashion.CodiDTO">

@@ -718,7 +718,7 @@ var requestSubmitted = false;
 			</div>
 		</div>
 		</div>
-	</div>
+	
 
 	<!--  hidden form (POST로 넘기기위한 숨겨진 FORM 지저분한 주소창방지용)  -->
 	<form id="form_all" name="formAll"
