@@ -122,9 +122,9 @@ function getBuyList(buyState_state) {
 				}
 				x = x + '</tr>';
 				var strAr = value.buyStateDTO.buyState_address.split('_-_');
-				x=x+'<tr><td colspan=1>address</td><td colspan=12>';
+				x=x+'<tr><td colspan=1 style="border-bottom : dotted 2px #dce2eb;">배송정보</td><td colspan=12 style="border-bottom : dotted 2px #dce2eb;">';
 				$.each(strAr, function(index, value) {
-				x=x+'<input class="cl_buy_addr_'+index+'" type="text" readonly="readonly" value="'+value+'">';	
+				x=x+'<input class="cl_buy_addr_'+index+'" type="text" style="margin-top : 5px; margin-bottom : 5px;" readonly="readonly" value="'+value+'">';	
 				});
 				x=x+'</td></tr>';
 			});
@@ -269,6 +269,123 @@ function refundConfEachAdd(product_num,productSize_size,productEach_color,produc
 			} else {
 				alert("갯수수정fail");
 			}
+		},
+		error : function(request, status, error) {
+			alert("code:" + request.status + "\n" + "error:" + error);
+		}
+	});
+}
+function mastProductAddClick() {
+	$("#div_modin_main").html("");
+	$.ajax({
+		url : "../json/allKindNum",
+		type : "post",
+		dataType : 'json',
+		data : {
+		},
+		success : function(data) {
+			var zz = "";
+			zz = zz + '<select id="sel_kind_proadd" class="form-control">';
+			$.each(data.kindNumList, function(index, value) {
+				zz = zz + '<option value="' + value.kind_num + '">' + value.kind_num + "--" + value.kind_name + '</option>'
+			});
+			zz = zz + '</select>';
+			var x = "";
+			x = x + '<table id="tab_proadd_sa" class="table"><tr><td colspan=2><label>상품등록</label></td></tr>';
+			x = x + '<tr><td>상품명</td><td><input id="inp_productAdd_name" class="form-control" type="text"></td></tr>';
+			x = x + '<tr><td>상품종류</td><td>' + zz + '</td></tr>';
+			x = x + '<tr><td>상품가격</td><td><input id="inp_productAdd_price" class="form-control" type="number" min=0 step=1></td></tr>';
+			x = x + '<tr><td>할인율</td><td><input id="inp_productAdd_saleRate" class="form-control" type="number" min=0 step=0.1></td></tr>';
+			x = x + '<tr><td>키워드</td><td><input id="inp_productAdd_searchWord" class="form-control" type="text"></td></tr>';
+			x = x + '<tr><td>브랜드</td><td><input id="inp_productAdd_brand" class="form-control" type="text"></td></tr>';
+			x = x + '<tr><td>';
+			x = x + '<form id="hid_form_proadd" action="${pageContext.request.contextPath}/mast/mastProductAdd"';
+			x = x + 'method="post" enctype="multipart/form-data">';
+			x = x + '<input type="hidden" id="inph_productAdd_product_name" name="product_name">';
+			x = x + '<input type="hidden" id="inph_productAdd_kind_num" name="kind_num">';
+			x = x + '<input type="hidden" id="inph_productAdd_price" name="productInfo_price">';
+			x = x + '<input type="hidden" id="inph_productAdd_saleRate" name="productInfo_saleRate">';
+			x = x + '<input type="hidden" id="inph_productAdd_searchWord" name="productInfo_searchWord">';
+			x = x + '<input type="hidden" id="inph_productAdd_brand" name="productInfo_brand">';
+			x = x + '<input type="file" id="inph_productAdd_pic" class="form-control" name="productPic_pic">';
+			x = x + '</form>';
+			x=x+'</td></tr>';
+			x = x + '<tr><td colspan=2><button id="btn_productAdd_ss" class="btn btn-info btn-lg">등록하기</button></td></tr>'
+			x = x + '</table>';
+			
+			$("#div_modin_main").html(x);
+			$("#inp_productAdd_saleRate").focus(function(){
+				$(this).change(function(){
+					if($(this).val()>90){
+						alert("90보다 크게 입력할수없습니다.")
+						$(this).val(90);
+					}
+				})
+				$(this).keydown(function(){
+					if($(this).val()>90){
+						alert("90보다 크게 입력할수없습니다.")
+						$(this).val(90);
+					}
+				})
+				$(this).keyup(function(){
+					if($(this).val()>90){
+						alert("90보다 크게 입력할수없습니다.")
+						$(this).val(90);
+					}
+				})
+				$(this).blur(function(){
+					if($(this).val()>90){
+						alert("90보다 크게 입력할수없습니다.")
+						$(this).val(90);
+					}
+				})
+			});
+			$("#btn_productAdd_ss").click(function() {
+				var count = 0;
+				var product_name = $("#inp_productAdd_name").val();
+				var kind_num = $("#sel_kind_proadd").val();
+				var productInfo_price = $("#inp_productAdd_price").val();
+				var productInfo_saleRate = $("#inp_productAdd_saleRate").val();
+				var productInfo_searchWord = $("#inp_productAdd_searchWord").val();
+				var productInfo_brand = $("#inp_productAdd_brand").val();
+				var productPic_pic = $("#inph_productAdd_pic").val();
+				if (product_name == "") {
+					count++;
+				}
+				if (kind_num == "") {
+					count++;
+				}
+				if (productInfo_price == "") {
+					count++;
+				}
+				if (productInfo_saleRate == "" || productInfo_saleRate < 0) {
+					count++;
+				}
+				if (productInfo_searchWord == "") {
+					count++;
+				}
+				if (productInfo_brand == "") {
+					count++;
+				}
+				if (productPic_pic == "") {
+					count++;
+				}
+				if(count > 0){
+					alert("빈값을 모두 입력해 주세요")
+				}else{
+					$("#inph_productAdd_product_name").val(product_name);
+					$("#inph_productAdd_kind_num").val(kind_num);
+					$("#inph_productAdd_price").val(productInfo_price);
+					$("#inph_productAdd_saleRate").val(productInfo_saleRate);
+					$("#inph_productAdd_searchWord").val(productInfo_searchWord);
+					$("#inph_productAdd_brand").val(productInfo_brand);
+					$("#hid_form_proadd").submit();
+				}
+
+			});
+
+
+
 		},
 		error : function(request, status, error) {
 			alert("code:" + request.status + "\n" + "error:" + error);

@@ -46,7 +46,6 @@
 					class="fa fa-file-text-o"></span><span class="sidebar-title">Board</span><span
 					class="carett"></span></a>
 				<ul id="sub-1">
-					<li><a href="boardList">dashboard</a></li>
 					<li><a href="boardList">Notice</a></li>
 					<li><a href="boardList?board_kind=2">FAQ</a></li>
 					<li><a href="boardList?board_kind=3">QnA</a></li>
@@ -54,26 +53,25 @@
 				</ul></li>
 			<li><a id="goMember" class="side-btn"
 				href="${pageContext.request.contextPath}/mast/mastMember"><span
-					class="fa fa-users"></span><span class="sidebar-title">Member</span></a>
+					class="fa fa-users"></span><span class="sidebar-title">회원관리</span></a>
 			</li>
 			<li class=""><a id="goProduct" class="side-btn"
 				onclick="gotoggle(3);"><span class="fa fa-shopping-basket "></span><span
-					class="sidebar-title">Product</span></a>
+					class="sidebar-title">상품관리</span></a>
 				<ul id="sub-3">
 					<li><a
-						href="${pageContext.request.contextPath}/mast/mastProductList">MastProductList</a></li>
+						href="${pageContext.request.contextPath}/mast/mastProductList">상품리스트</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/mast/mastProductListEach0">MastProductListEach0</a></li>
+						href="${pageContext.request.contextPath}/mast/mastProductListEach0">재고관리</a></li>
 				</ul></li>
 			<li class=""><a id="goBuy" class="side-btn"
 				onclick="gotoggle(4);"><span class="fa fa-shopping-basket "></span><span
-					class="sidebar-title">BUY</span></a>
+					class="sidebar-title">매출현황</span></a>
 				<ul id="sub-4">
 					<li><a
-						href="${pageContext.request.contextPath}/mast/mastBuyList">MastBuyList</a></li>
+						href="${pageContext.request.contextPath}/mast/mastBuyList">판매내역</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/mast/mastBuyListPay">Mast
-							BuyListPay</a></li>
+						href="${pageContext.request.contextPath}/mast/mastBuyListPay">매출내역</a></li>
 				</ul></li>
 			<li class=""><a id="goCodination" class="side-btn"
 				onclick="gotoggle(5);"><span class="fa fa-home"></span><span

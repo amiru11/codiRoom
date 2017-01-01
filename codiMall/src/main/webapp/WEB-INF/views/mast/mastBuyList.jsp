@@ -43,7 +43,8 @@ tr > td{
 	font-size : 12px;
 	width : 10%;
 	/* border-right : 2px solid #dce2eb; */
-	border-top : 2px solid #dce2eb;
+	/* border-top : 2px solid #dce2eb; */
+	border-bottom : 2px solid #dce2eb;
 	text-align: center;
 }
 th {
@@ -52,6 +53,8 @@ th {
 	width : 10%;
 	/* border-right : 2px solid #dce2eb; */
 	border-top : 2px solid #dce2eb;
+	border-bottom : 2px solid #dce2eb;
+}	
 .cl_buy_addr_0{
 width: 70px;
 }
