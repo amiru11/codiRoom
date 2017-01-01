@@ -119,7 +119,7 @@
 		resultType="com.basic.buy.BuyListDTO">
 		select DISTINCT
 		p.PRODUCT_NUM,p.PRODUCT_NAME,b.BUY_NUM,bs.BUYSTATE_SIZE,bs.BUYSTATE_COLOR,bs.BUYSTATE_EACH,bs.BUYSTATE_PRICE,pc.productPic_pic
-		,bs.buystate_state,bs.buystate_expressNum from PRODUCT p, MEMBER m,productPic pc,
+		,bs.buystate_state,bs.buystate_expressNum,bs.buystate_address from PRODUCT p, MEMBER m,productPic pc,
 		BUY b , BUYSTATE bs
 		where bs.BUY_NUM =
 		b.BUY_NUM and m.ID = b.ID and
@@ -202,7 +202,7 @@
 		resultType="com.basic.buy.BuyListDTO">
 		select DISTINCT
 		p.PRODUCT_NUM,p.PRODUCT_NAME,b.BUY_NUM,bs.BUYSTATE_SIZE,bs.BUYSTATE_COLOR,bs.BUYSTATE_EACH,bs.BUYSTATE_PRICE,pc.productPic_pic
-		,bs.buystate_state,bs.buystate_expressNum from PRODUCT p, MEMBER m,productPic pc,
+		,bs.buystate_state,bs.buystate_expressNum,bs.buyState_address from PRODUCT p, MEMBER m,productPic pc,
 		BUY b , BUYSTATE bs
 		where bs.BUY_NUM =
 		b.BUY_NUM and m.ID = b.ID and

@@ -2,6 +2,7 @@
 .sub-header > li {
 	line-height: 70px;
     margin-left: 40px;
+    border: 1px solid red;
 }
 .sub-header > li > a{
     display: block;
@@ -100,52 +101,4 @@
 }
 .cart > span{
 	font-family: 'Hanna', sans-serif;
-}
-
-
-.btn.button-plus, .btn.button-minus {
-    color : white;
-    font-size: 16px;
-    text-align: center;
-    margin-top: 10px;
-    padding: 0;
-    height: 36px;
-    width: 36px;
-    line-height: 36px;
-    border-radius: 50px;
-    border-color : #f54f29;
-    background: #f54f29;
-    box-shadow: 0 15px 28px #f54f29;
-    transition: all 0.3s ease;
-
-}
-.btn.button-plus:HOVER, .btn.button-minus:HOVER {
-	background: #353940;
-    border-color : #353940;
-    color: white;
-    -moz-box-shadow: 0 15px 30px rgba(53, 57, 64, 0.5);
-    -webkit-box-shadow: 0 15px 30px rgba(53, 57, 64, 0.5);
-    box-shadow: 0 15px 30px rgba(53, 57, 64, 0.5);
-}
-#modal_tab_right td > div > input {
-	width: 58px;
-    line-height: 36px;
-    height: 58px;
-    border: 2px solid #dce2eb;
-    background: white;
-    -moz-border-radius: 50px;
-    -webkit-border-radius: 50px;
-    border-radius: 50px;
-    color: #9d9d9d;
-    font-size: 13px;
-    font-weight: bold;
-    text-align: center;
-    float: left;
-    padding-left: 15px;
-    outline-width: 0;
-    margin-top: 0;
-    -moz-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-    -webkit-transition: all 0.2s ease;
-    transition: all 0.2s ease;
 }

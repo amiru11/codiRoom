@@ -52,7 +52,6 @@ table, table tr, tr td, th {
 				<div class="col-sm-8" style="margin: 20px;height: 100%;">
 					<div class="container-fluid">
 						<div id="view">
-							
 						</div>
 					</div>
 				</div>			

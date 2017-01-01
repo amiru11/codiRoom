@@ -13,11 +13,11 @@
 <link
 	href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
 <link
 	href="${pageContext.request.contextPath}/resources/css/mast/mast.css"
 	rel="stylesheet">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
 <script src="${pageContext.request.contextPath}/resources/js/mast.js"></script>
 <script type="text/javascript">
 
@@ -607,10 +607,6 @@ input[type="checkbox"], input[type="radio"] {
 	float: right;
 	width: 160px;
 }
-.cl_pro_pic{
-	width: 175px;
-	height: 175px;
-}
 </style>
 </head>
 <body style="height: 1800px; font-family: 'hanna';">
@@ -630,12 +626,12 @@ input[type="checkbox"], input[type="radio"] {
 									<ul id="category-type" class="nav navbar-nav"
 										style="vertical-align: top;">
 										<li class="category-li"><a id="1" class="sel_type"
-											href="${pageContext.request.contextPath}/mast/mastProductList">상품리스트</a></li>
+											href="${pageContext.request.contextPath}/mast/mastProductList">ProductList</a></li>
 										<li class="category-li"><a id="2" class="sel_type"
-											href="${pageContext.request.contextPath}/mast/mastProductListEach0">매진상품재고충전</a></li>
+											href="${pageContext.request.contextPath}/mast/mastProductListEach0">ProductEach(00)</a></li>
 										<li class="category-li"><a id="3" class="sel_type cl_proadd_action"
 											style="cursor: pointer;" data-toggle="modal"
-											data-target="#basketModal" data-backdrop="true">상품추가</a></li>
+											data-target="#basketModal" data-backdrop="true">ProductAdd</a></li>
 
 									</ul>
 								</div>

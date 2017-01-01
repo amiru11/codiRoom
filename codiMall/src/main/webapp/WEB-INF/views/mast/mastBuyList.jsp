@@ -52,6 +52,14 @@ th {
 	width : 10%;
 	/* border-right : 2px solid #dce2eb; */
 	border-top : 2px solid #dce2eb;
+.cl_buy_addr_0{
+width: 70px;
+}
+.cl_buy_addr_1{
+width: 50px;
+}
+.cl_buy_addr_2{
+width: 50px;
 }
 </style>
 </head>

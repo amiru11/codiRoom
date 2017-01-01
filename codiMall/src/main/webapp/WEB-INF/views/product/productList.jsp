@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
@@ -33,33 +32,20 @@ var requestSubmitted = false;
 		var sale = "${sale}";
 		if(sale != ""){
 			$(".a_sale_product").css('color', '#006633');
-			$(".a_sale_product").css('font-size', '15px');
-			$(".a_sale_product").css('font-weight', 'bold');
+			$(".a_sale_product").css('font-size', '25px');
 		}else{
-			$.each( $(".a_prosel_num"), function( key, value ) {
-				  if($(value).find(".inhA_proselNum").val()==${productSelect_num}){
-/* 					  $(value).css({
-							 color : #006633,
-							 'font-size' : '15px',
-							 'font-weight' : 'bold;'
-						  }); */
-					  $(value).css('color', '#006633');
-					  $(value).css('font-size', '15px');
-					  $(value).css('font-weight','bold');						  
-				  }
+		$.each( $(".a_prosel_num"), function( key, value ) {
+			  if($(value).find(".inhA_proselNum").val()==${productSelect_num}){
+				  $(value).css('color', '#006633');
+				  $(value).css('font-size', '20px');
+			  }
 			});
 			
 		}
 		$.each( $(".sel_type"), function( key, value ) {
 			  if($(value).find(".inhc_sel").val()==sessel){
-/* 				  $(value).css({
-					 'color' : '#006633',
-					 'font-size' : '15px',
-					 'font-weight' : 'bold;'
-				  }); */
 				  $(value).css('color', '#006633');
-				  $(value).css('font-size', '15px');
-				  $(value).css('font-weight','bold');
+				  $(value).css('font-size', '25px');
 				  
 			  }
 			});
@@ -145,9 +131,8 @@ var requestSubmitted = false;
 			var product_num = $(this).find(".inh_product_num").val();
 			var productPic_pic = $(this).find(".inh_productPic_pic_val").val();
 			var price = $(this).find(".p_cl_price").html();
-			var xxx = '<table id="modal_tab_right"><tr><td><select id="sel_size" class="form-control"></select></td></tr><tr><td><select id="sel_color" class="form-control" style="display:none"></select>';
-			xxx=xxx+'</td></tr><tr><td><div id="each_div" style="display:none"><input type="number" value="0" min="1" max="20" step="1" id="inp_each">';
-			xxx=xxx+'<a	class="btn btn-default button-minus product_quantity_down" style="margin-left: 20px; padding : 0;" onclick="minusOn();"> <span><i class="glyphicon glyphicon-minus"></i></span></a> <span><i id="btn_add_eachaa" class="btn btn-default button-plus product_quantity_up glyphicon glyphicon-plus" style="left: 1px; padding : 0;" onclick="addOn();"></i></span></div></td></tr></table>';
+			var xxx = '<table id="modal_tab_right"><tr><td><select id="sel_size"></select></td></tr><tr><td><select id="sel_color" style="display:none"></select>';
+			xxx=xxx+'</td></tr><tr><td><input type="number" value="0" min="1" max="20" step="1" id="inp_each" style="display:none"></select></td></tr></table>';
 			$("#modal_div_img_left").html("");
 			$("#modal_div_img_left").append('<img src="'+productPic_pic+'" >');
 			$("#modal_div_tab_right").html("");
@@ -159,31 +144,31 @@ var requestSubmitted = false;
 			$("#sel_color").css('display','none');
 			$("#sel_size").val("");
 			$("#inp_each").val(0);
-			$("#each_div").css('display','none');
+			$("#inp_each").css('display','none');
 			$("#btn_basketAdd").css('display','none');
 			
 			$("#sel_size").on('change',function() {
 				if($(this).val()!=""){
 					selColor($("#inh_pro_val").val());
 					$("#sel_color").css('display','inline-block');
-					$("#each_div").css('display','none');
+					$("#inp_each").css('display','none');
 				}
 				if($(this).val()==""){
 					$("#sel_color").css('display','none');
-					$("#each_div").css('display','none');
+					$("#inp_each").css('display','none');
 				}
 				if($("#sel_color").val()==""){
-					$("#each_div").css('display','none');
+					$("#inp_each").css('display','none');
 				}
 				
 				$("#inp_each").val(0);
-				$("#each_div").css('display','none');
+				$("#inp_each").css('display','none');
 			});
 			$("#sel_color").on('change',function() {
 				if($(this).val()==""){
-					$("#each_div").css('display','none');
+					$("#inp_each").css('display','none');
 				}else{
-					$("#each_div").css('display','inline-block');
+					$("#inp_each").css('display','inline-block');
 				}
 				$("#inp_each").val(0);
 				$("#btn_basketAdd").css('display','none');
@@ -235,33 +220,9 @@ var requestSubmitted = false;
 			}
 
 		});
-			
+
 	});
 	//function end ------------------------------------------------------------------------------------------ 
-	
-	function addOn(){
-		$("#inp_each").val($("#inp_each").val()*1+1);
-		var as = $("#inh_id_hidden_each").val()*1;
-    	if($("#inp_each").val()*1>as*1){
-    		alert("재고초과");
-    		$("#inp_each").val(as*1);
-    	}else{
-    		if($("#inp_each").val()*1>20){	
-				$("#inp_each").val(20*1);
-				alert("21개이상은 전화로 문의");
-			}
-    	}
-	}
-	
-	function minusOn(){
-		var c = parseInt($("#inp_each").val());
-		var d = c-1;
-		if(d>1 || d==1){	
-			$("#inp_each").val(d);
-		}else{
-			alert("더 이상 수량을 줄일 수 없습니다.");
-		}
-	}
 	
 	function selCheck(){
 		
@@ -368,8 +329,6 @@ var requestSubmitted = false;
 			}, 500);
 		});
 	}
-	
-
 </script>
 
 <style type="text/css">
@@ -423,7 +382,7 @@ var requestSubmitted = false;
 #modal_div_img_left {
 	width: 200px;
 	height: 200px;
-	/* border: 2px blue solid; */
+	border: 2px blue solid;
 	float: left;
 }
 
@@ -435,22 +394,21 @@ var requestSubmitted = false;
 #modal_div_tab_right {
 	width: 200px;
 	height: 200px;
-	/* border: 2px green solid; */
+	border: 2px green solid;
 	float: right;
 }
 
 #modal_tab_right {
-	/* border: black 3px double; */
+	border: black 3px double;
 }
 
-#modal_tab_right td>select{
+#modal_tab_right td>select, input {
 	width: 195px;
 	height: 50px;
-	font-size: 15px;
+	font-size: 25px;
 	font-weight: bold;
-	border: 2px solid #dce2eb;
-	margin-bottom:15px;
 }
+
 #modal_div_tab_right img {
 	width: 190px;
 	height: 190px;
@@ -471,7 +429,7 @@ var requestSubmitted = false;
 	<!-- HEADER:E -->
 
 
-	<div class="container" style="padding-top: 30px;">
+	<div class="container" style="padding-top: 20px;">
 		<nav class="navbar" style="border-bottom: 1px solid #eeeeee;">
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav sub-header">
@@ -501,9 +459,9 @@ var requestSubmitted = false;
 								<table id="tab_kind_checkbox" class="cl_tab_checkboxp">
 									<c:forEach var="kindList" items="${selKind_num}">
 										<tr>
-											<td>${kindList}</td>
+											<td>${kindList.kind_name}</td>
 											<td><input class="inCk_kind_num" type="checkbox"
-												value="${kindList}"
+												value="${kindList.kind_num}"
 												<c:forEach var = "kind2" items="${kind_num}">
 								<c:if test="${kindList ==kind2}">
 								checked="checked"
@@ -696,14 +654,14 @@ var requestSubmitted = false;
 	<!-- Footer:E -->
 
 	<!-- Modal -->
-	<div class="modal fade" id="basketModal" role="dialog" style="font-family: 'hanna';">
+	<div class="modal fade" id="basketModal" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
 
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">장바구니 담기</h4>
+					<h4 class="modal-title">CART</h4>
 				</div>
 				<input type="hidden" value="" id="inh_pro_val">
 				<div class="modal-body div_img_in"
@@ -715,11 +673,8 @@ var requestSubmitted = false;
 				</div>
 				<div class="modal-body3"></div>
 
-				<div id="div_hidden_each">
-					<input type="hidden" id="inh_id_hidden_each">
-				</div>
-					
-				<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+				<div id="div_hidden_each"></div>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>

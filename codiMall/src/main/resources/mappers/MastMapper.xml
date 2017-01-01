@@ -213,6 +213,7 @@
 		<result property="buyState_pay_date" column="buyState_pay_date" />
 		<result property="buyState_result_date" column="buyState_result_date" />
 		<result property="buyState_state" column="buyState_state" />
+		<result property="buyState_address" column="buyState_address" />
 	</resultMap>
 
 	<resultMap type="com.basic.mast.MastBuyListDTO" id="MastBuyList">
@@ -684,7 +685,7 @@ t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_D
 		parameterType="java.util.HashMap">
 		select DISTINCT
 		b.BUY_NUM,p.PRODUCT_NUM,p.PRODUCT_NAME,m.ID,bs.BUYSTATE_SIZE,bs.BUYSTATE_COLOR,bs.BUYSTATE_EACH,bs.BUYSTATE_PRICE
-		,bs.BUYSTATE_EXPRESSNUM,bs.BUYSTATE_PAY_DATE,bs.BUYSTATE_RESULT_DATE,bs.BUYSTATE_STATE
+		,bs.BUYSTATE_EXPRESSNUM,bs.BUYSTATE_PAY_DATE,bs.BUYSTATE_RESULT_DATE,bs.BUYSTATE_STATE,bs.buystate_address
 		from PRODUCT p, buy b, BUYSTATE bs , MEMBER m
 		where bs.BUY_NUM =
 		b.BUY_NUM and m.ID = b.ID and p.PRODUCT_NUM =

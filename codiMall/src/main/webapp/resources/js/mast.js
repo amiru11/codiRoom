@@ -71,6 +71,7 @@ function getBuyList(buyState_state) {
 		},
 		success : function(data) {
 			var x = "";
+
 			x = x + "<tr><th>구매번호</th><th>ID</th><th>상품번호</th><th>상품명</th><th>사이즈</th>";
 			x = x + "<th>색상</th><th>구매수량</th><th>구매금액</th><th>송장번호</th><th>구매날짜</th><th>입금날짜</th>";
 			x = x + "<th>배송상황</th>";
@@ -120,6 +121,12 @@ function getBuyList(buyState_state) {
 					x = x + '<input class="btn_refund_confirm" type="button" value="환불완료"></td>';
 				}
 				x = x + '</tr>';
+				var strAr = value.buyStateDTO.buyState_address.split('_-_');
+				x=x+'<tr><td colspan=1>address</td><td colspan=12>';
+				$.each(strAr, function(index, value) {
+				x=x+'<input class="cl_buy_addr_'+index+'" type="text" readonly="readonly" value="'+value+'">';	
+				});
+				x=x+'</td></tr>';
 			});
 			$("#table_buy_list").html(x);
 

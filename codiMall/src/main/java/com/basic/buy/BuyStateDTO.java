@@ -12,8 +12,16 @@ public class BuyStateDTO extends BuyDTO{
 	private int buyState_expressNum;
 	private Date buyState_pay_date;
 	private Date buyState_result_date;
+	private String buyState_address;
 	
 	
+	
+	public String getBuyState_address() {
+		return buyState_address;
+	}
+	public void setBuyState_address(String buyState_address) {
+		this.buyState_address = buyState_address;
+	}
 	public int getBuyState_expressNum() {
 		return buyState_expressNum;
 	}

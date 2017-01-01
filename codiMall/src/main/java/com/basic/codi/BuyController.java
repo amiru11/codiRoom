@@ -151,7 +151,6 @@ public class BuyController {
 			if(ar!=null){
 			path = "/buy/buyListN";
 			
-			model.addAttribute("subMenu","주문/배송");
 			model.addAttribute("message", map.get("message"));
 			model.addAttribute("list",ar);
 			}else{
