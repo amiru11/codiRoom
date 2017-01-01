@@ -17,6 +17,7 @@ import com.basic.board.CommentDAO;
 import com.basic.board.CommentDTO;
 import com.basic.member.MemberDTO;
 import com.basic.product.ProductAllDTO;
+import com.basic.product.ProductSelectDTO;
 import com.basic.product.ProductSizeDTO;
 import com.basic.util.PageMaker;
 
@@ -31,6 +32,14 @@ public class MastService {
 
 	@Autowired
 	private CommentDAO commentDAO;
+	//mast kind add SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+	public int mastKindAdd(String kind_name,int productSelect_num) {
+		return mastDAO.mastKindAdd(kind_name,productSelect_num);
+	}
+	//mast kind add EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+	
+	
+	
 	// mast product Add SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 
 	public int mastProductAdd(MastProductAddParamDTO paramDTO,HttpSession session) {
@@ -103,6 +112,10 @@ public class MastService {
 	public int mastProductEachFix(int product_num, String productSize_size, String productEach_color,
 			int productEach_each) {
 		return mastDAO.mastProductEachFix(product_num, productSize_size, productEach_color, productEach_each);
+	}
+	
+	public List<ProductSelectDTO> mastProductSelectList(){
+		return mastDAO.mastProductSelectList();
 	}
 
 	////////////////////////////////////////////////////////////// 게시판/////////////////////////////////////////////////////////////

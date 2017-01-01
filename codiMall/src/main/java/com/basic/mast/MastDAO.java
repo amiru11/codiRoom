@@ -47,6 +47,20 @@ public class MastDAO {
 	TransactionStatus status = null;
 
 	private List<MemberDTO> ar;
+	
+	
+	//mast kind add SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+		public int mastKindAdd(String kind_name,int productSelect_num) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("productSelect_num", productSelect_num);
+			map.put("kind_name", kind_name);
+			int kind_num = sqlSession.selectOne(namespace+"SelMastLastKindNum");
+			kind_num = kind_num+1;
+			map.put("kind_num",kind_num);
+			return sqlSession.insert(namespace+"InMastKindAdd",map);
+		}
+		//mast kind add EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+	
 
 	// mast product Pic fixSSSSSSSSSS
 	public int mastProductPicFix(HttpSession session,MultipartHttpServletRequest mr) {

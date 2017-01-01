@@ -59,6 +59,35 @@ public class MastController {
 		}
 		return path;
 	}
+	
+	@RequestMapping(value="/mastKindAdd",method=RequestMethod.POST)
+	public String mastKindADD(String kind_name,int productSelect_num,HttpSession session,RedirectAttributes ra){
+		String path = "";
+		String location = "";
+		String message="";
+		int result = 0;
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		if (memberDTO != null && memberDTO.getMember_level() == 0) {
+			result = mastService.mastKindAdd(kind_name,productSelect_num);
+			if(result >0){
+				path="redirect:/result/result";
+				location="/mast/mastProductList";
+				message="KIND 등록 성공";
+				ra.addFlashAttribute("message", message);
+				ra.addFlashAttribute("location", location);
+			}else{
+				path="redirect:/result/result";
+				location="/mast/mastProductList";
+				message="KIND 등록 실패";
+				ra.addFlashAttribute("message", message);
+				ra.addFlashAttribute("location", location);
+			}
+		} else {
+			path = "redirect:/";
+		}
+		return path;
+		
+	}
 
 	@RequestMapping(value = "/mastProductAdd", method = RequestMethod.GET)
 	public String mastProductAddG(HttpSession session) {

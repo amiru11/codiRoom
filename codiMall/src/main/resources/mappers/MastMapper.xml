@@ -670,8 +670,16 @@ t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_D
 
 
 
+<insert id="InMastKindAdd" parameterType="java.util.HashMap">
+insert into kind values(#{kind_num}
+,#{kind_name},#{productSelect_num})
+</insert>
 
-
+<select id="SelMastLastKindNum" resultType="int">
+select t.kind_num from(
+select kind_num from kind
+order by kind_num desc)t where rownum=1
+</select>
 
 
 

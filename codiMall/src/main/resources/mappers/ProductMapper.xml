@@ -497,13 +497,9 @@
 
 	<select id="SelAllKindNum" resultType="com.basic.product.KindDTO" parameterType="java.util.HashMap">
 		select DISTINCT
-		k.kind_num,k.kind_name from PRODUCT p , PRODUCTKIND pk,kind k
-		where pk.PRODUCT_NUM = p.PRODUCT_NUM
-		and pk.KIND_NUM = k.KIND_NUM
-		and
-		pk.PRODUCT_NUM = p.PRODUCT_NUM
-		<if test="productSelect_num !=0">
-			and k.PRODUCTSELECT_NUM = #{productSelect_num}
+		k.kind_num,k.kind_name from kind k
+		<if test="productSelect_num !=0 and productSelect_num != null">
+			where k.PRODUCTSELECT_NUM = #{productSelect_num}
 		</if>
 		order by k.kind_num asc
 	</select>

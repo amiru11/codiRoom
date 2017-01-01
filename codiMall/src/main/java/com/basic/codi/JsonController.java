@@ -24,6 +24,7 @@ import com.basic.mast.SSSSSService;
 import com.basic.product.ProductDTO;
 import com.basic.product.ProductEachDTO;
 import com.basic.product.ProductEachListDTO;
+import com.basic.product.ProductSelectDTO;
 import com.basic.product.ProductService;
 import com.basic.product.ProductSizeDTO;
 
@@ -218,6 +219,11 @@ public class JsonController {
 		System.out.println("productEach_each-----"+productEach_each);
 		int result = mastService.mastProductEachAdd(product_num, productSize_size, productEach_color, productEach_each);
 		return result;
+	}
+	
+	@RequestMapping(value="/mastAllProductSelectGet",produces = "application/json; charset=utf-8")
+	public List<ProductSelectDTO> mastAllProductSelectGet(){
+		return mastService.mastProductSelectList();
 	}
 	
 	

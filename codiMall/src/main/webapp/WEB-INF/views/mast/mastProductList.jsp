@@ -27,10 +27,61 @@
 		selBox();
 		allCheckBoxes();
 		pageing();
-		$(".cl_proadd_action").click(function(){
+		$(".cl_proadd_action").click(function() {
 			mastProductAddClick();
 		});
+		$(".cl_kindadd_action").click(function() {
+			mastKindAddClick();
+		});
 	});
+	function mastKindAddClick() {
+		$("#div_modin_main").html("");
+		$.ajax({
+			url : "../json/allKindNum",
+			type : "post",
+			dataType : 'json',
+			success : function(data) {
+				var x = "";
+				x=x+'<table id="id_tab_kind_list" style="display:inline-block;"><tr><th>KIND_NUM</th><th>KIND_NAME</th></tr>'
+				$.each(data.kindNumList, function(index, value) {
+					x = x + '<tr><td>' + value.kind_num + '</td><td>'+value.kind_name + '</td></tr>'
+				});
+				$.ajax({
+					url : "../json/mastAllProductSelectGet",
+					type : "post",
+					dataType : 'json',
+					success : function(data) {
+						x=x+'</table><form id="id_form_kind_add"  action="${pageContext.request.contextPath}/mast/mastKindAdd" method="post"';
+						x=x+'style="display:inline-block;">';
+						x=x+'PRODUCTSELECT<select name="productSelect_num">'
+						$.each(data, function(index, value) {
+							x=x+'<option value="'+value.productSelect_num+'">'+value.productSelect_name+'</option>';
+						});
+						x=x+'</select>'
+						x=x+'KIND_NAME<input name="kind_name" id="inp_kind_name_aa" style="width:100px;">';
+						x=x+'<input id="btn_kindAdd_submit" type="button" value="ADD"></form>'
+						$("#div_modin_main").html(x);
+
+						$("#btn_kindAdd_submit").click(function(){
+							if($("#inp_kind_name_aa").val()==""){
+								alert("비어있습니다");
+							}else{
+								$("#id_form_kind_add").submit();
+							}
+							
+						})
+					},
+					error : function(request, status, error) {
+						alert("code:" + request.status + "\n" + "error:" + error);
+					}
+				});
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
+			}
+		});
+
+	}
 
 	function mastProductAddClick() {
 		$("#div_modin_main").html("");
@@ -66,32 +117,32 @@
 				x = x + '<input type="hidden" id="inph_productAdd_brand" name="productInfo_brand">';
 				x = x + '<input type="file" id="inph_productAdd_pic" name="productPic_pic">';
 				x = x + '</form>';
-				x=x+'</td></tr>';
+				x = x + '</td></tr>';
 				x = x + '<tr><td colspan=2><button id="btn_productAdd_ss">PRODUCTADD</button></td></tr>'
 				x = x + '</table>';
-				
+
 				$("#div_modin_main").html(x);
-				$("#inp_productAdd_saleRate").focus(function(){
-					$(this).change(function(){
-						if($(this).val()>90){
+				$("#inp_productAdd_saleRate").focus(function() {
+					$(this).change(function() {
+						if ($(this).val() > 90) {
 							alert("90보다 크게 입력할수없습니다.")
 							$(this).val(90);
 						}
 					})
-					$(this).keydown(function(){
-						if($(this).val()>90){
+					$(this).keydown(function() {
+						if ($(this).val() > 90) {
 							alert("90보다 크게 입력할수없습니다.")
 							$(this).val(90);
 						}
 					})
-					$(this).keyup(function(){
-						if($(this).val()>90){
+					$(this).keyup(function() {
+						if ($(this).val() > 90) {
 							alert("90보다 크게 입력할수없습니다.")
 							$(this).val(90);
 						}
 					})
-					$(this).blur(function(){
-						if($(this).val()>90){
+					$(this).blur(function() {
+						if ($(this).val() > 90) {
 							alert("90보다 크게 입력할수없습니다.")
 							$(this).val(90);
 						}
@@ -127,9 +178,9 @@
 					if (productPic_pic == "") {
 						count++;
 					}
-					if(count > 0){
+					if (count > 0) {
 						alert("빈값을 모두 입력해 주세요")
-					}else{
+					} else {
 						$("#inph_productAdd_product_name").val(product_name);
 						$("#inph_productAdd_kind_num").val(kind_num);
 						$("#inph_productAdd_price").val(productInfo_price);
@@ -629,10 +680,14 @@ input[type="checkbox"], input[type="radio"] {
 											href="${pageContext.request.contextPath}/mast/mastProductList">ProductList</a></li>
 										<li class="category-li"><a id="2" class="sel_type"
 											href="${pageContext.request.contextPath}/mast/mastProductListEach0">ProductEach(00)</a></li>
-										<li class="category-li"><a id="3" class="sel_type cl_proadd_action"
-											style="cursor: pointer;" data-toggle="modal"
-											data-target="#basketModal" data-backdrop="true">ProductAdd</a></li>
-
+										<li class="category-li"><a id="3"
+											class="sel_type cl_proadd_action" style="cursor: pointer;"
+											data-toggle="modal" data-target="#basketModal"
+											data-backdrop="true">ProductAdd</a></li>
+											<li class="category-li"><a id="4"
+											class="sel_type cl_kindadd_action" style="cursor: pointer;"
+											data-toggle="modal" data-target="#basketModal"
+											data-backdrop="true">KindAdd</a></li>
 									</ul>
 								</div>
 							</nav>
