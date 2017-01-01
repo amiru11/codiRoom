@@ -71,17 +71,17 @@ function getBuyList(buyState_state) {
 		},
 		success : function(data) {
 			var x = "";
-			x = x + "<tr><th>buy_num</th><th>id</th><th>product_num</th><th>product_name</th><th>size</th>";
-			x = x + "<th>color</th><th>each</th><th>price</th><th>expressNum</th><th>pay_date</th><th>result_date</th>";
-			x = x + "<th>state</th>";
+			x = x + "<tr><th>구매번호</th><th>ID</th><th>상품번호</th><th>상품명</th><th>사이즈</th>";
+			x = x + "<th>색상</th><th>구매수량</th><th>구매금액</th><th>송장번호</th><th>구매날짜</th><th>입금날짜</th>";
+			x = x + "<th>배송상황</th>";
 			if (buyState_state == 1) {
-				x = x + "<th>state1to2</th>"
+				x = x + "<th>배송번호변경(1->2)</th>"
 			} else if (buyState_state == 2) {
-				x = x + "<th>expressNumFix</th></tr>";
+				x = x + "<th>배송번호변경</th></tr>";
 			} else if (buyState_state == 3) {
-				x = x + "<th>Conf && refund</th></tr>";
+				x = x + "<th>구매확정 && 환불</th></tr>";
 			} else if (buyState_state == 5) {
-				x = x + "<th>refund Conf</th></tr>";
+				x = x + "<th>환불 확정</th></tr>";
 			}
 			$.each(data.ar, function(index, value) {
 				x = x + '<tr class="tr_buy_list">';
@@ -100,20 +100,19 @@ function getBuyList(buyState_state) {
 				if (buyState_state == 1) {
 					x = x + '<td>';
 					x = x + '<input class="hid_buy_num" name="buy_num" type="hidden" value="' + value.buyDTO.buy_num + '">';
-					x = x + 'expressNum:<input onkeydown="numcheck()" class="inp_expressNum" type="number" name="buyState_expressNum"><Br>';
+					x = x + '배송번호:<input onkeydown="numcheck()" class="inp_expressNum" type="number" name="buyState_expressNum"><Br>';
 					x = x + '<input class="btn_add" type="button" value="ADD"></td>';
 				} else if (buyState_state == 2) {
 					x = x + '<td>';
 					x = x + '<input class="hid_buy_num" name="buy_num" type="hidden" value="' + value.buyDTO.buy_num + '">';
-					x = x + 'expressNum:<input onkeydown="numcheck()" class="inp_expressNum" type="number" name="buyState_expressNum"><Br>';
-					x = x + '<input class="btn_add" type="button" value="ADD">';
-					x = x + '<input class="btn_expressConfirm" type="button" value="ExConf"></td>';
+					x = x + '배송번호:<input onkeydown="numcheck()" class="inp_expressNum" type="number" name="buyState_expressNum"><Br>';
+					x = x + '<input class="btn_add" type="button" value="추가">';
+					x = x + '<input class="btn_expressConfirm" type="button" value="발급"></td>';
 				} else if (buyState_state == 3) {
 					x = x + '<td>';
 					x = x + '<input class="hid_buy_num" name="buy_num" type="hidden" value="' + value.buyDTO.buy_num + '">';
-					x = x + '<input class="btn_BuyConfirm" type="button" value="BuyConf"><br>';
-					x = x + 'expressNum:<input onkeydown="numcheck()" class="inp_expressNum" type="number" name="buyState_expressNum"><Br>';
-					x = x + '<input class="btn_refund" type="button" value="환불"></td>';
+					x = x + '배송번호:<input onkeydown="numcheck()" class="inp_expressNum" type="number" name="buyState_expressNum"><Br>';
+					x = x + '<input class="btn_refund" type="button" value="환불"><input class="btn_BuyConfirm" type="button" value="구매확정"></td>';
 				} else if (buyState_state == 5) {
 					x = x + '<td>';
 					x = x + '<input class="hid_buy_num" name="buy_num" type="hidden" value="' + value.buyDTO.buy_num + '">';

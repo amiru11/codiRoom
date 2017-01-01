@@ -21,26 +21,7 @@ table, table tr, tr td, th {
 	border: 1px solid black;
 }
 </style>
-<script type="text/javascript">
 
-	$(function() {
-		calendar();
-		$("#goCalendar").click(function(){
-				calendar();
-		});		
-	});
-	
-	function calendar(){
-		$.ajax({
-			url : "${pageContext.request.contextPath}/mast/calendar",
-			success : function(data){
-				$("#view").empty();
-				$("#view").html(data);
-				console.log(data);
-			}			
-		});
-	}
-</script>
 <style type="text/css">
 .nav >li >a.side-btn{
 	color: #91a7c6;
@@ -56,6 +37,11 @@ table, table tr, tr td, th {
     margin-bottom: 1em;
 }
 </style>
+<script type="text/javascript">
+	$(function(){
+		calendar();
+	});
+</script>
 </head>
 <body style="height:1200px;">
 	<div class="container-fluid" style="padding : 0; height: 100%">
@@ -64,7 +50,7 @@ table, table tr, tr td, th {
 					<%@ include file="/resources/temp/mast/sideBar.jspf"%>
 				</div>
 				<div class="col-sm-8" style="margin: 20px;height: 100%;">
-					<div class="container" >
+					<div class="container-fluid">
 						<div id="view">
 							
 						</div>
