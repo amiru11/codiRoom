@@ -237,7 +237,7 @@
 			$("#search_formaa").submit();
 		});
 	}
-	function enttt(event){
+	function enttt(event) {
 		event = event || window.event;
 		var keyID = (event.which) ? event.which : event.keyCode;
 		if (keyID == 13) {
@@ -369,15 +369,16 @@
 					<li><a
 						href="${pageContext.request.contextPath}/board/findList?board_kind=1">고객센터</a></li>
 					<!-- 기본적으로 notice로 가게 -->
-					<li><a href="${pageContext.request.contextPath}/basket/basketList"><span
+					<li><a
+						href="${pageContext.request.contextPath}/basket/basketList"><span
 							class="glyphicon glyphicon-shopping-cart"></span> CART</a></li>
 					<c:if test="${sessionScope.member eq null}">
 						<li><a href="" data-toggle="modal" data-target="#loginModal"
 							data-backdrop="true"><span class="glyphicon glyphicon-log-in"></span>
 								LOGIN</a></li>
-						<li><a href="${pageContext.request.contextPath}/basket/basketList" data-toggle="modal" data-target="#signModal"
-							data-backdrop="true"><span class="glyphicon glyphicon-user"></span>
-								Sign Up</a></li>
+						<li><a style="cursor: pointer;"
+							data-toggle="modal" data-target="#signModal" data-backdrop="true"><span
+								class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 					</c:if>
 					<c:if test="${sessionScope.member ne null}">
 						<li><a
@@ -397,9 +398,8 @@
 								<input type="text" class="form-control"
 									value="${productInfo_searchWord}" placeholder="Search Product"
 									id="product_search" onkeydown='enttt(event)'
-									onkeyup='enttt(event)'> <span
-									class="input-group-btn"> <a class="btn btn-default"
-									type="button" id="ps_btn"> <span
+									onkeyup='enttt(event)'> <span class="input-group-btn">
+									<a class="btn btn-default" type="button" id="ps_btn"> <span
 										class="glyphicon glyphicon-search"></span>
 								</a>
 								</span>
@@ -459,7 +459,7 @@
 				<h4 class="modal-title">LOGIN</h4>
 			</div>
 			<div class="modal-body">
-<%-- 				<form action="${pageContext.request.contextPath}/member/f1">
+				<%-- 				<form action="${pageContext.request.contextPath}/member/f1">
 					<div class="fb-login-button" data-size="xlarge"
 						data-show-faces="false" data-auto-logout-link="true"></div>
 				</form>
