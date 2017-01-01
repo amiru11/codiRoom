@@ -77,7 +77,7 @@ public class BuyDao {
 		System.out.println("productEach_color---" + productEach_color);
 		System.out.println("productEach_each---" + productEach_each);
 		System.out.println("productEach----" + productEach);
-		if (productEach > productEach_each) {
+		if (productEach >= productEach_each) {
 			try {
 				def = new DefaultTransactionDefinition();
 				def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);

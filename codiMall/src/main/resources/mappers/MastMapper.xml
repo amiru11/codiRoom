@@ -258,8 +258,10 @@
 	</insert>
 	<update id="UpMastProductPicFix" parameterType="java.util.HashMap">
 		update
-		productPic set productPic_pic = #{productPic_pic}
-		where product_num = #{product_num}
+		productPic
+		set productPic_pic = #{productPic_pic}
+		where product_num =
+		#{product_num}
 	</update>
 
 
@@ -274,12 +276,11 @@
 
 	<select id="SelMastProductList" parameterType="java.util.HashMap"
 		resultMap="ProductAll">
-		select zxc.* from(select ROWNUM r, tt.* from(select DISTINCT zx.* from(select z.* from(select DISTINCT
+		select zxc.* from(select ROWNUM r, tt.* from(select DISTINCT zx.*
+		from(select z.* from(select DISTINCT
 		(PRODUCTINFO_PRICE*(100-productInfo_saleRate)/100) realPrice,
 		selCount,pse.PRODUCTSELECT_NUM,pse.PRODUCTSELECT_NAME,k.KIND_NUM,k.KIND_NAME,t.PRODUCT_NUM,
-		
-
-t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_DATE,pi.PRODUCTINFO_SALERATE,
+		t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_DATE,pi.PRODUCTINFO_SALERATE,
 		pi.PRODUCTINFO_SEARCHWORD,pi.PRODUCTINFO_BRAND,pc.PRODUCTPIC_PIC
 		from
 		(select count(b.buy_num) selCount,p.PRODUCT_NUM,p.product_name
@@ -302,8 +303,9 @@ t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_D
 		pse.PRODUCTSELECT_NUM = k.PRODUCTSELECT_NUM
 		and
 		pk.KIND_NUM = k.KIND_NUM) z LEFT OUTER JOIN PRODUCTSIZE ps
-		   ON z.product_num = ps.PRODUCT_NUM) zx LEFT OUTER JOIN PRODUCTEach pe
-		   ON zx.product_num = pe.PRODUCT_NUM 
+		ON z.product_num = ps.PRODUCT_NUM) zx LEFT OUTER JOIN PRODUCTEach pe
+		ON zx.product_num = pe.PRODUCT_NUM
+		where 1 = 1
 		<if test="kind_num != null">
 			and zx.kind_num in
 			<foreach item="item" index="index" collection="kind_num"
@@ -390,8 +392,9 @@ t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_D
 
 	<select id="SelMastProductCount" parameterType="java.util.HashMap"
 		resultType="int">
-		select
-		count(z.PRODUCT_NUM) from (select DISTINCT
+		select count(zxc.product_num) from(select ROWNUM r, tt.* from(select DISTINCT zx.*
+		from(select z.* from(select DISTINCT
+		(PRODUCTINFO_PRICE*(100-productInfo_saleRate)/100) realPrice,
 		selCount,pse.PRODUCTSELECT_NUM,pse.PRODUCTSELECT_NAME,k.KIND_NUM,k.KIND_NAME,t.PRODUCT_NUM,
 		t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_DATE,pi.PRODUCTINFO_SALERATE,
 		pi.PRODUCTINFO_SEARCHWORD,pi.PRODUCTINFO_BRAND,pc.PRODUCTPIC_PIC
@@ -405,15 +408,9 @@ t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_D
 		t ,PRODUCTINFO pi,PRODUCTPIC pc
 		,
 		PRODUCTKIND pk , PRODUCTSELECT pse
-		,kind k,ProductSize ps,productEach
-		pe
+		,kind k
 		where t.PRODUCT_NUM =
 		pi.PRODUCT_NUM
-		and t.PRODUCT_NUM =
-		ps.PRODUCT_NUM
-		and t.PRODUCT_NUM = pe.PRODUCT_NUM
-		and
-		ps.PRODUCTSize_size = pe.PRODUCTSize_size
 		and t.PRODUCT_NUM =
 		pc.PRODUCT_NUM
 		and t.PRODUCT_NUM =
@@ -421,30 +418,33 @@ t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_D
 		and
 		pse.PRODUCTSELECT_NUM = k.PRODUCTSELECT_NUM
 		and
-		pk.KIND_NUM = k.KIND_NUM
+		pk.KIND_NUM = k.KIND_NUM) z LEFT OUTER JOIN PRODUCTSIZE ps
+		ON z.product_num = ps.PRODUCT_NUM) zx LEFT OUTER JOIN PRODUCTEach pe
+		ON zx.product_num = pe.PRODUCT_NUM
+		where 1 = 1
 		<if test="kind_num != null">
-			and k.kind_num in
+			and zx.kind_num in
 			<foreach item="item" index="index" collection="kind_num"
 				open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
 		<if test="product_num != null">
-			and t.product_num in
+			and zx.product_num in
 			<foreach item="item" index="index" collection="product_num"
 				open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
 		<if test="productSelect_num != null">
-			and k.productSelect_num in
+			and zx.productSelect_num in
 			<foreach item="item" index="index" collection="productSelect_num"
 				open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
 		<if test="productSize_size != null">
-			and ps.productSize_size in
+			and pe.productSize_size in
 			<foreach item="item" index="index" collection="productSize_size"
 				open="(" separator="," close=")">
 				#{item}
@@ -459,10 +459,10 @@ t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_D
 		</if>
 		<choose>
 			<when test="mtpSel == 2">
-				and pi.productInfo_saleRate not in (0)
+				and zx.productInfo_saleRate not in (0)
 			</when>
 			<when test="mtpSel == 3">
-				and pi.productInfo_saleRate in (0)
+				and zx.productInfo_saleRate in (0)
 			</when>
 			<when test="mtpSel == 4">
 				and pe.productEach_each not in (0)
@@ -473,7 +473,33 @@ t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_D
 			<otherwise>
 			</otherwise>
 		</choose>
-		)z
+		<choose>
+			<when test="sel==1">
+				order by zx.product_num desc
+			</when>
+			<when test="sel==2">
+				order by zx.product_num asc
+			</when>
+			<when test="sel == 3">
+				order by zx.productInfo_saleRate desc
+			</when>
+			<when test="sel == 4">
+				order by zx.productInfo_saleRate asc
+			</when>
+			<when test="sel == 5">
+				order by realPrice desc
+			</when>
+			<when test="sel == 6">
+				order by realPrice asc
+			</when>
+			<when test="sel == 7">
+				order by selCount desc,zx.product_num desc
+			</when>
+			<otherwise>
+				order by zx.product_num desc
+			</otherwise>
+		</choose>
+		)tt)zxc 
 
 	</select>
 
@@ -670,16 +696,16 @@ t.PRODUCT_NAME,pi.PRODUCTINFO_PRICE,pi.PRODUCTINFO_REC_DATE,pi.PRODUCTINFO_REG_D
 
 
 
-<insert id="InMastKindAdd" parameterType="java.util.HashMap">
-insert into kind values(#{kind_num}
-,#{kind_name},#{productSelect_num})
-</insert>
+	<insert id="InMastKindAdd" parameterType="java.util.HashMap">
+		insert into kind values(#{kind_num}
+		,#{kind_name},#{productSelect_num})
+	</insert>
 
-<select id="SelMastLastKindNum" resultType="int">
-select t.kind_num from(
-select kind_num from kind
-order by kind_num desc)t where rownum=1
-</select>
+	<select id="SelMastLastKindNum" resultType="int">
+		select t.kind_num from(
+		select kind_num from kind
+		order by kind_num desc)t where rownum=1
+	</select>
 
 
 

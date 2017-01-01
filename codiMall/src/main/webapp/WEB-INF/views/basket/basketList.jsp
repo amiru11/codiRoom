@@ -18,19 +18,19 @@
 	rel="stylesheet">
 <script type="text/javascript">
 	$(function() {
-		$.each($(".bas_td_sel_size"), function( key, value ) {
+		$.each($(".bas_td_sel_size"), function(key, value) {
 			var z = $.trim($(value).text());
-			  if(z==""){
-				  $(value).css('display','none');
-			  }
-			});
+			if (z == "") {
+				$(value).css('display', 'none');
+			}
+		});
 
-		$.each($(".bas_td_sel_color"), function( key, value ) {
+		$.each($(".bas_td_sel_color"), function(key, value) {
 			var z = $.trim($(value).text());
-			  if(z==""){
-				  $(value).css('display','none');
-			  }
-			});
+			if (z == "") {
+				$(value).css('display', 'none');
+			}
+		});
 
 		$("#btn_allBuy").click(function() {
 			var count = 0;
@@ -141,8 +141,8 @@
 		}
 
 	});
-	
-	function basketTake(aaaa){
+
+	function basketTake(aaaa) {
 		var thisTr = aaaa;
 		thisTr.find(".bas_td_sel_size").on("change", function() {
 			var optionSize = thisTr.find(".bas_td_sel_size option").length;
@@ -154,12 +154,12 @@
 		});
 
 		thisTr.find(".btn_fix").on("click", function() {
-			if ($(thisTr).find(".bas_td_inp_each").val() == 0) {
+			if ($(thisTr).find(".bas_td_inp_each2").val() == 0) {
 				alert("수량을 1개이상 입력해주세요")
 			} else {
 				var selSize = thisTr.find(".bas_td_sel_size").val();
 				var selColor = thisTr.find(".bas_td_sel_color[name=" + selSize + "]").val();
-				var each = thisTr.find(".bas_td_inp_each").val();
+				var each = thisTr.find(".bas_td_inp_each2").val();
 				var basket_num = thisTr.find(".td_inh_bas_num").val();
 				var product_num = thisTr.find(".bas_td_hid_pronum").val();
 
@@ -176,7 +176,7 @@
 
 		});
 
-		thisTr.find(".bas_td_inp_each").focus(function() {
+		thisTr.find(".bas_td_inp_each2").focus(function() {
 			$(this).change(function() {
 				numcheck();
 				if ($(this).val() > 0) {
@@ -195,9 +195,9 @@
 			});
 		});
 		$(".product_quantity_down").click(function() { //수량감소
-			if ($(thisTr).find(".bas_td_inp_each").val() == 0) {
+			if ($(thisTr).find(".bas_td_inp_each2").val() == 0) {
 			} else {
-				$(thisTr).find(".bas_td_inp_each").val($(thisTr).find(".bas_td_inp_each").val() * 1 - 1);
+				$(thisTr).find(".bas_td_inp_each2").val($(thisTr).find(".bas_td_inp_each2").val() * 1 - 1);
 			}
 
 		});
@@ -206,20 +206,20 @@
 			var color = $(thisTr).find(".bas_td_sel_color");
 			var size = $(thisTr).find(".bas_td_sel_size").text();
 			var count = 0;
-			$.each(color, function( key, value ) {
+			$.each(color, function(key, value) {
 				var z = $.trim($(value).text());
-				  if(z==""){
-					  count++;
-				  }
-				});
+				if (z == "") {
+					count++;
+				}
+			});
 
-			if (size == "" || count>0) {
+			if (size == "" || count > 0) {
 			} else {
-				$(thisTr).find(".bas_td_inp_each").val($(thisTr).find(".bas_td_inp_each").val() * 1 + 1);
+				$(thisTr).find(".bas_td_inp_each2").val($(thisTr).find(".bas_td_inp_each2").val() * 1 + 1);
 				productEachGet(thisTr);
-				if ($(thisTr).find(".bas_td_inp_each").val() > 20) {
+				if ($(thisTr).find(".bas_td_inp_each2").val() > 20) {
 					alert("21개이상은 전화로 문의");
-					$(thisTr).find(".bas_td_inp_each").val(20);
+					$(thisTr).find(".bas_td_inp_each2").val(20);
 				}
 			}
 
@@ -346,7 +346,8 @@
 										class="bas_td_sel_size">
 											<c:set var="tempname1" value="" />
 											<c:forEach var="eachSize" items="${list1.productEachDTO}">
-												<c:if test="${tempname1 != eachSize.productSize_size && eachSize.productEach_each != 0}">
+												<c:if
+													test="${tempname1 != eachSize.productSize_size && eachSize.productEach_each != 0}">
 													<option value="${eachSize.productSize_size}"
 														<c:if test="${list1.basketInfo_size == eachSize.productSize_size }">selected="selected"</c:if>>${eachSize.productSize_size}</option>
 													<c:set var="tempname1" value="${eachSize.productSize_size}" />
@@ -356,8 +357,7 @@
 									<td class="bas_td_bas_color"><c:set var="tempname1"
 											value="" /> <c:forEach var="eachSize"
 											items="${list1.productEachDTO}">
-											<c:if
-												test="${tempname1 != eachSize.productSize_size }">
+											<c:if test="${tempname1 != eachSize.productSize_size }">
 												<c:set var="tempname1" value="${eachSize.productSize_size}" />
 												<select class="bas_td_sel_color"
 													name="${eachSize.productSize_size}"
@@ -389,13 +389,16 @@
 											<a class="btn btn-default button-minus product_quantity_down"
 												style="margin-left: 10px;"> <span><i
 													class="glyphicon glyphicon-minus"></i></span>
-											</a> <input style="width: 60px;" type="number" min="1" class="bas_td_inp_each"
-												value="${list1.basketInfo_each}" name="basketInfo_each"
+											</a> <input style="width: 60px;" type="number" min="1"
+												class="bas_td_inp_each2" value="${list1.basketInfo_each}"
 												readonly="readonly"> <a
 												class="btn btn-default button-plus product_quantity_up">
 												<span><i class="glyphicon glyphicon-plus"
 													style="left: 1px;"></i></span>
-											</a> ${list1.basketInfo_each}
+											</a><input  type="hidden" class="bas_td_inp_each"
+												value="${list1.basketInfo_each}"
+												name="basketInfo_each" >
+											${list1.basketInfo_each}
 
 										</div>
 									</td>
@@ -419,8 +422,8 @@
 						<input id="basketInfo_size" type="hidden" value=""
 							name="basketInfo_size"> <input id="basketInfo_color"
 							type="hidden" value="" name="basketInfo_color"> <input
-							id="basketInfo_each" type="hidden" 
-							value="" name="basketInfo_each">
+							id="basketInfo_each" type="hidden" value=""
+							name="basketInfo_each">
 					</form>
 				</div>
 

@@ -22,6 +22,7 @@
 <script type="text/javascript">
 
 	$(function() {
+		alert("${list.size()}");
 		$("#1").parent("li").addClass("active");
 		mastProductListSt();
 		selBox();
