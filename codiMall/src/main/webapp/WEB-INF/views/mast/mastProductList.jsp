@@ -692,9 +692,6 @@ input[type="checkbox"], input[type="radio"] {
 											class="sel_type cl_kindadd_action" style="cursor: pointer;"
 											data-toggle="modal" data-target="#basketModal"
 											data-backdrop="true">KindAdd</a></li>
-										<li class="category-li"><a id="3" class="sel_type cl_proadd_action"
-											style="cursor: pointer;" data-toggle="modal"
-											data-target="#basketModal" data-backdrop="true">상품추가</a></li>
 									</ul>
 								</div>
 							</nav>
