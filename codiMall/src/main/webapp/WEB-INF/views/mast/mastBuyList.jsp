@@ -55,6 +55,15 @@ table, table tr, tr td, th {
 	cursor: pointer;
 	font-size: 18px;
 }
+.cl_buy_addr_0{
+width: 70px;
+}
+.cl_buy_addr_1{
+width: 50px;
+}
+.cl_buy_addr_2{
+width: 50px;
+}
 </style>
 </head>
 <body style="height: 1200px;">

@@ -369,7 +369,7 @@
 					<li><a
 						href="${pageContext.request.contextPath}/board/findList?board_kind=1">고객센터</a></li>
 					<!-- 기본적으로 notice로 가게 -->
-					<li><a href="${pageContext.request.contextPath}/basket/basketList"><span
+					<li><a href=""><span
 							class="glyphicon glyphicon-shopping-cart"></span> CART</a></li>
 					<c:if test="${sessionScope.member eq null}">
 						<li><a href="" data-toggle="modal" data-target="#loginModal"
@@ -411,8 +411,8 @@
 				<ul class="nav navbar-nav navbar-left"
 					style="margin-top: 60px; margin-left: 50px;">
 					<!--  test li s -->
-					<%-- <li><a
-						href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li> --%>
+					<li><a
+						href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
 
 					<%-- <li><a href="${pageContext.request.contextPath}/buy/buyList">BUYLIST</a></li> --%>
 
@@ -459,7 +459,7 @@
 				<h4 class="modal-title">LOGIN</h4>
 			</div>
 			<div class="modal-body">
-<%-- 				<form action="${pageContext.request.contextPath}/member/f1">
+				<form action="${pageContext.request.contextPath}/member/f1">
 					<div class="fb-login-button" data-size="xlarge"
 						data-show-faces="false" data-auto-logout-link="true"></div>
 				</form>
@@ -470,7 +470,7 @@
 				<div class="separator">
 					<span class="separator-text">또는</span>
 					<hr>
-				</div> --%>
+				</div>
 				<form action="${pageContext.request.contextPath}/member/memberLogin"
 					method="post">
 					<div class="form-group" style="color: #eee;">

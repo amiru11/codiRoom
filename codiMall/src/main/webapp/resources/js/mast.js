@@ -71,7 +71,7 @@ function getBuyList(buyState_state) {
 		},
 		success : function(data) {
 			var x = "";
-			x = x + "<tr><th>buy_num</th><th>id</th><th>product_num</th><th>product_name</th><th>size</th>";
+			x = x + "<tr><th>buy.num</th><th>id</th><th>pro.num</th><th>pro.name</th><th>size</th>";
 			x = x + "<th>color</th><th>each</th><th>price</th><th>expressNum</th><th>pay_date</th><th>result_date</th>";
 			x = x + "<th>state</th>";
 			if (buyState_state == 1) {
@@ -121,6 +121,12 @@ function getBuyList(buyState_state) {
 					x = x + '<input class="btn_refund_confirm" type="button" value="환불완료"></td>';
 				}
 				x = x + '</tr>';
+				var strAr = value.buyStateDTO.buyState_address.split('_-_');
+				x=x+'<tr><td colspan=1>address</td><td colspan=12>';
+				$.each(strAr, function(index, value) {
+				x=x+'<input class="cl_buy_addr_'+index+'" type="text" readonly="readonly" value="'+value+'">';	
+				});
+				x=x+'</td></tr>';
 			});
 			$("#table_buy_list").html(x);
 

@@ -11,11 +11,17 @@ public class BuyListDTO {
 	private int buyState_each;
 	private int buyState_price;
 	private int buyState_expressNum;
+	private String buyState_address;
 	private String productPic_pic;
 	
 	
 	
-	
+	public String getBuyState_address() {
+		return buyState_address;
+	}
+	public void setBuyState_address(String buyState_address) {
+		this.buyState_address = buyState_address;
+	}
 	public String getProductPic_pic() {
 		return productPic_pic;
 	}
