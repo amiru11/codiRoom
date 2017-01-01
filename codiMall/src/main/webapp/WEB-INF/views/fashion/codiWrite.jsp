@@ -171,7 +171,7 @@ function getCodiProductList(kind_num){
  			
  			pageing += '<nav aria-label="Page navigation"><ul class="pagination"><li>';
 			pageing += '<c:if test="'+(data.curBlock > 1)+'"><a class="a_prev" aria-label="Previous"	style="cursor: pointer"><input class="inh_prev"	type="hidden" value="'+(data.pageing.startNum*1-1)+'"><span aria-hidden="true">&laquo;</span>';
-			pageing += '</a></c:if></li><li><c:forEach begin="1" step="1" end="6" var="i"><a style="cursor: pointer" class="N_pageing">${i}</a></c:forEach></li>';
+			pageing += '</a></c:if></li><li><c:forEach begin="1" step="1" end="5" var="i"><a style="cursor: pointer" class="N_pageing">${i}</a></c:forEach></li>';
 			pageing += '<li><c:if test="'+(data.curBlock < data.totalBlock)+'"><a class="a_next" aria-label="Next" style="cursor: pointer"><input class="inh_next" type="hidden" value="'+(data.pageing.lastNum*1+1)+'}"><span aria-hidden="true">&raquo;</span></a></c:if></li></ul></nav>';
 			 console.log("되라" + data.startNum*1);
  			//console.log("11111" + data.pageing.startRowNum);
