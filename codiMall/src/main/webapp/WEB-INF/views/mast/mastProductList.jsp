@@ -93,19 +93,19 @@
 			},
 			success : function(data) {
 				var zz = "";
-				zz = zz + '<select id="sel_kind_proadd">';
+				zz = zz + '<select id="sel_kind_proadd" class="form-control">';
 				$.each(data.kindNumList, function(index, value) {
 					zz = zz + '<option value="' + value.kind_num + '">' + value.kind_num + "--" + value.kind_name + '</option>'
 				});
 				zz = zz + '</select>';
 				var x = "";
-				x = x + '<table id="tab_proadd_sa"><tr><td colspan=2><label>PRODUCTADD</label></td></tr>';
-				x = x + '<tr><td>PRODUCTNAME</td><td><input id="inp_productAdd_name" type="text"></td></tr>';
-				x = x + '<tr><td>KIND_NUM</td><td>' + zz + '</td></tr>';
-				x = x + '<tr><td>PRICE</td><td><input id="inp_productAdd_price" type="number" min=0 step=1></td></tr>';
-				x = x + '<tr><td>SALERATE</td><td><input id="inp_productAdd_saleRate" type="number" min=0 step=0.1></td></tr>';
-				x = x + '<tr><td>SEARCHWORD</td><td><input id="inp_productAdd_searchWord" type="text"></td></tr>';
-				x = x + '<tr><td>BRAND</td><td><input id="inp_productAdd_brand" type="text"></td></tr>';
+				x = x + '<table id="tab_proadd_sa" class="table"><tr><td colspan=2><label>상품등록</label></td></tr>';
+				x = x + '<tr><td>상품명</td><td><input id="inp_productAdd_name" class="form-control" type="text"></td></tr>';
+				x = x + '<tr><td>상품종류</td><td>' + zz + '</td></tr>';
+				x = x + '<tr><td>상품가격</td><td><input id="inp_productAdd_price" class="form-control" type="number" min=0 step=1></td></tr>';
+				x = x + '<tr><td>할인율</td><td><input id="inp_productAdd_saleRate" class="form-control" type="number" min=0 step=0.1></td></tr>';
+				x = x + '<tr><td>키워드</td><td><input id="inp_productAdd_searchWord" class="form-control" type="text"></td></tr>';
+				x = x + '<tr><td>브랜드</td><td><input id="inp_productAdd_brand" class="form-control" type="text"></td></tr>';
 				x = x + '<tr><td>';
 				x = x + '<form id="hid_form_proadd" action="${pageContext.request.contextPath}/mast/mastProductAdd"';
 				x = x + 'method="post" enctype="multipart/form-data">';
@@ -115,10 +115,15 @@
 				x = x + '<input type="hidden" id="inph_productAdd_saleRate" name="productInfo_saleRate">';
 				x = x + '<input type="hidden" id="inph_productAdd_searchWord" name="productInfo_searchWord">';
 				x = x + '<input type="hidden" id="inph_productAdd_brand" name="productInfo_brand">';
-				x = x + '<input type="file" id="inph_productAdd_pic" name="productPic_pic">';
+				x = x + '<input type="file" id="inph_productAdd_pic" class="form-control" name="productPic_pic">';
 				x = x + '</form>';
+<<<<<<< HEAD
 				x = x + '</td></tr>';
 				x = x + '<tr><td colspan=2><button id="btn_productAdd_ss">PRODUCTADD</button></td></tr>'
+=======
+				x=x+'</td></tr>';
+				x = x + '<tr><td colspan=2><button id="btn_productAdd_ss" class="btn btn-info btn-lg">등록하기</button></td></tr>'
+>>>>>>> refs/heads/sub
 				x = x + '</table>';
 
 				$("#div_modin_main").html(x);
@@ -658,6 +663,10 @@ input[type="checkbox"], input[type="radio"] {
 	float: right;
 	width: 160px;
 }
+.cl_pro_pic{
+	width: 175px;
+	height: 175px;
+}
 </style>
 </head>
 <body style="height: 1800px; font-family: 'hanna';">
@@ -677,17 +686,19 @@ input[type="checkbox"], input[type="radio"] {
 									<ul id="category-type" class="nav navbar-nav"
 										style="vertical-align: top;">
 										<li class="category-li"><a id="1" class="sel_type"
-											href="${pageContext.request.contextPath}/mast/mastProductList">ProductList</a></li>
+											href="${pageContext.request.contextPath}/mast/mastProductList">상품리스트</a></li>
 										<li class="category-li"><a id="2" class="sel_type"
-											href="${pageContext.request.contextPath}/mast/mastProductListEach0">ProductEach(00)</a></li>
-										<li class="category-li"><a id="3"
-											class="sel_type cl_proadd_action" style="cursor: pointer;"
-											data-toggle="modal" data-target="#basketModal"
-											data-backdrop="true">ProductAdd</a></li>
+											href="${pageContext.request.contextPath}/mast/mastProductListEach0">매진상품재고충전</a></li>
+										<li class="category-li"><a id="3" class="sel_type cl_proadd_action"
+											style="cursor: pointer;" data-toggle="modal"
+											data-target="#basketModal" data-backdrop="true">상품추가</a></li>
 											<li class="category-li"><a id="4"
 											class="sel_type cl_kindadd_action" style="cursor: pointer;"
 											data-toggle="modal" data-target="#basketModal"
 											data-backdrop="true">KindAdd</a></li>
+										<li class="category-li"><a id="3" class="sel_type cl_proadd_action"
+											style="cursor: pointer;" data-toggle="modal"
+											data-target="#basketModal" data-backdrop="true">상품추가</a></li>
 									</ul>
 								</div>
 							</nav>
@@ -715,7 +726,7 @@ input[type="checkbox"], input[type="radio"] {
 							<div class="panel" style="background: #fff; margin-bottom: 30px;">
 								<div class="panel-heading">
 									<a id="subList" class="subBtn btn btn-default btn-lg"> <span
-										class="fa fa-list"></span> List
+										class="fa fa-list"></span> 상품리스트
 									</a>
 									<%@ include file="/resources/temp/mast/productSelBox.jspf"%>
 								</div>
@@ -839,12 +850,12 @@ input[type="checkbox"], input[type="radio"] {
 	</div>
 
 
-	<div class="modal fade" id="basketModal" role="dialog">
+	<div class="modal fade" id="basketModal" role="dialog" >
 		<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div id=div_modin_main></div>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
 			</div>
 		</div>
 	</div>
