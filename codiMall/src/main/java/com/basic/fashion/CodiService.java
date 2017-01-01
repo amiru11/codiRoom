@@ -36,8 +36,15 @@ public class CodiService {
 	}
 	
 	//상품 리스트
-	public List<CodiDTO> codiProductList(int kind_num){
-		return codiDAO.codiProductList(kind_num);
+	public List<CodiDTO> codiProductList(int curPage, int perPage, int kind_num){
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setPerPage(perPage);
+		pageMaker.setCurPage(curPage);
+		pageMaker.makeRow();
+		pageMaker.makePage(codiDAO.codiProductListCount(kind_num));
+		List<CodiDTO> ar;
+		ar = codiDAO.codiProductList(pageMaker,kind_num);
+		return ar;
 	}
 	public List<KindDTO> codiKindList(int productSelect_num){
 		return codiDAO.codiKindList(productSelect_num);
@@ -45,5 +52,8 @@ public class CodiService {
 	public List<ProductSelectDTO> codiSelectList(){
 		return codiDAO.codiSelectList();
 	}
-
+	//상품 리스트 카운트
+	 	public int codiProductListCount(int kind_num){
+	 		return codiDAO.codiProductListCount(kind_num);
+	 	}
 }

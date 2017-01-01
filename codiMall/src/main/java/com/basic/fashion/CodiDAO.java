@@ -49,11 +49,12 @@ public class CodiDAO {
 	}
 	
 	//코디 등록 할 상품 리스트
-	public List<CodiDTO> codiProductList(int kind_num){
-		Map<String, Integer> map = new HashMap<>();
-		map.put("kind_num", kind_num);
-		List<CodiDTO> ar = sqlSession.selectList(namespace+"SelCodiProductList", map);
-		return ar;
+	public List<CodiDTO> codiProductList(PageMaker pageMaker, int kind_num){
+		Map<String, Object> map = new HashMap<>();
+		 map.put("kind_num", kind_num);
+		 map.put("pageing", pageMaker);
+		 List<CodiDTO> ar = sqlSession.selectList(namespace+"SelCodiProductList", map);
+		 return ar;
 	}
 	public List<KindDTO> codiKindList(int productSelect_num){
 		Map<String, Integer> map = new HashMap<>();
@@ -64,6 +65,12 @@ public class CodiDAO {
 	public List<ProductSelectDTO> codiSelectList(){
 		return sqlSession.selectList(namespace+"SelProductSelectList");
 	}
-	
+	//상품 리스트 카운트
+	 public int codiProductListCount(int kind_num){
+	 	Map<String, Object> map = new HashMap<>();
+	 	map.put("kind_num", kind_num);
+	 	
+	 	return sqlSession.selectOne(namespace+"codiProductListCount", kind_num);
+	 }
 
 }

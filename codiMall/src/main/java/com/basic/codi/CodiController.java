@@ -76,6 +76,7 @@ public class CodiController {
             String path = session.getServletContext().getRealPath("/resources/codiUpload");
             System.out.println(path);
             String filename = memberDTO.getId() + "_" + dateForm.format(today) +".png";
+            System.out.println(filename);
             File file = new File(path, filename);
             //실제 파일로 이미지 저장
             ImageIO.write(image, "png", file);

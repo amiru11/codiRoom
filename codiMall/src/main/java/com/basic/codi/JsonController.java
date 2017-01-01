@@ -27,6 +27,7 @@ import com.basic.product.ProductEachListDTO;
 import com.basic.product.ProductSelectDTO;
 import com.basic.product.ProductService;
 import com.basic.product.ProductSizeDTO;
+import com.basic.util.PageMaker;
 
 @Controller
 @RequestMapping(value = "/json")
@@ -229,10 +230,10 @@ public class JsonController {
 	
 	//codi-----------------------------------------------------------------------------
 	@RequestMapping(value="/codiProductList")
-	public Map<String, Object> codiProductList(int kind_num){
-		Map<String, Object> retVal = new HashMap<String, Object>();
-		retVal.put("ar", codiService.codiProductList(kind_num));
-		return retVal;
+	public Map<String, Object> codiProductList(@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="6") int perPage, @RequestParam int kind_num){
+	Map<String, Object> retVal = new HashMap<String, Object>();
+	retVal.put("ar", codiService.codiProductList(curPage, perPage, kind_num));
+	return retVal;
 	}
 
 	@RequestMapping(value = "/codiKindList")

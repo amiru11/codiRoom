@@ -39,14 +39,20 @@
 	</select>
 
 	<select id="SelCodiProductList" resultMap="CodiProduct" parameterType="java.util.HashMap">
-		select p.product_num,p.product_name,pic.productPic_pic from product p,productPic pic,productKind pk
+		select * from 
+		(select Rownum R, F.* from 
+		(select distinct p.product_num,p.product_name,pic.productPic_pic from product p,productPic pic,productKind pk
+		where p.product_num = pic.product_num and pk.product_num = p.product_num and pk.kind_num = #{kind_num}) F)
+		where R between #{pageing.startRowNum} and #{pageing.lastLowNum}
+		
+<!-- 		select distinct p.product_num,p.product_name,pic.productPic_pic from product p,productPic pic,productKind pk
 		where p.product_num = pic.product_num and pk.product_num = p.product_num
-		and pk.kind_num = #{kind_num}
+		and pk.kind_num = #{kind_num} -->
 	</select>
 
 	<!-- Codi List -->
 	<select id="codiList" resultType="com.basic.fashion.CodiDTO" parameterType="com.basic.util.PageMaker">
-		select * from codi
+		select * from (select rownum R, c.* from(select * from codi) c) where R between #{startRowNum} and #{lastLowNum}
 	</select>
 
 	<!-- Codi Count -->
@@ -56,7 +62,13 @@
 	
 	<!-- Codi 등록 -->
 	<insert id="codiCreate" parameterType="com.basic.fashion.CodiDTO">
-		insert into codi values(codi_seq.nextval, #{fileName}, #{member_id}, #{title}, #{product}, 0)
+		insert into codi values(49, #{fileName}, #{member_id}, #{product}, #{title}, 0)
 	</insert>
 
+	<!-- Product Count -->
+	<select id="codiProductListCount" resultType="int" parameterType="java.util.HashMap">
+ 		select count(*) from product p,productPic pic,productKind pk
+ 		where p.product_num = pic.product_num and pk.product_num = p.product_num
+ 		and pk.kind_num = #{kind_num}	
+ 	</select>
 </mapper>
