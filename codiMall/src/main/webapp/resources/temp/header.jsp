@@ -375,7 +375,7 @@
 						<li><a href="" data-toggle="modal" data-target="#loginModal"
 							data-backdrop="true"><span class="glyphicon glyphicon-log-in"></span>
 								LOGIN</a></li>
-						<li><a href="" data-toggle="modal" data-target="#signModal"
+						<li><a href="${pageContext.request.contextPath}/basket/basketList" data-toggle="modal" data-target="#signModal"
 							data-backdrop="true"><span class="glyphicon glyphicon-user"></span>
 								Sign Up</a></li>
 					</c:if>
@@ -411,9 +411,9 @@
 				<ul class="nav navbar-nav navbar-left"
 					style="margin-top: 60px; margin-left: 50px;">
 					<!--  test li s -->
-					<li><a
+					<%-- <li><a
 						href="${pageContext.request.contextPath}/basket/basketList">BASKET</a></li>
-
+ --%>
 					<%-- <li><a href="${pageContext.request.contextPath}/buy/buyList">BUYLIST</a></li> --%>
 
 					<li><a
@@ -459,7 +459,7 @@
 				<h4 class="modal-title">LOGIN</h4>
 			</div>
 			<div class="modal-body">
-				<form action="${pageContext.request.contextPath}/member/f1">
+<%-- 				<form action="${pageContext.request.contextPath}/member/f1">
 					<div class="fb-login-button" data-size="xlarge"
 						data-show-faces="false" data-auto-logout-link="true"></div>
 				</form>
@@ -470,7 +470,7 @@
 				<div class="separator">
 					<span class="separator-text">또는</span>
 					<hr>
-				</div>
+				</div> --%>
 				<form action="${pageContext.request.contextPath}/member/memberLogin"
 					method="post">
 					<div class="form-group" style="color: #eee;">
