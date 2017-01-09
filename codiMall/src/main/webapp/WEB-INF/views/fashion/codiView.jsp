@@ -17,6 +17,16 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>코디보기</title>
+<script type="text/javascript">
+$(function(){
+	$("#goDel").click(function() {
+		var check = confirm('삭제하시겠습니까?');
+		if (check == true) {
+			document.delFrm.submit();
+		}
+	});
+});
+</script>
 <style type="text/css">
 #contents {
     /* margin-top: 138px; */
@@ -176,6 +186,15 @@ ul#codi_item_li li {
 											${view.title}
 				   						</p>
 				    				</div>
+				    				<div>
+							    		<c:if test="${sessionScope.member.id eq view.member_id}">
+							    			<form action="${pageContext.request.contextPath}/board/boardDelete"
+									name="delFrm" method="post">
+								    		<input type="button" role="button" id="goDel"  class="btn btn-default btn-md" value="삭제">
+								    		<input type="hidden" value="${view.num}" name="num">
+								    		</form>
+							    		</c:if>
+							    	</div>
 								</div>
 							</li>
 						</ul>
@@ -197,7 +216,11 @@ ul#codi_item_li li {
 										</p>
 									</div>
 								</div>
-				    		</li></c:forEach></ul>				
+				    		</li></c:forEach>
+				    	</ul>
+				    	
+				    	
+				    					
 					</div>
 				</div>
 			</div>

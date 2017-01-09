@@ -101,6 +101,7 @@ public class MastDAO {
 		String saveName = uid.toString();
 		System.out.println(saveName);
 		saveName = saveName + "_" + mt.getOriginalFilename();
+		System.out.println(savePath);
 		File f = new File(savePath, saveName);
 		Map<String, Object> map = new HashMap<>();
 		map.put("productPic_pic", saveName);

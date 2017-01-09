@@ -13,6 +13,8 @@
 <script
 	src="${pageContext.request.contextPath}/resources/js/jquery.bxslider.js"></script>
 <script
+	src="${pageContext.request.contextPath}/resources/js/footer.js"></script>
+<script
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <link
 	href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css"
@@ -26,9 +28,9 @@
 	href="${pageContext.request.contextPath}/resources/css/homeslider.css"
 	rel="stylesheet">
 <script type="text/javascript">
-	var sale_curPage = 1;
+	
 	$(function() {
-		showSaleItem(sale_curPage); //메인페이지 호출시 나타나는 SaleItem 
+		//showSaleItem(sale_curPage); //메인페이지 호출시 나타나는 SaleItem 
 
 		/* 첫번째 슬라이드 */
 		$('.bxslider').bxSlider({
@@ -41,7 +43,7 @@
 
 		/* 두번째 슬라이드 */
 		$('.slider3').bxSlider({
-			slideWidth : 1000,
+			//slideWidth : 1000,
 			minSlides : 3,
 			maxSlides : 3,
 			slideMargin : 40,
@@ -52,14 +54,59 @@
 
 		/* 세번째 슬라이드 */
 		$('.slider4').bxSlider({
-			slideWidth : 1000,
+			//slideWidth : 1000,
 			minSlides : 4,
 			maxSlides : 4,
 			slideMargin : 20,
 			auto : false,
 			pager : false
 		});
-
+	var myWindow = window.outerWidth;
+	
+		/* 네번째 슬라이드 */
+	if (myWindow > 960) {
+		
+					$('.footer_awards_slider').bxSlider({
+						minSlides:4,
+						maxSlides:6,
+						slideWidth:189,
+						slideMargin:0,
+						controls:false,
+						auto:true,
+						autoControls:true,
+						autoControlsCombine:true,
+						pause:2000
+					});
+		
+				} else if ((myWindow > 640) && (myWindow <= 960)) {
+					$('.footer_awards_slider').bxSlider({
+						minSlides:3,
+						maxSlides:3,
+						slideWidth:210,
+						slideMargin:0,
+						controls:false,
+						auto:true,
+						autoControls:true,
+						autoControlsCombine:true,
+						pause:2000,
+						pagerSelector:'.footer_slider_pagers',
+						autoControlsSelector:'.footer_slider_controls'
+					});
+				} else if (myWindow <= 640) {
+					$('.footer_awards_slider').bxSlider({
+						minSlides:1,
+						maxSlides:1,
+						slideWidth:300,
+						slideMargin:0,
+						controls:false,
+						auto:true,
+						autoControls:true,
+						autoControlsCombine:true,
+						pause:2000,
+						pagerSelector:'.footer_slider_pagers',
+						autoControlsSelector:'.footer_slider_controls'
+					});	
+				}
 		//sale의 화살표 클릭시
 		$(".arrows").click(function() {
 			var paging = $(this).attr("name"); //화살표클릭시 paging으로 사용할 값을 name태그에 넣어 놨습니다. 저는 각각 뒤로가기는 a, 앞으로가기는 b 
@@ -83,7 +130,7 @@
 
 	});
 
-	function showSaleItem(sale_curPage) {
+/* 	function showSaleItem(sale_curPage) {
 		$.ajax({
 			url : '/codi/board/bestList', //지금은 일단 겟방식으로 ajax를 실행합니다
 			type : 'GET',
@@ -95,8 +142,8 @@
 			success : function(data) {
 				//var result = JSON.parse(data);
 				//alert("json object의 갯수 : " + data.length);//JACSON일 때는 length가 먹힌다
-				/* alert(data[0].board_num);
-				            console.log(data[1].board_num) ; */
+				 alert(data[0].board_num);
+				            console.log(data[1].board_num) ; 
 				var r = '';
 				$("#saleItem").empty() ;
 				$(data).each(function() {
@@ -108,11 +155,11 @@
 
 				});
 			},
-		/* 		        error:function(request,status,error){
+		 		        error:function(request,status,error){
 				        	console.error("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				       	} */
-		});
-	}
+				       	}
+		}); 
+	}*/
 </script>
 <style type="text/css">
 .slider {
@@ -165,7 +212,7 @@
 	<!-- HEADER:S -->
 	<%@ include file="/resources/temp/header.jsp"%>
 	<!-- HEADER:E -->
-	<section id="firstWrap">
+	<section id="firstWrap" class="container" style="padding-top:50px;">
 		<div id="homepage-slider" class="slider">
 			<ul class="bxslider" id="bxslider1">
 				<li><img
@@ -185,35 +232,32 @@
 	</section>
 	<!-- Container (Portfolio Section) -->
 	<section id="secondWrap" class="container">
-		<div id="portfolio" class="row">
-			<div class="col-lg-12" id="portImg">
-				<ul class="row">
+			<div id="portImg">
+				<ul>
 					<li class="col-xs-4 port-li1"><img
 						src="${pageContext.request.contextPath}/resources/images/main/mdpick.jpg"
-						width=384 height=394></li>
+						width=380 height=394></li>
 					<li class="col-xs-4 port-li2"><img
 						src="${pageContext.request.contextPath}/resources/images/main/saleItem.jpg"
-						width=784 height=394></li>
-					<li class="col-xs-4 port-li3" style="clear: left;"><img
+						width=760 height=394></li>
+					<li class="col-xs-4 port-li3" style="clear: left; margin-top:-3px;"><img
 						src="${pageContext.request.contextPath}/resources/images/main/covernat.jpg"
-						width=784 height=394></li>
-					<li class="col-xs-4 port-li4" style="padding-left: 400px;"><img
+						width=760 height=394></li>
+					<li class="col-xs-4 port-li4" style="padding-left: 380px; margin-top:-3px;"><img
 						src="${pageContext.request.contextPath}/resources/images/main/20161125lostgarden.jpg"
-						width=384 height=394></li>
+						width=380 height=394></li>
 				</ul>
 			</div>
 			<br>
-		</div>
 	</section>
 
 	<!-- BEST CODI :S -->
 	<section class="container" style="padding-top: 50px;">
-		<div class="row">
-			<div class="text-center">
-				<p style="font-size: 18px; font-weight: 800;">BEST CODI</p>
-				<p style="font-size: 12px; color: #a6a6a6; font-weight: 700;">현재
-					가장인기 있는 코디를 만나보세요</p>
-			</div>
+		<div class="text-center">
+			<p style="font-size: 18px; font-weight: 800;">BEST CODI</p>
+			<p style="font-size: 12px; color: #a6a6a6; font-weight: 700;">현재
+				가장인기 있는 코디를 만나보세요</p>
+		</div>
 			<div class="slider3">
 				<div class="slide codi-item">
 					<table class="table table-bordered" style="margin-bottom: 0;">
@@ -227,7 +271,7 @@
 					</table>
 				</div>
 				<!-- LIST 뿌리면 지울 것들 -->
-				<div class="slide">
+<!-- 				<div class="slide">
 					<img src="http://placehold.it/500x150&text=FooBar2">
 				</div>
 				<div class="slide">
@@ -253,16 +297,14 @@
 				</div>
 				<div class="slide">
 					<img src="http://placehold.it/500x150&text=FooBar10">
-				</div>
+				</div> -->
 				<!-- LIST 뿌리면 지울 것들 -->
 			</div>
-		</div>
 	</section>
 	<!-- BEST CODI :E -->
 
 	<!-- BEST ITEM :S -->
 	<section class="container" style="padding-top: 50px;">
-		<div class="row">
 			<div class="text-center">
 				<p style="font-size: 18px; font-weight: 800;">BEST ITEM</p>
 				<p style="font-size: 12px; color: #a6a6a6; font-weight: 700;">현재
@@ -299,93 +341,9 @@
 						</table>
 					</div>
 				</c:forEach>
-
-				<!-- <div class="slide codi-item">
-					<table class="table table-bordered" style="margin-bottom: 0;">
-						<tr>
-							<td style="padding: 0;"><img
-								src="http://placehold.it/500x150&text=FooBar4"></td>
-						</tr>
-						<tr>
-							<td style="padding: 0; padding-left: 10px;">
-								<p style="padding-top: 10px;">
-									<a>상품명</a>
-								</p>
-								<p>브랜드</p>
-								<span>가격</span> <span class="glyphicon glyphicon-shopping-cart"
-								style="font-size: 20px; background: #000; color: #ffffff; padding: 10px; border-radius: 20px; position: absolute; top: 350px; right: 15px;"></span>
-							</td>
-						</tr>
-					</table>
-				</div> -->
 			</div>
-		</div>
 	</section>
 	<!-- BEST ITEM :E -->
-
-	<!-- SALE , NEW , RECOMMEND ITEMs : S -->
-<%-- 	<section class="container" style="padding-top: 50px;">
-		<div class="row">
-			<div class="col-lg-12" style="padding: 0;">
-				<div class="col-lg-4" style="padding-left: 0;">
-					<table class="table table-bordered">
-						<tr>
-							<td style="padding: 0;"><span
-								style="font-size: 18px; font-weight: 600; padding-top: 5px;">세일상품
-							</span>
-								<div class="arrow"
-									style="display: inline-block; float: right; padding: 5px 5px 0 0; cursor: pointer;">
-									<a name='a' class="arrows"> <img
-										src="${pageContext.request.contextPath}/resources/images/main/btn_left_s.png"
-										alt="왼쪽" />
-									</a> <a name='b' class="arrows"> <img
-										src="${pageContext.request.contextPath}/resources/images/main/btn_right_s.png"
-										alt="오른쪽" />
-									</a>
-								</div></td>
-						</tr>
-						<tr>
-							<td style="padding: 0;">
-								<div id="saleItem"></div>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div class="col-lg-4">
-					<table class="table table-bordered">
-						<tr>
-							<td style="padding: 0;">
-								<h2>신상품</h2>
-							</td>
-						</tr>
-						<tr>
-							<td style="padding: 0;"></td>
-						</tr>
-					</table>
-				</div>
-				<div class="col-lg-4" style="padding-right: 0;">
-					<table class="table table-bordered">
-						<tr>
-							<td style="padding: 0;">
-								<h2>추천상품</h2>
-							</td>
-						</tr>
-						<tr>
-							<td style="padding: 0;">
-								<ul>
-									<li></li>
-									<li></li>
-									<li></li>
-								</ul>
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-	</section> --%>
-	<!-- SALE , NEW , RECOMMEND ITEMs : E -->
-
 
 	<br>
 	<!-- Footer:S -->

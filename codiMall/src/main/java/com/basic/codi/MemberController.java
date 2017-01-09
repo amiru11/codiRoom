@@ -3,11 +3,20 @@ package com.basic.codi;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.security.Key;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.RSAPrivateKeySpec;
+import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.crypto.Cipher;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,12 +64,41 @@ public class MemberController {
 		return new ResponseEntity<Map<String, Object>>(m, HttpStatus.OK);
 	}
 	
-	//가입
+	private String privateSHA(String inputPw){//SHA알고리즘을 통한 PASSWORD 암호화
+		 StringBuffer sbuf = new StringBuffer();//동적 문자열을 처리하는 클래스인 StringBuffer 클래스 객체 생성
+	     
+		    MessageDigest mDigest;//MessageDigest 클래스 : 임의의 사이즈의 데이타를 뽑아 고정 오랜 해시값을 출력 하는 안전한 한방향의 해시 기능
+			try {
+				String salt = "!@#pv^&%qwe?nt";
+				inputPw = inputPw + salt;
+				mDigest = MessageDigest.getInstance("SHA-256");//지정된 다이제스트 알고리즘을 구현하는 MessageDigest 객체 생성
+				mDigest.update(inputPw.getBytes());// 지정된 바이트 데이터를 사용해 다이제스트를 갱신
+				
+				byte[] msgStr = mDigest.digest() ;//지정된 바이트 배열을 사용해 다이제스트에 대해서 최종의 갱신을 실행한 뒤, 다이제스트 계산을 완료
+				
+				for(int i=0; i < msgStr.length; i++){
+					byte tmpStrByte = msgStr[i];
+					String tmpEncTxt = Integer.toString((tmpStrByte & 0xff) + 0x100, 16).substring(1);//byte를 hexString으로 변환
+					sbuf.append(tmpEncTxt) ;
+				}//계산된 다이제스트를 문자열로 만들어서 출력하기위한 과정
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+		     
+		    return sbuf.toString();
+	}
+	
+	//가입	
 	@RequestMapping(value = "/memberJoin", method = RequestMethod.POST)
 	public String memberJoin(MemberDTO memberDTO, RedirectAttributes rd){
 		int result = 0;
 		String path = "";
 		String message = "";
+		System.out.println("입력받은 pw : "+ memberDTO.getPw());
+		String inputPw = memberDTO.getPw();
+		String a = privateSHA(inputPw);
+		memberDTO.setPw(a);
+		System.out.println("암호화 된 pw : "+ memberDTO.getPw());
 		try {
 			result = memberService.memberJoin(memberDTO);
 		} catch (Exception e) {
@@ -84,15 +122,21 @@ public class MemberController {
 		System.out.println(cur_uri);
 		///codi/WEB-INF/views/product/productList.jsp
 		String uri[] = cur_uri.split("/codi");
-		for (int i = 0; i < uri.length; i++) {
+		/*for (int i = 0; i < uri.length; i++) {
 			System.out.println(uri[i]+"--------"+i);
-		}
+		}*/
 
 		String message = "";
+			
+		System.out.println("입력받은 pw : "+ memberDTO.getPw());
+		String inputPw = memberDTO.getPw();
+		String savePw = privateSHA(inputPw);
+		memberDTO.setPw(savePw);
+		System.out.println("암호화 된 pw : "+ memberDTO.getPw());
 		try {
-			memberDTO = memberService.memberLogin(memberDTO);
+		memberDTO = memberService.memberLogin(memberDTO);
+			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if(memberDTO != null){
@@ -101,20 +145,24 @@ public class MemberController {
 		}else {
 			message = "아이디와 비밀번호가 다릅니다.";
 		}
+		System.out.println("message : "+message);
 		rd.addFlashAttribute("message", message);
 		return "redirect:"+uri[1];
 	}
 	
 	//로그아웃
 	@RequestMapping(value = "memberLogout")
-	public String memberLogout(HttpSession session,String cur_uri){
+	public String memberLogout(HttpSession session,String cur_uri,RedirectAttributes rd){
 		session.invalidate();
 		System.out.println(cur_uri);
+		String message = "";
 		///codi/WEB-INF/views/product/productList.jsp
 		String uri[] = cur_uri.split("/codi");
 		for (int i = 0; i < uri.length; i++) {
 			System.out.println(uri[i]+"--------"+i);
 		}
+		System.out.println("message : "+message);
+		rd.addFlashAttribute("message", message);
 		return "redirect:"+uri[1];
 	}
 	

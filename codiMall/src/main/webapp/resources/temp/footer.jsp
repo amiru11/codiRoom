@@ -10,7 +10,7 @@
 }
 </style>
 <div class="container-fluid" style="padding : 0;">
-	<div id="footer" style="height: 300px;">
+	<div id="footer" style="height: 300px; font-family: 'nbg', '맑은 고딕', HelveticaNeue, DroidSans, Sans-serif, Helvetica;">
 		<div style="margin-top: 50px; padding-top: 30px;">
 			<ul class="list-inline footer-ul">
 				<li style="margin-left: 400px;">
@@ -32,24 +32,19 @@
 					</a>
 				</li>	
 			</ul>
-			<ul class="list-inline text-center" style="font-size: 14px; color:#fff; margin-bottom: 10px; margin-top: 10px;">
-				<li> 
-					<strong>
-						© 2015 All right reserved. mapssi
-					</strong>
-				</li>
-			</ul>
+			
 		</div>
 		<div style="font-size:11px; margin-left: 400px;" >
-			<ul class="list-inline" style="color:#fff;line-height:1.5em;">
+			<ul class="list-inline" style="color: #999;line-height:1.5em;">
 				<li>
 					<b>고객센터</b><br>
 					(03909) 서울특별시 마포구 매봉산로 37 DMC 산학협력연구센터 7층<br>
 					Tel : (010) 5959 - 0228 <span>E-mail : mapssi.com@gmail.com</span><br>
 					사업자등록번호 : 204-86-53909 
 					<a href="http://www.ftc.go.kr/info/bizinfo/communicationView.jsp?apv_perm_no=2015323023130200589&amp;area1=&amp;area2=&amp;currpage=1&amp;searchKey=04&amp;searchVal=2048653909&amp;stdate=&amp;enddate=" target="_blank" style="margin-left:15px;">
-						<span style="color:#fff;">사업자정보확인&gt;</span>
+						<span style="color: #999;">사업자정보확인&gt;</span>
 					</a>
+
 				</li>
 				<li>
 					<b>주식회사 맵씨닷컴</b><br>
@@ -59,6 +54,18 @@
 					통신판매업신고 : 2015-서울송파-0591
 				</li>
 			</ul>
+		</div>
+		<div class="footer_awards_wrap" style="margin-top: 20px;">
+			<div class="footer_awards_wrap_inner">
+				
+			</div>
 		</div>	
+		<ul class="list-inline text-center" style="font-size: 14px; color:#fff; margin-bottom: 10px; margin-top: 10px;">
+				<li> 
+					<strong style="color: #999;">
+						© 2015 All right reserved. mapssi
+					</strong>
+				</li>
+		</ul>	
 	</div>
 </div>	

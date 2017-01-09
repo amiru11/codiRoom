@@ -24,8 +24,19 @@ img, ul, li{
     box-shadow: 0 15px 40px rgba(53, 57, 64, 0.5);
 }
 #footer{
+	font-family: 'nbg', '맑은 고딕', HelveticaNeue, DroidSans, Sans-serif, Helvetica;
 	background-image: url("/codi/resources/images/footer-bg.png");
-	height: 300px;
+	clear: both;
+    position: relative;
+    width: 100%;
+}
+.footer_awards_wrap{
+	height: 80px;
+ 	margin-top: 40px;
+    /* width: 1134px; */
+}
+.footer_awards_slider li a img {
+    margin: 0 auto;
 }
 .modal{
 	z-index : 9001;

@@ -22,7 +22,6 @@
 <script type="text/javascript">
 
 	$(function() {
-		alert("${list.size()}");
 		$("#1").parent("li").addClass("active");
 		mastProductListSt();
 		selBox();
@@ -118,9 +117,8 @@
 				x = x + '<input type="hidden" id="inph_productAdd_brand" name="productInfo_brand">';
 				x = x + '<input type="file" id="inph_productAdd_pic" class="form-control" name="productPic_pic">';
 				x = x + '</form>';
-				x = x + '<tr><td colspan=2><button id="btn_productAdd_ss">PRODUCTADD</button></td></tr>'
-				x=x+'</td></tr>';
 				x = x + '<tr><td colspan=2><button id="btn_productAdd_ss" class="btn btn-info btn-lg">등록하기</button></td></tr>'
+				x=x+'</td></tr>';
 				x = x + '</table>';
 
 				$("#div_modin_main").html(x);
@@ -391,14 +389,19 @@
 					var productSize_size = $("#sel_Size_sd").val();
 					var productEach_color = $("#in_proEach_color_ss").val();
 					var productEach_each = $("#in_pro_each_each").val();
+					if(productSize_size !=null){
 					if (productEach_color != "") {
 						if (productEach_each == "") {
 							alert("수량을 올바르게 입력해주세요")
 						} else {
 							mastProductEachAdd(product_num, productSize_size, productEach_color, productEach_each);
 						}
-					} else {
+					} 
+					else {
 						alert("COLOR를 입력해주세요")
+					}
+					}else{
+						alert("SIZE를 먼저 추가해주세요")
 					}
 				});
 
@@ -434,10 +437,7 @@
 	}
 
 	function mastProductEachAdd(product_num, productSize_size, productEach_color, productEach_each) {
-		alert(product_num);
-		alert(productSize_size)
-		alert(productEach_color)
-		alert(productEach_each)
+
 		$.ajax({
 			url : "../json/mastProductEachAddaa",
 			type : "post",
@@ -640,7 +640,7 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 #div_product_list {
-	width: 100%;
+	width: 1000px;
 	/* 	height: 1000px;
 	border: 2px solid #dce2eb; */
 }
@@ -660,9 +660,36 @@ input[type="checkbox"], input[type="radio"] {
 	float: right;
 	width: 160px;
 }
-.cl_pro_pic{
+
+.cl_pro_pic {
 	width: 175px;
 	height: 175px;
+}
+
+#tab_modin {
+	background-color: white;
+}
+#sidebar_left{
+width:200px;
+}
+#section{
+margin-left: 0;
+width: 1000px;
+}
+.asdasd12{
+margin-left: 0;
+}
+#view{
+margin-left: 0;
+}
+.div_sel table{
+width: 100%;
+}
+#modin_div{
+width:250px;
+}
+.modin_td{
+width:300px;
 }
 </style>
 </head>
@@ -673,8 +700,8 @@ input[type="checkbox"], input[type="radio"] {
 				<%@ include file="/resources/temp/mast/sideBar.jspf"%>
 			</div>
 
-			<div class="col-sm-8" style="margin: 20px; height: 100%;">
-				<div class="container-fluid">
+			<div class="col-sm-8 asdasd12" style="margin: 20px; height: 100%;">
+				<div class="container-fluid asdasd12">
 					<div id="view">
 						<header id="topbar" class="text-center bg-white alt ph10 br-b-ddd">
 							<nav class="navbar">
@@ -686,10 +713,11 @@ input[type="checkbox"], input[type="radio"] {
 											href="${pageContext.request.contextPath}/mast/mastProductList">상품리스트</a></li>
 										<li class="category-li"><a id="2" class="sel_type"
 											href="${pageContext.request.contextPath}/mast/mastProductListEach0">매진상품재고충전</a></li>
-										<li class="category-li"><a id="3" class="sel_type cl_proadd_action"
-											style="cursor: pointer;" data-toggle="modal"
-											data-target="#basketModal" data-backdrop="true">상품추가</a></li>
-											<li class="category-li"><a id="4"
+										<li class="category-li"><a id="3"
+											class="sel_type cl_proadd_action" style="cursor: pointer;"
+											data-toggle="modal" data-target="#basketModal"
+											data-backdrop="true">상품추가</a></li>
+										<li class="category-li"><a id="4"
 											class="sel_type cl_kindadd_action" style="cursor: pointer;"
 											data-toggle="modal" data-target="#basketModal"
 											data-backdrop="true">품목추가</a></li>
@@ -844,7 +872,7 @@ input[type="checkbox"], input[type="radio"] {
 	</div>
 
 
-	<div class="modal fade" id="basketModal" role="dialog" >
+	<div class="modal fade" id="basketModal" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">

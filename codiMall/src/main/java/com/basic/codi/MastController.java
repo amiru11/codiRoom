@@ -66,6 +66,8 @@ public class MastController {
 		String location = "";
 		String message="";
 		int result = 0;
+		System.out.println(kind_name);
+		System.out.println(productSelect_num);
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
 		if (memberDTO != null && memberDTO.getMember_level() == 0) {
 			result = mastService.mastKindAdd(kind_name,productSelect_num);

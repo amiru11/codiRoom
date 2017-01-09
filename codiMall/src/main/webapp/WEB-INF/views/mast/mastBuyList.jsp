@@ -26,6 +26,7 @@
 		$("#1").parent("li").addClass("active");
 		mastBuyStart();
 	});
+	
 
 
 </script>
@@ -56,13 +57,27 @@ th {
 	border-bottom : 2px solid #dce2eb;
 }	
 .cl_buy_addr_0{
+border: 0;
 width: 70px;
 }
 .cl_buy_addr_1{
+border: 0;
 width: 50px;
 }
 .cl_buy_addr_2{
-width: 50px;
+border: 0;
+width: 120px;
+}
+.cl_buy_addr_3{
+border: 0;
+width: 150px;
+}
+.cl_buy_addr_4{
+border: 0;
+width: 150px;
+}
+.asdzxczxc1 input{
+border: 0;
 }
 </style>
 </head>

@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet"
 	href="http://fonts.googleapis.com/earlyaccess/hanna.css">
-<script src="http://connect.facebook.net/en_US/all.js"></script>
 <script type="text/javascript">
 	//ID 중복 체크
 	var idCount = 0;
@@ -42,9 +41,13 @@
 	}
 
 	$(function() {
+		searchProduct();
+		if(${message ne null}){
+			alert('${message}');	
+		}
 		$(".li_logout").click(function() {
 			$("#logout_form").submit();
-		})
+		});
 
 		$("#joinCom").click(function() {
 			var date = new Date();
@@ -228,9 +231,6 @@
 			alert("gender : " + response.gender);
 		});
 	}
-	$(function() {
-		searchProduct();
-	});
 	function searchProduct() {
 		$("#ps_btn").click(function() {
 			$("#inph_search_wordaa").val($("#product_search").val());
@@ -381,10 +381,10 @@
 								class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 					</c:if>
 					<c:if test="${sessionScope.member ne null}">
-						<li><a
+						<li><a style="cursor: pointer;"
 							href="${pageContext.request.contextPath}/member/myPage">MY
 								PAGE</a></li>
-						<li><a class="li_logout">LOGOUT</a></li>
+						<li><a style="cursor: pointer;" class="li_logout">LOGOUT</a></li>
 						<form id="logout_form"
 							action="${pageContext.request.contextPath}/member/memberLogout">
 							<input type="hidden" name="cur_uri"
@@ -393,13 +393,13 @@
 					</c:if>
 					<li style="clear: left; margin-top: -10px; float: right;">
 						<!--상품검색  -->
-						<div class="navbar-form navbar-right" style="padding-right: 30px;">
+						<div class="navbar-form navbar-right" style="margin-top: 25px; padding-right: 30px;">
 							<div class="input-group">
 								<input type="text" class="form-control"
 									value="${productInfo_searchWord}" placeholder="Search Product"
 									id="product_search" onkeydown='enttt(event)'
 									onkeyup='enttt(event)'> <span class="input-group-btn">
-									<a class="btn btn-default" type="button" id="ps_btn"> <span
+									<a class="btn btn-default" type="button" id="ps_btn"><span
 										class="glyphicon glyphicon-search"></span>
 								</a>
 								</span>
@@ -417,19 +417,21 @@
 					<%-- <li><a href="${pageContext.request.contextPath}/buy/buyList">BUYLIST</a></li> --%>
 
 					<li><a
-						href="${pageContext.request.contextPath}/product/productList">ITEM</a></li>
-					<%-- <li><a href="${pageContext.request.contextPath}/basket/log">TESTLOG</a></li> --%>
-
-					<%-- <li><a href="${pageContext.request.contextPath}/product/productList">ITEM</a></li> --%>
-
+						href="${pageContext.request.contextPath}/product/productList">전체상품</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/product/productList">베스트 상품</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/product/productList">세일 상품</a></li>
+				
+					<li><a
+						href="${pageContext.request.contextPath}/fashion/codiList">전체코디</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/fashion/codiList">베스트 코디</a></li>
 					<c:if test="${sessionScope.member.member_level == 0 }">
 						<li><a
 							href="${pageContext.request.contextPath}/mast/mastIndex">MASTIN</a></li>
 					</c:if>
 					<li><a href="${pageContext.request.contextPath}/basket/log">TESTLOGIN</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/fashion/codiList">CODI</a></li>
-
 					<!--  test li e -->
 
 				</ul>

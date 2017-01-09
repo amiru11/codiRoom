@@ -1,5 +1,14 @@
 package com.basic.member;
 
+import java.security.Key;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.spec.RSAPrivateKeySpec;
+import java.security.spec.RSAPublicKeySpec;
+
+import javax.crypto.Cipher;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +48,7 @@ public class MemberService {
 	public MemberDTO idCheck(MemberDTO memberDTO) throws Exception{
 		return memberDAO.idCheck(memberDTO);
 	}
+	
+
 	
 }

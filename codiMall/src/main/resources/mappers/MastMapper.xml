@@ -559,13 +559,11 @@
 	<!-- Mast product All Info S -->
 	<select id="SelMastProductInfoAll" parameterType="int"
 		resultMap="ProductAllInfo2">
-		select DISTINCT * from(select ROWNUM r, z.* from(select
-		DISTINCT
-		selCount,pse.PRODUCTSELECT_NUM as
+		select pse.PRODUCTSELECT_NUM as
 		pse_productSelect_num,pse.PRODUCTSELECT_NAME as pse_productSelect_name
-		,k.KIND_NUM as k_kind_num,k.KIND_NAME as k_kind_name,t.PRODUCT_NUM as
+		,k.KIND_NUM as k_kind_num,k.KIND_NAME as k_kind_name,zzz .PRODUCT_NUM as
 		p_product_num,
-		t.PRODUCT_NAME as p_product_name,pi.PRODUCTINFO_PRICE as
+		zzz.PRODUCT_NAME as p_product_name,pi.PRODUCTINFO_PRICE as
 		pi_PRODUCTINFO_price,pi.PRODUCTINFO_REC_DATE as
 		pi_PRODUCTINFO_rec_date,pi.PRODUCTINFO_REG_DATE as
 		pi_PRODUCTINFO_reg_date,
@@ -574,42 +572,22 @@
 		pi.PRODUCTINFO_SEARCHWORD as
 		pi_PRODUCTINFO_searchword,pi.PRODUCTINFO_BRAND as
 		pi_PRODUCTINFO_brand,pc.PRODUCTPIC_PIC as pc_PRODUCTPIC_PIC,
-		pe.PRODUCTSIZE_SIZE as pe_productSize_size,pe.PRODUCTEACH_COLOR as
-		pe_productEach_color,pe.PRODUCTEACH_EACH as pe_productEach_each
-		from
-		(select count(b.buy_num) selCount,p.PRODUCT_NUM,p.product_name
+		zzz.PRODUCTSIZE_SIZE as pe_productSize_size,zzz.PRODUCTEACH_COLOR as
+		pe_productEach_color,zzz.PRODUCTEACH_EACH as pe_productEach_each 
+    from(select pee.productSize_size,productEach_color,productEach_each,t.* from(select count(b.buy_num) selCount,p.PRODUCT_NUM,p.product_name
 		from
 		product p LEFT OUTER JOIN buy b
 		ON b.product_num = p.PRODUCT_NUM
 		group
-		by p.PRODUCT_NUM, p.product_name)
-		t ,PRODUCTINFO pi,PRODUCTPIC pc
-		,
-		PRODUCTKIND pk , PRODUCTSELECT pse
-		,kind k,productEach
-		pe
-		where
-		t.product_num = pe.product_num and
-		t.product_num = #{product_num} and
-		t.PRODUCT_NUM =
-		pe.PRODUCT_NUM and
-		t.PRODUCT_NUM =
-		pi.PRODUCT_NUM
-		and
-		t.PRODUCT_NUM =
-		pe.PRODUCT_NUM
-		and
-		t.PRODUCT_NUM =
-		pc.PRODUCT_NUM
-		and
-		t.PRODUCT_NUM =
-		pk.PRODUCT_NUM
-		and
-		pse.PRODUCTSELECT_NUM =
-		k.PRODUCTSELECT_NUM
-		and
-		pk.KIND_NUM = k.KIND_NUM
-		) z)order by case when
+		by p.PRODUCT_NUM, p.product_name) t LEFT OUTER JOIN productEach pee
+		   on pee.PRODUCT_NUM = t.product_num) zzz, PRODUCTSELECT pse, PRODUCTINFO pi, kind k, PRODUCTPIC pc , PRODUCTKIND pk where
+       zzz.product_num = pc.PRODUCT_NUM
+       and zzz.product_num = pk.PRODUCT_NUM
+       and k.KIND_NUM = pk.KIND_NUM
+       and pse.PRODUCTSELECT_NUM =k.PRODUCTSELECT_NUM
+       and zzz.product_num =pi.PRODUCT_NUM
+       and zzz.product_num = #{product_num}
+       order by case when
 		pe_productSize_size = 'SSS' then 1 when pe_productSize_size = 'SS'
 		then 2 when pe_productSize_size = 'S' then 3
 		when pe_productSize_size =
@@ -618,7 +596,7 @@
 		pe_productSize_size = 'XL' then 6 when pe_productSize_size =
 		'XXL' then
 		7
-		end,pe_productEach_color asc
+		end , pe_productEach_color asc
 
 
 	</select>

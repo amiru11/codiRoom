@@ -55,6 +55,28 @@
 		select * from (select rownum R, c.* from(select * from codi order by num desc) c) where R between #{startRowNum} and #{lastLowNum}
 	</select>
 
+	<!-- Best Codi List -->
+	<select id="bestCodiList" resultType="com.basic.fashion.CodiDTO">
+		select * from (select rownum R, c.* from(select * from codi order by count desc) c) where R between 1 and 4
+	</select>
+
+	<!-- COUNT UPDATE:S -->
+	<update id="codiViewUpdate" parameterType="com.basic.fashion.CodiDTO" statementType="PREPARED">
+		<![CDATA[
+				update codi set count=#{count}+1 where num=#{num}
+		]]>
+	</update>	
+	<!-- COUNT UPDATE:E -->	
+
+	<!-- DELETE:S -->
+	<delete id="codiDelete" parameterType="int" statementType="PREPARED">
+		<![CDATA[
+				delete codi where num=#{num}
+		]]>
+	</delete>	
+	<!-- DELETE:E -->
+
+
 	<!-- Codi Count -->
 	<select id="codiCount" resultType="int">
 		select count(*) from codi
@@ -82,12 +104,19 @@
 	<select id="codiProduct" resultMap="CodiProduct" parameterType="java.util.HashMap">
 		select distinct p.product_num,p.product_name,pic.productPic_pic from product p,productPic pic,productKind pk
 		where p.product_num = pic.product_num and pk.product_num = p.product_num and 
-		(p.product_num = #{product0} 
+		p.product_num = #{product0} 
 		<if test="product1 != null">
-			or p.product_num = #{product1})
+			or p.product_num = #{product1}
 			<if test="product2 != null">
-				or p.product_num = #{product1} or p.product_num = #{product2})	
+				or p.product_num = #{product1} or p.product_num = #{product2}	
+	<!-- 			<if test="product3 != null">
+					or p.product_num = #{product1} or p.product_num = #{product2} or p.product_num = #{product3}
+					<if  test="product4 != null">
+						or p.product_num = #{product1} or p.product_num = #{product2} or p.product_num = #{product4}
+					</if>
+				</if> -->
 			</if>
+
 		</if>
 		 
 		order by p.product_num desc

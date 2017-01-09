@@ -26,52 +26,55 @@
 		display: none;
 	}
 .ppp{
-	float: right;
+	position : absolute;
+	top : 0;
+	left : 550px;
 }	
-#ul_kind > li{
+#ul_productSelect > li > a {
+	font-size : 16px;
+}
+#ul_kind > li > a{
 	list-style: none;
+	font-size : 14px;
+}
+#ul_kind > li > a:HOVER{
+	background-color: #fff;
+	color : #006633;
 }
 .list_pro > a{
 	cursor: pointer;text-decoration: none;color : black;
 }
 </style>
 </head>
-<body>
-<div style="background : blue; width: 1000px; height: 1000px;" id="a">
+<body style="font-family: 'hanna';">
+<div style="width: 1000px; height: 1000px;" id="a">
 	<div style="background : #fff; border : 2px solid #dce2eb;width: 500px; height: 500px;display: inline-block;" id="b"></div>
-	<!-- 상품 리스트 -->
+	<!-- 상품 리스트 :S -->
 	<div class="ppp">
-		<ul  id="ul_productSelect">
-		
-		</ul>
+		<ul id="ul_productSelect" class="list-inline"></ul>
+		<ul id="ul_kind" class="list-inline"></ul>
 	</div>
-	<div class="ppp">
-		<ul id="ul_kind"></ul>
-	</div>
-	<div id="div_product">
-	</div>
+	<!-- 상품 리스트 :E -->
 	
+	<!-- 상품 이미지 : S -->
+	<div id="div_product"></div>
+	<!-- 상품 이미지 : E -->
 	
-		<!-- PAGINATIOIN:S -->
-	<div id="pageing">
-	
-	</div>
-	
-
-		<!-- PAGINATIOIN:E -->
+	<!-- PAGINATIOIN:S -->
+	<div id="pageing"></div>
+	<!-- PAGINATIOIN:E -->
 </div>
 
 	<!-- 코디저장 할 것들 -->
-		태그 걸꺼 : <input type="text" id="title" value="#" placeholder="# 태그 입력">
+	<div class="input-group" style="width : 400px; position : absolute; top : 460px; left : 550px;">
+		<input type="text" id="title" placeholder="ex)#남자코디 #남친룩" class="form-control" style="width : 200px; display: inline-block;">
 		<input type="hidden" id="product_num">
-	<button>코디 생성</button><br>
+		<button class="btn btn-info btn-md">코디등록<span class="glyphicon glyphicon-ok"></span>  </button>
+	</div>
 	
 	<canvas width="500px" height="500px"></canvas>
-<a></a>
+<!-- <a></a> -->
 
-
-   
-   
 <script type="text/javascript">
 //코디 리스트 값 배열
 var codi = [];
@@ -84,7 +87,7 @@ function codiArray(pNum) {
 	}
  	if(check){
  		codi.push(pNum);
- 		$("#product_"+pNum).clone().appendTo($("#b"));
+ 		$("#product_"+pNum).clone().appendTo($("#b"));//기존에 있던 div를 캔버스안에서 복제
  	}
 }
 //상품 리스트
@@ -111,7 +114,7 @@ function getProductSelectList(){
 			$("#ul_productSelect").append(productSelect);
 		},
 		error : function(request, status, error) {
-			alert("code:" + request.status + "\n" + "error:" + error);
+			console.log("code:" + request.status + "\n" + "error:" + error);
 		}
 	});
 }
@@ -139,7 +142,7 @@ function getKindList(productSelect_num){
 			$("#ul_kind").html(kind);
 		},
 		error : function(request, status, error) {
-			alert("code:" + request.status + "\n" + "error:" + error);
+			console.log("code:" + request.status + "\n" + "error:" + error);
 		}
 	});
 }
@@ -148,6 +151,7 @@ function kindView(kin_num) {
 	getCodiProductList(kin_num);
 }
 var v = "";
+
 //마지막 메뉴 상품 리스트
 function getCodiProductList(kind_num){
 	$.ajax({
@@ -161,20 +165,23 @@ function getCodiProductList(kind_num){
 			$("#div_product").html("");
 			var productList = "";
 			
-			$.each(data.ar, function( index, value ) {
-				productList += "<div class='product' id='product_"+value.productDTO.product_num+"' style='display : inline-block; background : url(${pageContext.request.contextPath}/resources/testPic/"+value.productPicDTO.productPic_pic+"); width: 200px; height: 200px' onmousedown='move(this,"+value.productDTO.product_num+");'>";
-				productList += "<input id='x-"+value.productDTO.product_num+"' type='text' value='' readonly='readonly'><input id='y-"+value.productDTO.product_num+"' type='text' value='' readonly='readonly'>";
+			$.each(data.ar, function( index, value ) {//상품이미지 출력하기 위해 가지고 있는 상품리스트를 가져온다(기본적으로 6개씩 출력)
+				//mousemove 이벤트로 div를 캔버스로 움직이도록 해주기//
+				productList += "<div class='product' id='product_"+value.productDTO.product_num+"' style='display : inline-block; width: 200px; height: 200px' onmousedown='move(this,"+value.productDTO.product_num+");'>";
+				//div안에 있는 상품이미지
+				productList += "<img alt='' src='/codi/resources/testPic/"+value.productPicDTO.productPic_pic+"' width='200' height='200'>";
+				//가져가야할 상품의 x축 ,y축 value
+				productList += "<input id='x-"+value.productDTO.product_num+"' type='hidden' value='' readonly='readonly'><input id='y-"+value.productDTO.product_num+"' type='hidden' value='' readonly='readonly'>";
 				productList += "</div>";
 				console.log(index+" : "+ value.productDTO.product_num+" : "+value.productPicDTO.productPic_pic+" : "+value.productDTO.product_name);
 	    	});
-			var x = parseInt(data.startNum);
-			var y = parseInt(data.lastNum);
-			alert(typeof(x));
+
+			//pagination해주기
  			var pageing = "";
- 			alert(${a});//
+ 			//alert(${a}); background : url(${pageContext.request.contextPath}/resources/testPic/"+value.productPicDTO.productPic_pic+");//
  			pageing += '<nav aria-label="Page navigation"><ul class="pagination"><li>';
-			pageing += '<c:if test="'+(data.pageing.curBlock > 1)+'"><a class="a_prev" aria-label="Previous"	style="cursor: pointer"><input class="inh_prev"	type="hidden" value="'+(data.pageing.startNum*1-1)+'"><span aria-hidden="true">&laquo;</span>';
-			pageing += '</a></c:if></li><li><c:forEach begin="1" step="1" end="5" var="i"><a style="cursor: pointer" class="N_pageing">${i}</a></c:forEach></li>';
+ 			pageing += '<a class="a_prev" aria-label="Previous" style="cursor: pointer"><input class="inh_prev" type="hidden" value="'+(data.pageing.startNum*1-1)+'"><span aria-hidden="true">&laquo;</span>';
+			pageing += '</a></li><li><c:forEach begin="1" step="1" end="5" var="i"><a style="cursor: pointer" class="N_pageing" onclick="gogo();">${i}</a></c:forEach></li>';
 			pageing += '<li><c:if test="'+(data.pageing.curBlock < data.pageing.totalBlock)+'"><a class="a_next" aria-label="Next" style="cursor: pointer"><input class="inh_next" type="hidden" value="'+(data.pageing.lastNum*1+1)+'}"><span aria-hidden="true">&raquo;</span></a></c:if></li></ul></nav>';
 			 //console.log("되라" + data.pageing.startNum*1);
  			//console.log("11111" + data.pageing.startRowNum);
@@ -193,21 +200,21 @@ function move(a, product_num) {
     $(a).css({
     	"position" : 'absolute'
     });
-	var x = event.pageX;
-	var y = event.pageY;
+	var x = event.pageX;//이벤트발생시 X좌표
+	var y = event.pageY;//이벤트발생시 Y좌표
 	var product = $(a).attr("id");
-	var xVal = $(a).css('left').replace(/[^0-9]/g, "");
-	var yVal = $(a).css('top').replace(/[^0-9]/g, "");
+	var xVal = $(a).css('left').replace(/[^0-9]/g, "");//숫자이외의 것이 들어가면 left를 공백으로
+	var yVal = $(a).css('top').replace(/[^0-9]/g, "");//숫자이외의 것이 들어가면 top을 공백으로
 
-	$(a).mousemove(function(event) {
+	$(a).mousemove(function(event) {//지금 클릭한 div 상품을 움직일 때,
         $("#x-"+product_num).val($("#"+product).css('left').replace(/[^0-9]/g, ""));
         $("#y-"+product_num).val($("#"+product).css('top').replace(/[^0-9]/g, ""));
-        $(a).css({
+        $(a).css({//left와 top를 바꿔준다
            "left" : xVal * 1 + ((event.pageX) * 1 - x * 1) * 1,
            "top" : yVal * 1 + ((event.pageY) * 1 - y * 1) * 1
         });
-        	$(a).on("mouseup mouseout", function(event) {
-        		$(a).off("mousemove");
+        	$(a).on("mouseup mouseout", function(event) {//mouseup 또는 mouseout 이벤트 발생시
+        		$(a).off("mousemove");//mousemove를 중지시킴
 		        xVal = $(a).css('left').replace(/[^0-9]/g, "");
 		        yVal = $(a).css('top').replace(/[^0-9]/g, "");
 			       	if(xVal < 500 && yVal < 500){
@@ -215,9 +222,7 @@ function move(a, product_num) {
 			        	 codiArray(product_num);
 			    		 //이미지 복사
 			    	 }else {
-			    		 //이미지 삭제
-			    		 
-			    		 //상품 번호 삭제
+			    		 //이미지 삭제&상품 번호 삭제
 			    		 for(var i=0; i<codi.length; i++){
 			    			 if(product_num == codi[i]){
 			    					codi.splice(i,1);
@@ -233,11 +238,10 @@ function Check() {
 	var title = $("#title").val();
 	var product_num = $("#product_num").val();
 	var check = false;
-	
-	
 }
 var canvas = document.querySelector("canvas");
 	
+//codi submit해주기	
 document.querySelector("button").addEventListener("click", function() {
 	html2canvas(document.querySelector("#a"), {canvas: canvas}).then(function(canvas) {
 		$("#product_num").val(codi);
@@ -253,9 +257,9 @@ document.querySelector("button").addEventListener("click", function() {
 			alert("상품을 올려 주세요.");
 			return false;
 		}
-		alert(data);
+		/* alert(data);
 		alert(product_num);
-		alert(title);
+		alert(title); */
 		//코디 등록
        	$.ajax({
             url: "${pageContext.request.contextPath}/fashion/codiCreate",
@@ -266,7 +270,7 @@ document.querySelector("button").addEventListener("click", function() {
                	title : title
                },
                success: function(data) {
-            	alert(data);   
+            	//alert(data);   
                	alert(data.message);
 					if(data.result = 1){
 						opener.location.reload();//부모창리프래쉬

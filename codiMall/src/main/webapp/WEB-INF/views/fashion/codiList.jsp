@@ -15,7 +15,25 @@
 	href="${pageContext.request.contextPath}/resources/css/product/productList.css"
 	rel="stylesheet">
 <script type="text/javascript">
+$(function(){
+	$(".N_pageing").click(function(){
+		$(".inh_curPage").val($(this).text());
+		$("#form_all").submit();
+	});
+});
 </script>
+<style type="text/css">
+.tit{
+    background : none;
+    border: none;
+    
+}
+.code_group > .tit {
+    padding-top: 45px;
+    padding-bottom: 45px;
+    text-align: center;
+}
+</style>
 </head>
 <body>
 	<!-- HEADER:S -->
@@ -25,6 +43,11 @@
 	<div class="container" style="padding-top: 20px;">
 		<div class="row">
 			<div class="col-sm-12">
+			<div class="code_group">
+		    		<pre class="tit"><span style="font-size:18px; color: #333; font-weight: bold;font-family: 'Sandol', sans-serif;">MAPSSI 코디</span><br>
+					<span style="font-size:12px; color: #d2d2d2; font-weight: bold;font-family: 'Sandol', sans-serif;margin-left: -270px;">인기코디와 최신코디를 만나보세요!</span>
+		    		</pre>
+		    	</div>
 					<nav class="navbar">
 						<div class="navbar-collapse collapse"
 							style="padding-left: 100px; border-bottom: 1px solid #eee;">
@@ -33,7 +56,9 @@
 										class="inhc_sel" type="hidden" value="1">최신순</a></li>
 								<li><a style="cursor: pointer" class="sel_type"><input
 										class="inhc_sel" type="hidden" value="2">인기순</a></li>
-								<li><a style="cursor: pointer" class="sel_type" onclick="window.open('${pageContext.request.contextPath}/fashion/codiWrite','codi','width=1200,height=800');return false;">코디 생성</a></li>
+								<c:if  test="${sessionScope.member ne null }">								
+								<li><a style="cursor: pointer" class="sel_type" onclick="window.open('${pageContext.request.contextPath}/fashion/codiWrite','codi','width=900,height=700');return false;">코디 생성</a></li>
+								</c:if>		
 							</ul>
 						</div>
 					</nav>
@@ -94,6 +119,13 @@
 					<!-- PAGINATIOIN:E -->						
 					</div>
 			</div>
-<%@ include file="/resources/temp/footer.jsp"%>	
+			<%@ include file="/resources/temp/footer.jsp"%>
+
+				<!--  hidden form (POST로 넘기기위한 숨겨진 FORM 지저분한 주소창방지용)  -->
+				<form id="form_all" name="formAll"
+					action="${pageContext.request.contextPath}/fashion/codiList"
+					method="post" style="display: none;">
+					<input class="inh_curPage" type="hidden" value="" name="curPage">
+				</form>
 </body>
 </html>
