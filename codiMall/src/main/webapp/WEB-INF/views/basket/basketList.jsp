@@ -326,9 +326,7 @@
 											style="display: inline-block; margin-right: 10px; float: left;">
 											<a
 												href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">
-												<img alt=""
-												src="${pageContext.request.contextPath}/resources/images/noimage.jpg"
-												width="60" height="60">
+												
 											</a>
 										</div>
 										<div style="display: inline-block; margin-top: 20px;">
@@ -353,7 +351,7 @@
 													<c:set var="tempname1" value="${eachSize.productSize_size}" />
 												</c:if>
 											</c:forEach>
-									</select>${list1.basketInfo_size}</td>
+									</select><%-- ${list1.basketInfo_size} --%></td>
 									<td class="bas_td_bas_color"><c:set var="tempname1"
 											value="" /> <c:forEach var="eachSize"
 											items="${list1.productEachDTO}">
@@ -375,7 +373,7 @@
 													</c:forEach>
 												</select>
 											</c:if>
-										</c:forEach>${list1.basketInfo_color}</td>
+										</c:forEach><%-- ${list1.basketInfo_color} --%></td>
 									<td><fmt:formatNumber
 											value="${list1.productInfo_price*list1.basketInfo_each*(100-list1.productInfo_saleRate)/100}"
 											currencySymbol="" type="currency" />원 <%-- 							

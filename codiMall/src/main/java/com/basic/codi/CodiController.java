@@ -45,7 +45,17 @@ public class CodiController {
 		}
 		return "/fashion/codiList";
 	}
-	
+	//베스트코디리스트
+	@RequestMapping(value = "bestCodiList")
+	public String codiList(Model model){
+		try {
+			codiService.bestCodiList(model);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("bestCodiListController");
+		return "/fashion/bestList";
+	}	
 	//코디 뷰
 	@RequestMapping(value = "codiView")
 	public String codiView(CodiDTO codiDTO,Model model){
@@ -75,9 +85,8 @@ public class CodiController {
             String data = request.getParameter("data");
             //data 이미지에서 필요 없는 앞부분 없앤 것
             data = data.replaceAll("data:image/png;base64,", "");
-            //byte 단위로 ?
+            //byte 단위로 decode
             byte[] bt = Base64.getDecoder().decode(data.getBytes());
-            // ?
             ByteArrayInputStream is = new ByteArrayInputStream(bt);
             //이미지로 전환
             BufferedImage image = ImageIO.read(is);

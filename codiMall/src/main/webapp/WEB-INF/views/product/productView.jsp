@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -64,7 +64,7 @@
 			selEach(product_num,productSize_size,productEach_color);
 		});
 
-		<c:if test="${!empty sessionScope.member}">
+	<c:if test="${!empty sessionScope.member}">
 
 		$("#btn_basket").click(function(){
 
@@ -442,7 +442,7 @@
 								alt="">
 						</div>
 						<h1>${view.product_name}</h1>
-						<div class="item-manufacture">BRAND NAME</div>
+						<div class="item-manufacture">${view.productInfo_brand}</div>
 					</div>
 					<form id="view_frm" method="post">
 						<div class="infoBox">

@@ -33,9 +33,17 @@ public class CodiService {
 		model.addAttribute("list", ar);
 	}
 	
+	//코디 베스트리스트
+	public void bestCodiList(Model model) throws Exception{
+		List<CodiDTO> ar;
+		ar = codiDAO.bestCodiList();
+		model.addAttribute("blist", ar);
+		System.out.println("bestCodiListSERVICE");
+	}
 	//코디 뷰
 	public CodiDTO codiView(CodiDTO codiDTO,Model model) throws Exception {
 		codiDTO = codiDAO.codiView(codiDTO);
+		codiDAO.codiViewUpdate(codiDTO);
 		String pn = codiDTO.getProduct();
 		String [] product;
 		product = pn.split(",");
@@ -51,6 +59,21 @@ public class CodiService {
 		model.addAttribute("list", ar);
 		return codiDTO;
 	}
+	
+	//삭제//
+	
+	public String codiDel(int num) throws Exception {
+		int result = 0;		
+		result = codiDAO.codiDel(num);
+		String message = "";
+		if(result > 0){
+			message = "삭제완료!";
+		}else{
+			message = "삭제실패!";
+		}
+		return message;		
+	}
+	
 	
 	//코디 저장
 	public int codiCreate(CodiDTO codiDTO, Model model) throws Exception{

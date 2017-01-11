@@ -11,6 +11,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import com.basic.board.BoardDTO;
 import com.basic.product.KindDTO;
 import com.basic.product.ProductSelectDTO;
 import com.basic.util.PageMaker;
@@ -32,6 +33,12 @@ public class CodiDAO {
 	public List<CodiDTO> codiList(PageMaker pageMaker) throws Exception{
 		return sqlSession.selectList(namespace + "codiList", pageMaker);
 	}
+	//베스트리스트
+	public List<CodiDTO> bestCodiList() throws Exception{
+		System.out.println("bestCodiListDAO");
+		return sqlSession.selectList(namespace+"bestCodiList");
+	}
+	
 	
 	//코디 카운트
 	public int codiCount() throws Exception{
@@ -42,25 +49,34 @@ public class CodiDAO {
 	public int codiCreate(CodiDTO codiDTO) throws Exception{
 		return sqlSession.insert(namespace + "codiCreate", codiDTO);
 	}
-	
-	//삭제
-	public void codiDelete() throws Exception{
 		
-	}
-	
 	//뷰//
 	public CodiDTO codiView(CodiDTO codiDTO) throws Exception{
 		
 		codiDTO = sqlSession.selectOne(namespace+"codiView", codiDTO);
 		return codiDTO;
 	}
+	
+	//뷰업데이트//
+	public void codiViewUpdate(CodiDTO codiDTO) throws Exception{
+		sqlSession.update(namespace+"codiViewUpdate", codiDTO);
+	};
+	
+	//코디삭제//
+		public int codiDel(int num) throws Exception{
+			int result = 0;
+			
+				result = sqlSession.delete(namespace+"codiDelete",num);
+			
+			return result;
+		};
+	
 	//뷰 상품리스트//
 	public List<CodiDTO> codiProduct(String [] product) throws Exception{
 		Map<String, Object> map = new HashMap<>();
 		System.out.println(product.length);
 		for(int i=0;i<product.length;i++){
-			
-			System.out.println(product[i]);
+			System.out.println("product"+i+":"+product[i]);
 			map.put("product"+i, product[i]);
 		}
 		 List<CodiDTO> ar = sqlSession.selectList(namespace+"codiProduct", map);

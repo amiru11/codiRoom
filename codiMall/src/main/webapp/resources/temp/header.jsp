@@ -176,61 +176,7 @@
 			}
 		}
 	}
-	;
 
-
-	//facebook Login
-	function statusChangeCallback(response) {
-		if (response.status === 'connected') {
-			testAPI();
-			console.log("id : " + response.id);
-			alert("id : " + response.id);
-			alert("email : " + response.email);
-			alert("name : " + response.name);
-			alert("birth : " + response.birth);
-			alert("gender : " + response.gender);
-		} else if (response.status === 'not_authorized') {
-			alert('Please log ' + 'into this app.');
-		} else {
-			alert('Please log ' + 'into Facebook.');
-		}
-	}
-	function checkLoginState() {
-		FB.getLoginStatus(function(response) {});
-	}
-
-	window.fbAsyncInit = function() {
-		FB.init({
-			appId : '{1464313553583238}',
-			cookie : true,
-			xfbml : true,
-			version : 'v2.8'
-		});
-		FB.getLoginStatus(function(response) {});
-
-	};
-
-	// Load the SDK asynchronously
-	(function(d, s, id) {
-		var js,
-			fjs = d.getElementsByTagName(s)[0];
-		if (d.getElementById(id))
-			return;
-		js = d.createElement(s);
-		js.id = id;
-		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1464313553583238";
-		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
-
-	function testAPI() {
-		FB.api('/me?fields=email,first_name,last_name,birthday,gender', function(response) {
-			alert("id : " + response.id);
-			alert("email : " + response.email);
-			alert("name : " + response.name);
-			alert("birth : " + response.birth);
-			alert("gender : " + response.gender);
-		});
-	}
 	function searchProduct() {
 		$("#ps_btn").click(function() {
 			$("#inph_search_wordaa").val($("#product_search").val());
@@ -419,10 +365,7 @@
 					<li><a
 						href="${pageContext.request.contextPath}/product/productList">전체상품</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/product/productList">베스트 상품</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/product/productList">세일 상품</a></li>
-				
+						href="${pageContext.request.contextPath}/product/productBestList">베스트 상품</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/fashion/codiList">전체코디</a></li>
 					<li><a

@@ -15,6 +15,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+<link
+	href="${pageContext.request.contextPath}/resources/css/pagination.css"
+	rel="stylesheet">	
 <script type="text/javascript">
 	$(function(){
 		$("#search_btn").click(function () {
@@ -58,7 +61,7 @@
 	}); 
 </script>
 </head>
-<body>
+<body  style="font-family: 'hanna';">
 
 	<!-- HEADER:S -->
 	<%@ include file="/resources/temp/header.jsp"%>

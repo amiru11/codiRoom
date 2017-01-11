@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <!DOCTYPE html>
 				
-				<c:forEach var="list" items="${blist}" >
+				<c:forEach var="list" items="${blist}" begin="0" end="3" >
 					<div class="slide codi-item" style="display:inline-block; width:290px;">
 						<table class="table table-bordered" style="margin-bottom: 0;">
 							<tr>

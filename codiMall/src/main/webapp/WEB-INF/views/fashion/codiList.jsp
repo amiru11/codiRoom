@@ -35,7 +35,7 @@ $(function(){
 }
 </style>
 </head>
-<body>
+<body style="font-family: 'hanna';">
 	<!-- HEADER:S -->
 	<%@ include file="/resources/temp/header.jsp"%>
 	<!-- HEADER:E -->
@@ -78,6 +78,15 @@ $(function(){
 										<p style="padding-top: 10px;">
 											<a
 												href="${pageContext.request.contextPath}/fashion/codiView?num=${list1.num}">${list1.title}</a>
+										</p>
+										<hr>
+										<p style="">
+											<a
+												href="${pageContext.request.contextPath}/fashion/codiView?num=${list1.num}">
+												<img
+											src="${pageContext.request.contextPath}/resources/images/ic_profilepic.png"
+											width="40" height="40">	
+													<span style="padding-bottom: 10px;">${list1.member_id}</span></a>
 										</p>
 									</div>	
 								</div>							

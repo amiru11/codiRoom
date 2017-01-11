@@ -67,9 +67,9 @@ public class MemberController {
 	private String privateSHA(String inputPw){//SHA알고리즘을 통한 PASSWORD 암호화
 		 StringBuffer sbuf = new StringBuffer();//동적 문자열을 처리하는 클래스인 StringBuffer 클래스 객체 생성
 	     
-		    MessageDigest mDigest;//MessageDigest 클래스 : 임의의 사이즈의 데이타를 뽑아 고정 오랜 해시값을 출력 하는 안전한 한방향의 해시 기능
+		    MessageDigest mDigest;//MessageDigest 클래스 : 임의의 사이즈의 데이터를 뽑아 고정 오랜 해시값을 출력 하는 안전한 한방향의 해시 기능
 			try {
-				String salt = "!@#pv^&%qwe?nt";
+				String salt = "!@#pv^&%qwe?nt";//SHA암호화에 보안증가를 위해 salt추가
 				inputPw = inputPw + salt;
 				mDigest = MessageDigest.getInstance("SHA-256");//지정된 다이제스트 알고리즘을 구현하는 MessageDigest 객체 생성
 				mDigest.update(inputPw.getBytes());// 지정된 바이트 데이터를 사용해 다이제스트를 갱신
@@ -122,16 +122,11 @@ public class MemberController {
 		System.out.println(cur_uri);
 		///codi/WEB-INF/views/product/productList.jsp
 		String uri[] = cur_uri.split("/codi");
-		/*for (int i = 0; i < uri.length; i++) {
-			System.out.println(uri[i]+"--------"+i);
-		}*/
-
 		String message = "";
-			
-		System.out.println("입력받은 pw : "+ memberDTO.getPw());
-		String inputPw = memberDTO.getPw();
-		String savePw = privateSHA(inputPw);
-		memberDTO.setPw(savePw);
+		String inputPw = memberDTO.getPw();//입력받는 Pw//
+		System.out.println("입력받는 pw : "+ inputPw);
+		String savePw = privateSHA(inputPw);//매개변수로 비밀번호를 받아서 암호화시켜주기
+		memberDTO.setPw(savePw);//암호화된 비밀번호로 DB에 저장된 암호화 비밀번호와 비
 		System.out.println("암호화 된 pw : "+ memberDTO.getPw());
 		try {
 		memberDTO = memberService.memberLogin(memberDTO);
@@ -162,7 +157,7 @@ public class MemberController {
 			System.out.println(uri[i]+"--------"+i);
 		}
 		System.out.println("message : "+message);
-		rd.addFlashAttribute("message", message);
+		//rd.addFlashAttribute("message", message);
 		return "redirect:"+uri[1];
 	}
 	

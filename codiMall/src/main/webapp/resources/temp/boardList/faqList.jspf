@@ -105,7 +105,7 @@
 					</div>
 					<!-- PAGINATIOIN:E -->
 					<div class="col-md-4">
-						<input type="button" value="글쓰기" id="wrBtn" class="btn" style="background-color: #333; color : #ddd;">
+						<!-- <input type="button" value="글쓰기" id="wrBtn" class="btn" style="background-color: #333; color : #ddd;"> -->
 					</div>
 				</div>
 				<div class="col-md-3">

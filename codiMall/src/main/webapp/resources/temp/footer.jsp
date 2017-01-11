@@ -1,8 +1,69 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>	
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/jejugothic.css">
+<link
+	href="${pageContext.request.contextPath}/resources/css/jquery.bxslider.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/homeslider.css"
+	rel="stylesheet">
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery.bxslider.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/footer.js"></script>		
+<script>
+var myWindow = window.outerWidth;
 
+$(function(){
+	/* 네번째 슬라이드 */
+	if (myWindow > 960) {
+
+				$('.footer_awards_slider').bxSlider({
+					minSlides:4,
+					maxSlides:6,
+					slideWidth:189,
+					slideMargin:0,
+					controls:false,
+					auto:true,
+					autoControls:true,
+					autoControlsCombine:true,
+					pause:2000
+				});
+
+			} else if ((myWindow > 640) && (myWindow <= 960)) {
+				$('.footer_awards_slider').bxSlider({
+					minSlides:3,
+					maxSlides:3,
+					slideWidth:210,
+					slideMargin:0,
+					controls:false,
+					auto:true,
+					autoControls:true,
+					autoControlsCombine:true,
+					pause:2000,
+					pagerSelector:'.footer_slider_pagers',
+					autoControlsSelector:'.footer_slider_controls'
+				});
+			} else if (myWindow <= 640) {
+				$('.footer_awards_slider').bxSlider({
+					minSlides:1,
+					maxSlides:1,
+					slideWidth:300,
+					slideMargin:0,
+					controls:false,
+					auto:true,
+					autoControls:true,
+					autoControlsCombine:true,
+					pause:2000,
+					pagerSelector:'.footer_slider_pagers',
+					autoControlsSelector:'.footer_slider_controls'
+				});	
+			}	
+});
+
+</script>
 <style>
 .footer-ul > li > a{
 	text-decoration: none;

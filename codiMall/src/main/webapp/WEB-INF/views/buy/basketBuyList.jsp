@@ -275,9 +275,7 @@
 											style="display: inline-block; float: left;">
 											<a
 												href="${pageContext.request.contextPath}/product/productView?product_num=${list1.product_num}">
-												<img alt=""
-												src="${pageContext.request.contextPath}/resources/images/noimage.jpg"
-												width="60" height="60">
+												
 											</a>
 										</div>
 										<div

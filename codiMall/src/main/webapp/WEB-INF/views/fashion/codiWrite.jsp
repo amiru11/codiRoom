@@ -78,7 +78,7 @@
 <script type="text/javascript">
 //코디 리스트 값 배열
 var codi = [];
-function codiArray(pNum) {
+function codiArray(pNum) { //mouseup & down 이벤트로 주기 때문에 중복되는 것 제거를 위해 필요
 	var check = true;
  	for(var i=0; i<codi.length; i++){
 		if(pNum == codi[i]){
@@ -183,9 +183,6 @@ function getCodiProductList(kind_num){
  			pageing += '<a class="a_prev" aria-label="Previous" style="cursor: pointer"><input class="inh_prev" type="hidden" value="'+(data.pageing.startNum*1-1)+'"><span aria-hidden="true">&laquo;</span>';
 			pageing += '</a></li><li><c:forEach begin="1" step="1" end="5" var="i"><a style="cursor: pointer" class="N_pageing" onclick="gogo();">${i}</a></c:forEach></li>';
 			pageing += '<li><c:if test="'+(data.pageing.curBlock < data.pageing.totalBlock)+'"><a class="a_next" aria-label="Next" style="cursor: pointer"><input class="inh_next" type="hidden" value="'+(data.pageing.lastNum*1+1)+'}"><span aria-hidden="true">&raquo;</span></a></c:if></li></ul></nav>';
-			 //console.log("되라" + data.pageing.startNum*1);
- 			//console.log("11111" + data.pageing.startRowNum);
-			//console.log("22222" + data.pageing.lastLowNum); 
 			$("#div_product").html(productList);
 			$("#pageing").html(pageing); 
 			
@@ -257,9 +254,6 @@ document.querySelector("button").addEventListener("click", function() {
 			alert("상품을 올려 주세요.");
 			return false;
 		}
-		/* alert(data);
-		alert(product_num);
-		alert(title); */
 		//코디 등록
        	$.ajax({
             url: "${pageContext.request.contextPath}/fashion/codiCreate",
@@ -270,7 +264,6 @@ document.querySelector("button").addEventListener("click", function() {
                	title : title
                },
                success: function(data) {
-            	//alert(data);   
                	alert(data.message);
 					if(data.result = 1){
 						opener.location.reload();//부모창리프래쉬

@@ -103,22 +103,51 @@
 	<!-- view product -->
 	<select id="codiProduct" resultMap="CodiProduct" parameterType="java.util.HashMap">
 		select distinct p.product_num,p.product_name,pic.productPic_pic from product p,productPic pic,productKind pk
-		where p.product_num = pic.product_num and pk.product_num = p.product_num and 
-		p.product_num = #{product0} 
-		<if test="product1 != null">
+		where p.product_num = pic.product_num and pk.product_num = p.product_num and pic.product_num = pk.product_num and
+		p.product_num in (
+		<if test="product0 != null">
+			#{product0}
+			<if test="product0 !=null and product1!=null">
+				,#{product1}
+				<if test="product0 !=null and product1!=null and product2!=null">
+					,#{product2}
+					<if test="product0 !=null and product1!=null and product2!=null and product3!=null">
+						,#{product3}
+						<if test="product0 !=null and product1!=null and product2!=null and product3!=null and product4!=null">
+							,#{product4}			
+						</if>
+					</if>
+				</if>
+			</if>
+		</if>
+		)
+		<!-- <if test="product0 != null">
+			(#{product0},#{product1})
+			<if test="product1 != null">
+				(#{product0},#{product1})
+			</if>
+		</if> -->
+		<!-- <if test="product1 != null">
 			or p.product_num = #{product1}
 			<if test="product2 != null">
 				or p.product_num = #{product1} or p.product_num = #{product2}	
-	<!-- 			<if test="product3 != null">
-					or p.product_num = #{product1} or p.product_num = #{product2} or p.product_num = #{product3}
-					<if  test="product4 != null">
-						or p.product_num = #{product1} or p.product_num = #{product2} or p.product_num = #{product4}
-					</if>
-				</if> -->
+
 			</if>
 
-		</if>
-		 
+		</if> 
+						<if test="product2 != null">
+					(#{product0},#{product1},#{product2})
+					<if test="product3 != null">
+						(#{product0},#{product1},#{product2},#{product3})
+						<if test="product4 != null">
+							(#{product0},#{product1},#{product2},#{product3},#{product4})
+							<if test="product5 != null">
+							(#{product0},#{product1},#{product2},#{product3},#{product4},#{product5})
+							</if>
+						</if>
+					</if>
+				</if>
+		-->
 		order by p.product_num desc
 		
 	</select>

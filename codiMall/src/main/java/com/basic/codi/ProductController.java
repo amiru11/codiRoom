@@ -17,6 +17,7 @@ import com.basic.product.ProductEachAddDTOs;
 import com.basic.product.ProductParamDTO;
 
 import com.basic.product.ProductService;
+import com.basic.product.ProductViewDTO;
 import com.basic.util.PageMaker;
 
 
@@ -95,8 +96,22 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/productView", method = RequestMethod.GET)
-	public void productView(@RequestParam(required = false) int product_num, Model model) {
-		model.addAttribute("view", productService.productView(product_num));
+	public String productView(@RequestParam(required = false) int product_num, Model model,RedirectAttributes ra) {
+		ProductViewDTO productViewDTO = productService.productView(product_num);
+		String path = "";
+		String location = "";
+		String message="";
+		if(productViewDTO !=null){
+			model.addAttribute("view",productViewDTO);
+			path="/product/productView";
+		}else{
+			path="redirect:/result/result";
+			location="/product/productList";
+			message="존재하지 않는 상품";
+			ra.addFlashAttribute("message", message);
+			ra.addFlashAttribute("location", location);
+		}
+		return path;
 	}
 
 	@RequestMapping(value = "/productEachAdd", method = RequestMethod.POST)

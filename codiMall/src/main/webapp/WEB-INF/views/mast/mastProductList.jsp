@@ -607,7 +607,7 @@
 </script>
 <style type="text/css">
 table, table tr, tr td, th {
-	border: 2px solid #dce2eb;
+	border-top: 2px solid #dce2eb;
 }
 
 th {
@@ -650,7 +650,7 @@ input[type="checkbox"], input[type="radio"] {
 	margin-top: 30px;
 	padding: 2px;
 	width: 360px;
-	height: 230px;
+	height: 280px;
 	border: 2px solid #dce2eb;
 	text-align: center;
 	float: left;
@@ -658,12 +658,13 @@ input[type="checkbox"], input[type="radio"] {
 
 .tab_mast_productList {
 	float: right;
-	width: 160px;
+	width: 175px;
+	height: 275px;
 }
 
 .cl_pro_pic {
 	width: 175px;
-	height: 175px;
+	height: 200px;
 }
 
 #tab_modin {
@@ -752,7 +753,7 @@ width:300px;
 									</a>
 									<%@ include file="/resources/temp/mast/productSelBox.jspf"%>
 								</div>
-								<div class="panel-body" style="background-color: white;">
+								<div class="panel-body" style="background-color: white; padding-left: 50px;">
 									<div id="div_product_list">
 										<c:forEach var="list1" items="${list}">
 											<div class="div_list_in_list">
@@ -760,54 +761,58 @@ width:300px;
 													style="display: inline-block; cursor: pointer; float: left;">
 													<input class="inh_product_num" type="hidden"
 														name="product_num" value="${list1.productDTO.product_num}">
-													<img width="175" height="175"
+													<img width="175" height="200"
 														<c:if test="${!empty sessionScope.member}">
 														data-toggle="modal" data-target="#basketModal"
 														data-backdrop="true"
 													</c:if>
 														src="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}">
 												</div>
-												<table class="tab_mast_productList">
-													<tr>
-														<td>판매수</td>
-														<td>${list1.selCount}</td>
+												<table class="tab_mast_productList" style="border : none;">
+													<tr style="border : none;">
+														<td style="border : none;">판매수</td>
+														<td style="border : none;">${list1.selCount}</td>
 													</tr>
-													<tr>
+													<%-- <tr>
 														<td>pS.num</td>
 														<td>${list1.productSelectDTO.productSelect_num}</td>
-													</tr>
+													</tr> --%>
 													<tr>
-														<td>pS.name</td>
+														<td>대분류</td>
 														<td>${list1.productSelectDTO.productSelect_name}</td>
 													</tr>
-													<tr>
+													<%-- <tr>
 														<td>k.num</td>
 														<td>${list1.kindDTO.kind_num}</td>
-													</tr>
+													</tr> --%>
 													<tr>
-														<td>k.name</td>
+														<td>소분류</td>
 														<td>${list1.kindDTO.kind_name}</td>
 													</tr>
 													<tr>
-														<td>p.num</td>
+														<td>상품번호</td>
 														<td>${list1.productDTO.product_num}</td>
 													</tr>
 													<tr>
-														<td>p.name</td>
+														<td>상품명</td>
 														<td>${list1.productDTO.product_name}</td>
 													</tr>
 													<tr>
-														<td>price</td>
+														<td>브랜드</td>
+														<td>${list1.productInfoDTO.productInfo_brand}</td>
+													</tr>
+													<tr>
+														<td>가격</td>
 														<td><fmt:formatNumber
 																value="${list1.productInfoDTO.productInfo_price}"
 																pattern="#,###" />원</td>
 													</tr>
 													<tr>
-														<td>sale</td>
-														<td>${list1.productInfoDTO.productInfo_saleRate}</td>
+														<td>할인율</td>
+														<td>${list1.productInfoDTO.productInfo_saleRate}%</td>
 													</tr>
 													<tr>
-														<td>totalPrice</td>
+														<td>할인가</td>
 														<td><c:set var="number"
 																value="${list1.productInfoDTO.productInfo_price*(100-list1.productInfoDTO.productInfo_saleRate)/100}" />
 															<fmt:parseNumber var="total" value="${number}"

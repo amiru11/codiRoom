@@ -194,15 +194,15 @@
 										<table id="table_buy_pay_list" class="table">
 											<tr>
 												<th>ID</th>
-												<th>P.NUM</th>
-												<th>P.NAME</th>
-												<th>B.NUM</th>
-												<th>SIZE</th>
-												<th>COLOR</th>
-												<th>EACH</th>
-												<th>PRICE</th>
-												<th>EXPRESSNUM</th>
-												<th>RESULTDATE</th>
+												<th>상품번호</th>
+												<th>상품명</th>
+												<th>구매번호</th>
+												<th>사이즈</th>
+												<th>색상</th>
+												<th>구매수량</th>
+												<th>송장번호</th>
+												<th>완료날짜</th>
+												<th>구매가격</th>
 											</tr>
 											<c:forEach var="list1" items="${list}">
 												<tr>
@@ -213,16 +213,16 @@
 													<td>${list1.buyStateDTO.buyState_size}</td>
 													<td>${list1.buyStateDTO.buyState_color}</td>
 													<td>${list1.buyStateDTO.buyState_each}</td>
+													<td>${list1.buyStateDTO.buyState_expressNum}</td>
+													<td>${list1.buyStateDTO.buyState_result_date}</td>
 													<td style="text-align: right;">
 													 <fmt:formatNumber value="${list1.buyStateDTO.buyState_price}" pattern="#,###" /> 원
 													</td>
-													<td>${list1.buyStateDTO.buyState_expressNum}</td>
-													<td>${list1.buyStateDTO.buyState_result_date}</td>
 												</tr>
 											</c:forEach>
 											<tr>
-												<td colspan="5">합계</td>
-												<td colspan="5" class="total_money"></td>
+												<td colspan="9" style="font-weight: bold;">합계</td>
+												<td colspan="1" style="color: #006633; font-weight: bold;" class="total_money"></td>
 											</tr>
 			
 										</table>
@@ -239,8 +239,8 @@
 																type="hidden" value="${pageing.startNum-1}"> <span
 																aria-hidden="true">&laquo;</span> </a>
 														</c:if></li>
-													<li><c:forEach begin="${pageing.startNum}" step="1"
-															end="${pageing.lastNum}" var="i">
+													<li><c:forEach begin="1" step="1"
+															end="5" var="i">
 			
 															<a
 																href="${pageContext.request.contextPath}/mast/mastProductListEach0?curPage=${i}"

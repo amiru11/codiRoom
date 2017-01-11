@@ -43,7 +43,7 @@
 					class="fa fa-calendar"></span><span class="sidebar-title">Calendar</span></a>
 			</li>
 			<li><a id="goBoard" class="side-btn" onclick="gotoggle(1);"><span
-					class="fa fa-file-text-o"></span><span class="sidebar-title">Board</span><span
+					class="fa fa-file-text-o"></span><span class="sidebar-title">게시판</span><span
 					class="carett"></span></a>
 				<ul id="sub-1">
 					<li><a href="boardList">Notice</a></li>
@@ -73,15 +73,15 @@
 					<li><a
 						href="${pageContext.request.contextPath}/mast/mastBuyListPay">매출내역</a></li>
 				</ul></li>
-			<li class=""><a id="goCodination" class="side-btn"
+			<!-- <li class=""><a id="goCodination" class="side-btn"
 				onclick="gotoggle(5);"><span class="fa fa-home"></span><span
-					class="sidebar-title">Codination</span></a>
+					class="sidebar-title">코디</span></a>
 				<ul id="sub-5">
 					<li><a>dashboard</a></li>
 					<li><a>list</a></li>
 					<li><a>write</a></li>
 					<li><a>comment</a></li>
-				</ul></li>
+				</ul></li> -->
 		</ul>
 	</div>
 </div>

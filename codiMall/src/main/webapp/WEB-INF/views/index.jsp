@@ -12,8 +12,8 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/jquery.bxslider.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/footer.js"></script>
+<%-- <script
+	src="${pageContext.request.contextPath}/resources/js/footer.js"></script> --%>
 <script
 	src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <link
@@ -29,9 +29,8 @@
 	rel="stylesheet">
 <script type="text/javascript">
 	
-	$(function() {
-		//showSaleItem(sale_curPage); //메인페이지 호출시 나타나는 SaleItem 
-
+	$(function() { 
+		bestCodiList();
 		/* 첫번째 슬라이드 */
 		$('.bxslider').bxSlider({
 			mode : 'fade',
@@ -50,10 +49,9 @@
 			auto : false,
 			pager : false
 		});
-
-
+		
 		/* 세번째 슬라이드 */
-		$('.slider4').bxSlider({
+ 		$('.slider4').bxSlider({
 			//slideWidth : 1000,
 			minSlides : 4,
 			maxSlides : 4,
@@ -160,6 +158,21 @@
 				       	}
 		}); 
 	}*/
+	function bestCodiList() {
+		$.ajax({
+			url : '/codi/fashion/bestCodiList', //지금은 일단 겟방식으로 ajax를 실행합니다
+			type : 'GET',
+			data : {},
+			success : function(data) {
+				$(".slider3").empty() ;
+				$(".slider3").html(data);
+				
+			},
+		    error:function(request,status,error){
+				        	console.error("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				       	} 
+		});
+	}
 </script>
 <style type="text/css">
 .slider {
@@ -253,66 +266,30 @@
 
 	<!-- BEST CODI :S -->
 	<section class="container" style="padding-top: 50px;">
-		<div class="text-center">
-			<p style="font-size: 18px; font-weight: 800;">BEST CODI</p>
-			<p style="font-size: 12px; color: #a6a6a6; font-weight: 700;">현재
-				가장인기 있는 코디를 만나보세요</p>
-		</div>
-			<div class="slider3">
-				<div class="slide codi-item">
-					<table class="table table-bordered" style="margin-bottom: 0;">
-						<tr>
-							<td style="padding: 0;"><img
-								src="http://placehold.it/500x150&text=FooBar1"></td>
-						</tr>
-						<tr>
-							<td style="padding: 0;">회원정보</td>
-						</tr>
-					</table>
-				</div>
-				<!-- LIST 뿌리면 지울 것들 -->
-<!-- 				<div class="slide">
-					<img src="http://placehold.it/500x150&text=FooBar2">
-				</div>
-				<div class="slide">
-					<img src="http://placehold.it/500x150&text=FooBar3">
-				</div>
-				<div class="slide">
-					<img src="http://placehold.it/500x150&text=FooBar4">
-				</div>
-				<div class="slide">
-					<img src="http://placehold.it/500x150&text=FooBar5">
-				</div>
-				<div class="slide">
-					<img src="http://placehold.it/500x150&text=FooBar6">
-				</div>
-				<div class="slide">
-					<img src="http://placehold.it/500x150&text=FooBar7">
-				</div>
-				<div class="slide">
-					<img src="http://placehold.it/500x150&text=FooBar8">
-				</div>
-				<div class="slide">
-					<img src="http://placehold.it/500x150&text=FooBar9">
-				</div>
-				<div class="slide">
-					<img src="http://placehold.it/500x150&text=FooBar10">
-				</div> -->
-				<!-- LIST 뿌리면 지울 것들 -->
+		<div class="row">
+			<div class="text-center">
+				<p style="font-size: 18px; font-weight: 800;">BEST CODI</p>
+				<p style="font-size: 12px; color: #a6a6a6; font-weight: 700;">현재
+					가장인기 있는 코디를 만나보세요</p>
 			</div>
+				<div class="slider3">
+					
+				</div>
+		</div>
 	</section>
 	<!-- BEST CODI :E -->
 
 	<!-- BEST ITEM :S -->
 	<section class="container" style="padding-top: 50px;">
+		<div class="row">
 			<div class="text-center">
 				<p style="font-size: 18px; font-weight: 800;">BEST ITEM</p>
 				<p style="font-size: 12px; color: #a6a6a6; font-weight: 700;">현재
 					가장 인기있는 상품을 만나보세요</p>
 			</div>
 			<div class="slider4">
-				<c:forEach var="list1" items="${list}" begin="1" end="4">
-					<div class="slide codi-item">
+				<c:forEach items="${list}" var="list1" begin="0" end="3">
+					<div class="slide codi-item"style="display:inline-block; width:290px;">
 						<table class="table table-bordered" style="margin-bottom: 0;">
 							<tr>
 								<td style="padding: 0;"><a
@@ -342,6 +319,7 @@
 					</div>
 				</c:forEach>
 			</div>
+		</div>
 	</section>
 	<!-- BEST ITEM :E -->
 

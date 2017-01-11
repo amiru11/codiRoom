@@ -35,6 +35,9 @@ public class IndexController {
 		String lastDate = c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DAY_OF_MONTH);
 		String startDate = (c.get(Calendar.YEAR)-100) + "-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DAY_OF_MONTH);
 		model.addAttribute("list",productService.productBestList());
+		for(int i=0;i<productService.productBestList().size();i++){			
+			System.out.println("상품명 : "+productService.productBestList().get(i).getProduct_name());
+		}
 		model.addAttribute("lastDate", lastDate);
 		model.addAttribute("startDate", startDate);
 		return "index";

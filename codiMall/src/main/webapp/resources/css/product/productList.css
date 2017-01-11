@@ -90,7 +90,7 @@
 	color : #000;
 }
 .cart{
-	text-align : center; background: #000; cursor: pointer;
+	text-align : center; background: #000; cursor: pointer; padding: 10px;
 }
 .cart:HOVER{
 	background:#006633;

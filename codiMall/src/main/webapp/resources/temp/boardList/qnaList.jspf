@@ -76,7 +76,7 @@
 				</div>
 				<!-- PAGINATIOIN:E -->
 				<div class="col-md-4">
-					<input type="button" value="글쓰기" id="wrBtn" class="btn btn-info">
+					<!-- <input type="button" value="글쓰기" id="wrBtn" class="btn btn-info"> -->
 				</div>
 			</div>
 			<div class="col-md-4">

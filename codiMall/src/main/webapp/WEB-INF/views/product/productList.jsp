@@ -295,7 +295,7 @@ var requestSubmitted = false;
 				var x = '<option value="">COLOR</option>';
 				var y = "";
 				$.each(data.eachList, function(index, value) {
-					x = x + "<option value=" + value.productEach_color + ">" + value.productEach_color + '_' + value.productEach_each + "</option>";
+					x = x + "<option value=" + value.productEach_color + ">" + value.productEach_color + "</option>";
 					y = y + '<input class="' + value.productEach_color + '" type="hidden" value="' + value.productEach_each + '">';
 				});
 				$("#div_hidden_each").html(y);
@@ -367,29 +367,29 @@ var requestSubmitted = false;
 
 <style type="text/css">
 .cl_div_subject_name {
-	width: 220px;
+	width: 200px;
 	text-align: center;
 	background-color: black;
 }
 
 .cl_div_subject_name label {
-	font-size: 20px;
-	font-weight: bold;
+	font-size: 16px;
 	color: white;
+	font-weight: 500;
 }
 
 .cl_div_checkboxpp {
 	overflow-x: none;
 	overflow-y: auto;
-	width: 220px;
+	width: 200px;
 	height: 200px;
 	border : 2px #dce2eb solid;
+	background-color:#f7f7f7; 
 	border-top : none;
 }
 
-.cl_tab_checkboxp {
-	/* border: 3px blue double; */
-	width: 200px;
+.cl_tab_checkboxp {	
+    width: 180px;
 }
 
 .cl_tab_checkboxp tr th {
@@ -411,8 +411,9 @@ var requestSubmitted = false;
 }
 
 .cl_tab_checkboxp td:LAST-OF-TYPE input {
-	width: 20px;
-	height: 20px;
+	width: 15px;
+    height: 15px;
+    margin-left: 5px;
 }
 
 #modal_div_img_left {
@@ -460,7 +461,7 @@ var requestSubmitted = false;
 </style>
 
 </head>
-<body>
+<body style="font-family: 'hanna';">
 	<!-- HEADER:S -->
 	<%@ include file="/resources/temp/header.jsp"%>
 	<!-- HEADER:E -->
@@ -477,8 +478,8 @@ var requestSubmitted = false;
 								value="${list1.productSelect_num}">${list1.productSelect_name}</a></li>
 					</c:forEach>
 					<li><a class="a_sale_product" style="cursor: pointer;">할인상품</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/product/productBestList">BSET</a></li>
+					<%-- <li><a
+						href="${pageContext.request.contextPath}/product/productBestList">BSET</a></li> --%>
 				</ul>
 			</div>
 		</nav>
@@ -490,7 +491,7 @@ var requestSubmitted = false;
 						method="get">
 						<div id="div_out_search_select">
 							<div class="cl_div_subject_name">
-								<label>KIND</label>
+								<label>카테고리</label>
 							</div>
 							<div id="div_ck_kind" class="cl_div_checkboxpp">
 								<table id="tab_kind_checkbox" class="cl_tab_checkboxp">
@@ -500,7 +501,7 @@ var requestSubmitted = false;
 											<td><input class="inCk_kind_num" type="checkbox"
 												value="${kindList.kind_num}"
 												<c:forEach var = "kind2" items="${kind_num}">
-								<c:if test="${kindList ==kind2}">
+								<c:if test="${kindList.kind_num ==kind2}">
 								checked="checked"
 								</c:if>
 								</c:forEach>
@@ -510,7 +511,7 @@ var requestSubmitted = false;
 								</table>
 							</div>
 							<div class="cl_div_subject_name">
-								<label>SIZE</label>
+								<label>사이즈</label>
 							</div>
 							<div id="div_ck_size" class="cl_div_checkboxpp">
 								<table id="tab_kind_checkbox" class="cl_tab_checkboxp">
@@ -530,7 +531,7 @@ var requestSubmitted = false;
 								</table>
 							</div>
 							<div class="cl_div_subject_name">
-								<label>COLOR</label>
+								<label>색상</label>
 							</div>
 							<div id="div_ck_color" class="cl_div_checkboxpp">
 								<table id="tab_kind_checkbox" class="cl_tab_checkboxp">
@@ -592,7 +593,7 @@ var requestSubmitted = false;
 												<a
 													href="${pageContext.request.contextPath}/product/productView?product_num=${list1.productDTO.product_num}">${list1.productDTO.product_name}</a>
 											</p>
-											<p>브랜드</p>
+											<p>${list1.productInfoDTO.productInfo_brand}</p>
 											<p>
 												<span> <fmt:formatNumber
 														value="${list1.productInfoDTO.productInfo_price}"
@@ -641,8 +642,7 @@ var requestSubmitted = false;
 												class="inh_product_num" name="product_num"> <input
 												type="hidden" class="inh_productPic_pic_val"
 												value="${pageContext.request.contextPath}/resources/testPic/${list1.productPicDTO.productPic_pic}">
-											<span style="font-size: 20px; color: #ffffff;">ADD TO
-												CART</span>
+											<span style="font-size: 15px; color: #ffffff; font-weight: 400;margin : 5px 0 5px 0 ;">장바구니 담기</span>
 										</div>
 									</div>
 								</li>
@@ -706,7 +706,7 @@ var requestSubmitted = false;
 					<div id="modal_div_img_left"></div>
 					<div id="modal_div_tab_right"></div>
 					<div id="modal_div_price"></div>
-					<button id="btn_basketAdd" style="display: none;">장바구니 추가</button>
+					<button id="btn_basketAdd" style="display: none; color : #fff; background-color: black; font-size: 15px;">장바구니 추가</button>
 				</div>
 				<div class="modal-body3"></div>
 
@@ -760,11 +760,5 @@ var requestSubmitted = false;
 		<input id="inphid_productSelect_num" type="hidden"
 			name="productSelect_num">
 	</form>
-
-	<!--   side bar  -->
-	<%@ include file="/resources/temp/product/productSideBar.jspf"%>
-
-
-
 </body>
 </html>
